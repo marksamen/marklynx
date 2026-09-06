@@ -1,4 +1,10 @@
 html<!DOCTYPE html>
+<script>
+  // If someone visits via the youtube subdomain, send them into the subfolder
+  if (window.location.hostname === 'youtube.marklynx.com') {
+    window.location.replace('/youtube/index.html');
+  }
+</script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
