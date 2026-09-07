@@ -275,6 +275,19 @@
     margin-top:2px;
   }
 
+  .watch-label{
+    display:inline-block;
+    align-self:flex-start;
+    margin:8px 14px 0;
+    padding:3px 8px;
+    border:1px solid var(--red-bright);
+    border-radius:4px;
+    background:#000;
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.08em;
+  }
   .card-body{
     padding:12px 14px 14px;
     display:flex;
@@ -617,9 +630,10 @@
 
 <footer>
   <div class="footer-stats">
-    <span><strong id="quickEasyCount">0</strong> Quick &amp; Easy Completions</span>
-    <span><strong id="totalGamesCount">0</strong> Total Games</span>
-    <span><strong id="totalPlaylistsCount">0</strong> Full Playlists</span>
+    <span>⚡ <strong id="quickEasyCount">0</strong> Quick &amp; Easy</span>
+    <span>🎮 <strong id="totalGamesCount">0</strong> Games</span>
+    <span>📺 <strong id="totalGuidesCount">0</strong> Guides</span>
+    <span>📋 <strong id="totalPlaylistsCount">0</strong> Playlists</span>
   </div>
   Mark Lynx Gaming Network &nbsp;·&nbsp; 100% Walkthroughs, Achievement Guides &amp; Speed Runs
 </footer>
@@ -776,6 +790,7 @@ function cardHtml(r){
         <svg viewBox="0 0 68 48"><path d="M66.5,7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8,0.1,34,0,34,0S12.2,0.1,6.9,1.7c-2.9,0.8-4.6,3.1-5.4,6C0,13.1,0,24,0,24s0,10.9,1.5,16.3c0.8,2.9,2.5,5.1,5.4,5.9C12.2,47.9,34,48,34,48s21.8-0.1,27.1-1.7c2.9-0.8,4.6-3,5.4-5.9C68,34.9,68,24,68,24S68,13.1,66.5,7.7z" fill="#e0392f"></path><polygon points="27,34 45,24 27,14" fill="#fff"></polygon></svg>
       </span>
     </span>
+    <div class="watch-label">▶ WATCH</div>
     <span class="card-body">
       <h3 class="card-title">${escapeHtml(r.n)}</h3>
       <div class="card-meta">
@@ -863,10 +878,18 @@ function render(){
 
 function updateFooterStats(){
   const quickEasy = RAW.filter(r=>r.df === 'Quick & Easy').length;
-  const totalGames = RAW.length;
+  const totalGuides = RAW.length;
   const totalPlaylists = RAW.filter(r=>r.pl).length;
+
+  // Count unique game names rather than treating every guide/playlist as a game.
+  // Entries with the same name are grouped together for the game count.
+  const totalGames = new Set(
+    RAW.map(r => (r.n || '').trim().toLowerCase()).filter(Boolean)
+  ).size;
+
   document.getElementById('quickEasyCount').textContent = quickEasy.toLocaleString();
   document.getElementById('totalGamesCount').textContent = totalGames.toLocaleString();
+  document.getElementById('totalGuidesCount').textContent = totalGuides.toLocaleString();
   document.getElementById('totalPlaylistsCount').textContent = totalPlaylists.toLocaleString();
 }
 
