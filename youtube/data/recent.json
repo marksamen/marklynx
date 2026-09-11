@@ -1,5 +1,54 @@
 {
-  "updated": null,
-  "channelId": null,
-  "videos": []
+  "updated": "2026-09-11T18:03:09.371568+00:00",
+  "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
+  "videos": [
+    {
+      "id": "vgMu4r_BfHg",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 1 | Jungle of the Giants | All Coins | Normal | Nabbit",
+      "published": "2026-09-11T13:05:47+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/vgMu4r_BfHg/hqdefault.jpg"
+    },
+    {
+      "id": "PJCHQwoeC0Y",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle Ship | The Mighty Cannonship | All Star Coins | Normal",
+      "published": "2026-09-10T14:36:21+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/PJCHQwoeC0Y/hqdefault.jpg"
+    },
+    {
+      "id": "_c5MonrVIcA",
+      "title": "Introducing the Mark Lynx Gaming Network | All My Game Guides in One Place",
+      "published": "2026-09-09T17:59:16+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/_c5MonrVIcA/hqdefault.jpg"
+    },
+    {
+      "id": "yrIeBOBHnFw",
+      "title": "New Super Mario Bros. U Deluxe | Frosted Glacier Castle | Wendy's Shifting Castle | All Star Coins",
+      "published": "2026-09-09T17:30:55+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/yrIeBOBHnFw/hqdefault.jpg"
+    },
+    {
+      "id": "UbuQsfDQzsQ",
+      "title": "Aquadine | Easy 100% Completion | 1000 Gamerscore | 4-5 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-09T15:19:39+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/UbuQsfDQzsQ/hqdefault.jpg"
+    },
+    {
+      "id": "epF_OyOSz6c",
+      "title": "Bunninjutsu | Easy 100% Completion | 3000 Gamerscore | 5 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-08T16:53:04+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/epF_OyOSz6c/hqdefault.jpg"
+    },
+    {
+      "id": "o6jjkso1xDw",
+      "title": "New Super Mario Bros. U Deluxe | Frosted Glacier | Fliprus Lake | Normal Exit | All Star Coins",
+      "published": "2026-09-08T15:35:38+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/o6jjkso1xDw/hqdefault.jpg"
+    },
+    {
+      "id": "wKB1zPF_2MU",
+      "title": "Cubey | Hexfall | Easy 100% Completion | 4000 Gamerscore | 3.5 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-07T16:09:58+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/wKB1zPF_2MU/hqdefault.jpg"
+    }
+  ]
 }
