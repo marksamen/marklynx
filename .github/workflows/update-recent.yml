@@ -15,14 +15,17 @@ jobs:
         working-directory: youtube
 
     runs-on: ubuntu-latest
-    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Fetch latest public YouTube uploads
         run: python scripts/update_recent.py
+
       - name: Commit changed recent upload data
         run: |
           if git diff --quiet -- data/recent.json; then
