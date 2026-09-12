@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-12T20:29:27.267877+00:00",
+  "updated": "2026-09-12T21:26:38.664814+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "mOG115m0pXo",
+      "title": "The Cute Whale | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
+      "published": "2026-09-12T20:33:34+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/mOG115m0pXo/hqdefault.jpg"
+    },
     {
       "id": "Ft-9XzLjWvs",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 2 | Bridge over Poisoned Waters | All Coins | Secret Ex",
@@ -43,12 +49,6 @@
       "title": "Aquadine | Easy 100% Completion | 1000 Gamerscore | 4-5 Minute Completion | 4K | 60FPS",
       "published": "2026-09-09T15:19:39+00:00",
       "thumbnail": "https://i.ytimg.com/vi/UbuQsfDQzsQ/hqdefault.jpg"
-    },
-    {
-      "id": "epF_OyOSz6c",
-      "title": "Bunninjutsu | Easy 100% Completion | 3000 Gamerscore | 5 Minute Completion | 4K | 60FPS",
-      "published": "2026-09-08T16:53:04+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/epF_OyOSz6c/hqdefault.jpg"
     }
   ]
 }
