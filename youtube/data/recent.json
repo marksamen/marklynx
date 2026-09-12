@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-12T13:26:11.891634+00:00",
+  "updated": "2026-09-12T14:27:47.462416+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "Ft-9XzLjWvs",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 2 | Bridge over Poisoned Waters | All Coins | Secret Ex",
+      "published": "2026-09-12T13:27:05+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/Ft-9XzLjWvs/hqdefault.jpg"
+    },
     {
       "id": "zmJYMphRZWM",
       "title": "Cats Around Us: Black Cat | Easy 100% Completion | 1000 Gamerscore | 30 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "Bunninjutsu | Easy 100% Completion | 3000 Gamerscore | 5 Minute Completion | 4K | 60FPS",
       "published": "2026-09-08T16:53:04+00:00",
       "thumbnail": "https://i.ytimg.com/vi/epF_OyOSz6c/hqdefault.jpg"
-    },
-    {
-      "id": "o6jjkso1xDw",
-      "title": "New Super Mario Bros. U Deluxe | Frosted Glacier | Fliprus Lake | Normal Exit | All Star Coins",
-      "published": "2026-09-08T15:35:38+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/o6jjkso1xDw/hqdefault.jpg"
     }
   ]
 }
