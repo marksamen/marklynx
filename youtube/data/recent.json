@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-13T13:26:42.598939+00:00",
+  "updated": "2026-09-13T14:27:23.159514+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "US_9cOmvyt4",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 2 | Bridge over Poisoned Waters | No Coins | Normal Ext",
+      "published": "2026-09-13T13:29:31+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/US_9cOmvyt4/hqdefault.jpg"
+    },
     {
       "id": "mOG115m0pXo",
       "title": "The Cute Whale | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Frosted Glacier Castle | Wendy's Shifting Castle | All Star Coins",
       "published": "2026-09-09T17:30:55+00:00",
       "thumbnail": "https://i.ytimg.com/vi/yrIeBOBHnFw/hqdefault.jpg"
-    },
-    {
-      "id": "UbuQsfDQzsQ",
-      "title": "Aquadine | Easy 100% Completion | 1000 Gamerscore | 4-5 Minute Completion | 4K | 60FPS",
-      "published": "2026-09-09T15:19:39+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/UbuQsfDQzsQ/hqdefault.jpg"
     }
   ]
 }
