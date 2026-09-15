@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-15T13:30:27.813031+00:00",
+  "updated": "2026-09-15T14:29:19.095875+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "vZmBxFHLK48",
+      "title": "Mole Mine Boom | Easy 100% Completion | 2000 Gamerscore | 8 Minute Completion | Text Guide Inc | 4K",
+      "published": "2026-09-15T14:21:46+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/vZmBxFHLK48/hqdefault.jpg"
+    },
     {
       "id": "7ke92oPDpLw",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 3 | Bramball Woods | All Star Coins | Normal Exit | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 1 | Jungle of the Giants | All Coins | Normal | Nabbit",
       "published": "2026-09-11T13:05:47+00:00",
       "thumbnail": "https://i.ytimg.com/vi/vgMu4r_BfHg/hqdefault.jpg"
-    },
-    {
-      "id": "PJCHQwoeC0Y",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle Ship | The Mighty Cannonship | All Star Coins | Normal",
-      "published": "2026-09-10T14:36:21+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/PJCHQwoeC0Y/hqdefault.jpg"
     }
   ]
 }
