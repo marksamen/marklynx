@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-14T23:26:16.075501+00:00",
+  "updated": "2026-09-15T00:37:32.508949+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "7ke92oPDpLw",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 3 | Bramball Woods | All Star Coins | Normal Exit | 4K",
+      "published": "2026-09-14T23:46:39+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/7ke92oPDpLw/hqdefault.jpg"
+    },
     {
       "id": "hfyK_nfaS2M",
       "title": "Hole In Many | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle Ship | The Mighty Cannonship | All Star Coins | Normal",
       "published": "2026-09-10T14:36:21+00:00",
       "thumbnail": "https://i.ytimg.com/vi/PJCHQwoeC0Y/hqdefault.jpg"
-    },
-    {
-      "id": "_c5MonrVIcA",
-      "title": "Introducing the Mark Lynx Gaming Network | All My Game Guides in One Place",
-      "published": "2026-09-09T17:59:16+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/_c5MonrVIcA/hqdefault.jpg"
     }
   ]
 }
