@@ -1,0 +1,141 @@
+(() => {
+  const openBtn = document.getElementById('developerShowcaseBtn');
+  const overlay = document.getElementById('developerShowcaseOverlay');
+  const closeBtn = document.getElementById('developerShowcaseClose');
+  const form = document.getElementById('developerContactForm');
+  const sendBtn = document.getElementById('developerSendBtn');
+  const status = document.getElementById('developerFormStatus');
+  const turnstileMount = document.getElementById('developerTurnstile');
+  if (!openBtn || !overlay || !closeBtn) return;
+
+  const TURNSTILE_SITE_KEY = '0x4AAAAAAE3AJPCXDRsIdRB-';
+  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwswb06LQNqNtdDtXZtCDPTJYqIFfWsL-3oGekfpAvUq1QC0neZzBDF1FmksSlW5qcBGw/exec';
+  let turnstileToken = '';
+  let turnstileWidgetId = null;
+  let lastFocus = null;
+
+  const setStatus = (message, type = '') => {
+    if (!status) return;
+    status.textContent = message;
+    status.className = `developer-form-status${type ? ` ${type}` : ''}`;
+  };
+
+  const loadTurnstile = () => new Promise((resolve, reject) => {
+    if (window.turnstile) return resolve();
+    const existing = document.querySelector('script[data-marklynx-turnstile]');
+    if (existing) {
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.dataset.marklynxTurnstile = '1';
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+
+  const renderTurnstile = async () => {
+    if (!turnstileMount || turnstileWidgetId !== null) return;
+    try {
+      await loadTurnstile();
+      turnstileWidgetId = window.turnstile.render(turnstileMount, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'dark',
+        action: 'developer_contact',
+        callback: token => {
+          turnstileToken = token;
+          setStatus('');
+        },
+        'expired-callback': () => { turnstileToken = ''; },
+        'error-callback': () => {
+          turnstileToken = '';
+          setStatus('Human verification could not load. Please try again.', 'error');
+        }
+      });
+    } catch (error) {
+      console.error('Turnstile failed to load:', error);
+      setStatus('Human verification could not load. Please try again.', 'error');
+    }
+  };
+
+  const open = () => {
+    lastFocus = document.activeElement;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('developer-modal-open');
+    closeBtn.focus();
+    renderTurnstile();
+  };
+
+  const close = () => {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('developer-modal-open');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  };
+
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', event => { if (event.target === overlay) close(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+
+  if (form) {
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      setStatus('');
+
+      if (!form.reportValidity()) return;
+      if (!turnstileToken) {
+        setStatus('Please complete the human verification first.', 'error');
+        return;
+      }
+
+      const data = new FormData(form);
+      const payload = {
+        name: data.get('name') || '',
+        studio: data.get('studio') || '',
+        email: data.get('email') || '',
+        game: data.get('game') || '',
+        platforms: data.get('platforms') || '',
+        message: data.get('message') || '',
+        website: data.get('website') || '',
+        turnstileToken
+      };
+
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending…';
+      setStatus('Sending your message…', 'sending');
+
+      try {
+        // text/plain keeps this a simple cross-origin POST and avoids a CORS preflight.
+        const response = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: JSON.stringify(payload),
+          redirect: 'follow'
+        });
+        const result = await response.json();
+        if (!result.ok) throw new Error(result.message || 'Message could not be sent.');
+
+        form.reset();
+        turnstileToken = '';
+        if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+        setStatus(result.message || 'Message sent successfully. Thanks for getting in touch!', 'success');
+      } catch (error) {
+        console.error('Developer contact submission failed:', error);
+        setStatus(error.message || 'Your message could not be sent. Please try again.', 'error');
+        turnstileToken = '';
+        if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send Message';
+      }
+    });
+  }
+})();
