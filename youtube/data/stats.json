@@ -1,3 +1,7 @@
 {
-  "totalVideos": 1014
+  "totalVideos": 1014,
+  "directVideos": 274,
+  "playlistVideos": 740,
+  "updated": "2026-09-15T16:07:39.260347+00:00",
+  "playlistMode": "verified-checkpoint"
 }
