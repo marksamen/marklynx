@@ -48,9 +48,9 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_test.html?v=20260915-modular1', 'mainModuleMount');
-      await loadHtml('sections/recent_test.html?v=20260915-modular1', 'recentModuleMount');
-      await loadHtml('sections/footer_test.html?v=20260915-modular1', 'footerModuleMount');
+      await loadHtml('sections/main_test.html?v=20260915-reloadtest1', 'mainModuleMount');
+      await loadHtml('sections/recent_test.html?v=20260915-reloadtest1', 'recentModuleMount');
+      await loadHtml('sections/footer_test.html?v=20260915-reloadtest1', 'footerModuleMount');
 
       installVisibilitySync();
 
@@ -58,9 +58,9 @@
       if (!gamesResponse.ok) throw new Error(`games.json: HTTP ${gamesResponse.status}`);
       window.RAW = await gamesResponse.json();
 
-      await loadScript('js/youtube_modular_test.js?v=20260915-modular1');
-      await loadScript('js/site_modular_test.js?v=20260915-modular1');
-      await loadScript('js/recent_modular_test.js?v=20260915-modular1');
+      await loadScript('js/youtube_modular_test.js?v=20260915-reloadtest1');
+      await loadScript('js/site_modular_test.js?v=20260915-reloadtest1');
+      await loadScript('js/recent_modular_test.js?v=20260915-reloadtest1');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
