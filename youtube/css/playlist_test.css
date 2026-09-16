@@ -1,0 +1,94 @@
+/* Playlist modal test overrides — isolated from Developer styling.
+   REV21: geometry only. No colors or playback behavior changed. */
+@media (min-width:721px){
+  .video-modal-sidebar{
+    height:min(521px, 90vh);
+    max-height:min(521px, 90vh);
+  }
+}
+
+/* REV22: playlist thumbnail geometry only.
+   Prevent flex-row cross-axis stretching from turning 16:9 thumbnails square. */
+@media (min-width:721px){
+  .playlist-item-thumb{
+    width:88px;
+    height:49.5px;
+    aspect-ratio:auto;
+    align-self:center;
+  }
+}
+
+/* REV23: playlist colors only.
+   Geometry, thumbnails and playback behavior are intentionally untouched. */
+@media (min-width:721px){
+  .video-modal-sidebar{
+    background:#080808;
+    border-left-color:#32100e;
+    scrollbar-color:#6f1b17 #0a0a0a;
+  }
+
+  .video-modal-sidebar-head{
+    background:#0d0d0d;
+    color:#a8a8a8;
+    border-bottom-color:#32100e;
+  }
+
+  .playlist-item{
+    background:#0b0b0b;
+    border-bottom-color:#242424;
+  }
+
+  .playlist-item:hover{
+    background:#17100f;
+  }
+
+  .playlist-item.active{
+    background:#24100e;
+    border-left-color:var(--red);
+  }
+
+  .playlist-item-number{
+    color:#8a8a8a;
+  }
+
+  .playlist-item-title{
+    color:var(--text);
+  }
+
+  .video-modal-sidebar::-webkit-scrollbar{
+    width:10px;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-track{
+    background:#0a0a0a;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-thumb{
+    background:#6f1b17;
+    border:2px solid #0a0a0a;
+    border-radius:8px;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-thumb:hover{
+    background:var(--red);
+  }
+}
+
+/* REV34: mobile playlist scrollbar only.
+   Desktop remains exactly as approved in REV23. */
+@media (max-width:720px){
+  .video-modal-sidebar{
+    scrollbar-color:var(--red) #0a0a0a;
+  }
+  .video-modal-sidebar::-webkit-scrollbar{
+    width:10px;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-track{
+    background:#0a0a0a;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-thumb{
+    background:var(--red);
+    border:2px solid #0a0a0a;
+    border-radius:8px;
+  }
+  .video-modal-sidebar::-webkit-scrollbar-thumb:hover{
+    background:var(--red);
+  }
+}
