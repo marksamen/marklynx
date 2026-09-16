@@ -1,0 +1,5 @@
+/* REV25 — Shared video modal cleanup.
+   Global rule: the title / close bar beneath the player is obsolete. */
+.video-modal-info {
+  display: none;
+}
