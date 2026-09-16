@@ -1,0 +1,8 @@
+/* Playlist modal test overrides — isolated from Developer styling.
+   REV21: geometry only. No colors or playback behavior changed. */
+@media (min-width:721px){
+  .video-modal-sidebar{
+    height:min(521px, 90vh);
+    max-height:min(521px, 90vh);
+  }
+}
