@@ -1,60 +1,50 @@
-/* REV43 — TEST SITE ONLY
-   Inject permanent unlisted test media into the same data responses used by
-   Main Guides and Recent Uploads. Production JSON files remain untouched.
-   This file must load before the normal site loader. */
+/* REV44 — TEST SITE ONLY
+   Permanent test media uses the same games/recent data paths as normal content.
+   /test/ controls visibility via localStorage.
+   TEST CONTENT = Y means HIDDEN. N means VISIBLE. Default is Y. */
 (() => {
   'use strict';
 
-  const TEST_GUIDE = {
-    n: 'TEST',
-    p: 'TEST',
-    g: 'TEST',
-    t: 'TEST',
-    ty: 'TEST',
-    q: '4K',
-    df: 'Easy',
-    pl: 'PLW8_g7jLVHB0'
-  };
+  const STORAGE_KEY = 'marklynxTestContent';
+  const testContentIsHidden = () => (localStorage.getItem(STORAGE_KEY) || 'Y').toUpperCase() === 'Y';
+
+  // Hidden means do not alter the normal site at all.
+  if (testContentIsHidden()) return;
+
+  const TEST_GAMES = [
+    {
+      n: 'TEST VIDEO', p: 'TEST', g: 'TEST', t: 'TEST', ty: 'TEST', tx: 'No', q: '4K', df: 'Easy',
+      u: 'https://youtu.be/HRtSmycjwN8', v: 'HRtSmycjwN8', testContent: 'Y'
+    },
+    {
+      n: 'TEST PLAYLIST', p: 'TEST', g: 'TEST', t: 'TEST', ty: 'TEST', tx: 'No', q: '4K', df: 'Easy',
+      u: 'https://www.youtube.com/playlist?list=PLW8_g7jLVHB0', v: '', pl: 'PLW8_g7jLVHB0', testContent: 'Y'
+    }
+  ];
 
   const TEST_RECENT = [
     {
-      id: 'HRtSmycjwN8',
-      title: '1 - TEST',
+      id: 'HRtSmycjwN8', title: 'TEST VIDEO',
       thumbnail: 'https://i.ytimg.com/vi/HRtSmycjwN8/hqdefault.jpg'
     },
     {
-      id: 'HRtSmycjwN8',
-      title: 'TEST',
+      id: 'HRtSmycjwN8', title: 'TEST PLAYLIST',
       thumbnail: 'https://i.ytimg.com/vi/HRtSmycjwN8/hqdefault.jpg',
       testPlaylistId: 'PLW8_g7jLVHB0'
     }
   ];
 
   const nativeFetch = window.fetch.bind(window);
-
-  const requestUrl = input => {
-    if (typeof input === 'string') return input;
-    if (input && typeof input.url === 'string') return input.url;
-    return '';
-  };
-
+  const requestUrl = input => typeof input === 'string' ? input : (input && typeof input.url === 'string' ? input.url : '');
   const isPath = (url, path) => {
-    try {
-      return new URL(url, location.href).pathname.endsWith(path);
-    } catch (_) {
-      return url.includes(path);
-    }
+    try { return new URL(url, location.href).pathname.endsWith(path); }
+    catch (_) { return url.includes(path); }
   };
-
   const jsonResponse = (payload, original) => {
     const headers = new Headers(original.headers);
     headers.set('content-type', 'application/json; charset=utf-8');
     headers.delete('content-length');
-    return new Response(JSON.stringify(payload), {
-      status: original.status,
-      statusText: original.statusText,
-      headers
-    });
+    return new Response(JSON.stringify(payload), {status: original.status, statusText: original.statusText, headers});
   };
 
   window.fetch = async function(input, init) {
@@ -64,8 +54,10 @@
 
     if (isPath(url, 'data/games.json')) {
       const data = await response.clone().json();
-      if (Array.isArray(data) && !data.some(game => game && game.n === 'TEST')) {
-        data.push(TEST_GUIDE);
+      if (Array.isArray(data)) {
+        for (const testGame of TEST_GAMES) {
+          if (!data.some(game => game && game.n === testGame.n)) data.push(testGame);
+        }
       }
       return jsonResponse(data, response);
     }
@@ -73,9 +65,7 @@
     if (isPath(url, 'data/recent.json')) {
       const data = await response.clone().json();
       if (data && Array.isArray(data.videos)) {
-        const production = data.videos.filter(video =>
-          video && video.id !== 'HRtSmycjwN8' && video.title !== 'TEST'
-        );
+        const production = data.videos.filter(video => video && video.title !== 'TEST VIDEO' && video.title !== 'TEST PLAYLIST');
         data.videos = [...TEST_RECENT, ...production];
       }
       return jsonResponse(data, response);
