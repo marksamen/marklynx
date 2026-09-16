@@ -1,0 +1,19 @@
+/* Playlist modal test overrides — isolated from Developer styling.
+   REV21: geometry only. No colors or playback behavior changed. */
+@media (min-width:721px){
+  .video-modal-sidebar{
+    height:min(521px, 90vh);
+    max-height:min(521px, 90vh);
+  }
+}
+
+/* REV22: playlist thumbnail geometry only.
+   Prevent flex-row cross-axis stretching from turning 16:9 thumbnails square. */
+@media (min-width:721px){
+  .playlist-item-thumb{
+    width:88px;
+    height:49.5px;
+    aspect-ratio:auto;
+    align-self:center;
+  }
+}
