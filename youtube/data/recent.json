@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-17T00:35:38.373686+00:00",
+  "updated": "2026-09-17T08:30:51.150911+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "bO21TsR5Xg0",
+      "title": "Panda: Shards of Aurora | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-17T04:00:06+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/bO21TsR5Xg0/hqdefault.jpg"
+    },
     {
       "id": "7q_97byQ_uw",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Which-Way labyrinth | 2/3 Star Coins | Normal Exit",
@@ -43,12 +49,6 @@
       "title": "The Cute Whale | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
       "published": "2026-09-12T20:33:34+00:00",
       "thumbnail": "https://i.ytimg.com/vi/mOG115m0pXo/hqdefault.jpg"
-    },
-    {
-      "id": "Ft-9XzLjWvs",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 2 | Bridge over Poisoned Waters | All Coins | Secret Ex",
-      "published": "2026-09-12T13:27:05+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Ft-9XzLjWvs/hqdefault.jpg"
     }
   ]
 }
