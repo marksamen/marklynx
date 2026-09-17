@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<title>Copyright Claims — Mark Lynx Admin</title>
+<style>
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
+body{padding:24px}
+main{width:min(1100px,100%);margin:0 auto}
+#checking{text-align:center;opacity:.7;padding-top:15vh}
+#claims{display:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+h1{margin:0 0 4px}
+.subtitle{margin:0;opacity:.65}
+.actions{display:flex;gap:10px}
+a,button{border:0;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+a{background:#fff;color:#111}
+button{background:#d9d9d9;color:#111}
+.panel{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:20px;margin-bottom:20px}
+.panel h2{margin:0 0 16px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:6px;text-align:left}
+.field.full{grid-column:1/-1}
+label{font-weight:700;font-size:.92rem}
+input,select,textarea{width:100%;border:1px solid #555;border-radius:8px;background:#111;color:#fff;padding:.8rem;font:inherit}
+textarea{min-height:110px;resize:vertical}
+#save{grid-column:1/-1;background:#fff}
+#message{grid-column:1/-1;min-height:1.2em;margin:0;font-weight:700}
+.error{color:#ff8d8d}.success{color:#9be89b}
+.claim-list{display:grid;gap:12px}
+.claim-card{border:1px solid #3b3b3b;border-radius:10px;padding:16px;background:#141414;text-align:left}
+.claim-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.claim-head h3{margin:0}
+.badge{white-space:nowrap;border:1px solid #555;border-radius:999px;padding:5px 9px;font-size:.8rem;font-weight:700}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px;margin-top:12px;color:#ddd}
+.meta strong{color:#fff}
+.claim-card p{white-space:pre-wrap;margin:12px 0 0;color:#ccc}
+.claim-card a{display:inline-block;margin-top:12px;padding:0;background:none;color:#fff;text-decoration:underline;font-weight:700}
+.empty{opacity:.65;text-align:center;padding:16px}
+@media(max-width:700px){
+ body{padding:14px}
+ .topbar{display:grid}
+ .actions{display:grid;grid-template-columns:1fr 1fr}
+ form{grid-template-columns:1fr}
+ .field.full,#save,#message{grid-column:1}
+ .meta{grid-template-columns:1fr}
+ .claim-head{display:grid}
+}
+</style>
+</head>
+<body>
+<main id="checking">Checking authorization…</main>
+
+<main id="claims">
+  <div class="topbar">
+    <div>
+      <h1>Copyright Claims</h1>
+      <p class="subtitle">MARK LYNX ADMIN</p>
+    </div>
+    <div class="actions">
+      <a href="../">Back to Admin</a>
+      <button id="logout" type="button">Sign Out</button>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>Add Copyright Claim</h2>
+    <form id="claimForm">
+      <div class="field">
+        <label for="videoTitle">Video / Content Title</label>
+        <input id="videoTitle" required>
+      </div>
+
+      <div class="field">
+        <label for="claimant">Claimant</label>
+        <input id="claimant" required>
+      </div>
+
+      <div class="field full">
+        <label for="videoUrl">YouTube / Content URL</label>
+        <input id="videoUrl" type="url" placeholder="https://..." required>
+      </div>
+
+      <div class="field">
+        <label for="claimType">Claim Type</label>
+        <select id="claimType">
+          <option>Copyright Claim</option>
+          <option>Copyright Strike</option>
+          <option>Content ID</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status">
+          <option>Open</option>
+          <option>Disputed</option>
+          <option>Appealed</option>
+          <option>Resolved</option>
+          <option>Released</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="claimDate">Claim Date</label>
+        <input id="claimDate" type="date" required>
+      </div>
+
+      <div class="field">
+        <label for="reference">Reference / Claim ID</label>
+        <input id="reference">
+      </div>
+
+      <div class="field full">
+        <label for="notes">Notes</label>
+        <textarea id="notes"></textarea>
+      </div>
+
+      <button id="save" type="submit">Save Claim</button>
+      <p id="message" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Saved Claims</h2>
+    <div id="claimList" class="claim-list"><div class="empty">Loading claims…</div></div>
+  </section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
+  authDomain: "mark-lynx-admin.firebaseapp.com",
+  projectId: "mark-lynx-admin",
+  storageBucket: "mark-lynx-admin.firebasestorage.app",
+  messagingSenderId: "749999035332",
+  appId: "1:749999035332:web:52c78e6e358c1fef794a91"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const checking = document.getElementById("checking");
+const claims = document.getElementById("claims");
+const form = document.getElementById("claimForm");
+const message = document.getElementById("message");
+const claimList = document.getElementById("claimList");
+let unsubscribeClaims = null;
+
+function text(value){
+  return value == null || value === "" ? "—" : String(value);
+}
+
+function renderClaims(snapshot){
+  claimList.innerHTML = "";
+  if(snapshot.empty){
+    claimList.innerHTML = '<div class="empty">No copyright claims saved yet.</div>';
+    return;
+  }
+
+  snapshot.forEach(docSnap=>{
+    const d = docSnap.data();
+    const card = document.createElement("article");
+    card.className = "claim-card";
+
+    const head = document.createElement("div");
+    head.className = "claim-head";
+
+    const title = document.createElement("h3");
+    title.textContent = text(d.videoTitle);
+
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = text(d.status);
+
+    head.append(title,badge);
+    card.append(head);
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    [
+      ["Claimant", d.claimant],
+      ["Type", d.claimType],
+      ["Claim Date", d.claimDate],
+      ["Reference", d.reference]
+    ].forEach(([label,value])=>{
+      const item = document.createElement("div");
+      const strong = document.createElement("strong");
+      strong.textContent = label + ": ";
+      item.append(strong, document.createTextNode(text(value)));
+      meta.append(item);
+    });
+
+    card.append(meta);
+
+    if(d.notes){
+      const notes = document.createElement("p");
+      notes.textContent = d.notes;
+      card.append(notes);
+    }
+
+    if(d.videoUrl){
+      const link = document.createElement("a");
+      link.href = d.videoUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Open Content";
+      card.append(link);
+    }
+
+    claimList.append(card);
+  });
+}
+
+function startClaimsListener(){
+  if(unsubscribeClaims) return;
+  const claimsQuery = query(collection(db,"copyrightClaims"), orderBy("createdAt","desc"));
+  unsubscribeClaims = onSnapshot(claimsQuery, renderClaims, err=>{
+    console.error(err);
+    claimList.innerHTML = '<div class="empty">Unable to load claims.</div>';
+  });
+}
+
+await setPersistence(auth,browserLocalPersistence);
+
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    if(unsubscribeClaims) unsubscribeClaims();
+    location.replace("../");
+    return;
+  }
+  checking.style.display="none";
+  claims.style.display="block";
+  startClaimsListener();
+});
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  message.className = "";
+  message.textContent = "Saving…";
+  document.getElementById("save").disabled = true;
+
+  try{
+    await addDoc(collection(db,"copyrightClaims"),{
+      videoTitle: document.getElementById("videoTitle").value.trim(),
+      claimant: document.getElementById("claimant").value.trim(),
+      videoUrl: document.getElementById("videoUrl").value.trim(),
+      claimType: document.getElementById("claimType").value,
+      status: document.getElementById("status").value,
+      claimDate: document.getElementById("claimDate").value,
+      reference: document.getElementById("reference").value.trim(),
+      notes: document.getElementById("notes").value.trim(),
+      createdAt: serverTimestamp(),
+      createdBy: auth.currentUser.uid
+    });
+
+    form.reset();
+    message.className = "success";
+    message.textContent = "Claim saved.";
+  }catch(err){
+    console.error(err);
+    message.className = "error";
+    message.textContent = "Claim could not be saved.";
+  }finally{
+    document.getElementById("save").disabled = false;
+  }
+});
+
+document.getElementById("logout").addEventListener("click",async()=>{
+  await signOut(auth);
+  location.replace("../");
+});
+</script>
+</body>
+</html>
