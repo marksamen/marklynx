@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<title>Mark Lynx Admin — GAMEDEV TEST REV10</title>
+<style>
+html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
+body{display:grid;place-items:center;text-align:center}
+h1{margin:0 0 .35rem}p{margin:0;opacity:.7}
+#login,#admin{width:min(92vw,420px)}
+#admin{display:none}
+form{display:grid;gap:.8rem;margin-top:1.5rem}
+input,button{box-sizing:border-box;width:100%;padding:.85rem 1rem;border-radius:8px;font:inherit}
+input{border:1px solid #555;background:#1c1c1c;color:#fff}
+button{border:0;cursor:pointer;font-weight:700}
+#error{min-height:1.2em;margin-top:.8rem;color:#ff8d8d;opacity:1}
+.admin-link{box-sizing:border-box;display:block;width:100%;margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;text-decoration:none;font-weight:700}
+#claims{margin-top:1.5rem;background:#fff;color:#111}
+#youtubeClaims{background:#c62828;color:#fff}
+#developerSubmissions{background:#6a1b9a;color:#fff}
+#trafficPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
+#trafficPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
+#trafficGrid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.traffic-card{padding:.75rem;border:1px solid #444;border-radius:8px;background:#151515;text-align:center}
+.traffic-card strong{display:block;margin-bottom:.35rem}
+.traffic-values{font-size:.9rem;line-height:1.45;opacity:.85}
+#trafficUpdated{margin-top:.75rem;text-align:center;font-size:.8rem;opacity:.6}
+#trafficError{margin-top:.75rem;text-align:center;color:#ff8d8d;opacity:1}
+#testPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c}
+#siteLinks{display:grid;gap:.55rem;margin-top:.8rem}
+#siteLinks .admin-link{margin-top:0;background:#2b2b2b;color:#fff;border:1px solid #555}
+#siteLinks .primary{background:#1565c0;border-color:#1565c0}
+#testStatus{margin:0 0 .8rem;font-weight:700;opacity:1}
+#testStatus.on{color:#6dff8b}
+#testStatus.off{color:#ff6d6d}
+#testToggle.enable{background:#1f9d49;color:#fff}
+#testToggle.disable{background:#a82d2d;color:#fff}
+#gameDevPanel{box-sizing:border-box;width:min(96vw,980px);margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
+#gameDevPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
+#gameDevStatus{text-align:center;font-weight:700}
+#gameDevDetails{font-size:.88rem;line-height:1.55;opacity:.85;white-space:pre-line}
+#gameDevError{text-align:center;color:#ff8d8d;opacity:1}
+#gameDevTools{display:none;margin-top:1rem;border-top:1px solid #444;padding-top:1rem}
+#gameDevList{width:100%;padding:.75rem;border-radius:8px;border:1px solid #555;background:#151515;color:#fff}
+#gameDevForm{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem}
+#gameDevForm label{font-size:.78rem;opacity:.9;text-align:left}
+#gameDevForm .field-help{display:block;margin-top:.25rem;font-size:.7rem;line-height:1.35;color:#aaa;font-weight:400}
+#gameDevForm input,#gameDevForm select,#gameDevSearch{margin-top:.25rem;width:100%;padding:.7rem;border-radius:7px;border:1px solid #555;background:#151515;color:#fff;box-sizing:border-box}
+#gameDevForm .wide{grid-column:1/-1}
+.choice-box{border:1px solid #555;border-radius:7px;background:#151515;padding:.6rem;margin-top:.25rem}
+.choice-grid{display:flex;flex-wrap:wrap;gap:.45rem .8rem}
+.choice-grid label{display:flex;align-items:center;gap:.3rem;font-size:.76rem!important}
+.choice-grid input{width:auto!important;margin:0!important;padding:0!important}
+.media-fields{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.5rem}
+@media(max-width:700px){.media-fields{grid-template-columns:1fr}}
+#gameDevActions{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.8rem}
+#gameDevSave{background:#1565c0;color:#fff}
+#gameDevReload{background:#333;color:#fff;border:1px solid #555}
+#gameDevWriteStatus{margin:.75rem 0 0;text-align:center;font-weight:700}
+@media(max-width:700px){#gameDevForm,#gameDevActions{grid-template-columns:1fr}#gameDevForm .wide{grid-column:auto}}
+#logout{margin-top:.8rem}
+</style>
+</head>
+<body>
+<main id="login">
+<h1>Mark Lynx Admin</h1><p>AUTHORIZED ACCESS ONLY</p>
+<form id="loginForm">
+<input id="email" type="email" autocomplete="username" placeholder="Email" required>
+<input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+<button type="submit">Sign In</button>
+</form>
+<div id="error" role="alert" aria-live="polite"></div>
+</main>
+<main id="admin">
+<h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST</p>
+<a id="claims" class="admin-link" href="claims/">Copyright Claims</a>
+<a id="developerSubmissions" class="admin-link" href="developers/">Developer Submissions</a>
+<a id="gameSuggestions" class="admin-link" href="suggestions/">Game Suggestions</a>
+<section id="trafficPanel" aria-label="Traffic Analytics">
+<h2>Traffic Analytics</h2>
+<div id="trafficGrid">
+<div class="traffic-card"><strong>Today</strong><div id="trafficToday" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 7 Days</strong><div id="traffic7" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 30 Days</strong><div id="traffic30" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>All Time</strong><div id="trafficAll" class="traffic-values">Loading…</div></div>
+</div>
+<p id="trafficUpdated"></p>
+<p id="trafficError"></p>
+</section>
+<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
+<section id="testPanel" aria-label="Test content control">
+<p id="testStatus"></p>
+<button id="testToggle" type="button"></button>
+<div id="siteLinks" aria-label="YouTube site launch and redirect checks">
+<a class="admin-link primary" href="https://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Open HTTPS Site</a>
+<a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
+<a class="admin-link" href="http://copyright.marklynx.com" target="_blank" rel="noopener noreferrer">Test Copyright Redirect</a>
+</div>
+</section>
+<section id="gameDevPanel" aria-label="Game Management Firestore test">
+<h2>Game Management — games_TEST</h2>
+<p id="gameDevStatus">Waiting for authentication…</p>
+<p id="gameDevDetails"></p>
+<p id="gameDevError"></p>
+<div id="gameDevTools">
+<input id="gameDevSearch" type="search" placeholder="Search by name, ID, playlist or video…" autocomplete="off" aria-label="Search games">
+<select id="gameDevList" aria-label="Select game"></select>
+<form id="gameDevForm">
+<label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
+<input id="gdOrder" type="hidden">
+<label class="wide">Game Name<input id="gdName" placeholder="Example: 7 Days Of Rose"><span class="field-help">The title shown throughout the website.</span></label>
+<label>Difficulty<select id="gdDifficulty"><option value="">Select difficulty…</option><option>Quick & Easy</option><option>Easy</option><option>Moderate</option><option>Hard</option></select><span class="field-help">Existing site values: Quick & Easy | Easy | Moderate | Hard.</span></label>
+<div><strong>Genre / Type</strong><div id="gdTypeChoices" class="choice-box choice-grid"></div><span class="field-help">Select every genre/type that applies. Admin builds the stored value automatically.</span></div>
+<div><strong>Platform</strong><div id="gdPlatformChoices" class="choice-box choice-grid"></div><span class="field-help">Select every platform that applies. Multiple selections are supported.</span></div>
+<label>Gamerscore<input id="gdGamerscore" placeholder="Example: 1,000G"><span class="field-help">Displayed achievement total, e.g. 1,000G, 2,000G or 5-Star Profile.</span></label>
+<label>Completion Time<input id="gdTime" placeholder="Example: 10 Minutes"><span class="field-help">Free text exactly as you want it displayed, e.g. 10 Minutes or 8-10 Hours.</span></label>
+<label>Quality<select id="gdQuality"><option value="">Select quality…</option><option value="4K">4K</option><option value="1080p">1080p</option></select><span class="field-help">Current site uses 4K or 1080p.</span></label>
+<label>Text Guide<input id="gdTextGuide" list="gdTextGuideOptions" placeholder="No"><datalist id="gdTextGuideOptions"><option value="No"><option value="Yes"><option value="-"><option value="Yes (All Cats Circled)"><option value="Yes (All Cats Numbered)"></datalist><span class="field-help">Usually No, Yes, or -. Custom Yes (...) labels are allowed.</span></label>
+<label class="wide">YouTube URL<input id="gdUrl" placeholder="https://youtu.be/... or https://www.youtube.com/playlist?list=..."><span class="field-help">Full public YouTube video or playlist URL used when the site needs a direct link.</span></label>
+<div class="wide"><strong>Media Type</strong><div class="choice-box choice-grid"><label><input type="radio" name="gdMediaType" value="video" checked> Video</label><label><input type="radio" name="gdMediaType" value="playlist"> Playlist</label></div><span class="field-help">Choose one. A game uses either a Video ID or a Playlist ID — never both.</span><div class="media-fields"><label id="gdVideoWrap">Video ID<input id="gdVideo" placeholder="Example: ohYGCeRKbwI"><span class="field-help">Video ID only, not the full URL.</span></label><label id="gdPlaylistWrap" style="display:none">Playlist ID<input id="gdPlaylist" placeholder="Example: PLMpV--_D7TGM"><span class="field-help">Playlist ID beginning with PL.</span></label></div></div>
+<label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
+<label>Kinect Required<select id="gdKinect"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes only when Kinect hardware is required to play/complete the game. Otherwise leave No.</span></label>
+<label>Test Content<select id="gdTest"><option value="false">No — normal record</option><option value="true">Yes — TEST only</option></select><span class="field-help">New games default to TEST only for safety. Change to No only when deliberately testing normal-record behavior.</span></label>
+<label class="wide">Raw record preview<input id="gdRaw" disabled></label>
+</form>
+<div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevReload" type="button">Reload from Firestore</button></div>
+<p id="gameDevWriteStatus"></p>
+</div>
+</section>
+<button id="logout" type="button">Sign Out</button>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
+  authDomain: "mark-lynx-admin.firebaseapp.com",
+  projectId: "mark-lynx-admin",
+  storageBucket: "mark-lynx-admin.firebasestorage.app",
+  messagingSenderId: "749999035332",
+  appId: "1:749999035332:web:52c78e6e358c1fef794a91"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const login = document.getElementById("login");
+const admin = document.getElementById("admin");
+const form = document.getElementById("loginForm");
+const error = document.getElementById("error");
+
+function loggedOut(){admin.style.display="none";login.style.display="block";}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();}
+
+function drawTrafficValue(elementId,data){
+  const el=document.getElementById(elementId);
+  el.textContent=`${data?.activeUsers ?? 0} active users · ${data?.pageViews ?? 0} page views`;
+}
+async function loadTrafficAnalytics(){
+  const trafficError=document.getElementById("trafficError");
+  const trafficUpdated=document.getElementById("trafficUpdated");
+  trafficError.textContent="";
+  try{
+    const snap=await getDoc(doc(db,"trafficAnalytics","current"));
+    if(!snap.exists()) throw new Error("Traffic analytics snapshot not found.");
+    const data=snap.data();
+    drawTrafficValue("trafficToday",data.today);
+    drawTrafficValue("traffic7",data.last7Days);
+    drawTrafficValue("traffic30",data.last30Days);
+    drawTrafficValue("trafficAll",data.allTime);
+    const updated=data.updatedAt?.toDate?.();
+    trafficUpdated.textContent=updated?`Last updated: ${updated.toLocaleString()}`:"";
+  }catch(e){
+    trafficError.textContent="Traffic analytics unavailable.";
+    console.error(e);
+  }
+}
+
+
+async function loadGamesTest(){
+  const status=document.getElementById("gameDevStatus");
+  const details=document.getElementById("gameDevDetails");
+  const gameError=document.getElementById("gameDevError");
+  status.textContent="Reading games_TEST from Firestore…";
+  details.textContent="";
+  gameError.textContent="";
+
+  try{
+    const snap=await getDocs(query(collection(db,"games_TEST"),orderBy("order")));
+    const games=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const production=games.filter(g=>g.testContent!==true);
+    const qa=games.filter(g=>g.testContent===true);
+
+    const first=games[0];
+    const lastProduction=production[production.length-1];
+    const qaNames=qa.map(g=>`${g.id}: ${g.n}`).join(" | ");
+
+    const passed=
+      games.length>=322 &&
+      production.length>=320 &&
+      qa.length>=2 &&
+      first?.id==="0001" &&
+      first?.n==="7 Days Of Rose" &&
+      production.some(g=>g.id==="0320" && g.n==="Hole In Many") &&
+      qa.some(g=>g.id==="0321" && g.n) &&
+      qa.some(g=>g.id==="0322" && g.n);
+
+    status.textContent=passed
+      ?"PASS — Firepit returned the expected GAMEDEV dataset."
+      :"CHECK REQUIRED — Firestore responded, but the dataset did not match the expected baseline.";
+
+    details.textContent=
+      `Total documents: ${games.length}\n`+
+      `Production records: ${production.length}\n`+
+      `Permanent QA records: ${qa.length}\n`+
+      `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
+      `Last production: ${lastProduction?.id ?? "?"} — ${lastProduction?.n ?? "?"}\n`+
+      `QA: ${qaNames || "none"}`;
+
+    status.style.color=passed?"#6dff8b":"#ffd36d";
+    window.GAMEDEV_RAW=games;
+    populateGameDev(games);
+  }catch(e){
+    status.textContent="FAILED — could not read games_TEST.";
+    status.style.color="#ff6d6d";
+    gameError.textContent=e?.message || String(e);
+    console.error("GAMEDEV games_TEST read failed:",e);
+  }
+}
+
+function populateGameDev(games){
+  const tools=document.getElementById("gameDevTools");
+  tools.style.display="block";
+  filterGameDevList();
+}
+function filterGameDevList(){
+  const games=window.GAMEDEV_RAW||[];
+  const list=document.getElementById("gameDevList");
+  const search=document.getElementById("gameDevSearch");
+  const previous=list.value;
+  const q=(search.value||"").trim().toLowerCase();
+  const filtered=!q?games:games.filter(g=>[
+    g.id,g.n,g.pl,g.v
+  ].some(v=>String(v??"").toLowerCase().includes(q)));
+  list.innerHTML="";
+  for(const g of filtered){
+    const o=document.createElement("option");
+    o.value=g.id;
+    o.textContent=`${String(g.order ?? "?").padStart(4,"0")} — ${g.n || "(unnamed)"}${g.testContent===true?" [TEST]":""}`;
+    list.appendChild(o);
+  }
+  if(previous && filtered.some(g=>g.id===previous)) list.value=previous;
+  if(filtered.length){
+    drawSelectedGame();
+  }else{
+    document.getElementById("gameDevWriteStatus").style.color="#ffd36d";
+    document.getElementById("gameDevWriteStatus").textContent="No matching games.";
+  }
+}
+function selectedGame(){
+  const id=document.getElementById("gameDevList").value;
+  return (window.GAMEDEV_RAW||[]).find(g=>g.id===id);
+}
+const GD_GENRES=["Action","Adventure","Beat 'em up","Dancing","First Person Shooter","Management","Open World","Party","Platformer","Point & Click","Puzzle","Racing","Roguelite","Shoot 'em up","Shooter","Simulation","Sports","Strategy","3rd Person Shooter","Visual Novel"];
+const GD_PLATFORMS=["XBOX 360","XBOX ONE","XBOX Series S/X","Windows","Nintendo Switch","Nintendo Switch 2"];
+function splitMulti(v){return String(v||"").split("|").map(x=>x.trim()).filter(Boolean);}
+function buildChoices(id,values){const box=document.getElementById(id);box.innerHTML=values.map(v=>`<label><input type="checkbox" value="${v.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}"> ${v}</label>`).join("");}
+function setChoices(id,value){const wanted=new Set(splitMulti(value));document.querySelectorAll(`#${id} input[type=checkbox]`).forEach(cb=>cb.checked=wanted.has(cb.value));}
+function getChoices(id){return [...document.querySelectorAll(`#${id} input[type=checkbox]:checked`)].map(cb=>cb.value).join(" | ");}
+function setMediaType(type){const isPlaylist=type==="playlist";document.querySelector(`input[name=gdMediaType][value=${isPlaylist?"playlist":"video"}]`).checked=true;document.getElementById("gdVideoWrap").style.display=isPlaylist?"none":"block";document.getElementById("gdPlaylistWrap").style.display=isPlaylist?"block":"none";if(isPlaylist)document.getElementById("gdVideo").value="";else document.getElementById("gdPlaylist").value="";}
+buildChoices("gdTypeChoices",GD_GENRES);buildChoices("gdPlatformChoices",GD_PLATFORMS);
+document.querySelectorAll("input[name=gdMediaType]").forEach(r=>r.addEventListener("change",()=>setMediaType(r.value)));
+function drawSelectedGame(){
+  const g=selectedGame(); if(!g)return;
+  document.getElementById("gdId").value=g.id||"";
+  document.getElementById("gdOrder").value=g.order??"";
+  document.getElementById("gdName").value=g.n??"";
+  document.getElementById("gdDifficulty").value=g.df??"";
+  setChoices("gdTypeChoices",g.ty??"");
+  document.getElementById("gdGamerscore").value=g.g??"";
+  document.getElementById("gdTime").value=g.t??"";
+  document.getElementById("gdQuality").value=(String(g.q||"").toLowerCase()==="1080p"?"1080p":(g.q??""));
+  document.getElementById("gdTextGuide").value=g.tx??"";
+  document.getElementById("gdUrl").value=g.u??"";
+  document.getElementById("gdAdult").value=g.adult===true?"true":"false";
+  document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
+  setMediaType(g.pl?"playlist":"video");
+  if(g.pl) document.getElementById("gdPlaylist").value=g.pl; else document.getElementById("gdVideo").value=g.v??"";
+  setChoices("gdPlatformChoices",g.p??"");
+  document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  document.getElementById("gdRaw").value=JSON.stringify(g);
+  document.getElementById("gameDevWriteStatus").textContent="";
+}
+
+function nextGameDevIdentity(){
+  const games=window.GAMEDEV_RAW||[];
+  const maxOrder=games.reduce((m,g)=>Number.isInteger(Number(g.order))?Math.max(m,Number(g.order)):m,0);
+  const maxId=games.reduce((m,g)=>/^\d+$/.test(g.id||"")?Math.max(m,Number(g.id)):m,0);
+  return {id:String(maxId+1).padStart(4,"0"),order:maxOrder+1};
+}
+function beginAddGame(){
+  const next=nextGameDevIdentity();
+  document.getElementById("gdId").value=next.id;
+  document.getElementById("gdOrder").value=next.order;
+  document.getElementById("gdName").value="";
+  document.getElementById("gdDifficulty").value="";
+  setChoices("gdTypeChoices","");
+  document.getElementById("gdGamerscore").value="";
+  document.getElementById("gdTime").value="";
+  document.getElementById("gdQuality").value="";
+  document.getElementById("gdTextGuide").value="No";
+  document.getElementById("gdUrl").value="";
+  document.getElementById("gdAdult").value="false";
+  document.getElementById("gdKinect").value="false";
+  setMediaType("video");
+  document.getElementById("gdVideo").value="";
+  setChoices("gdPlatformChoices","");
+  document.getElementById("gdTest").value="true";
+  document.getElementById("gdRaw").value="NEW games_TEST record";
+  document.getElementById("gameDevSave").style.display="none";
+  document.getElementById("gameDevReload").style.display="none";
+  const status=document.getElementById("gameDevWriteStatus");
+  status.style.color="#ffd36d";
+  status.textContent=`NEW RECORD — ${next.id}, order ${next.order}. Test Content defaults to true. Fill the fields, then click Add New Game again to create it.`;
+  document.getElementById("gameDevAdd").dataset.mode="confirm";
+  document.getElementById("gameDevAdd").textContent="Create New Game";
+  document.getElementById("gameDevCancel").style.display="block";
+}
+function cancelAddMode(){
+  const add=document.getElementById("gameDevAdd");
+  add.dataset.mode="";
+  add.textContent="Add New Game";
+  document.getElementById("gameDevSave").style.display="block";
+  document.getElementById("gameDevReload").style.display="block";
+  document.getElementById("gameDevCancel").style.display="none";
+}
+async function createGameDev(){
+  const writeStatus=document.getElementById("gameDevWriteStatus");
+  const id=document.getElementById("gdId").value.trim();
+  const order=Number(document.getElementById("gdOrder").value);
+  const name=document.getElementById("gdName").value.trim();
+  if(!/^\d{4}$/.test(id)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="New ID must be four digits.";return;}
+  if(!Number.isInteger(order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Order must be an integer.";return;}
+  if(!name){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Name is required.";return;}
+  if((window.GAMEDEV_RAW||[]).some(g=>g.id===id)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${id} already exists.`;return;}
+  if((window.GAMEDEV_RAW||[]).some(g=>Number(g.order)===order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — order ${order} already exists.`;return;}
+  const record={
+    order, n:name,
+    p:getChoices("gdPlatformChoices"),
+    g:document.getElementById("gdGamerscore").value.trim(),
+    t:document.getElementById("gdTime").value.trim(),
+    ty:getChoices("gdTypeChoices"),
+    tx:document.getElementById("gdTextGuide").value.trim(),
+    q:document.getElementById("gdQuality").value.trim(),
+    df:document.getElementById("gdDifficulty").value.trim(),
+    u:document.getElementById("gdUrl").value.trim(),
+    testContent:document.getElementById("gdTest").value==="true"
+  };
+  const mediaType=document.querySelector("input[name=gdMediaType]:checked")?.value||"video";
+  if(mediaType==="playlist"){
+    const playlist=document.getElementById("gdPlaylist").value.trim();
+    if(!playlist){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Playlist ID is required when Media Type is Playlist.";return;}
+    record.pl=playlist;
+  }else{
+    const video=document.getElementById("gdVideo").value.trim();
+    if(!video){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Video ID is required when Media Type is Video.";return;}
+    record.v=video;
+  }
+  if(document.getElementById("gdAdult").value==="true") record.adult=true;
+  if(document.getElementById("gdKinect").value==="true") record.kinect=true;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in games_TEST…`;
+  try{
+    await setDoc(doc(db,"games_TEST",id),record);
+    cancelAddMode();
+    await loadGamesTest();
+    document.getElementById("gameDevSearch").value=id;
+    filterGameDevList();
+    document.getElementById("gameDevList").value=id;
+    drawSelectedGame();
+    writeStatus.style.color="#6dff8b";writeStatus.textContent=`CREATED — ${id} added to games_TEST.`;
+  }catch(e){
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — games_TEST was not changed.";console.error(e);
+  }
+}
+
+document.getElementById("gameDevAdd").addEventListener("click",()=>{
+  const add=document.getElementById("gameDevAdd");
+  if(add.dataset.mode==="confirm") createGameDev(); else beginAddGame();
+});
+document.getElementById("gameDevCancel").addEventListener("click",()=>{cancelAddMode();drawSelectedGame();document.getElementById("gameDevWriteStatus").textContent="";});
+document.getElementById("gameDevSearch").addEventListener("input",filterGameDevList);
+document.getElementById("gameDevList").addEventListener("change",()=>{cancelAddMode();drawSelectedGame();});
+document.getElementById("gameDevReload").addEventListener("click",()=>{cancelAddMode();loadGamesTest();});
+document.getElementById("gameDevSave").addEventListener("click",async()=>{
+  const g=selectedGame(); if(!g)return;
+  const writeStatus=document.getElementById("gameDevWriteStatus");
+  const patch={
+    order:g.order,
+    n:document.getElementById("gdName").value.trim(),
+    p:getChoices("gdPlatformChoices"),
+    g:document.getElementById("gdGamerscore").value.trim(),
+    t:document.getElementById("gdTime").value.trim(),
+    ty:getChoices("gdTypeChoices"),
+    tx:document.getElementById("gdTextGuide").value.trim(),
+    q:document.getElementById("gdQuality").value.trim(),
+    df:document.getElementById("gdDifficulty").value.trim(),
+    u:document.getElementById("gdUrl").value.trim(),
+    adult:document.getElementById("gdAdult").value==="true",
+    kinect:document.getElementById("gdKinect").value==="true",
+    testContent:document.getElementById("gdTest").value==="true"
+  };
+  const mediaType=document.querySelector("input[name=gdMediaType]:checked")?.value||"video";
+  patch.v=mediaType==="video"?document.getElementById("gdVideo").value.trim():"";
+  patch.pl=mediaType==="playlist"?document.getElementById("gdPlaylist").value.trim():"";
+  if(mediaType==="video" && !patch.v){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Video ID is required when Media Type is Video.";return;}
+  if(mediaType==="playlist" && !patch.pl){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Playlist ID is required when Media Type is Playlist.";return;}
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to games_TEST…`;
+  try{
+    await updateDoc(doc(db,"games_TEST",g.id),patch);
+    writeStatus.style.color="#6dff8b";writeStatus.textContent=`SAVED — ${g.id} updated in games_TEST.`;
+    await loadGamesTest();
+    document.getElementById("gameDevList").value=g.id;
+    drawSelectedGame();
+    document.getElementById("gameDevWriteStatus").style.color="#6dff8b";
+    document.getElementById("gameDevWriteStatus").textContent=`SAVED — ${g.id} updated in games_TEST.`;
+  }catch(e){
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE FAILED — games_TEST was not changed.";console.error(e);
+  }
+});
+
+await setPersistence(auth,browserLocalPersistence);
+onAuthStateChanged(auth,user=>user?loggedIn():loggedOut());
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault(); error.textContent="";
+  try{
+    await signInWithEmailAndPassword(auth,
+      document.getElementById("email").value.trim(),
+      document.getElementById("password").value);
+  }catch(e){error.textContent="Invalid email or password.";}
+});
+
+document.getElementById("logout").addEventListener("click",()=>signOut(auth));
+
+const TEST_KEY="marklynxTestContent";
+const testStatus=document.getElementById("testStatus");
+const testToggle=document.getElementById("testToggle");
+function testHidden(){return (localStorage.getItem(TEST_KEY)||"Y").toUpperCase()==="Y";}
+function drawTestControl(){
+  const hidden=testHidden();
+  testStatus.textContent="TEST CONTENT: "+(hidden?"OFF":"ON");
+  testStatus.className=hidden?"off":"on";
+  testToggle.textContent=hidden?"TURN TEST CONTENT ON":"TURN TEST CONTENT OFF";
+  testToggle.className=hidden?"enable":"disable";
+}
+testToggle.addEventListener("click",()=>{
+  localStorage.setItem(TEST_KEY,testHidden()?"N":"Y");
+  drawTestControl();
+});
+drawTestControl();
+</script>
+</body>
+</html>
