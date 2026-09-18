@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<title>Mark Lynx Admin — GAMEDEV TEST REV10</title>
+<style>
+html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
+body{display:grid;place-items:center;text-align:center}
+h1{margin:0 0 .35rem}p{margin:0;opacity:.7}
+#login,#admin{width:min(92vw,420px)}
+#admin{display:none}
+form{display:grid;gap:.8rem;margin-top:1.5rem}
+input,button{box-sizing:border-box;width:100%;padding:.85rem 1rem;border-radius:8px;font:inherit}
+input{border:1px solid #555;background:#1c1c1c;color:#fff}
+button{border:0;cursor:pointer;font-weight:700}
+#error{min-height:1.2em;margin-top:.8rem;color:#ff8d8d;opacity:1}
+.admin-link{box-sizing:border-box;display:block;width:100%;margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;text-decoration:none;font-weight:700}
+#claims{margin-top:1.5rem;background:#fff;color:#111}
+#youtubeClaims{background:#c62828;color:#fff}
+#developerSubmissions{background:#6a1b9a;color:#fff}
+#trafficPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
+#trafficPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
+#trafficGrid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.traffic-card{padding:.75rem;border:1px solid #444;border-radius:8px;background:#151515;text-align:center}
+.traffic-card strong{display:block;margin-bottom:.35rem}
+.traffic-values{font-size:.9rem;line-height:1.45;opacity:.85}
+#trafficUpdated{margin-top:.75rem;text-align:center;font-size:.8rem;opacity:.6}
+#trafficError{margin-top:.75rem;text-align:center;color:#ff8d8d;opacity:1}
+#testPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c}
+#siteLinks{display:grid;gap:.55rem;margin-top:.8rem}
+#siteLinks .admin-link{margin-top:0;background:#2b2b2b;color:#fff;border:1px solid #555}
+#siteLinks .primary{background:#1565c0;border-color:#1565c0}
+#testStatus{margin:0 0 .8rem;font-weight:700;opacity:1}
+#testStatus.on{color:#6dff8b}
+#testStatus.off{color:#ff6d6d}
+#testToggle.enable{background:#1f9d49;color:#fff}
+#testToggle.disable{background:#a82d2d;color:#fff}
+#gameDevPanel{box-sizing:border-box;width:min(96vw,980px);margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
+#gameDevPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
+#gameDevStatus{text-align:center;font-weight:700}
+#gameDevDetails{font-size:.88rem;line-height:1.55;opacity:.85;white-space:pre-line}
+#gameDevError{text-align:center;color:#ff8d8d;opacity:1}
+#gameDevTools{display:none;margin-top:1rem;border-top:1px solid #444;padding-top:1rem}
+#gameDevList{width:100%;padding:.75rem;border-radius:8px;border:1px solid #555;background:#151515;color:#fff}
+#gameDevForm{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem}
+#gameDevForm label{font-size:.78rem;opacity:.75;text-align:left}
+#gameDevForm input,#gameDevForm select,#gameDevSearch{margin-top:.25rem;width:100%;padding:.7rem;border-radius:7px;border:1px solid #555;background:#151515;color:#fff;box-sizing:border-box}
+#gameDevForm .wide{grid-column:1/-1}
+#gameDevActions{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.8rem}
+#gameDevSave{background:#1565c0;color:#fff}
+#gameDevReload{background:#333;color:#fff;border:1px solid #555}
+#gameDevWriteStatus{margin:.75rem 0 0;text-align:center;font-weight:700}
+@media(max-width:700px){#gameDevForm,#gameDevActions{grid-template-columns:1fr}#gameDevForm .wide{grid-column:auto}}
+#logout{margin-top:.8rem}
+</style>
+</head>
+<body>
+<main id="login">
+<h1>Mark Lynx Admin</h1><p>AUTHORIZED ACCESS ONLY</p>
+<form id="loginForm">
+<input id="email" type="email" autocomplete="username" placeholder="Email" required>
+<input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+<button type="submit">Sign In</button>
+</form>
+<div id="error" role="alert" aria-live="polite"></div>
+</main>
+<main id="admin">
+<h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST</p>
+<a id="claims" class="admin-link" href="claims/">Copyright Claims</a>
+<a id="developerSubmissions" class="admin-link" href="developers/">Developer Submissions</a>
+<a id="gameSuggestions" class="admin-link" href="suggestions/">Game Suggestions</a>
+<section id="trafficPanel" aria-label="Traffic Analytics">
+<h2>Traffic Analytics</h2>
+<div id="trafficGrid">
+<div class="traffic-card"><strong>Today</strong><div id="trafficToday" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 7 Days</strong><div id="traffic7" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 30 Days</strong><div id="traffic30" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>All Time</strong><div id="trafficAll" class="traffic-values">Loading…</div></div>
+</div>
+<p id="trafficUpdated"></p>
+<p id="trafficError"></p>
+</section>
+<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
+<section id="testPanel" aria-label="Test content control">
+<p id="testStatus"></p>
+<button id="testToggle" type="button"></button>
+<div id="siteLinks" aria-label="YouTube site launch and redirect checks">
+<a class="admin-link primary" href="https://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Open HTTPS Site</a>
+<a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
+<a class="admin-link" href="http://copyright.marklynx.com" target="_blank" rel="noopener noreferrer">Test Copyright Redirect</a>
+</div>
+</section>
+<section id="gameDevPanel" aria-label="Game Management Firestore test">
+<h2>Game Management — games_TEST</h2>
+<p id="gameDevStatus">Waiting for authentication…</p>
+<p id="gameDevDetails"></p>
+<p id="gameDevError"></p>
+<div id="gameDevTools">
+<input id="gameDevSearch" type="search" placeholder="Search by name, ID, playlist or video…" autocomplete="off" aria-label="Search games">
+<select id="gameDevList" aria-label="Select game"></select>
+<form id="gameDevForm">
+<label>ID<input id="gdId" disabled></label>
+<label>Order<input id="gdOrder" type="number" step="1"></label>
+<label class="wide">Name (n)<input id="gdName"></label>
+<label>Difficulty (df)<input id="gdDifficulty"></label>
+<label>Playlist (pl)<input id="gdPlaylist"></label>
+<label>Video (v)<input id="gdVideo"></label>
+<label>Platform (p)<input id="gdPlatform"></label>
+<label>Test Content<select id="gdTest"><option value="false">false</option><option value="true">true</option></select></label>
+<label class="wide">Raw record preview<input id="gdRaw" disabled></label>
+</form>
+<div id="gameDevActions"><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevReload" type="button">Reload from Firestore</button></div>
+<p id="gameDevWriteStatus"></p>
+</div>
+</section>
+<button id="logout" type="button">Sign Out</button>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
+  authDomain: "mark-lynx-admin.firebaseapp.com",
+  projectId: "mark-lynx-admin",
+  storageBucket: "mark-lynx-admin.firebasestorage.app",
+  messagingSenderId: "749999035332",
+  appId: "1:749999035332:web:52c78e6e358c1fef794a91"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const login = document.getElementById("login");
+const admin = document.getElementById("admin");
+const form = document.getElementById("loginForm");
+const error = document.getElementById("error");
+
+function loggedOut(){admin.style.display="none";login.style.display="block";}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();}
+
+function drawTrafficValue(elementId,data){
+  const el=document.getElementById(elementId);
+  el.textContent=`${data?.activeUsers ?? 0} active users · ${data?.pageViews ?? 0} page views`;
+}
+async function loadTrafficAnalytics(){
+  const trafficError=document.getElementById("trafficError");
+  const trafficUpdated=document.getElementById("trafficUpdated");
+  trafficError.textContent="";
+  try{
+    const snap=await getDoc(doc(db,"trafficAnalytics","current"));
+    if(!snap.exists()) throw new Error("Traffic analytics snapshot not found.");
+    const data=snap.data();
+    drawTrafficValue("trafficToday",data.today);
+    drawTrafficValue("traffic7",data.last7Days);
+    drawTrafficValue("traffic30",data.last30Days);
+    drawTrafficValue("trafficAll",data.allTime);
+    const updated=data.updatedAt?.toDate?.();
+    trafficUpdated.textContent=updated?`Last updated: ${updated.toLocaleString()}`:"";
+  }catch(e){
+    trafficError.textContent="Traffic analytics unavailable.";
+    console.error(e);
+  }
+}
+
+
+async function loadGamesTest(){
+  const status=document.getElementById("gameDevStatus");
+  const details=document.getElementById("gameDevDetails");
+  const gameError=document.getElementById("gameDevError");
+  status.textContent="Reading games_TEST from Firestore…";
+  details.textContent="";
+  gameError.textContent="";
+
+  try{
+    const snap=await getDocs(query(collection(db,"games_TEST"),orderBy("order")));
+    const games=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const production=games.filter(g=>g.testContent!==true);
+    const qa=games.filter(g=>g.testContent===true);
+
+    const first=games[0];
+    const lastProduction=production[production.length-1];
+    const qaNames=qa.map(g=>`${g.id}: ${g.n}`).join(" | ");
+
+    const passed=
+      games.length===322 &&
+      production.length===320 &&
+      qa.length===2 &&
+      first?.id==="0001" &&
+      first?.n==="7 Days Of Rose" &&
+      lastProduction?.id==="0320" &&
+      lastProduction?.n==="Hole In Many";
+
+    status.textContent=passed
+      ?"PASS — Firepit returned the expected GAMEDEV dataset."
+      :"CHECK REQUIRED — Firestore responded, but the dataset did not match the expected baseline.";
+
+    details.textContent=
+      `Total documents: ${games.length}\n`+
+      `Production records: ${production.length}\n`+
+      `Permanent QA records: ${qa.length}\n`+
+      `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
+      `Last production: ${lastProduction?.id ?? "?"} — ${lastProduction?.n ?? "?"}\n`+
+      `QA: ${qaNames || "none"}`;
+
+    status.style.color=passed?"#6dff8b":"#ffd36d";
+    window.GAMEDEV_RAW=games;
+    populateGameDev(games);
+  }catch(e){
+    status.textContent="FAILED — could not read games_TEST.";
+    status.style.color="#ff6d6d";
+    gameError.textContent=e?.message || String(e);
+    console.error("GAMEDEV games_TEST read failed:",e);
+  }
+}
+
+function populateGameDev(games){
+  const tools=document.getElementById("gameDevTools");
+  tools.style.display="block";
+  filterGameDevList();
+}
+function filterGameDevList(){
+  const games=window.GAMEDEV_RAW||[];
+  const list=document.getElementById("gameDevList");
+  const search=document.getElementById("gameDevSearch");
+  const previous=list.value;
+  const q=(search.value||"").trim().toLowerCase();
+  const filtered=!q?games:games.filter(g=>[
+    g.id,g.n,g.pl,g.v
+  ].some(v=>String(v??"").toLowerCase().includes(q)));
+  list.innerHTML="";
+  for(const g of filtered){
+    const o=document.createElement("option");
+    o.value=g.id;
+    o.textContent=`${String(g.order ?? "?").padStart(4,"0")} — ${g.n || "(unnamed)"}${g.testContent===true?" [TEST]":""}`;
+    list.appendChild(o);
+  }
+  if(previous && filtered.some(g=>g.id===previous)) list.value=previous;
+  if(filtered.length){
+    drawSelectedGame();
+  }else{
+    document.getElementById("gameDevWriteStatus").style.color="#ffd36d";
+    document.getElementById("gameDevWriteStatus").textContent="No matching games.";
+  }
+}
+function selectedGame(){
+  const id=document.getElementById("gameDevList").value;
+  return (window.GAMEDEV_RAW||[]).find(g=>g.id===id);
+}
+function drawSelectedGame(){
+  const g=selectedGame(); if(!g)return;
+  document.getElementById("gdId").value=g.id||"";
+  document.getElementById("gdOrder").value=g.order??"";
+  document.getElementById("gdName").value=g.n??"";
+  document.getElementById("gdDifficulty").value=g.df??"";
+  document.getElementById("gdPlaylist").value=g.pl??"";
+  document.getElementById("gdVideo").value=g.v??"";
+  document.getElementById("gdPlatform").value=g.p??"";
+  document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  document.getElementById("gdRaw").value=JSON.stringify(g);
+  document.getElementById("gameDevWriteStatus").textContent="";
+}
+document.getElementById("gameDevSearch").addEventListener("input",filterGameDevList);
+document.getElementById("gameDevList").addEventListener("change",drawSelectedGame);
+document.getElementById("gameDevReload").addEventListener("click",loadGamesTest);
+document.getElementById("gameDevSave").addEventListener("click",async()=>{
+  const g=selectedGame(); if(!g)return;
+  const writeStatus=document.getElementById("gameDevWriteStatus");
+  const order=Number(document.getElementById("gdOrder").value);
+  if(!Number.isInteger(order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Order must be an integer.";return;}
+  const patch={
+    order,
+    n:document.getElementById("gdName").value.trim(),
+    df:document.getElementById("gdDifficulty").value.trim(),
+    pl:document.getElementById("gdPlaylist").value.trim(),
+    v:document.getElementById("gdVideo").value.trim(),
+    p:document.getElementById("gdPlatform").value.trim(),
+    testContent:document.getElementById("gdTest").value==="true"
+  };
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to games_TEST…`;
+  try{
+    await updateDoc(doc(db,"games_TEST",g.id),patch);
+    writeStatus.style.color="#6dff8b";writeStatus.textContent=`SAVED — ${g.id} updated in games_TEST.`;
+    await loadGamesTest();
+    document.getElementById("gameDevList").value=g.id;
+    drawSelectedGame();
+    document.getElementById("gameDevWriteStatus").style.color="#6dff8b";
+    document.getElementById("gameDevWriteStatus").textContent=`SAVED — ${g.id} updated in games_TEST.`;
+  }catch(e){
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE FAILED — games_TEST was not changed.";console.error(e);
+  }
+});
+
+await setPersistence(auth,browserLocalPersistence);
+onAuthStateChanged(auth,user=>user?loggedIn():loggedOut());
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault(); error.textContent="";
+  try{
+    await signInWithEmailAndPassword(auth,
+      document.getElementById("email").value.trim(),
+      document.getElementById("password").value);
+  }catch(e){error.textContent="Invalid email or password.";}
+});
+
+document.getElementById("logout").addEventListener("click",()=>signOut(auth));
+
+const TEST_KEY="marklynxTestContent";
+const testStatus=document.getElementById("testStatus");
+const testToggle=document.getElementById("testToggle");
+function testHidden(){return (localStorage.getItem(TEST_KEY)||"Y").toUpperCase()==="Y";}
+function drawTestControl(){
+  const hidden=testHidden();
+  testStatus.textContent="TEST CONTENT: "+(hidden?"OFF":"ON");
+  testStatus.className=hidden?"off":"on";
+  testToggle.textContent=hidden?"TURN TEST CONTENT ON":"TURN TEST CONTENT OFF";
+  testToggle.className=hidden?"enable":"disable";
+}
+testToggle.addEventListener("click",()=>{
+  localStorage.setItem(TEST_KEY,testHidden()?"N":"Y");
+  drawTestControl();
+});
+drawTestControl();
+</script>
+</body>
+</html>
