@@ -1,0 +1,66 @@
+/* REV28 — test-only shared video modal geometry.
+   Keep REV25's approved removal of the obsolete title/X bar.
+   Desktop: make the playlist sidebar exactly the same height as the 16:9 video player.
+   The modal height is now determined by the player; the sidebar fills that height and scrolls internally. */
+.video-modal-info {
+  display: none;
+}
+
+@media (min-width:721px) {
+  .video-modal {
+    position: relative;
+    display: block;
+  }
+
+  /* REV46: reserve the right column only when the playlist sidebar is actually open.
+     Single videos keep the full modal width; playlist geometry remains unchanged. */
+  .video-modal:has(.video-modal-sidebar[style*="display: block"]) {
+    padding-right: 280px;
+  }
+
+  .video-modal-main {
+    width: 100%;
+  }
+
+  .video-modal-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* REV05 — TEST ONLY: restore a standalone close control without restoring
+   the obsolete title/info bar. The existing close button remains wired to
+   the shared closeVideoModal() path (click / backdrop / Escape). */
+.video-modal {
+  position: relative;
+}
+
+.video-modal-info {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.video-modal-title {
+  display: none;
+}
+
+.video-modal-close {
+  pointer-events: auto;
+  width: 38px;
+  height: 38px;
+  border-color: rgba(255,255,255,.45);
+  background: rgba(0,0,0,.78);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+}
