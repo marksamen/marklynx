@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-18T13:27:59.115946+00:00",
+  "updated": "2026-09-18T16:27:32.521294+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "fJvOLH27Pas",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | All Star Coins | Secret Exit",
+      "published": "2026-09-18T14:32:07+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/fJvOLH27Pas/hqdefault.jpg"
+    },
     {
       "id": "Q3G8N7UhOxM",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Which-Way labyrinth | 3rd Star Coin | Secret Exit",
@@ -43,12 +49,6 @@
       "title": "Hole In Many | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
       "published": "2026-09-14T21:23:00+00:00",
       "thumbnail": "https://i.ytimg.com/vi/hfyK_nfaS2M/hqdefault.jpg"
-    },
-    {
-      "id": "US_9cOmvyt4",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 2 | Bridge over Poisoned Waters | No Coins | Normal Ext",
-      "published": "2026-09-13T13:29:31+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/US_9cOmvyt4/hqdefault.jpg"
     }
   ]
 }
