@@ -134,7 +134,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260918-cache-REV07');
-      await loadScript('js/site_.js?v=20260919-features-REV20');
+      await loadScript('js/site_.js?v=20260919-game-meta-REV25');
       await loadScript('js/developer_.js?v=20260919-developer-scrollbar-top-REV23');
       await loadScript('js/recent_.js?v=20260918-firestore-test-REV09');
       await loadScript('js/suggest_game_.js?v=20260919-suggest-close-REV18');
