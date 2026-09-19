@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-19T14:26:34.184132+00:00",
+  "updated": "2026-09-19T15:26:20.645329+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "nV19bdRPgPY",
+      "title": "Bravion | Easy 100% Completion | 3000 Gamerscore | 9 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-19T14:43:36+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/nV19bdRPgPY/hqdefault.jpg"
+    },
     {
       "id": "fJvOLH27Pas",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | All Star Coins | Secret Exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 3 | Bramball Woods | All Star Coins | Normal Exit | 4K",
       "published": "2026-09-14T23:46:39+00:00",
       "thumbnail": "https://i.ytimg.com/vi/7ke92oPDpLw/hqdefault.jpg"
-    },
-    {
-      "id": "hfyK_nfaS2M",
-      "title": "Hole In Many | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K",
-      "published": "2026-09-14T21:23:00+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/hfyK_nfaS2M/hqdefault.jpg"
     }
   ]
 }
