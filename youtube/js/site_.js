@@ -236,6 +236,10 @@ function listRowHtml(r){
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
       <div class="list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="mobile-game-meta">
+        <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
+        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+      </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
       ${(r.kinect || hasTextGuide(r.tx)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}</div>` : ''}
     </span>
