@@ -312,6 +312,11 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
+// Supabase PROD connection constants. Defined before auth callbacks so
+// data-source status can safely use them during the initial login event.
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
+
 function loggedOut(){admin.style.display="none";login.style.display="block";}
 function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
 
@@ -870,8 +875,6 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
 
 
 // Supabase PROD recovery export — public SELECT only. No database writes.
-const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
-const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 async function fetchAllSupabaseTestGames(){
