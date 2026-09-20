@@ -171,6 +171,12 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
  cursor:not-allowed!important;opacity:.78!important}
 .gd-readonly-label{display:inline-flex;align-items:center;margin-left:8px;padding:2px 7px;border-radius:999px;
  background:#29292c;color:#b8bcc3;border:1px solid #45454a;font-size:.68rem;font-weight:800;letter-spacing:.06em}
+
+/* TEST-only read-only data source status */
+#dataSourceStatusPanel{margin-top:14px;padding:14px;border:1px solid #444;border-radius:10px;background:#111113}
+#dataSourceStatusPanel h2{margin:0 0 10px}
+#dataSourceStatusPanel p{margin:5px 0}
+#dataSourceConfigured{font-weight:800}
 </style>
 </head>
 <body>
@@ -201,6 +207,11 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 <a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
 <a class="admin-link" href="http://copyright.marklynx.com" target="_blank" rel="noopener noreferrer">Test Copyright Redirect</a>
 </div>
+</section>
+<section id="dataSourceStatusPanel" aria-label="Data Source Status">
+<h2>Data Source Status</h2>
+<p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
+<p id="dataSourceStatusNote">Read-only TEST status from data-source_.json.</p>
 </section>
 </div>
 <div id="adminGameColumn">
@@ -293,7 +304,25 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
+
+async function loadDataSourceStatus(){
+  const configured=document.getElementById("dataSourceConfigured");
+  const note=document.getElementById("dataSourceStatusNote");
+  try{
+    const response=await fetch("../youtube/data/data-source_.json?status="+Date.now(),{cache:"no-store"});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const config=await response.json();
+    const source=String(config?.source||"").toLowerCase();
+    if(source!=="supabase"&&source!=="json")throw new Error("Unknown source value");
+    configured.textContent=source.toUpperCase();
+    note.textContent="Read-only TEST status from data-source_.json.";
+  }catch(e){
+    configured.textContent="UNAVAILABLE";
+    note.textContent="Could not read TEST data-source_.json.";
+    console.error("TEST data source status read failed:",e);
+  }
+}
 
 function drawTrafficValue(elementId,data){
   const el=document.getElementById(elementId);
