@@ -1,3 +1,4 @@
 {
-  "source": "supabase"
+  "source": "supabase",
+  "testForceSupabaseFailure": true
 }
