@@ -58,15 +58,15 @@
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
       await loadHtml('sections/main_.html?v=20260919-features-REV20', 'mainModuleMount');
-      await loadHtml('sections/developer.html?v=20260917-panda', 'developerModuleMount');
-      await loadHtml('sections/recent.html?v=20260916-prod2', 'recentModuleMount');
-      await loadHtml('sections/footer.html?v=20260916-prod2', 'footerModuleMount');
+      await loadHtml('sections/developer_.html?v=20260917-panda', 'developerModuleMount');
+      await loadHtml('sections/recent_.html?v=20260916-prod2', 'recentModuleMount');
+      await loadHtml('sections/footer_.html?v=20260916-prod2', 'footerModuleMount');
 
       installVisibilitySync();
 
       // DATA SOURCE TEST: one tiny config chooses Supabase TEST or static games.json.
       // Keep the rest of the website completely independent of the chosen source.
-      const dataSourceResponse = await fetch('data/data-source.json', { cache: 'no-store' });
+      const dataSourceResponse = await fetch('data/data-source_.json', { cache: 'no-store' });
       if (!dataSourceResponse.ok) {
         throw new Error(`data-source.json: HTTP ${dataSourceResponse.status}`);
       }
@@ -79,7 +79,7 @@
       );
 
       const loadGamesFromJson = async () => {
-        const response = await fetch('data/games.json', { cache: 'no-store' });
+        const response = await fetch('data/games_.json', { cache: 'no-store' });
         if (!response.ok) throw new Error(`games.json: HTTP ${response.status}`);
         const rows = await response.json();
         if (!Array.isArray(rows) || !rows.length) throw new Error('games.json: no games received');
@@ -136,7 +136,7 @@
       console.info(`[GAMEDEV] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
-      const statsResponse = await fetch('data/stats.json?v=20260915-prod1', { cache: 'no-store' });
+      const statsResponse = await fetch('data/stats_.json?v=20260915-prod1', { cache: 'no-store' });
       if (!statsResponse.ok) throw new Error(`stats.json: HTTP ${statsResponse.status}`);
       const stats = await statsResponse.json();
       const totalVideos = Number(stats.totalVideos);

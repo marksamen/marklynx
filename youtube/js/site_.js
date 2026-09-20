@@ -170,8 +170,8 @@ function hydratePlaylistThumbs(container){
 
 function qualityBadge(q){
   const quality = String(q || '').trim().toLowerCase();
-  if(quality === '4k') return `<img class="quality-badge" src="quality-4k-60fps.png" alt="4K 60 FPS" title="4K · 60 FPS">`;
-  if(quality === '1080p') return `<img class="quality-badge" src="quality-1080p.png" alt="Full HD 1080p" title="Full HD · 1080p">`;
+  if(quality === '4k') return `<img class="quality-badge" src="quality-4k-60fps_.png" alt="4K 60 FPS" title="4K · 60 FPS">`;
+  if(quality === '1080p') return `<img class="quality-badge" src="quality-1080p_.png" alt="Full HD 1080p" title="Full HD · 1080p">`;
   return escapeHtml(q || '');
 }
 

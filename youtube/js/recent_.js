@@ -85,11 +85,11 @@
     img.className = 'quality-badge';
 
     if (quality === '4k') {
-      img.src = 'quality-4k-60fps.png';
+      img.src = 'quality-4k-60fps_.png';
       img.alt = '4K 60 FPS';
       img.title = '4K · 60 FPS';
     } else {
-      img.src = 'quality-1080p.png';
+      img.src = 'quality-1080p_.png';
       img.alt = 'Full HD 1080p';
       img.title = 'Full HD · 1080p';
     }
@@ -145,7 +145,7 @@
     applyView(listBtn?.classList.contains('active') ? 'list' : 'grid');
   };
 
-  fetch('data/recent.json', { cache: 'no-store' })
+  fetch('data/recent_.json', { cache: 'no-store' })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
