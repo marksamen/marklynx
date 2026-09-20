@@ -2009,3 +2009,11 @@ body.suggest-modal-open{overflow:hidden}
     color:#65b7d6;
   }
 }
+
+/* ---------- TEST REV65: Desktop Recent LIST — restore approved metadata column placement ---------- */
+/* The grid-only spacer must not consume a desktop LIST grid column. */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-grid-meta-break{
+    display:none;
+  }
+}
