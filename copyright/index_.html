@@ -482,6 +482,9 @@ function drawSelectedGame(){
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");
   document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  const mediaUrl=g.pl ? `https://www.youtube.com/playlist?list=${g.pl}` : (g.v ? `https://www.youtube.com/watch?v=${g.v}` : (g.u||""));
+  document.getElementById("gdYoutubeLink").value=mediaUrl;
+  document.getElementById("gdYoutubeLinkError").textContent="";
   document.getElementById("gdRaw").value=JSON.stringify(g);
   document.getElementById("gameDevWriteStatus").textContent="";
 }
@@ -740,10 +743,16 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     kinect:document.getElementById("gdKinect").value==="true",
     testContent:document.getElementById("gdTest").value==="true" ? "true" : "false"
   };
-  const existingMedia=selectedGame();
-  patch.v=existingMedia?.v || null;
-  patch.pl=existingMedia?.pl || null;
-  patch.u=existingMedia?.u || null;
+  const media=parseYoutubeLink(document.getElementById("gdYoutubeLink").value);
+  if(!media){
+    document.getElementById("gdYoutubeLinkError").textContent="Paste a valid YouTube video or playlist link.";
+    writeStatus.style.color="#ff6d6d";
+    writeStatus.textContent="SAVE BLOCKED — paste a valid YouTube video or playlist link.";
+    return;
+  }
+  patch.u=media.url;
+  patch.v=media.type==="video" ? media.id : null;
+  patch.pl=media.type==="playlist" ? media.id : null;
   writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase TEST…`;
   try{
     const user=auth.currentUser;
