@@ -37,4 +37,4 @@ jobs:
           git add data/recent.json
           git commit -m "Update recent YouTube uploads"
           git pull --rebase origin main
-git push origin main
+          git push origin main
