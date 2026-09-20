@@ -248,7 +248,7 @@ body.admin-modal-open{overflow:hidden}
   <button id="gameDevAddLauncher" type="button">Add New Game</button>
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
-  <button id="gameDevExportSupabase" type="button">Generate games.json</button>
+  <button id="gameDevExportSupabase" type="button">Generate games_.json</button>
 </div>
 <div id="gameDevEditorHome"><form id="gameDevForm">
 <label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
@@ -358,8 +358,7 @@ async function loadDataSourceStatus(){
     const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/site_control?id=eq.game_data_source&select=value,updated_at`,{
       cache:"no-store",
       headers:{
-        "apikey":SUPABASE_TEST_PUBLISHABLE_KEY,
-        "Authorization":`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`
+        "apikey":SUPABASE_TEST_PUBLISHABLE_KEY
       }
     });
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
@@ -924,7 +923,7 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase TEST and generating games.json…";
+  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
     if(!games.length)throw new Error("Supabase TEST returned zero games.");
@@ -933,17 +932,17 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games.json";
+    a.download="games_.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase TEST (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase TEST games.json export failed:",e);
+    console.error("Supabase TEST games_.json export failed:",e);
   }finally{
     button.disabled=false;
   }
