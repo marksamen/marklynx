@@ -66,8 +66,18 @@
       // Production: Supabase PROD is the source of window.RAW.
       // Keep the production website independent from TEST code and TEST data.
       const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult'];
+      const normalizeBooleanField = value => {
+        if (value === true || value === 'true') return true;
+        if (value === false || value === 'false') return false;
+        return value ?? null;
+      };
       const normalizeGame = game => Object.fromEntries(
-        gameFields.map(field => [field, game[field] ?? null])
+        gameFields.map(field => [
+          field,
+          (field === 'adult' || field === 'kinect')
+            ? normalizeBooleanField(game[field])
+            : (game[field] ?? null)
+        ])
       );
 
       const baseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games';
