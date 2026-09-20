@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-20T14:26:49.026634+00:00",
+  "updated": "2026-09-20T16:27:58.445639+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "IgVnOFJJ5uw",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | All Star Coins | Secret Exit",
+      "published": "2026-09-20T15:44:02+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/IgVnOFJJ5uw/hqdefault.jpg"
+    },
     {
       "id": "D2Sq5vdLx7Q",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | No Star Coins | Normal Exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Soda Jungle Tower | All Star Coins | Normal Exit | 4K",
       "published": "2026-09-15T17:27:34+00:00",
       "thumbnail": "https://i.ytimg.com/vi/iy25_erzykU/hqdefault.jpg"
-    },
-    {
-      "id": "vZmBxFHLK48",
-      "title": "Mole Mine Boom | Easy 100% Completion | 2000 Gamerscore | 8 Minute Completion | Text Guide Inc | 4K",
-      "published": "2026-09-15T14:21:46+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/vZmBxFHLK48/hqdefault.jpg"
     }
   ]
 }
