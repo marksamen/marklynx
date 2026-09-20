@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-20T16:27:58.445639+00:00",
+  "updated": "2026-09-20T22:26:53.665562+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "bf20in9LmYA",
+      "title": "Cursed Island | Easy 100% Completion | 1000 Gamerscore | 3 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-20T19:49:59+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/bf20in9LmYA/hqdefault.jpg"
+    },
     {
       "id": "IgVnOFJJ5uw",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | All Star Coins | Secret Exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Which-Way labyrinth | 2/3 Star Coins | Normal Exit",
       "published": "2026-09-16T13:48:08+00:00",
       "thumbnail": "https://i.ytimg.com/vi/7q_97byQ_uw/hqdefault.jpg"
-    },
-    {
-      "id": "iy25_erzykU",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Soda Jungle Tower | All Star Coins | Normal Exit | 4K",
-      "published": "2026-09-15T17:27:34+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/iy25_erzykU/hqdefault.jpg"
     }
   ]
 }
