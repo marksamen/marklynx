@@ -177,6 +177,18 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 #dataSourceStatusPanel h2{margin:0 0 10px}
 #dataSourceStatusPanel p{margin:5px 0}
 #dataSourceConfigured{font-weight:800}
+
+/* TEST Admin submissions/suggestions modal — REV02 */
+#adminPageModal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.78)}
+#adminPageModal.open{display:flex}
+#adminPageModalShell{width:min(1180px,96vw);height:min(860px,92vh);background:#111113;border:1px solid #45454a;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden;display:flex;flex-direction:column}
+#adminPageModalHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:#19191b;border-bottom:1px solid #35353a}
+#adminPageModalTitle{margin:0;font-size:1rem;font-weight:800;color:#fff}
+#adminPageModalClose{width:36px;height:36px;min-width:36px;padding:0;border-radius:8px;background:#242426;color:#fff;border:1px solid #4a4a4f;font-size:1.2rem;line-height:1;cursor:pointer}
+#adminPageModalClose:hover{background:#331616;border-color:#c62828}
+#adminPageModalFrame{width:100%;height:100%;border:0;background:#111}
+body.admin-modal-open{overflow:hidden}
+@media(max-width:600px){#adminPageModal{padding:8px}#adminPageModalShell{width:100%;height:96vh}}
 </style>
 </head>
 <body>
@@ -195,8 +207,8 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
   <button id="logout" type="button">Sign Out</button>
 </div>
 <div id="adminWorkspace"><div id="adminControls">
-<a id="developerSubmissions" class="admin-link" href="developers/index_.html">Developer Submissions</a>
-<a id="gameSuggestions" class="admin-link" href="suggestions/index_.html">Game Suggestions</a>
+<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/index_.html" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
+<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/index_.html" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
 
 <a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
 <section id="testPanel" aria-label="Test content control">
@@ -281,6 +293,15 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 </div>
 </div>
 </main>
+<div id="adminPageModal" aria-hidden="true">
+  <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
+    <div id="adminPageModalHeader">
+      <h2 id="adminPageModalTitle">Admin</h2>
+      <button id="adminPageModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <iframe id="adminPageModalFrame" title="Admin content"></iframe>
+  </div>
+</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
@@ -897,6 +918,31 @@ testToggle.addEventListener("click",()=>{
   drawTestControl();
 });
 drawTestControl();
+
+
+// TEST Admin submissions/suggestions modal — REV02
+const adminPageModal=document.getElementById("adminPageModal");
+const adminPageModalFrame=document.getElementById("adminPageModalFrame");
+const adminPageModalTitle=document.getElementById("adminPageModalTitle");
+const adminPageModalClose=document.getElementById("adminPageModalClose");
+function openAdminPageModal(url,title){
+  adminPageModalTitle.textContent=title;
+  adminPageModalFrame.src=url;
+  adminPageModal.classList.add("open");
+  adminPageModal.setAttribute("aria-hidden","false");
+  document.body.classList.add("admin-modal-open");
+  adminPageModalClose.focus();
+}
+function closeAdminPageModal(){
+  adminPageModal.classList.remove("open");
+  adminPageModal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("admin-modal-open");
+  adminPageModalFrame.src="about:blank";
+}
+document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
+adminPageModalClose.addEventListener("click",closeAdminPageModal);
+adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal)closeAdminPageModal();});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open"))closeAdminPageModal();});
 </script>
 </body>
 </html>
