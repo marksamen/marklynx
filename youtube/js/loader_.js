@@ -125,9 +125,36 @@
         return rows.map(normalizeGame);
       };
 
-      let activeDataSource = dataSource;
+      // Manual TEST override lives in Supabase site_control. If that control
+      // cannot be reached, keep using the existing static data-source_.json config.
+      // This control lookup is optional: automatic JSON recovery must not depend on it.
+      const loadManualDataSourceOverride = async () => {
+        const controlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
+        const apiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
+        const response = await fetch(controlUrl, {
+          headers: { apikey: apiKey },
+          cache: 'no-store'
+        });
+        if (!response.ok) throw new Error(`Supabase site_control: HTTP ${response.status}`);
+        const rows = await response.json();
+        const value = String(rows?.[0]?.value || '').toLowerCase();
+        if (value !== 'supabase' && value !== 'json') {
+          throw new Error(`Supabase site_control: invalid source ${value || '(blank)'}`);
+        }
+        return value;
+      };
 
-      if (dataSource === 'supabase') {
+      let selectedDataSource = dataSource;
+      try {
+        selectedDataSource = await loadManualDataSourceOverride();
+        console.info(`[GAMEDEV] Manual source override: ${selectedDataSource.toUpperCase()}`);
+      } catch (controlError) {
+        console.warn('[GAMEDEV] Manual source override unavailable; using data-source_.json:', controlError);
+      }
+
+      let activeDataSource = selectedDataSource;
+
+      if (selectedDataSource === 'supabase') {
         try {
           if (dataSourceConfig.testForceSupabaseFailure === true) {
             throw new Error('Supabase failure forced by TEST config');
@@ -138,10 +165,10 @@
           window.RAW = await loadGamesFromJson();
           activeDataSource = 'json-fallback';
         }
-      } else if (dataSource === 'json') {
+      } else if (selectedDataSource === 'json') {
         window.RAW = await loadGamesFromJson();
       } else {
-        throw new Error(`Unknown website data source: ${dataSource || '(blank)'}`);
+        throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
       }
 
       console.info(`[GAMEDEV] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
