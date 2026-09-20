@@ -5166,5 +5166,21 @@
     "kinect": null,
     "adult": null,
     "testContent": null
+  },
+  {
+    "n": "Cursed Island",
+    "p": "XBOX ONE | XBOX Series S/X",
+    "g": "1,000G",
+    "t": "3 Minutes",
+    "ty": "Action",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=bf20in9LmYA",
+    "v": "bf20in9LmYA",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false"
   }
 ]
