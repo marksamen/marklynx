@@ -355,15 +355,17 @@ async function loadDataSourceStatus(){
   }
 
   try{
-    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/site_control?id=eq.game_data_source&select=value,updated_at`,{
-      cache:"no-store",
-      headers:{
-        "apikey":SUPABASE_TEST_PUBLISHABLE_KEY
-      }
+    const user=auth.currentUser;
+    if(!user)throw new Error("Admin authentication is required.");
+    const firebaseToken=await user.getIdToken();
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
+      method:"POST",
+      headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
+      body:JSON.stringify({action:"get-data-source"})
     });
-    if(!response.ok)throw new Error(`HTTP ${response.status}`);
-    const rows=await response.json();
-    const source=String(rows?.[0]?.value||"").toLowerCase();
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
+    const source=String(result?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
     override.textContent=source.toUpperCase();
   }catch(e){
