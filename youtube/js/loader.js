@@ -63,50 +63,113 @@
 
       installVisibilitySync();
 
-      // Production: Supabase PROD is the source of window.RAW.
-      // Keep the production website independent from TEST code and TEST data.
-      const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult'];
+      // Production data source: Supabase PROD is primary, with static games.json recovery.
+      const dataSourceResponse = await fetch('data/data-source.json', { cache: 'no-store' });
+      if (!dataSourceResponse.ok) {
+        throw new Error(`data-source.json: HTTP ${dataSourceResponse.status}`);
+      }
+      const dataSourceConfig = await dataSourceResponse.json();
+      const dataSource = String(dataSourceConfig.source || '').toLowerCase();
+      const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
+
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
         if (value === false || value === 'false') return false;
         return value ?? null;
       };
+
       const normalizeGame = game => Object.fromEntries(
         gameFields.map(field => [
           field,
-          (field === 'adult' || field === 'kinect')
+          ['kinect','adult','testContent'].includes(field)
             ? normalizeBooleanField(game[field])
             : (game[field] ?? null)
         ])
       );
 
-      const baseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games';
-      const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
-      const pageSize = 1000;
-      const rows = [];
+      const loadGamesFromJson = async () => {
+        const response = await fetch('data/games.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`games.json: HTTP ${response.status}`);
+        const rows = await response.json();
+        if (!Array.isArray(rows) || !rows.length) throw new Error('games.json: no games received');
+        return rows.map(normalizeGame);
+      };
 
-      for (let offset = 0; ; offset += pageSize) {
-        const params = new URLSearchParams({
-          select: `id,${gameFields.join(',')}`,
-          order: 'id.asc',
-          limit: String(pageSize),
-          offset: String(offset)
-        });
-        const response = await fetch(`${baseUrl}?${params}`, {
+      const loadGamesFromSupabase = async () => {
+        const baseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games';
+        const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const pageSize = 1000;
+        const rows = [];
+
+        for (let offset = 0; ; offset += pageSize) {
+          const params = new URLSearchParams({
+            select: `id,${gameFields.join(',')}`,
+            order: 'id.asc',
+            limit: String(pageSize),
+            offset: String(offset)
+          });
+          const response = await fetch(`${baseUrl}?${params}`, {
+            headers: { apikey: apiKey },
+            cache: 'no-store'
+          });
+          if (!response.ok) throw new Error(`Supabase games: HTTP ${response.status}`);
+          const page = await response.json();
+          if (!Array.isArray(page)) throw new Error('Supabase games: invalid response');
+          rows.push(...page);
+          if (page.length < pageSize) break;
+        }
+
+        if (!rows.length) throw new Error('Supabase games: no games received');
+        return rows.map(normalizeGame);
+      };
+
+      // Manual PROD override lives in Supabase site_control. If the control
+      // cannot be reached, keep using the static data-source.json config.
+      // This lookup is optional so automatic JSON recovery never depends on it.
+      const loadManualDataSourceOverride = async () => {
+        const controlUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
+        const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const response = await fetch(controlUrl, {
           headers: { apikey: apiKey },
           cache: 'no-store'
         });
-        if (!response.ok) throw new Error(`Supabase games: HTTP ${response.status}`);
-        const page = await response.json();
-        if (!Array.isArray(page)) throw new Error('Supabase games: invalid response');
-        rows.push(...page);
-        if (page.length < pageSize) break;
+        if (!response.ok) throw new Error(`Supabase site_control: HTTP ${response.status}`);
+        const rows = await response.json();
+        const value = String(rows?.[0]?.value || '').toLowerCase();
+        if (value !== 'supabase' && value !== 'json') {
+          throw new Error(`Supabase site_control: invalid source ${value || '(blank)'}`);
+        }
+        return value;
+      };
+
+      let selectedDataSource = dataSource;
+      try {
+        selectedDataSource = await loadManualDataSourceOverride();
+        console.info(`[PRODUCTION] Manual source override: ${selectedDataSource.toUpperCase()}`);
+      } catch (controlError) {
+        console.warn('[PRODUCTION] Manual source override unavailable; using data-source.json:', controlError);
       }
 
-      if (!rows.length) throw new Error('Supabase games: no games received');
-      window.RAW = rows.map(normalizeGame);
+      let activeDataSource = selectedDataSource;
 
-      console.info(`[PRODUCTION] Supabase PROD games loaded: ${window.RAW.length}`);
+      if (selectedDataSource === 'supabase') {
+        try {
+          if (dataSourceConfig.testForceSupabaseFailure === true) {
+            throw new Error('Supabase failure forced by PROD config');
+          }
+          window.RAW = await loadGamesFromSupabase();
+        } catch (supabaseError) {
+          console.warn('[PRODUCTION] Supabase unavailable; falling back to games.json:', supabaseError);
+          window.RAW = await loadGamesFromJson();
+          activeDataSource = 'json-fallback';
+        }
+      } else if (selectedDataSource === 'json') {
+        window.RAW = await loadGamesFromJson();
+      } else {
+        throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
+      }
+
+      console.info(`[PRODUCTION] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
       const statsResponse = await fetch('data/stats.json?v=20260915-prod1', { cache: 'no-store' });
