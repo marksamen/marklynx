@@ -74,8 +74,19 @@
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
       const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
 
+      const normalizeBooleanField = value => {
+        if (value === true || value === 'true') return true;
+        if (value === false || value === 'false') return false;
+        return value ?? null;
+      };
+
       const normalizeGame = game => Object.fromEntries(
-        gameFields.map(field => [field, game[field] ?? null])
+        gameFields.map(field => [
+          field,
+          (field === 'adult' || field === 'kinect')
+            ? normalizeBooleanField(game[field])
+            : (game[field] ?? null)
+        ])
       );
 
       const loadGamesFromJson = async () => {
