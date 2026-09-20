@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
+<title>Developer Submissions — Mark Lynx Admin</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111;color:#fff}
+body{padding:24px}
+#gate{min-height:calc(100vh - 48px);display:grid;place-items:center;text-align:center;color:#bbb}
+#viewer{display:none;width:min(1180px,100%);margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+h1{margin:0;font-size:clamp(1.6rem,4vw,2.25rem)}
+.subtitle{margin:.35rem 0 0;color:#aaa}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+button,a.btn{border:0;border-radius:8px;padding:.75rem 1rem;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;color:#fff;background:#2b2b2b;border:1px solid #555}
+button:hover,a.btn:hover{filter:brightness(1.15)}
+#signout{background:#a82d2d;border-color:#a82d2d}
+.summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.pill{background:#1c1c1c;border:1px solid #444;border-radius:999px;padding:.55rem .85rem;color:#ccc}.pill strong{color:#fff}
+#state{padding:28px;text-align:center;border:1px solid #333;border-radius:10px;background:#181818;color:#bbb}
+#list{display:grid;gap:14px}
+.card{border:1px solid #3d3d3d;border-radius:12px;background:#191919;overflow:hidden}.card.new{border-color:#6a1b9a}
+.card-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:16px 18px;background:#202020;border-bottom:1px solid #333}
+.identity{min-width:0}.identity h2{margin:0 0 5px;font-size:1.15rem;word-break:break-word}.studio{color:#bbb;font-size:.92rem}.date{color:#999;font-size:.86rem;white-space:nowrap;text-align:right}
+.badge{display:inline-block;margin-top:7px;padding:.25rem .55rem;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.05em;background:#6a1b9a;color:#fff}
+.manage{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}.manage select,.delete{border:1px solid #555;border-radius:8px;padding:.65rem .8rem;background:#222;color:#fff;font:inherit;font-weight:700}.delete{background:#7d2424;border-color:#9a3434}.manage select:disabled,.delete:disabled{opacity:.55;cursor:not-allowed}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.filter{width:auto;padding:.55rem .8rem}.filter.active{background:#6a1b9a;border-color:#8d42b8}
+.card-body{padding:17px 18px;display:grid;gap:13px}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.field{background:#141414;border:1px solid #303030;border-radius:8px;padding:10px 12px;min-width:0}.label{display:block;color:#888;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}.value{word-break:break-word}.email a{color:#8ab4f8}.message{white-space:pre-wrap;line-height:1.5}
+#errorBox{display:none;padding:16px;border:1px solid #8d3030;background:#2a1515;border-radius:10px;color:#ffb2b2}
+@media(max-width:720px){body{padding:14px}.topbar{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.meta{grid-template-columns:1fr}.card-head{flex-direction:column}.date{text-align:left;white-space:normal}}
+</style>
+</head>
+<body>
+<div id="gate">Checking authorized access…</div>
+<main id="viewer">
+  <header class="topbar">
+    <div><h1>Developer Submissions</h1><p class="subtitle">Private developer contact inbox</p></div>
+    <div class="actions"><a class="btn" href="/copyright/index_.html">Back to Admin</a><button id="refresh" type="button">Refresh</button><button id="signout" type="button">Sign Out</button></div>
+  </header>
+  <div class="summary"><span class="pill"><strong id="totalCount">0</strong> submissions</span><span class="pill"><strong id="newCount">0</strong> new</span></div>
+  <div class="filters" aria-label="Filter submissions"><button class="filter active" type="button" data-filter="All">All</button><button class="filter" type="button" data-filter="New">New</button><button class="filter" type="button" data-filter="Reviewed">Reviewed</button><button class="filter" type="button" data-filter="Contacted">Contacted</button><button class="filter" type="button" data-filter="Closed">Closed</button></div>
+  <div id="errorBox"></div><div id="state">Loading submissions…</div><section id="list" aria-live="polite"></section>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",authDomain:"mark-lynx-admin.firebaseapp.com",projectId:"mark-lynx-admin",storageBucket:"mark-lynx-admin.firebasestorage.app",messagingSenderId:"749999035332",appId:"1:749999035332:web:52c78e6e358c1fef794a91"};
+const ADMIN_UID='JMNwUXCevHU1dt6fQleyX7zLXCF2';
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let submissions=[];let activeFilter='All';
+const gate=document.getElementById('gate'),viewer=document.getElementById('viewer'),list=document.getElementById('list'),state=document.getElementById('state'),errorBox=document.getElementById('errorBox');
+const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function formatDate(v){if(!v)return 'Unknown date';const d=v.toDate?v.toDate():new Date(v);return Number.isNaN(d.getTime())?'Unknown date':d.toLocaleString();}
+function render(){
+  const visible=activeFilter==='All'?submissions:submissions.filter(x=>x.data.status===activeFilter);
+  document.getElementById('totalCount').textContent=submissions.length;
+  document.getElementById('newCount').textContent=submissions.filter(x=>x.data.status==='New').length;
+  document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===activeFilter));
+  if(!visible.length){list.innerHTML='';state.style.display='block';state.textContent=submissions.length?'No submissions match this filter.':'No developer submissions yet.';return;}
+  state.style.display='none';
+  list.innerHTML=visible.map(({id,data:d})=>{const status=d.status||'New';return `<article class="card ${status==='New'?'new':''}" data-id="${esc(id)}"><div class="card-head"><div class="identity"><h2>${esc(d.name||'Unnamed Developer')}</h2><div class="studio">${esc(d.studio||'No studio provided')}</div><span class="badge">${esc(status)}</span></div><div class="date">${esc(formatDate(d.submittedAt))}</div></div><div class="card-body"><div class="meta"><div class="field"><span class="label">Game</span><span class="value">${esc(d.game||'—')}</span></div><div class="field"><span class="label">Platforms</span><span class="value">${esc(d.platforms||'—')}</span></div><div class="field email"><span class="label">Email</span><span class="value"><a href="mailto:${esc(d.email||'')}">${esc(d.email||'—')}</a></span></div></div><div class="field"><span class="label">Message</span><div class="message">${esc(d.message||'—')}</div></div><div class="manage"><label><span class="label">Status</span><select class="statusSelect" data-id="${esc(id)}"><option${status==='New'?' selected':''}>New</option><option${status==='Reviewed'?' selected':''}>Reviewed</option><option${status==='Contacted'?' selected':''}>Contacted</option><option${status==='Closed'?' selected':''}>Closed</option></select></label><button class="delete" type="button" data-id="${esc(id)}">Delete</button></div></div></article>`}).join('');
+}
+async function load(){
+  state.style.display='block';state.textContent='Loading submissions…';list.innerHTML='';errorBox.style.display='none';
+  try{
+    const snap=await getDocs(query(collection(db,'developerSubmissions'),orderBy('submittedAt','desc')));
+    submissions=[];snap.forEach(item=>{const d=item.data();d.status=d.status||'New';submissions.push({id:item.id,data:d});});render();
+  }catch(e){console.error(e);state.style.display='none';errorBox.style.display='block';errorBox.textContent='Could not load developer submissions.';}
+}
+async function changeStatus(id,newStatus,select){
+  const item=submissions.find(x=>x.id===id);if(!item)return;const old=item.data.status;select.disabled=true;
+  try{await updateDoc(doc(db,'developerSubmissions',id),{status:newStatus});item.data.status=newStatus;render();}
+  catch(e){console.error(e);select.value=old;errorBox.style.display='block';errorBox.textContent='Could not update submission status. Firestore Admin write access may not be enabled yet.';select.disabled=false;}
+}
+async function removeSubmission(id,button){
+  const item=submissions.find(x=>x.id===id);if(!item)return;
+  const who=item.data.name||'this developer';const game=item.data.game||'this submission';
+  if(!confirm(`Delete ${who}'s submission for ${game}?\n\nThis cannot be undone.`))return;
+  button.disabled=true;
+  try{await deleteDoc(doc(db,'developerSubmissions',id));submissions=submissions.filter(x=>x.id!==id);render();}
+  catch(e){console.error(e);button.disabled=false;errorBox.style.display='block';errorBox.textContent='Could not delete submission. Firestore Admin delete access may not be enabled yet.';}
+}
+await setPersistence(auth,browserLocalPersistence);
+onAuthStateChanged(auth,user=>{if(!user){location.replace('/copyright/');return;}if(user.uid!==ADMIN_UID){signOut(auth).finally(()=>location.replace('/copyright/'));return;}gate.style.display='none';viewer.style.display='block';load();});
+document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;activeFilter=b.dataset.filter;render();});
+list.addEventListener('change',e=>{if(e.target.matches('.statusSelect'))changeStatus(e.target.dataset.id,e.target.value,e.target);});
+list.addEventListener('click',e=>{const b=e.target.closest('.delete');if(b)removeSubmission(b.dataset.id,b);});
+document.getElementById('refresh').addEventListener('click',load);document.getElementById('signout').addEventListener('click',async()=>{await signOut(auth);location.replace('/copyright/');});
+</script>
+</body>
+</html>
