@@ -176,7 +176,10 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 #dataSourceStatusPanel{margin-top:14px;padding:14px;border:1px solid #444;border-radius:10px;background:#111113}
 #dataSourceStatusPanel h2{margin:0 0 10px}
 #dataSourceStatusPanel p{margin:5px 0}
-#dataSourceConfigured{font-weight:800}
+#dataSourceConfigured,#dataSourceOverride{font-weight:800}
+#dataSourceActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#dataSourceActions button{width:auto;margin:0;padding:9px 12px}
+#dataSourceControlMessage{min-height:1.2em;margin-top:8px!important;font-weight:700}
 
 /* TEST Admin submissions/suggestions modal — REV02 */
 #adminPageModal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.78)}
@@ -224,6 +227,12 @@ body.admin-modal-open{overflow:hidden}
 <h2>Data Source Status</h2>
 <p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
 <p id="dataSourceStatusNote">Read-only TEST status from data-source_.json.</p>
+<p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
+<div id="dataSourceActions">
+<button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
+<button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
+</div>
+<p id="dataSourceControlMessage" aria-live="polite"></p>
 </section>
 </div>
 <div id="adminGameColumn">
@@ -329,6 +338,7 @@ function loggedIn(){login.style.display="none";admin.style.display="block";form.
 
 async function loadDataSourceStatus(){
   const configured=document.getElementById("dataSourceConfigured");
+  const override=document.getElementById("dataSourceOverride");
   const note=document.getElementById("dataSourceStatusNote");
   try{
     const response=await fetch("../youtube/data/data-source_.json?status="+Date.now(),{cache:"no-store"});
@@ -343,7 +353,58 @@ async function loadDataSourceStatus(){
     note.textContent="Could not read TEST data-source_.json.";
     console.error("TEST data source status read failed:",e);
   }
+
+  try{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/site_control?id=eq.game_data_source&select=value,updated_at`,{
+      cache:"no-store",
+      headers:{
+        "apikey":SUPABASE_TEST_PUBLISHABLE_KEY,
+        "Authorization":`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`
+      }
+    });
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const rows=await response.json();
+    const source=String(rows?.[0]?.value||"").toLowerCase();
+    if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
+    override.textContent=source.toUpperCase();
+  }catch(e){
+    override.textContent="UNAVAILABLE";
+    console.error("TEST data source override read failed:",e);
+  }
 }
+
+async function setTestDataSource(source){
+  if(source!=="supabase"&&source!=="json")return;
+  const message=document.getElementById("dataSourceControlMessage");
+  const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
+  buttons.forEach(button=>button.disabled=true);
+  message.style.color="#ffd36d";
+  message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
+  try{
+    const user=auth.currentUser;
+    if(!user)throw new Error("Admin authentication is required.");
+    const firebaseToken=await user.getIdToken();
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
+      method:"POST",
+      headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
+      body:JSON.stringify({action:"set-data-source",source})
+    });
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
+    await loadDataSourceStatus();
+    message.style.color="#6dff8b";
+    message.textContent=`✓ TEST manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
+  }catch(e){
+    message.style.color="#ff6d6d";
+    message.textContent=`SOURCE CHANGE FAILED — ${e?.message||e}`;
+    console.error(e);
+  }finally{
+    buttons.forEach(button=>button.disabled=false);
+  }
+}
+
+document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setTestDataSource("supabase"));
+document.getElementById("dataSourceUseJson").addEventListener("click",()=>setTestDataSource("json"));
 
 function drawTrafficValue(elementId,data){
   const el=document.getElementById(elementId);
