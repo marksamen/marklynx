@@ -2042,3 +2042,11 @@ body.suggest-modal-open{overflow:hidden}
     line-height:1.15;
   }
 }
+
+/* ---------- TEST REV68: Desktop Recent Uploads GRID — Gamerscore weight only ---------- */
+/* Remove bold from Recent GRID Gamerscore only. Sizing/colors/layout unchanged. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs{
+    font-weight:400;
+  }
+}
