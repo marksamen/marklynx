@@ -24,6 +24,7 @@ const searchInput = document.getElementById('searchInput');
 const typeFilter = document.getElementById('typeFilter');
 const diffFilter = document.getElementById('diffFilter');
 const platformFilter = document.getElementById('platformFilter');
+const featuresFilter = document.getElementById('featuresFilter');
 const sortSelect = document.getElementById('sortSelect');
 const gridBtn = document.getElementById('gridBtn');
 const listBtn = document.getElementById('listBtn');
@@ -44,6 +45,8 @@ function uniqueSorted(field){
 uniqueSorted('ty').forEach(v=>{
   const o=document.createElement('option'); o.value=v; o.textContent=v; typeFilter.appendChild(o);
 });
+
+// TEST REV20: Text Guide filtering lives under its own Features control.
 const difficultyOrder = ['Easy', 'Moderate', 'Hard'];
 const availableDifficulties = new Set(uniqueSorted('df'));
 difficultyOrder.filter(v=>availableDifficulties.has(v)).forEach(v=>{
@@ -93,6 +96,7 @@ function getFiltered(){
   const ty = typeFilter.value;
   const df = diffFilter.value;
   const platform = platformFilter.value;
+  const feature = featuresFilter.value;
   let out = RAW.filter(r=>{
     const searchable = normalizeSearch(`${r.n || ''} ${r.kinect ? 'Kinect Kinect Required' : ''}`);
     if(q && !searchable.includes(q)) return false;
@@ -112,6 +116,7 @@ function getFiltered(){
     } else if(df){
       if(r.df !== df) return false;
     }
+    if(feature === '__TEXT_GUIDE__' && !hasTextGuide(r.tx)) return false;
     return true;
   });
   const sort = sortSelect.value;
@@ -191,21 +196,19 @@ function cardHtml(r){
       <span class="gs-pill">${escapeHtml(r.g||'—')}</span>
       ${playlistPill(r)}
       ${adultPill(r)}
+      <span class="desktop-grid-quality">${qualityBadge(r.q)}</span>
       <span class="play-badge">
         <svg viewBox="0 0 68 48"><path d="M66.5,7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8,0.1,34,0,34,0S12.2,0.1,6.9,1.7c-2.9,0.8-4.6,3.1-5.4,6C0,13.1,0,24,0,24s0,10.9,1.5,16.3c0.8,2.9,2.5,5.1,5.4,5.9C12.2,47.9,34,48,34,48s21.8-0.1,27.1-1.7c2.9-0.8,4.6-3,5.4-5.9C68,34.9,68,24,68,24S68,13.1,66.5,7.7z" fill="#e0392f"></path><polygon points="27,34 45,24 27,14" fill="#fff"></polygon></svg>
       </span>
     </span>
     <span class="card-body">
       <h3 class="card-title">${escapeHtml(r.n)}</h3>
-      <div class="card-meta">
-        <span>${escapeHtml(r.ty||'')}</span>
-        <span>·</span>
-        <span>${escapeHtml(r.t||'')}</span>
-        <span>·</span>
-        <span>${qualityBadge(r.q)}</span>
-      </div>
-      <div class="badge-row">
-        <span class="diff-tag" style="padding-top:0;"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
+      <div class="grid-list-sub">${escapeHtml(r.p||'')}</div>
+          <div class="card-meta">
+        <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
+        <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
+        <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+        <span class="game-meta-quality">${qualityBadge(r.q)}</span>
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
       </div>
@@ -233,11 +236,15 @@ function listRowHtml(r){
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
       <div class="list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="mobile-game-meta">
+        <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
+        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+      </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
       ${(r.kinect || hasTextGuide(r.tx)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}</div>` : ''}
     </span>
-    <span class="list-col type">${escapeHtml(r.ty||'')}</span>
-    <span class="list-col time">${escapeHtml(r.t||'')}</span>
+    <span class="list-col type game-meta-pill list-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
+    <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
     <span class="list-col gs">${escapeHtml(r.g||'')}</span>
@@ -254,6 +261,7 @@ function render(){
     typeFilter.value !== '' ||
     diffFilter.value !== '' ||
     platformFilter.value !== '' ||
+    featuresFilter.value !== '' ||
     sortSelect.value !== 'az';
   clearFiltersBtn.classList.toggle('visible', hasActiveFilters);
 
@@ -334,6 +342,7 @@ clearFiltersBtn.addEventListener('click', ()=>{
   typeFilter.value='';
   diffFilter.value='';
   platformFilter.value='';
+  featuresFilter.value='';
   sortSelect.value='az';
   resetAndRender();
 });
@@ -342,6 +351,7 @@ searchInput.addEventListener('input', resetAndRender);
 typeFilter.addEventListener('change', resetAndRender);
 diffFilter.addEventListener('change', resetAndRender);
 platformFilter.addEventListener('change', resetAndRender);
+featuresFilter.addEventListener('change', resetAndRender);
 sortSelect.addEventListener('change', resetAndRender);
 loadMoreBtn.addEventListener('click', ()=>{ shown += PAGE_SIZE; render(); });
 

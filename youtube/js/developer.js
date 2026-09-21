@@ -10,12 +10,46 @@
   const successPanel = document.getElementById('developerSuccessPanel');
   if (!openBtn || !overlay || !closeBtn) return;
 
+  // TEST REV23: permanent mobile Developer Showcase indicator ABOVE the card rail.
+  // Recalculate when the hidden Developer overlay becomes visible so the bar exists before the first swipe.
+  const developerCards = overlay.querySelector('.developer-cards');
+  if (developerCards) {
+    const indicator = document.createElement('div');
+    indicator.className = 'developer-scroll-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    const thumb = document.createElement('div');
+    thumb.className = 'developer-scroll-indicator-thumb';
+    indicator.appendChild(thumb);
+    developerCards.insertAdjacentElement('beforebegin', indicator);
+
+    const syncDeveloperScrollIndicator = () => {
+      const viewport = developerCards.clientWidth;
+      const total = developerCards.scrollWidth;
+      const maxScroll = Math.max(0, total - viewport);
+      const track = indicator.clientWidth;
+      const thumbWidth = total > 0 ? Math.max(34, track * Math.min(1, viewport / total)) : track;
+      const maxThumbTravel = Math.max(0, track - thumbWidth);
+      const progress = maxScroll > 0 ? developerCards.scrollLeft / maxScroll : 0;
+      thumb.style.width = `${thumbWidth}px`;
+      thumb.style.transform = `translateX(${maxThumbTravel * progress}px)`;
+      indicator.hidden = total <= viewport + 1;
+    };
+
+    developerCards.addEventListener('scroll', syncDeveloperScrollIndicator, { passive: true });
+    window.addEventListener('resize', syncDeveloperScrollIndicator, { passive: true });
+    if (window.ResizeObserver) {
+      new ResizeObserver(syncDeveloperScrollIndicator).observe(developerCards);
+    }
+    requestAnimationFrame(syncDeveloperScrollIndicator);
+  }
+
   const TURNSTILE_SITE_KEY = '0x4AAAAAAE3AJPCXDRsIdRB-';
   const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbws5IDNItlGS2LJpUiHkszoAqgkYBgjcxLWe9e083QjusoS2TAPhwvNXDm4scjORjCWrQ/exec';
   let turnstileToken = '';
   let turnstileWidgetId = null;
   let lastFocus = null;
   let submissionSucceeded = false;
+  let developerMediaSuspended = false;
 
   const setStatus = (message, type = '') => {
     if (!status) return;
@@ -87,6 +121,7 @@
     resetForNewSubmission();
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
     document.body.classList.add('developer-modal-open');
     closeBtn.focus();
     renderTurnstile();
@@ -102,22 +137,83 @@
   openBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
 
-  // Keep developer-supported walkthroughs inside the Mark Lynx player.
-  // The YouTube href remains as a graceful fallback if site JavaScript fails.
-  overlay.querySelectorAll('.developer-card[data-video-id]').forEach(card => {
+  // TEST REV16: iOS uses a smaller/panned visual viewport while the keyboard is open.
+  // Keep the already-fixed mobile close button inside that visible viewport when a form field has focus.
+  const syncCloseToVisualViewport = () => {
+    if (!window.visualViewport || !window.matchMedia('(max-width: 900px)').matches) {
+      closeBtn.style.removeProperty('top');
+      return;
+    }
+    closeBtn.style.top = `${Math.round(window.visualViewport.offsetTop + 16)}px`;
+  };
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncCloseToVisualViewport);
+    window.visualViewport.addEventListener('scroll', syncCloseToVisualViewport);
+  }
+  overlay.addEventListener('focusin', syncCloseToVisualViewport);
+  overlay.addEventListener('focusout', () => requestAnimationFrame(syncCloseToVisualViewport));
+
+  // Keep developer-supported media inside the Mark Lynx player.
+  // Hide (rather than close/reset) the Developer overlay while media is open,
+  // then restore the exact existing Developer state when the media modal closes.
+  const suspendForMedia = () => {
+    developerMediaSuspended = true;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+  };
+
+  const restoreAfterMedia = () => {
+    if (!developerMediaSuspended) return;
+    developerMediaSuspended = false;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('developer-modal-open');
+    if (closeBtn) closeBtn.focus();
+  };
+
+  // Mobile browsers can lose the media modal's JavaScript close callback while
+  // the YouTube iframe is active. Watch the actual shared media modal instead:
+  // whenever Developer media was suspended and that modal stops being open,
+  // restore the existing Developer overlay. Desktop keeps the callback as the
+  // immediate path; this observer is the device-independent safety net.
+  const sharedMediaOverlay = document.getElementById('videoModalOverlay');
+  if (sharedMediaOverlay) {
+    new MutationObserver(() => {
+      if (developerMediaSuspended && !sharedMediaOverlay.classList.contains('open')) {
+        restoreAfterMedia();
+      }
+    }).observe(sharedMediaOverlay, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  const findDeveloperGame = card => {
+    const playlistId = card.dataset.playlistId || '';
+    const videoId = card.dataset.videoId || '';
+    return (window.RAW || []).find(game =>
+      (playlistId && game.pl === playlistId) || (videoId && game.v === videoId)
+    ) || null;
+  };
+
+  overlay.querySelectorAll('.developer-card[data-video-id], .developer-card[data-playlist-id]').forEach(card => {
+    const game = findDeveloperGame(card);
+    const titleNode = card.querySelector('.developer-card-top strong');
+    if (game?.n && titleNode) titleNode.textContent = game.n;
+
     card.addEventListener('click', event => {
-      if (typeof window.openVideoModal !== 'function') return;
+      const playlistId = card.dataset.playlistId || '';
+      const videoId = card.dataset.videoId || '';
+      const liveGame = findDeveloperGame(card);
+      const title = liveGame?.n || card.dataset.videoTitle || card.dataset.playlistTitle || '';
+      const opener = playlistId ? window.openPlaylistModal : window.openVideoModal;
+      if (typeof opener !== 'function') return;
       event.preventDefault();
-      const videoId = card.dataset.videoId;
-      const title = card.dataset.videoTitle || '';
-      // Open the player synchronously inside the original tap/click.
-      // Deferring with requestAnimationFrame can lose mobile browser user activation
-      // and prevent audible autoplay even though the visitor explicitly tapped.
-      close();
-      window.openVideoModal(videoId, title);
+      // Open synchronously inside the original tap/click so mobile autoplay keeps
+      // the visitor's user activation.
+      suspendForMedia();
+      opener(playlistId || videoId, title, restoreAfterMedia);
     });
   });
-  overlay.addEventListener('click', event => { if (event.target === overlay) close(); });
+  // TEST REV14: Developer closes deliberately via the persistent X (or Escape), not by clicking the backdrop.
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && overlay.classList.contains('open')) close();
   });

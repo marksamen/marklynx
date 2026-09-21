@@ -17,20 +17,21 @@
   });
 
   const syncRecentUploadsVisibility = () => {
-    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','sortSelect'];
+    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','featuresFilter','sortSelect'];
     const values = ids.map(id => document.getElementById(id));
-    const [search, type, diff, platform, sort] = values;
+    const [search, type, diff, platform, features, sort] = values;
     const active =
       (search && search.value.trim() !== '') ||
       (type && type.value !== '') ||
       (diff && diff.value !== '') ||
       (platform && platform.value !== '') ||
+      (features && features.value !== '') ||
       (sort && sort.value !== 'az');
     document.body.classList.toggle('guide-filter-active', !!active);
   };
 
   const installVisibilitySync = () => {
-    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','sortSelect'];
+    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','featuresFilter','sortSelect'];
     document.addEventListener('input', event => {
       if (event.target && ids.includes(event.target.id)) queueMicrotask(syncRecentUploadsVisibility);
     });
@@ -56,14 +57,15 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=20260916-prod2', 'mainModuleMount');
-      await loadHtml('sections/developer.html?v=20260917-panda', 'developerModuleMount');
-      await loadHtml('sections/recent.html?v=20260916-prod2', 'recentModuleMount');
-      await loadHtml('sections/footer.html?v=20260916-prod2', 'footerModuleMount');
+      await loadHtml('sections/main.html?v=20260921-prod-promotion-01', 'mainModuleMount');
+      await loadHtml('sections/developer.html?v=20260921-prod-promotion-01', 'developerModuleMount');
+      await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
+      await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
 
       installVisibilitySync();
 
-      // Production data source: Supabase PROD is primary, with static games.json recovery.
+      // DATA SOURCE TEST: one tiny config chooses Supabase PROD or static games.json.
+      // Keep the rest of the website completely independent of the chosen source.
       const dataSourceResponse = await fetch('data/data-source.json', { cache: 'no-store' });
       if (!dataSourceResponse.ok) {
         throw new Error(`data-source.json: HTTP ${dataSourceResponse.status}`);
@@ -123,9 +125,9 @@
         return rows.map(normalizeGame);
       };
 
-      // Manual PROD override lives in Supabase site_control. If the control
-      // cannot be reached, keep using the static data-source.json config.
-      // This lookup is optional so automatic JSON recovery never depends on it.
+      // Manual PROD override lives in Supabase site_control. If that control
+      // cannot be reached, keep using the existing static data-source.json config.
+      // This control lookup is optional: automatic JSON recovery must not depend on it.
       const loadManualDataSourceOverride = async () => {
         const controlUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
         const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
@@ -172,18 +174,18 @@
       console.info(`[PRODUCTION] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
-      const statsResponse = await fetch('data/stats.json?v=20260915-prod1', { cache: 'no-store' });
+      const statsResponse = await fetch('data/stats.json?v=20260921-prod-promotion-01', { cache: 'no-store' });
       if (!statsResponse.ok) throw new Error(`stats.json: HTTP ${statsResponse.status}`);
       const stats = await statsResponse.json();
       const totalVideos = Number(stats.totalVideos);
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube.js?v=20260916-prod2');
-      await loadScript('js/site.js?v=20260916-prod2');
-      await loadScript('js/developer.js?v=20260917-developer-submissions-rev02');
-      await loadScript('js/recent.js?v=20260916-prod2');
-      await loadScript('js/suggest_game.js?v=20260916-email-validation');
+      await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
+      await loadScript('js/site.js?v=20260921-prod-promotion-01');
+      await loadScript('js/developer.js?v=20260921-prod-promotion-01');
+      await loadScript('js/recent.js?v=20260921-prod-promotion-01');
+      await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');

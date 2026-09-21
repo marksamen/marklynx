@@ -429,7 +429,10 @@ function createPlaylistPlayer(playlistId, token){
   });
 }
 
-function openVideoModal(videoId, title){
+let videoModalCloseCallback = null;
+
+function openVideoModal(videoId, title, onClose){
+  videoModalCloseCallback = typeof onClose === 'function' ? onClose : null;
   playlistToken++;
   pendingPlaylist = null;
   videoModalTitle.textContent = title || '';
@@ -457,7 +460,8 @@ function openVideoModal(videoId, title){
   });
 }
 
-function openPlaylistModal(playlistId, title){
+function openPlaylistModal(playlistId, title, onClose){
+  videoModalCloseCallback = typeof onClose === 'function' ? onClose : null;
   playlistToken++;
   const token = playlistToken;
   pendingPlaylist = playlistId;
@@ -480,6 +484,7 @@ function openPlaylistModal(playlistId, title){
 }
 
 function closeVideoModal(){
+  if(!videoModalOverlay.classList.contains('open')) return;
   playlistToken++;
   pendingPlaylist = null;
   videoModalOverlay.classList.remove('open');
@@ -487,6 +492,9 @@ function closeVideoModal(){
   if(playlistPlayer && playlistPlayer.stopVideo){
     playlistPlayer.stopVideo();
   }
+  const onClose = videoModalCloseCallback;
+  videoModalCloseCallback = null;
+  if(onClose) onClose();
 }
 
 videoModalClose.addEventListener('click', closeVideoModal);

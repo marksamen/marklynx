@@ -3,6 +3,7 @@
   const overlay = document.getElementById('suggestGameOverlay');
   const closeBtn = document.getElementById('suggestGameClose');
   const form = document.getElementById('suggestGameForm');
+  const panel = overlay ? overlay.querySelector('.suggest-panel') : null;
   const sendBtn = document.getElementById('suggestGameSendBtn');
   const status = document.getElementById('suggestGameFormStatus');
   const turnstileMount = document.getElementById('suggestGameTurnstile');
@@ -80,6 +81,7 @@
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('suggest-modal-open');
     closeBtn.focus();
+    requestAnimationFrame(syncCloseToVisualViewport);
     renderTurnstile();
   };
   const close = () => {
@@ -91,7 +93,43 @@
 
   openBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
-  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+  // TEST REV18: Keep Suggest X inside the panel corner while following the visible viewport.
+  const syncCloseToVisualViewport = () => {
+    if (!panel) return;
+    const rect = panel.getBoundingClientRect();
+    const vv = window.visualViewport;
+    const viewportTop = vv ? vv.offsetTop : 0;
+    const viewportLeft = vv ? vv.offsetLeft : 0;
+    const viewportWidth = vv ? vv.width : window.innerWidth;
+    const buttonWidth = closeBtn.offsetWidth || 38;
+    const inset = 16;
+    const left = Math.min(
+      rect.right - buttonWidth - inset,
+      viewportLeft + viewportWidth - buttonWidth - inset
+    );
+    closeBtn.style.left = `${Math.round(left)}px`;
+    closeBtn.style.right = 'auto';
+    closeBtn.style.top = `${Math.round(Math.max(rect.top + inset, viewportTop + inset))}px`;
+  };
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncCloseToVisualViewport);
+    window.visualViewport.addEventListener('scroll', syncCloseToVisualViewport);
+  }
+  window.addEventListener('resize', syncCloseToVisualViewport);
+  overlay.addEventListener('focusin', syncCloseToVisualViewport);
+  overlay.addEventListener('focusout', () => requestAnimationFrame(syncCloseToVisualViewport));
+
+  // Block any legacy backdrop-click close path before it can fire.
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
+
+  // Suggest closes deliberately via the persistent X (or Escape).
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) close(); });
 
   form.addEventListener('submit', event => {
