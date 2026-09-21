@@ -182,7 +182,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260918-cache-REV07');
-      await loadScript('js/site_.js?v=20260921-game-guides-match-recent-REV06');
+      await loadScript('js/site_.js?v=20260921-game-guides-exact-REV07');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=rev61');
       await loadScript('js/suggest_game_.js?v=20260919-suggest-close-REV18');
