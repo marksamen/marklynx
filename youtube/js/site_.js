@@ -203,7 +203,8 @@ function cardHtml(r){
     </span>
     <span class="card-body">
       <h3 class="card-title">${escapeHtml(r.n)}</h3>
-      <div class="card-meta">
+      <div class="normal-grid-platform">${escapeHtml(r.p||\'\')}</div>
+          <div class="card-meta">
         <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
         <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
