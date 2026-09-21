@@ -2103,12 +2103,11 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV16: MOBILE Recent LIST only.
-   Mirror the proven Normal Videos LIST row alignment:
-   .list-row uses align-items:center, so center the Recent grid row itself.
-   Built from REV13; REV14/REV15 discarded. */
+/* REV17: MOBILE Recent LIST only.
+   Remove the forced first-grid-row placement from the title item.
+   Built from REV13; REV14/15/16 are discarded. */
 @media (max-width: 900px) {
-  .recent-uploads-grid.list-mode .recent-upload-card {
-    align-items: center !important;
+  .recent-uploads-grid.list-mode .recent-upload-title {
+    grid-row: auto !important;
   }
 }
