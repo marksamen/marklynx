@@ -2353,3 +2353,13 @@ body.suggest-modal-open{overflow:hidden}
     align-items: start;
   }
 }
+
+
+/* REV45: MOBILE LANDSCAPE Recent Uploads GRID — card alignment only.
+   Apply the same approved REV44 top alignment using the established
+   landscape-phone scope. Desktop and portrait remain untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
+  }
+}
