@@ -2477,16 +2477,16 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV04: standardized Recent Uploads + Game Guides headings */
-.matched-section-head{
-  border-left:4px solid #d93025;
-  padding-left:10px;
+/* TEST REV05: Game Guides heading only — Recent Uploads intentionally untouched */
+#listHead {
+  padding-left: 0;
 }
-.matched-section-head h2{
-  margin:0;
-  font-size:22px;
-  line-height:1.2;
-}
-.list-head .matched-section-head{
-  margin:0 0 12px;
+.game-guides-heading {
+  box-sizing: border-box;
+  margin: 0 0 12px;
+  padding-left: 10px;
+  border-left: 4px solid #d93025;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
 }
