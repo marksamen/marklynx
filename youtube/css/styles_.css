@@ -2218,21 +2218,3 @@ body.suggest-modal-open{overflow:hidden}
     color: #8f8f8f !important;
   }
 }
-
-/* REV32: MOBILE LANDSCAPE Normal Videos — Console/Platform only.
-   List already renders r.p via .list-sub.
-   Grid now renders r.p via .normal-grid-platform, hidden outside landscape. */
-.normal-grid-platform { display:none; }
-
-@media (orientation: landscape) and (max-height: 900px) {
-  #resultsList .list-row .list-sub {
-    display:block !important;
-  }
-  #resultsGrid .card .normal-grid-platform {
-    display:block !important;
-    margin-top:3px;
-    color:#8f8f8f;
-    font-size:13px;
-    line-height:1.25;
-  }
-}
