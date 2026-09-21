@@ -273,7 +273,8 @@ function render(){
   if(filtered.length === 0){
     resultsGrid.style.display='none';
     resultsList.style.display='none';
-    listHead.style.display='none';
+    listHead.style.display='block';
+    listHead.innerHTML='<div class="game-guides-section-title">GAME GUIDES</div>';
     emptyState.style.display='block';
     loadMoreWrap.style.display='none';
     return;
