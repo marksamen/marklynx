@@ -2188,3 +2188,16 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV29: MOBILE LANDSCAPE Recent Uploads GRID — metadata cleanup only.
+   Hide Genre + Time + Difficulty.
+   Preserve thumbnails, title, platform, columns, spacing, and 4K overlay.
+   Portrait/Desktop/Normal Videos untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+}
