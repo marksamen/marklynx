@@ -2227,3 +2227,17 @@ body.suggest-modal-open{overflow:hidden}
     color: #8f8f8f !important;
   }
 }
+
+
+/* REV35: MOBILE PORTRAIT Normal Videos GRID — Console/Platform.
+   Match approved landscape REV34: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  #resultsGrid .card .grid-list-sub {
+    display: block !important;
+    margin-top: 2px;
+    font-size: 11px !important;
+    line-height: 1.25;
+    color: #8f8f8f !important;
+    overflow-wrap: anywhere;
+  }
+}
