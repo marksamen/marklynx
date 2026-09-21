@@ -2410,3 +2410,13 @@ body.suggest-modal-open{overflow:hidden}
     font-size: 16px;
   }
 }
+
+/* Suggest Landscape REV01: prevent mobile browser focus-zoom on form fields.
+   Same proven landscape-phone treatment as Developer. Suggest form only. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .suggest-game-form input[type=text],
+  .suggest-game-form input[type=email],
+  .suggest-game-form textarea {
+    font-size: 16px;
+  }
+}
