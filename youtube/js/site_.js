@@ -296,7 +296,7 @@ function render(){
     resultsGrid.style.display='none';
     resultsList.style.display='flex';
     listHead.style.display='block';
-      listHead.innerHTML='<h2 class="game-guides-heading">Game Guides</h2>';
+      listHead.innerHTML='<div class="recent-uploads-head game-guides-head"><h2>Game Guides</h2></div>';
     resultsList.innerHTML = slice.map(r=>listRowHtml(r)).join('');
     resultsList.querySelectorAll('[data-playlist-id]').forEach(el=>{
       el.addEventListener('click', ()=>openPlaylistModal(el.dataset.playlistId, el.dataset.playlistTitle));
