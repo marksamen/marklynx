@@ -2476,3 +2476,15 @@ body.suggest-modal-open{overflow:hidden}
     will-change: transform;
   }
 }
+
+/* TEST REV02: clean Regular LIST section heading */
+.game-guides-section-title {
+  margin: 8px 0 10px;
+  padding-left: 12px;
+  border-left: 4px solid #d93025;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.25;
+  color: #f1f1f1;
+}
