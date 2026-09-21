@@ -2432,9 +2432,11 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* PROD: Developer landscape card sizing — approved TEST REV01 */
+/* PROD: Developer landscape card sizing — exact passed TEST selector */
 @media (orientation: landscape) and (max-height: 500px) {
-  #developerView .developer-video-card {
+  .developer-card {
     flex: 0 0 42%;
+    min-width: 0;
+    scroll-snap-align: start;
   }
 }
