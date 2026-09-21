@@ -2477,26 +2477,39 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV10: Game Guides appearance + spacing only; Recent Uploads untouched */
-#listHead{
-  padding-left:0;
-  padding-right:0;
+/* TEST REV11: Game Guides copies approved Recent Uploads spacing/typography.
+   Recent Uploads itself is untouched. */
+.game-guides-section{
+  max-width:1400px;
+  margin:12px auto 0;
+  padding:0 28px;
+}
+.game-guides-section #listHead{
+  display:block;
+  padding:0;
   font-size:initial;
   text-transform:none;
   letter-spacing:normal;
   color:var(--text);
-  margin-top:14px;
-  margin-bottom:0;
 }
-#listHead .game-guides-head{margin-left:0;margin-right:0;margin-bottom:8px;}
-#listHead .game-guides-head h2{
+.game-guides-section .game-guides-head{
+  margin:0 0 12px;
+}
+.game-guides-section .game-guides-head h2{
+  margin:0;
+  font-size:22px;
+  line-height:1.2;
   color:var(--text);
   font-family:inherit;
   font-weight:700;
   text-transform:none;
   letter-spacing:normal;
 }
-#countLine{
-  margin-top:0;
-  margin-bottom:12px;
+.game-guides-section .game-guides-count{
+  max-width:none;
+  margin:0 0 12px;
+  padding:0;
+}
+.game-guides-section + .container{
+  padding-top:0;
 }
