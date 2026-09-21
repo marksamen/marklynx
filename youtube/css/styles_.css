@@ -2062,3 +2062,15 @@ body.suggest-modal-open{overflow:hidden}
     min-width:0;
   }
 }
+
+
+/* REV09: Mobile normal-video LIST — hide desktop metadata pills only.
+   Explicitly excludes Recent Uploads and desktop. */
+@media (max-width:900px){
+  #games:not(.recent-uploads-grid) .game-card.list-card .meta-pill,
+  #games:not(.recent-uploads-grid) .game-card.list-card .genre,
+  #games:not(.recent-uploads-grid) .game-card.list-card .time,
+  #games:not(.recent-uploads-grid) .game-card.list-card .difficulty{
+    display:none !important;
+  }
+}
