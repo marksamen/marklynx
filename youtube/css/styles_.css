@@ -2177,13 +2177,14 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV27: MOBILE LANDSCAPE Normal Videos LIST — remove Gamerscore + Quality.
-   Uses the actual List column structure. Portrait/Grid/Recent/Desktop untouched. */
+/* REV28: MOBILE LANDSCAPE Normal Videos LIST — simplify for long titles.
+   Hide Genre + Time + Difficulty only.
+   Gamerscore + Quality remain visible.
+   Portrait/Grid/Recent/Desktop untouched. */
 @media (orientation: landscape) and (max-height: 900px) {
-  #resultsList .list-col.score,
-  #resultsList .list-col.quality,
-  #listHead .h-score,
-  #listHead .h-quality {
+  #resultsList .list-col.type,
+  #resultsList .list-col.time,
+  #resultsList .list-col.diff {
     display: none !important;
   }
 }
