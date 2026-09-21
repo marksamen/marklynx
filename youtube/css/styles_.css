@@ -2477,20 +2477,12 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV11: Game Guides copies approved Recent Uploads spacing/typography.
-   Recent Uploads itself is untouched. */
+/* TEST REV12: exact approved LIST Game Guides header copied to GRID.
+   Recent Uploads remains untouched. */
 .game-guides-section{
   max-width:1400px;
   margin:12px auto 0;
   padding:0 28px;
-}
-.game-guides-section #listHead{
-  display:block;
-  padding:0;
-  font-size:initial;
-  text-transform:none;
-  letter-spacing:normal;
-  color:var(--text);
 }
 .game-guides-section .game-guides-head{
   margin:0 0 12px;
