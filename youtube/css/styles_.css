@@ -2477,16 +2477,11 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV05: Game Guides heading only — Recent Uploads intentionally untouched */
+/* TEST REV06: Game Guides mirrors existing Recent Uploads heading; Recent Uploads untouched */
 #listHead {
   padding-left: 0;
 }
-.game-guides-heading {
-  box-sizing: border-box;
-  margin: 0 0 12px;
-  padding-left: 10px;
-  border-left: 4px solid #d93025;
-  font-size: 22px;
-  line-height: 1.2;
-  font-weight: 700;
+#listHead .game-guides-head {
+  margin-left: 0;
+  margin-right: 0;
 }
