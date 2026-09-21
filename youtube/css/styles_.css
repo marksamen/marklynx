@@ -2177,10 +2177,13 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV26: MOBILE LANDSCAPE Normal Videos LIST — hide Gamerscore + Quality only. */
+/* REV27: MOBILE LANDSCAPE Normal Videos LIST — remove Gamerscore + Quality.
+   Uses the actual List column structure. Portrait/Grid/Recent/Desktop untouched. */
 @media (orientation: landscape) and (max-height: 900px) {
-  #resultsList .game-meta-gamerscore,
-  #resultsList .game-meta-quality {
+  #resultsList .list-col.score,
+  #resultsList .list-col.quality,
+  #listHead .h-score,
+  #listHead .h-quality {
     display: none !important;
   }
 }
