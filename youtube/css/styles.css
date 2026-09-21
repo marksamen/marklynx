@@ -2375,3 +2375,59 @@ body.suggest-modal-open{overflow:hidden}
     font-size: 16px;
   }
 }
+
+/* Developer Landscape Video Rail REV01: use the approved portrait mobile carousel
+   and persistent custom scroll indicator on landscape phones. Developer only. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-cards {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: -18px;
+    margin-right: -18px;
+    padding: 0 18px 8px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 18px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .developer-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .developer-card {
+    flex: 0 0 86%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .developer-section-head::after {
+    content: none;
+  }
+
+  .developer-scroll-indicator {
+    display: block;
+    position: relative;
+    height: 8px;
+    margin: 0 0 10px;
+    overflow: hidden;
+    background: #2b2b2b;
+    border: 1px solid #444;
+    border-radius: 999px;
+  }
+
+  .developer-scroll-indicator-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25%;
+    background: #c72b25;
+    border-radius: 999px;
+    transform: translateX(0);
+    will-change: transform;
+  }
+}
