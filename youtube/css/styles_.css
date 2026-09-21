@@ -2241,3 +2241,15 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap: anywhere;
   }
 }
+
+
+/* REV36: MOBILE PORTRAIT Recent Uploads GRID — metadata cleanup only.
+   Hide Genre + Time + Difficulty.
+   Preserve thumbnails, title, platform, 4K, columns, gaps and sizing. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+}
