@@ -2064,13 +2064,11 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV09: Mobile normal-video LIST — hide desktop metadata pills only.
-   Explicitly excludes Recent Uploads and desktop. */
-@media (max-width:900px){
-  #games:not(.recent-uploads-grid) .game-card.list-card .meta-pill,
-  #games:not(.recent-uploads-grid) .game-card.list-card .genre,
-  #games:not(.recent-uploads-grid) .game-card.list-card .time,
-  #games:not(.recent-uploads-grid) .game-card.list-card .difficulty{
-    display:none !important;
+/* REV10: MOBILE normal-video LIST only.
+   Remove the compact Genre/Time metadata copies added under the title.
+   Desktop and Recent Uploads are intentionally untouched. */
+@media (max-width: 900px) {
+  #resultsList .mobile-game-meta {
+    display: none !important;
   }
 }
