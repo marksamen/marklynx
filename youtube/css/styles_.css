@@ -2323,3 +2323,15 @@ body.suggest-modal-open{overflow:hidden}
     width: 40px !important;
   }
 }
+
+
+/* REV42: MOBILE LANDSCAPE Recent Uploads GRID — 4K sizing only.
+   Match approved portrait REV41 size: 40px. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+    height: auto !important;
+    max-width: none !important;
+  }
+}
