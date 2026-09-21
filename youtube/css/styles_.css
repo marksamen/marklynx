@@ -2444,7 +2444,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 
   .developer-card {
-    flex: 0 0 86%;
+    flex: 0 0 42%;
     min-width: 0;
     scroll-snap-align: start;
   }
