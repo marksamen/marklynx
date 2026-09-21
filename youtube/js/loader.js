@@ -183,7 +183,7 @@
 
       await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
       await loadScript('js/site.js?v=20260921-prod-promotion-01');
-      await loadScript('js/developer.js?v=20260921-prod-promotion-01');
+      await loadScript('js/developer.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent.js?v=20260921-prod-promotion-01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
     } catch (error) {
