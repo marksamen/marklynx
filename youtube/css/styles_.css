@@ -2276,3 +2276,30 @@ body.suggest-modal-open{overflow:hidden}
     color: #8f8f8f !important;
   }
 }
+
+
+/* REV39: MOBILE PORTRAIT Recent Uploads GRID — 4K overlay only.
+   Reuse the proven dedicated .recent-grid-quality overlay.
+   Put 4K at the usual bottom-right of the thumbnail; hide old metadata copy. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality {
+    display: block !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    z-index: 3 !important;
+    line-height: 0 !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 66px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality {
+    display: none !important;
+  }
+}
