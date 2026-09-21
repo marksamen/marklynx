@@ -2101,3 +2101,15 @@ body.suggest-modal-open{overflow:hidden}
     color: #8f8f8f !important;
   }
 }
+
+
+/* REV14: MOBILE Recent LIST only.
+   Vertically center the title/platform block within its row.
+   Typography, badges, thumbnails, row sizing, Normal List,
+   Recent Grid, and desktop remain untouched. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    align-self: center !important;
+    justify-content: center !important;
+  }
+}
