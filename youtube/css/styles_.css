@@ -2477,14 +2477,16 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV03: clean Regular LIST section heading */
-.game-guides-section-title {
-  margin: 8px 0 10px;
-  padding-left: 12px;
-  border-left: 4px solid #d93025;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  line-height: 1.25;
-  color: #f1f1f1;
+/* TEST REV04: standardized Recent Uploads + Game Guides headings */
+.matched-section-head{
+  border-left:4px solid #d93025;
+  padding-left:10px;
+}
+.matched-section-head h2{
+  margin:0;
+  font-size:22px;
+  line-height:1.2;
+}
+.list-head .matched-section-head{
+  margin:0 0 12px;
 }
