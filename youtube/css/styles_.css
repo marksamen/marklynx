@@ -2074,11 +2074,12 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV11: MOBILE Recent LIST only.
-   Hide the Genre/Time metadata block. Normal List, Recent Grid,
-   and all desktop layouts remain untouched. */
+/* REV12: MOBILE Recent LIST only.
+   Hide the actual Genre + Time metadata elements.
+   Built from frozen REV10; REV11 is discarded. */
 @media (max-width: 900px) {
-  .recent-uploads-grid.list-mode .recent-grid-meta-break {
+  .recent-uploads-grid.list-mode .recent-upload-meta.type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.time {
     display: none !important;
   }
 }
