@@ -2219,25 +2219,20 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
+/* REV32: MOBILE LANDSCAPE Normal Videos — Console/Platform only.
+   List already renders r.p via .list-sub.
+   Grid now renders r.p via .normal-grid-platform, hidden outside landscape. */
+.normal-grid-platform { display:none; }
 
-/* REV31: MOBILE LANDSCAPE Normal Videos LIST — Console/Platform only.
-   Copy the approved Desktop Videos LIST platform treatment exactly.
-   REV30 and all prior passes remain untouched. */
 @media (orientation: landscape) and (max-height: 900px) {
   #resultsList .list-row .list-sub {
-    display:inline-flex;
-    align-items:center;
-    width:max-content;
-    max-width:100%;
-    margin-top:5px;
-    padding:3px 7px;
-    border:1px solid #343434;
-    border-radius:5px;
-    background:rgba(255,255,255,.025);
-    color:#bdbdbd;
-    font-size:11px;
-    font-weight:700;
-    line-height:1.2;
-    letter-spacing:.01em;
+    display:block !important;
+  }
+  #resultsGrid .card .normal-grid-platform {
+    display:block !important;
+    margin-top:3px;
+    color:#8f8f8f;
+    font-size:13px;
+    line-height:1.25;
   }
 }
