@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=20260921-prod-promotion-01', 'mainModuleMount');
+      await loadHtml('sections/main.html?v=20260921-game-guides-REV12', 'mainModuleMount');
       await loadHtml('sections/developer.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -182,7 +182,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site.js?v=20260921-prod-promotion-01');
+      await loadScript('js/site.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent.js?v=20260921-prod-promotion-01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
