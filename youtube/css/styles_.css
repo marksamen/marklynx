@@ -2083,3 +2083,21 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV13: MOBILE Recent LIST typography hierarchy only.
+   Title is primary; platform/console is smaller and muted.
+   No positioning, badge, thumbnail, row-height, Grid, Normal List,
+   or desktop changes. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-title {
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
