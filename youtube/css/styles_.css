@@ -2139,23 +2139,26 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV21: MOBILE Normal Videos GRID only.
-   Modernize Difficulty to match the compact metadata-pill language.
-   Approved REV20 4K placement/size is untouched. */
+/* REV22: MOBILE Normal Videos GRID only.
+   Modernize the ACTUAL rendered difficulty pill and remove the legacy dot.
+   Built from frozen REV20; REV21 discarded. */
 @media (max-width: 900px) {
-  #resultsGrid .card-meta .game-meta-difficulty {
+  #resultsGrid .card-meta .difficulty-pill {
     display: inline-flex !important;
-    align-items: center;
+    align-items: center !important;
     width: max-content;
-    max-width: 100%;
-    padding: 3px 7px;
-    border: 1px solid #5a4d28;
-    border-radius: 5px;
-    background: rgba(180, 140, 45, .10);
-    color: #d8c27a;
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.15;
+    padding: 3px 8px !important;
+    border: 1px solid #454545 !important;
+    border-radius: 5px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.022)) !important;
+    color: #d7d7d7 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.15 !important;
     letter-spacing: .01em;
+  }
+
+  #resultsGrid .card-meta .difficulty-pill .diff-dot {
+    display: none !important;
   }
 }
