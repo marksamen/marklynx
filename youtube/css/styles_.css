@@ -2265,3 +2265,14 @@ body.suggest-modal-open{overflow:hidden}
     line-height: 1.18 !important;
   }
 }
+
+
+/* REV38: MOBILE PORTRAIT Recent Uploads GRID — Console polish only.
+   Match approved mobile console treatment: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
