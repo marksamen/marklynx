@@ -2343,3 +2343,13 @@ body.suggest-modal-open{overflow:hidden}
 .recent-uploads-grid.grid-mode .recent-grid-meta-break {
   display: none !important;
 }
+
+
+/* REV44: MOBILE Recent Uploads GRID — card alignment only.
+   Keep each card at the top of its grid cell.
+   Desktop and all approved content styling remain untouched. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
+  }
+}
