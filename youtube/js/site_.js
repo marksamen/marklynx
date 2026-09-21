@@ -273,8 +273,7 @@ function render(){
   if(filtered.length === 0){
     resultsGrid.style.display='none';
     resultsList.style.display='none';
-    listHead.style.display='block';
-    listHead.innerHTML='<div class="game-guides-section-title">GAME GUIDES</div>';
+    listHead.style.display='none';
     emptyState.style.display='block';
     loadMoreWrap.style.display='none';
     return;
@@ -296,7 +295,8 @@ function render(){
   } else {
     resultsGrid.style.display='none';
     resultsList.style.display='flex';
-    listHead.style.display='none';
+    listHead.style.display='block';
+      listHead.innerHTML='<div class="game-guides-section-title">GAME GUIDES</div>';
     resultsList.innerHTML = slice.map(r=>listRowHtml(r)).join('');
     resultsList.querySelectorAll('[data-playlist-id]').forEach(el=>{
       el.addEventListener('click', ()=>openPlaylistModal(el.dataset.playlistId, el.dataset.playlistTitle));
