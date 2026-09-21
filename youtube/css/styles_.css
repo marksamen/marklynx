@@ -2175,3 +2175,12 @@ body.suggest-modal-open{overflow:hidden}
     font-size: 11.5px !important;
   }
 }
+
+
+/* REV26: MOBILE LANDSCAPE Normal Videos LIST — hide Gamerscore + Quality only. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .game-meta-gamerscore,
+  #resultsList .game-meta-quality {
+    display: none !important;
+  }
+}
