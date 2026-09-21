@@ -2440,3 +2440,33 @@ body.suggest-modal-open{overflow:hidden}
     scroll-snap-align: start;
   }
 }
+
+
+/* PROD REV12: TEST-approved Game Guides header shared by LIST and GRID.
+   Recent Uploads remains untouched. */
+.game-guides-section{
+  max-width:1400px;
+  margin:12px auto 0;
+  padding:0 28px;
+}
+.game-guides-section .game-guides-head{
+  margin:0 0 12px;
+}
+.game-guides-section .game-guides-head h2{
+  margin:0;
+  font-size:22px;
+  line-height:1.2;
+  color:var(--text);
+  font-family:inherit;
+  font-weight:700;
+  text-transform:none;
+  letter-spacing:normal;
+}
+.game-guides-section .game-guides-count{
+  max-width:none;
+  margin:0 0 12px;
+  padding:0;
+}
+.game-guides-section + .container{
+  padding-top:0;
+}
