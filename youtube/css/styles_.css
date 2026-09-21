@@ -2335,3 +2335,11 @@ body.suggest-modal-open{overflow:hidden}
     max-width: none !important;
   }
 }
+
+
+/* REV43: Recent Uploads GRID alignment only.
+   Remove the TEST-only metadata spacer from GRID flow.
+   LIST, titles, platform, metadata styling, 4K, thumbnails and geometry untouched. */
+.recent-uploads-grid.grid-mode .recent-grid-meta-break {
+  display: none !important;
+}
