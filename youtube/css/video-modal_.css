@@ -64,3 +64,13 @@
   font-size: 22px;
   line-height: 1;
 }
+
+/* Mobile Landscape Normal Video Playback — REV02 TEST ONLY.
+   A single video has no playlist sidebar, so on landscape phones its full-width
+   16:9 player can become taller than the available viewport. Constrain ONLY the
+   no-sidebar modal by viewport height. Playlist geometry is unchanged. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .video-modal:not(:has(.video-modal-sidebar[style*="display: block"])) {
+    width: min(100%, calc(90vh * 16 / 9));
+  }
+}
