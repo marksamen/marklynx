@@ -2127,3 +2127,13 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV20: MOBILE Normal Videos GRID only.
+   Slightly enlarge the already-approved bottom-right 4K badge.
+   Placement and everything else remain unchanged. */
+@media (max-width: 900px) {
+  #resultsGrid .card .desktop-grid-quality .quality-badge {
+    width: 66px !important;
+  }
+}
