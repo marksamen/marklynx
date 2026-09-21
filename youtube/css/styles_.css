@@ -2253,3 +2253,15 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV37: MOBILE PORTRAIT Recent Uploads GRID — restore video TITLE only.
+   REV36 metadata cleanup stays frozen.
+   Keep existing two-column layout, thumbnails, platform and 4K untouched. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-title {
+    display: block !important;
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+}
