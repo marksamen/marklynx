@@ -2363,3 +2363,15 @@ body.suggest-modal-open{overflow:hidden}
     align-items: start;
   }
 }
+
+/* Mobile landscape forms: prevent browser focus-zoom on Developer and Suggest fields.
+   Both changes were independently tested and approved in TEST. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-contact-form input,
+  .developer-contact-form textarea,
+  .suggest-game-form input[type=text],
+  .suggest-game-form input[type=email],
+  .suggest-game-form textarea {
+    font-size: 16px;
+  }
+}
