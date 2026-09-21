@@ -2201,3 +2201,20 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV30: MOBILE LANDSCAPE Recent Uploads GRID — title/platform hierarchy only.
+   Copy the approved Recent title/platform treatment.
+   REV29 metadata cleanup remains; portrait/desktop/normal videos untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-upload-title {
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
