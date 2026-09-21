@@ -2218,3 +2218,12 @@ body.suggest-modal-open{overflow:hidden}
     color: #8f8f8f !important;
   }
 }
+
+
+/* REV34: MOBILE LANDSCAPE Normal Videos GRID — Console polish only. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsGrid .card .grid-list-sub {
+    font-size: 11px !important;
+    color: #8f8f8f !important;
+  }
+}
