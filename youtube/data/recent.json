@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-21T19:28:23.267962+00:00",
+  "updated": "2026-09-21T20:27:54.184036+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "CBkaY3Bk89M",
+      "title": "Dr. Oil | Easy 100% Completion | 1000 Gamerscore | 8 Minute Completion | 4K | 60FPS",
+      "published": "2026-09-21T19:56:58+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/CBkaY3Bk89M/hqdefault.jpg"
+    },
     {
       "id": "Ghz5fmoOVwI",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | No Star Coins | Normal Exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Which-Way labyrinth | 3rd Star Coin | Secret Exit",
       "published": "2026-09-17T13:06:18+00:00",
       "thumbnail": "https://i.ytimg.com/vi/Q3G8N7UhOxM/hqdefault.jpg"
-    },
-    {
-      "id": "bO21TsR5Xg0",
-      "title": "Panda: Shards of Aurora | Easy 100% Completion | 2000 Gamerscore | 5 Minute Completion | 4K | 60FPS",
-      "published": "2026-09-17T04:00:06+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/bO21TsR5Xg0/hqdefault.jpg"
     }
   ]
 }
