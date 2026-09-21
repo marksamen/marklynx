@@ -2103,11 +2103,19 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV17: MOBILE Recent LIST only.
-   Remove the forced first-grid-row placement from the title item.
-   Built from REV13; REV14/15/16 are discarded. */
+/* REV18: MOBILE Normal Videos GRID only.
+   Move the existing quality/4K badge to the bottom-right of the card.
+   Recent Uploads, List mode, and desktop are untouched. */
 @media (max-width: 900px) {
-  .recent-uploads-grid.list-mode .recent-upload-title {
-    grid-row: auto !important;
+  #resultsGrid .game-card:not(.list-card) {
+    position: relative;
+  }
+
+  #resultsGrid .game-card:not(.list-card) .quality-badge {
+    position: absolute !important;
+    right: 14px !important;
+    bottom: 14px !important;
+    left: auto !important;
+    top: auto !important;
   }
 }
