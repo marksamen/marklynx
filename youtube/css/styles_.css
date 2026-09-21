@@ -2303,3 +2303,23 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV40: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep REV39 placement; reduce badge for the smaller Recent thumbnails. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 50px !important;
+  }
+}
+
+
+/* REV41: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep approved REV39 placement; reduce badge from 50px to 40px. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+  }
+}
