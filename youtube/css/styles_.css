@@ -2363,3 +2363,50 @@ body.suggest-modal-open{overflow:hidden}
     align-items: start;
   }
 }
+
+
+/* Priority 1 REV01: PHONE LANDSCAPE rotation overflow — Normal Videos LIST only.
+   Landscape phones can exceed the 900px width breakpoint and fall back to the
+   desktop 7-column list, forcing horizontal page overflow. Keep the approved
+   compact mobile list geometry whenever the device is landscape + phone-height.
+   Portrait, Grid, Recent Uploads, Developer/Suggest and desktop are untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row,
+  #resultsList .list-head {
+    grid-template-columns: 88px minmax(0,1fr) auto;
+    gap: 10px;
+  }
+
+  #resultsList .list-thumb {
+    width: 88px;
+  }
+
+  #resultsList .list-row > span:nth-child(2) {
+    min-width: 0;
+  }
+
+  #resultsList .list-name,
+  #resultsList .list-sub {
+    overflow-wrap: anywhere;
+  }
+
+  #resultsList .list-col.time,
+  #resultsList .list-col.type,
+  #resultsList .list-col.diff,
+  #resultsList .list-col.quality,
+  #resultsList .list-head .h-time,
+  #resultsList .list-head .h-type,
+  #resultsList .list-head .h-diff,
+  #resultsList .list-head .h-quality {
+    display: none !important;
+  }
+}
+
+/* Developer Landscape REV01: prevent mobile browser focus-zoom on form fields.
+   Developer form only. Suggest A Game, portrait, and all other site areas untouched. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-contact-form input,
+  .developer-contact-form textarea {
+    font-size: 16px;
+  }
+}
