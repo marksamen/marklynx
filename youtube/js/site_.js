@@ -295,7 +295,7 @@ function render(){
   } else {
     resultsGrid.style.display='none';
     resultsList.style.display='flex';
-    listHead.style.display='grid';
+    listHead.style.display='none';
     resultsList.innerHTML = slice.map(r=>listRowHtml(r)).join('');
     resultsList.querySelectorAll('[data-playlist-id]').forEach(el=>{
       el.addEventListener('click', ()=>openPlaylistModal(el.dataset.playlistId, el.dataset.playlistTitle));
