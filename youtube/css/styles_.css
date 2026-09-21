@@ -2139,26 +2139,27 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV22: MOBILE Normal Videos GRID only.
-   Modernize the ACTUAL rendered difficulty pill and remove the legacy dot.
-   Built from frozen REV20; REV21 discarded. */
+/* REV23: MOBILE Normal Videos GRID — Difficulty only.
+   Port the proven Desktop Videos GRID REV46 diff-tag treatment.
+   Built from frozen REV20; REV21/REV22 discarded. */
 @media (max-width: 900px) {
-  #resultsGrid .card-meta .difficulty-pill {
+  #resultsGrid .card .diff-tag {
     display: inline-flex !important;
     align-items: center !important;
-    width: max-content;
-    padding: 3px 8px !important;
+    width: max-content !important;
+    max-width: 100%;
+    padding: 3px 7px !important;
     border: 1px solid #454545 !important;
     border-radius: 5px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.022)) !important;
-    color: #d7d7d7 !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
+    background: linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022)) !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
     line-height: 1.15 !important;
-    letter-spacing: .01em;
+    letter-spacing: .01em !important;
   }
 
-  #resultsGrid .card-meta .difficulty-pill .diff-dot {
+  #resultsGrid .card .diff-tag .diff-dot {
     display: none !important;
   }
 }
