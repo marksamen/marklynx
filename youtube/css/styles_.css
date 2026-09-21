@@ -2163,3 +2163,15 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* REV24: PORTRAIT MOBILE Normal Videos GRID — Difficulty sizing only.
+   Keep REV23 styling, but scale Difficulty to the Genre/Time metadata family.
+   Landscape, 4K, List, Recent, and desktop are untouched. */
+@media (max-width: 900px) and (orientation: portrait) {
+  #resultsGrid .card .diff-tag {
+    min-height: 29px !important;
+    padding: 5px 9px !important;
+    font-size: 13px !important;
+  }
+}
