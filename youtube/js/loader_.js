@@ -183,7 +183,7 @@
 
       await loadScript('js/youtube_.js?v=20260918-cache-REV07');
       await loadScript('js/site_.js?v=rev33-landscape-normal-grid-console');
-      await loadScript('js/developer_.js?v=20260919-developer-scrollbar-top-REV23');
+      await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=rev61');
       await loadScript('js/suggest_game_.js?v=20260919-suggest-close-REV18');
     } catch (error) {

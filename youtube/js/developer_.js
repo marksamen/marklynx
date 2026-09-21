@@ -179,6 +179,15 @@
   // immediate path; this observer is the device-independent safety net.
   const sharedMediaOverlay = document.getElementById('videoModalOverlay');
   if (sharedMediaOverlay) {
+    // TEST REV01: while Developer media is open on a phone in landscape,
+    // backdrop taps must not close the shared player. The X remains the close control.
+    sharedMediaOverlay.addEventListener('click', event => {
+      const landscapePhone = window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
+      if (developerMediaSuspended && landscapePhone && event.target === sharedMediaOverlay) {
+        event.stopImmediatePropagation();
+      }
+    }, true);
+
     new MutationObserver(() => {
       if (developerMediaSuspended && !sharedMediaOverlay.classList.contains('open')) {
         restoreAfterMedia();
