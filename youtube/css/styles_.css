@@ -2103,19 +2103,27 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV18: MOBILE Normal Videos GRID only.
-   Move the existing quality/4K badge to the bottom-right of the card.
-   Recent Uploads, List mode, and desktop are untouched. */
+/* REV19: MOBILE Normal Videos GRID only.
+   Reuse the existing desktop-grid-quality overlay mechanism:
+   show its dedicated quality badge bottom-right and hide the ordinary
+   metadata quality instance. Built from REV13; REV18 discarded. */
 @media (max-width: 900px) {
-  #resultsGrid .game-card:not(.list-card) {
-    position: relative;
+  #resultsGrid .card .desktop-grid-quality {
+    display: inline-flex !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    z-index: 4;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
-  #resultsGrid .game-card:not(.list-card) .quality-badge {
-    position: absolute !important;
-    right: 14px !important;
-    bottom: 14px !important;
-    left: auto !important;
-    top: auto !important;
+  #resultsGrid .card .desktop-grid-quality .quality-badge {
+    width: 58px;
+  }
+
+  #resultsGrid .card-meta .game-meta-quality {
+    display: none !important;
   }
 }
