@@ -213,6 +213,7 @@
     white-space:nowrap;
     transition:background .15s, border-color .15s;
     flex-shrink:0;
+    cursor: pointer;
   }
   .suggest-btn:hover{
     background:var(--red-bright);
@@ -960,7 +961,7 @@ body.developer-modal-open{overflow:hidden;}
   border-top:3px solid var(--red);border-radius:6px;padding:38px;box-shadow:0 24px 80px rgba(0,0,0,.65);
 }
 .developer-close{
-  position:absolute;right:18px;top:16px;width:38px;height:38px;border-radius:3px;border:1px solid #3a3a3a;
+  position:fixed;right:18px;top:16px;z-index:1002;width:38px;height:38px;border-radius:3px;border:1px solid #3a3a3a;
   background:#181818;color:var(--text);font:700 17px var(--sans);cursor:pointer;
 }
 .developer-close:hover{border-color:var(--red);color:var(--red-bright);}
@@ -1135,5 +1136,1230 @@ body.suggest-modal-open{overflow:hidden}
 @media (min-width: 901px) {
   .developer-cards {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+
+/* TEST REV05: Mobile Recent Uploads — overlay Quality badge on thumbnail (GRID + LIST). */
+@media (max-width:900px){
+  .recent-uploads-grid.grid-mode .recent-upload-card,
+  .recent-uploads-grid.list-mode .recent-upload-card{
+    position:relative;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality,
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality{
+    display:flex !important;
+    position:absolute;
+    z-index:2;
+    margin:0 !important;
+    width:auto !important;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality{
+    right:6px;
+    bottom:6px;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality{
+    left:42px;
+    bottom:10px;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality .quality-badge,
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality .quality-badge{
+    width:54px;
+    margin:0;
+  }
+}
+
+@media (max-width:640px){
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality{
+    left:22px;
+    bottom:9px;
+  }
+}
+
+
+/* TEST REV06: Mobile Recent Uploads LIST only — prevent Quality image from inheriting thumbnail height. */
+@media (max-width:900px){
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality .quality-badge{
+    width:54px !important;
+    height:auto !important;
+    max-height:24px;
+    object-fit:contain;
+  }
+}
+
+
+/* TEST REV08: Mobile Recent Uploads LIST only — equal spacing thumbnail > Quality > title. */
+@media (max-width:900px){
+  .recent-uploads-grid.list-mode .recent-upload-card{
+    grid-template-columns:80px 54px minmax(0,1fr);
+    column-gap:8px;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality{
+    display:flex !important;
+    position:static !important;
+    grid-column:2;
+    grid-row:1;
+    width:54px !important;
+    height:auto !important;
+    margin:0 !important;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality .quality-badge{
+    display:block;
+    width:54px !important;
+    height:auto !important;
+    max-height:24px;
+    object-fit:contain;
+    margin:0 !important;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-title{
+    grid-column:3;
+    grid-row:1;
+    min-width:0;
+  }
+}
+
+
+/* TEST REV08: Match the first LIST grid column to the 72px thumbnail on small mobile. */
+@media (max-width:640px){
+  .recent-uploads-grid.list-mode .recent-upload-card{
+    grid-template-columns:72px 54px minmax(0,1fr);
+    column-gap:8px;
+  }
+}
+
+/* TEST REV09: Mobile main GRID only — make Gamerscore badge clearly readable over any thumbnail. */
+@media (max-width:900px){
+  #resultsGrid .gs-pill{
+    top:8px;
+    right:8px;
+    background:rgba(10,10,10,.94);
+    border:1px solid rgba(255,255,255,.9);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.1;
+    padding:5px 10px;
+    border-radius:20px;
+    letter-spacing:.02em;
+    text-shadow:0 1px 2px rgba(0,0,0,.85);
+    box-shadow:0 1px 4px rgba(0,0,0,.55);
+  }
+}
+
+/* TEST REV10: Mobile main LIST polish — match Gamerscore pill to GRID and reduce quality badge size. */
+@media (max-width:900px){
+  #resultsList .list-col.gs{
+    display:inline-block;
+    justify-self:end;
+    background:rgba(10,10,10,.94);
+    border:1px solid rgba(255,255,255,.9);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.1;
+    padding:5px 10px;
+    border-radius:20px;
+    letter-spacing:.02em;
+    text-shadow:0 1px 2px rgba(0,0,0,.85);
+    box-shadow:0 1px 4px rgba(0,0,0,.55);
+  }
+
+  #resultsList .mobile-quality-badge .quality-badge{
+    width:44px;
+  }
+}
+
+
+/* TEST REV11: Mobile main LIST only — reduce Gamerscore pill visual dominance. */
+@media (max-width:900px){
+  #resultsList .list-col.gs{
+    font-size:11px;
+    line-height:1;
+    padding:3px 7px;
+    letter-spacing:.01em;
+  }
+}
+
+/* TEST REV13: Desktop Developer close — stay vertically fixed, anchor horizontally to panel edge. */
+@media (min-width:901px){
+  .developer-close{
+    right:max(40px, calc((100vw - 1040px)/2 + 16px));
+    top:calc(4vh + 8px);
+  }
+}
+
+/* TEST REV15: Mobile Developer + Suggest forms — prevent iOS focus auto-zoom. */
+@media (max-width:760px){
+  .developer-contact-form input,
+  .developer-contact-form textarea,
+  .developer-contact-form select,
+  .suggest-game-form input[type=text],
+  .suggest-game-form input[type=email],
+  .suggest-game-form textarea,
+  .suggest-game-form select{
+    font-size:16px;
+  }
+}
+
+
+/* TEST REV18: Suggest X is fixed but positioned by JS inside the panel's visible corner. */
+.suggest-close{
+  position:fixed;
+  right:auto;
+  z-index:10052;
+}
+
+
+/* ---------- TEST REV21: Developer Showcase horizontal video rail ---------- */
+@media (min-width:761px){
+  .developer-cards{
+    display:flex;
+    grid-template-columns:none;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:0 0 12px;
+    scroll-snap-type:x proximity;
+    scrollbar-width:auto;
+    scrollbar-color:#74231f #171717;
+  }
+  .developer-cards::-webkit-scrollbar{height:12px;}
+  .developer-cards::-webkit-scrollbar-track{background:#171717;border-top:1px solid #292929;}
+  .developer-cards::-webkit-scrollbar-thumb{background:#74231f;border:3px solid #171717;border-radius:999px;}
+  .developer-cards::-webkit-scrollbar-thumb:hover{background:#c72b25;}
+  .developer-card{
+    flex:0 0 calc((100% - 42px) / 4);
+    min-width:0;
+    scroll-snap-align:start;
+  }
+}
+
+@media (max-width:760px){
+  .developer-section-head::after{
+    content:"  •  SWIPE FOR MORE VIDEOS →";
+    color:#c72b25;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.04em;
+    white-space:nowrap;
+  }
+  .developer-cards{
+    scrollbar-width:thin;
+    scrollbar-color:#74231f #171717;
+  }
+  .developer-cards::-webkit-scrollbar{display:block;height:8px;}
+  .developer-cards::-webkit-scrollbar-track{background:#171717;}
+  .developer-cards::-webkit-scrollbar-thumb{background:#74231f;border-radius:999px;}
+}
+
+/* ---------- TEST REV23: persistent mobile Developer Showcase indicator above videos ---------- */
+@media (max-width:760px){
+  .developer-section-head::after{content:none;}
+  .developer-cards{
+    scrollbar-width:none;
+    padding-bottom:8px;
+  }
+  .developer-cards::-webkit-scrollbar{display:none;}
+  .developer-scroll-indicator{
+    position:relative;
+    height:8px;
+    margin:0 0 10px;
+    overflow:hidden;
+    background:#2b2b2b;
+    border:1px solid #444;
+    border-radius:999px;
+  }
+  .developer-scroll-indicator-thumb{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:25%;
+    background:#c72b25;
+    border-radius:999px;
+    transform:translateX(0);
+    will-change:transform;
+  }
+}
+@media (min-width:761px){
+  .developer-scroll-indicator{display:none;}
+}
+
+
+/* ---------- TEST REV25: Modern game metadata ---------- */
+/* Genre + completion time: modern compact chips in GRID on desktop and mobile. */
+.card-meta{
+  align-items:center;
+  gap:7px;
+}
+.card-meta .game-meta-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:25px;
+  padding:3px 8px;
+  border:1px solid #3b3b3b;
+  border-radius:6px;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  color:#e3e3e3;
+  font-size:11.5px;
+  font-weight:700;
+  line-height:1.15;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.game-meta-label{
+  color:#e34a43;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.card-meta .game-meta-quality{
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+}
+
+/* Text Guide Included: make the existing badge look intentional, not legacy text. */
+.text-guide-badge{
+  gap:6px;
+  min-height:25px;
+  padding:3px 9px;
+  border:1px solid #6f302d;
+  border-radius:6px;
+  background:linear-gradient(180deg,rgba(199,43,37,.16),rgba(199,43,37,.07));
+  color:#f0f0f0;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.01em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.text-guide-badge svg{
+  width:12px;
+  height:12px;
+  color:#e34a43;
+}
+
+/* Desktop LIST: modernize only Genre, Completion Time and Gamerscore. */
+@media (min-width:901px){
+  #resultsList .list-col.type,
+  #resultsList .list-col.time{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 8px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:12px;
+    font-weight:700;
+    text-align:left;
+  }
+  #resultsList .list-col.gs{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:62px;
+    padding:6px 9px;
+    border:1px solid #7b332f;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(199,43,37,.18),rgba(199,43,37,.07));
+    color:#fff;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.02em;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  }
+}
+
+/* Preserve the already-approved mobile Gamerscore styling from REV11. */
+@media (max-width:900px){
+  #resultsList .list-col.gs{
+    font-size:11px;
+    line-height:1;
+    padding:3px 7px;
+    letter-spacing:.01em;
+  }
+}
+
+
+/* ---------- TEST REV26: propagate approved metadata styling ---------- */
+/* Main LIST on phones: Genre + Time were previously hidden columns. Show compact copies under the title instead. */
+.mobile-game-meta{display:none;}
+@media (max-width:900px){
+  #resultsList .mobile-game-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:6px;
+  }
+  #resultsList .mobile-game-meta .game-meta-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    min-height:22px;
+    padding:3px 7px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:10.5px;
+    font-weight:700;
+    line-height:1.1;
+  }
+}
+
+/* Recent Uploads: use the same modern Genre/Time treatment as the approved main guide styling. */
+.recent-upload-meta.type,
+.recent-upload-meta.time{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:25px;
+  padding:3px 8px;
+  border:1px solid #3b3b3b;
+  border-radius:6px;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  color:#e3e3e3;
+  font-size:11.5px;
+  font-weight:700;
+  line-height:1.15;
+  text-align:left;
+}
+.recent-meta-label{
+  color:#e34a43;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+@media (min-width:901px){
+  .recent-upload-meta.gs{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:62px;
+    padding:6px 9px;
+    border:1px solid #7b332f;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(199,43,37,.18),rgba(199,43,37,.07));
+    color:#fff;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.02em;
+  }
+}
+/* On mobile Recent, keep approved quality overlay and Gamerscore behavior; surface only Genre + Time as compact chips. */
+@media (max-width:900px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time{
+    display:inline-flex !important;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.time{
+    display:inline-flex !important;
+    grid-column:2;
+    justify-self:start;
+  }
+}
+
+/* ---------- TEST REV27: Desktop Videos LIST ordering only ---------- */
+/* Keep fixed-size Quality badge at the far right. No Recent/mobile changes. */
+@media (min-width:901px){
+  #resultsList .list-col.type{order:3;}
+  #resultsList .list-col.time{order:4;}
+  #resultsList .list-col.diff{order:5;}
+  #resultsList .list-col.gs{order:6;}
+  #resultsList .list-col.quality{order:7;}
+
+  #listHead .h-type{order:3;}
+  #listHead .h-time{order:4;}
+  #listHead .h-diff{order:5;}
+  #listHead > span:last-child{order:6;}
+  #listHead .h-quality{order:7;}
+}
+
+/* ---------- TEST REV28: Desktop Recent Uploads LIST only ---------- */
+/* Match the frozen Desktop Videos LIST ordering. Keep Quality fixed at the far right. */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-upload-meta.type{order:3;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.time{order:4;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.diff{order:5;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs{order:6;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality{order:7;}
+
+  /* Explicit spacing because the label/value text was visually running together. */
+  .recent-uploads-grid.list-mode .recent-meta-label{margin-right:6px;}
+}
+
+/* ---------- TEST REV29: Desktop Videos LIST — Difficulty only ---------- */
+@media (min-width:901px){
+  #resultsList .list-col.diff{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:27px;
+    padding:5px 9px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.15;
+    white-space:nowrap;
+    text-align:center;
+  }
+}
+
+/* ---------- TEST REV30: Desktop Recent Uploads LIST — Difficulty only ---------- */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-upload-meta.diff{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:27px;
+    padding:5px 9px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.15;
+    white-space:nowrap;
+    text-align:center;
+  }
+}
+
+/* ---------- TEST REV31: Desktop Videos LIST — Platform only ---------- */
+@media (min-width:901px){
+  #resultsList .list-row .list-sub{
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    max-width:100%;
+    margin-top:5px;
+    padding:3px 7px;
+    border:1px solid #343434;
+    border-radius:5px;
+    background:rgba(255,255,255,.025);
+    color:#bdbdbd;
+    font-size:11px;
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:.01em;
+  }
+}
+
+/* ---------- TEST REV32: Desktop Videos LIST — neutral metadata balance ---------- */
+@media (min-width:901px){
+  /* Genre + Time: neutral pill, restrained label accent. */
+  #resultsList .list-col.type,
+  #resultsList .list-col.time{
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#f0f0f0;
+  }
+  #resultsList .list-col.type .game-meta-label,
+  #resultsList .list-col.time .game-meta-label{
+    color:#a86b68;
+  }
+
+  /* Gamerscore: match the quieter Difficulty family instead of a red action button. */
+  #resultsList .list-col.gs{
+    border-color:#454545;
+    background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022));
+    color:#fff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+
+  /* Text Guide: neutral badge; document icon carries the small accent. */
+  #resultsList .text-guide-badge{
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#ededed;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  #resultsList .text-guide-badge svg{
+    color:#a86b68;
+  }
+}
+
+/* ---------- TEST REV33: Desktop Videos LIST — Text Guide + Gamerscore balance only ---------- */
+@media (min-width:901px){
+  /* Text Guide: calm ocean-blue feature badge, no heavy bold. */
+  #resultsList .text-guide-badge{
+    border-color:#31586b;
+    background:linear-gradient(180deg,rgba(45,111,143,.16),rgba(45,111,143,.055));
+    color:#b9dce9;
+    font-weight:600;
+  }
+  #resultsList .text-guide-badge svg{
+    color:#65b7d6;
+  }
+
+  /* Gamerscore: keep the approved neutral pill but stop it dominating the row. */
+  #resultsList .list-col.gs{
+    font-weight:700;
+    letter-spacing:.01em;
+  }
+}
+
+/* ---------- TEST REV34: Desktop Videos LIST — Quality image size only ---------- */
+@media (min-width:901px){
+  #resultsList .list-col.quality .quality-badge{
+    width:54px;
+  }
+}
+
+/* ---------- TEST REV35: Desktop Recent LIST — under-title information only ---------- */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-upload-title-block{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-platform{
+    display:block;
+    margin-top:3px;
+    color:var(--text-dim);
+    font-size:10px;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges{
+    display:block;
+    margin-top:4px;
+  }
+}
+
+/* ---------- TEST REV37: Desktop Recent LIST — proportional visual cleanup only ---------- */
+@media (min-width:901px){
+  /* Recent thumbnail is 92px vs Videos 110px (~84%), so scale the metadata family accordingly. */
+  .recent-uploads-grid.list-mode .recent-upload-platform{
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    max-width:100%;
+    margin-top:4px;
+    padding:2px 6px;
+    border:1px solid #343434;
+    border-radius:5px;
+    background:rgba(255,255,255,.025);
+    color:#bdbdbd;
+    font-size:9.5px;
+    font-weight:700;
+    line-height:1.15;
+    letter-spacing:.01em;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:5px;
+    margin-top:4px;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .kinect-badge,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .text-guide-badge{
+    min-height:20px;
+    padding:2px 6px;
+    font-size:9.5px;
+    line-height:1.1;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .text-guide-badge{
+    border-color:#31586b;
+    background:linear-gradient(180deg,rgba(45,111,143,.16),rgba(45,111,143,.055));
+    color:#b9dce9;
+    font-weight:600;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .text-guide-badge svg{
+    width:10px;
+    height:10px;
+    color:#65b7d6;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.time{
+    min-height:22px;
+    padding:3px 7px;
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#f0f0f0;
+    font-size:10px;
+    font-weight:700;
+    gap:5px;
+  }
+  .recent-uploads-grid.list-mode .recent-meta-label{
+    margin-right:6px;
+    color:#a86b68;
+    font-size:7.5px;
+    font-weight:900;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.diff{
+    min-height:22px;
+    padding:3px 7px;
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:10px;
+    font-weight:700;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    min-width:52px;
+    min-height:22px;
+    padding:3px 7px;
+    border:1px solid #454545;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022));
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.01em;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality .quality-badge{
+    width:45px;
+  }
+}
+
+
+/* ---------- TEST REV45: Desktop Videos GRID — Quality overlay only ---------- */
+.desktop-grid-quality{display:none;}
+@media (min-width:761px){
+  #resultsGrid .card .desktop-grid-quality{
+    display:inline-flex;
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    z-index:4;
+    align-items:center;
+    justify-content:center;
+    line-height:1;
+  }
+  #resultsGrid .card .desktop-grid-quality .quality-badge{
+    width:58px;
+  }
+  #resultsGrid .card-meta .game-meta-quality{
+    display:none;
+  }
+}
+
+/* ---------- TEST REV46: Desktop Videos GRID — Difficulty only ---------- */
+/* Copy the approved Desktop Videos LIST Difficulty treatment into GRID. */
+@media (min-width:901px){
+  #resultsGrid .card .diff-tag{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:max-content;
+    max-width:100%;
+    min-height:25px;
+    margin-top:0;
+    padding:3px 8px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.15;
+    white-space:nowrap;
+    text-align:center;
+  }
+  #resultsGrid .card .diff-tag .diff-dot{display:none;}
+}
+
+/* ---------- TEST REV48: Desktop Videos GRID — approved LIST colors only ---------- */
+@media (min-width:901px){
+  /* Genre + Time: copy approved Desktop LIST restrained label accent. */
+  #resultsGrid .card-meta .game-meta-pill .game-meta-label{
+    color:#a86b68;
+  }
+
+  /* Text Guide Included: copy approved Desktop LIST ocean-blue treatment. */
+  #resultsGrid .card .text-guide-badge{
+    border-color:#31586b;
+    background:linear-gradient(180deg,rgba(45,111,143,.16),rgba(45,111,143,.055));
+    color:#b9dce9;
+    font-weight:600;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  #resultsGrid .card .text-guide-badge svg{
+    color:#65b7d6;
+  }
+}
+
+/* ---------- TEST REV49: Desktop Videos GRID — Gamerscore visibility only ---------- */
+/* Copy the already-approved Mobile GRID Gamerscore treatment exactly. */
+@media (min-width:901px){
+  #resultsGrid .gs-pill{
+    top:8px;
+    right:8px;
+    background:rgba(10,10,10,.94);
+    border:1px solid rgba(255,255,255,.9);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.1;
+    padding:5px 10px;
+    border-radius:20px;
+    letter-spacing:.02em;
+    text-shadow:0 1px 2px rgba(0,0,0,.85);
+    box-shadow:0 1px 4px rgba(0,0,0,.55);
+  }
+}
+
+
+/* ---------- TEST REV55: Desktop Recent Uploads GRID — Difficulty only ---------- */
+/* Copy the approved Desktop Normal Videos GRID Difficulty treatment into Recent GRID. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:max-content;
+    max-width:100%;
+    min-height:25px;
+    margin-top:0;
+    padding:3px 8px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.15;
+    white-space:nowrap;
+    text-align:center;
+  }
+}
+
+
+/* ---------- TEST REV57: Desktop Recent Uploads GRID — Quality badge only ---------- */
+.recent-grid-quality{display:none;}
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb{position:relative;}
+  .recent-uploads-grid.grid-mode .recent-grid-quality{
+    display:block;
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    z-index:3;
+    line-height:0;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality{display:none;}
+}
+
+
+/* ---------- TEST REV58: Desktop Recent Uploads GRID — Quality badge sizing only ---------- */
+/* Keep REV57 placement; size the cloned Recent badge like the approved Normal GRID badge. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img{
+    width:auto;
+    height:42px;
+    max-width:89px;
+    object-fit:contain;
+  }
+}
+
+
+/* ---------- TEST REV64: Desktop Recent GRID — approved Normal GRID colors only ---------- */
+@media (min-width:901px){
+  /* Genre + Time labels: exact approved Desktop Normal Videos GRID accent. */
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time .recent-meta-label{
+    color:#a86b68;
+  }
+
+  /* Text Guide Included: exact approved Desktop Normal Videos GRID blue treatment. */
+  .recent-uploads-grid.grid-mode .text-guide-badge{
+    border-color:#31586b;
+    background:linear-gradient(180deg,rgba(45,111,143,.16),rgba(45,111,143,.055));
+    color:#b9dce9;
+    font-weight:600;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  .recent-uploads-grid.grid-mode .text-guide-badge svg{
+    color:#65b7d6;
+  }
+}
+
+/* ---------- TEST REV65: Desktop Recent LIST — restore approved metadata column placement ---------- */
+/* The grid-only spacer must not consume a desktop LIST grid column. */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-grid-meta-break{
+    display:none;
+  }
+}
+
+/* ---------- TEST REV66: Desktop Recent Uploads GRID — metadata colors only ---------- */
+/* Match approved Normal Videos GRID color treatment. No sizing, spacing, or layout changes. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time .recent-meta-label{
+    color:#a86b68;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs{
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+  }
+}
+
+/* ---------- TEST REV67: Desktop Recent Uploads GRID — Gamerscore sizing only ---------- */
+/* Match the approved neighboring Recent GRID metadata box sizing. Colors/layout unchanged. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs{
+    min-height:25px;
+    padding:3px 8px;
+    font-size:12px;
+    line-height:1.15;
+  }
+}
+
+/* ---------- TEST REV68: Desktop Recent Uploads GRID — Gamerscore weight only ---------- */
+/* Remove bold from Recent GRID Gamerscore only. Sizing/colors/layout unchanged. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs{
+    font-weight:400;
+  }
+}
+
+/* ---------- TEST REV70: Desktop Recent GRID — title/platform row only ---------- */
+/* Keep the TEST title/platform wrapper on its own full-width row so metadata always starts below it. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-title-block{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    width:100%;
+    min-width:0;
+  }
+}
+
+
+/* REV10: MOBILE normal-video LIST only.
+   Remove the compact Genre/Time metadata copies added under the title.
+   Desktop and Recent Uploads are intentionally untouched. */
+@media (max-width: 900px) {
+  #resultsList .mobile-game-meta {
+    display: none !important;
+  }
+}
+
+
+/* REV12: MOBILE Recent LIST only.
+   Hide the actual Genre + Time metadata elements.
+   Built from frozen REV10; REV11 is discarded. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-meta.type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.time {
+    display: none !important;
+  }
+}
+
+
+/* REV13: MOBILE Recent LIST typography hierarchy only.
+   Title is primary; platform/console is smaller and muted.
+   No positioning, badge, thumbnail, row-height, Grid, Normal List,
+   or desktop changes. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-title {
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
+
+
+/* REV19: MOBILE Normal Videos GRID only.
+   Reuse the existing desktop-grid-quality overlay mechanism:
+   show its dedicated quality badge bottom-right and hide the ordinary
+   metadata quality instance. Built from REV13; REV18 discarded. */
+@media (max-width: 900px) {
+  #resultsGrid .card .desktop-grid-quality {
+    display: inline-flex !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    z-index: 4;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  #resultsGrid .card .desktop-grid-quality .quality-badge {
+    width: 58px;
+  }
+
+  #resultsGrid .card-meta .game-meta-quality {
+    display: none !important;
+  }
+}
+
+
+/* REV20: MOBILE Normal Videos GRID only.
+   Slightly enlarge the already-approved bottom-right 4K badge.
+   Placement and everything else remain unchanged. */
+@media (max-width: 900px) {
+  #resultsGrid .card .desktop-grid-quality .quality-badge {
+    width: 66px !important;
+  }
+}
+
+
+/* REV23: MOBILE Normal Videos GRID — Difficulty only.
+   Port the proven Desktop Videos GRID REV46 diff-tag treatment.
+   Built from frozen REV20; REV21/REV22 discarded. */
+@media (max-width: 900px) {
+  #resultsGrid .card .diff-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    width: max-content !important;
+    max-width: 100%;
+    padding: 3px 7px !important;
+    border: 1px solid #454545 !important;
+    border-radius: 5px !important;
+    background: linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022)) !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    letter-spacing: .01em !important;
+  }
+
+  #resultsGrid .card .diff-tag .diff-dot {
+    display: none !important;
+  }
+}
+
+
+/* REV25: PORTRAIT MOBILE Normal Videos GRID — Difficulty exact size match.
+   Match the approved Genre/Time game-meta-pill dimensions exactly.
+   Built from REV23; oversized REV24 discarded. */
+@media (max-width: 900px) and (orientation: portrait) {
+  #resultsGrid .card .diff-tag {
+    min-height: 25px !important;
+    padding: 3px 8px !important;
+    font-size: 11.5px !important;
+  }
+}
+
+
+/* REV28: MOBILE LANDSCAPE Normal Videos LIST — simplify for long titles.
+   Hide Genre + Time + Difficulty only.
+   Gamerscore + Quality remain visible.
+   Portrait/Grid/Recent/Desktop untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-col.type,
+  #resultsList .list-col.time,
+  #resultsList .list-col.diff {
+    display: none !important;
+  }
+}
+
+
+/* REV29: MOBILE LANDSCAPE Recent Uploads GRID — metadata cleanup only.
+   Hide Genre + Time + Difficulty.
+   Preserve thumbnails, title, platform, columns, spacing, and 4K overlay.
+   Portrait/Desktop/Normal Videos untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+}
+
+
+/* REV30: MOBILE LANDSCAPE Recent Uploads GRID — title/platform hierarchy only.
+   Copy the approved Recent title/platform treatment.
+   REV29 metadata cleanup remains; portrait/desktop/normal videos untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-upload-title {
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
+
+
+/* REV34: MOBILE LANDSCAPE Normal Videos GRID — Console polish only. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsGrid .card .grid-list-sub {
+    font-size: 11px !important;
+    color: #8f8f8f !important;
+  }
+}
+
+
+/* REV35: MOBILE PORTRAIT Normal Videos GRID — Console/Platform.
+   Match approved landscape REV34: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  #resultsGrid .card .grid-list-sub {
+    display: block !important;
+    margin-top: 2px;
+    font-size: 11px !important;
+    line-height: 1.25;
+    color: #8f8f8f !important;
+    overflow-wrap: anywhere;
+  }
+}
+
+
+/* REV36: MOBILE PORTRAIT Recent Uploads GRID — metadata cleanup only.
+   Hide Genre + Time + Difficulty.
+   Preserve thumbnails, title, platform, 4K, columns, gaps and sizing. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+}
+
+
+/* REV37: MOBILE PORTRAIT Recent Uploads GRID — restore video TITLE only.
+   REV36 metadata cleanup stays frozen.
+   Keep existing two-column layout, thumbnails, platform and 4K untouched. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-title {
+    display: block !important;
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+}
+
+
+/* REV38: MOBILE PORTRAIT Recent Uploads GRID — Console polish only.
+   Match approved mobile console treatment: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
+
+
+/* REV39: MOBILE PORTRAIT Recent Uploads GRID — 4K overlay only.
+   Reuse the proven dedicated .recent-grid-quality overlay.
+   Put 4K at the usual bottom-right of the thumbnail; hide old metadata copy. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality {
+    display: block !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    z-index: 3 !important;
+    line-height: 0 !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 66px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality {
+    display: none !important;
+  }
+}
+
+
+/* REV40: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep REV39 placement; reduce badge for the smaller Recent thumbnails. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 50px !important;
+  }
+}
+
+
+/* REV41: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep approved REV39 placement; reduce badge from 50px to 40px. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+  }
+}
+
+
+/* REV42: MOBILE LANDSCAPE Recent Uploads GRID — 4K sizing only.
+   Match approved portrait REV41 size: 40px. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+    height: auto !important;
+    max-width: none !important;
+  }
+}
+
+
+/* REV43: Recent Uploads GRID alignment only.
+   Remove the TEST-only metadata spacer from GRID flow.
+   LIST, titles, platform, metadata styling, 4K, thumbnails and geometry untouched. */
+.recent-uploads-grid.grid-mode .recent-grid-meta-break {
+  display: none !important;
+}
+
+
+/* REV44: MOBILE Recent Uploads GRID — card alignment only.
+   Keep each card at the top of its grid cell.
+   Desktop and all approved content styling remain untouched. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
+  }
+}
+
+
+/* REV45: MOBILE LANDSCAPE Recent Uploads GRID — card alignment only.
+   Apply the same approved REV44 top alignment using the established
+   landscape-phone scope. Desktop and portrait remain untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
   }
 }
