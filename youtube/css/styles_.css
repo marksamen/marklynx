@@ -2560,3 +2560,16 @@ body.suggest-modal-open{overflow:hidden}
     margin: 0;
   }
 }
+
+
+/* Mobile Landscape Normal Videos Quality REV02
+   Keep Gamerscore grouped immediately left of the already-correct quality badge. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-col.gamerscore {
+    position: absolute;
+    right: 102px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+  }
+}
