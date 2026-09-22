@@ -2833,7 +2833,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV19 — DIAGNOSTIC ONLY. */
+/* LANDSCAPE SEARCH REV20 — DIAGNOSTIC ONLY. */
 #rev18-landscape-debug{
   display:none;
 }
@@ -2847,7 +2847,7 @@ body.suggest-modal-open{overflow:hidden}
     background:rgba(0,0,0,.92);
     color:#fff;
     border:1px solid #fff;
-    font:700 6px/1 monospace;
+    font:700 4px/1 monospace;
     white-space:nowrap;
     overflow:hidden;
     pointer-events:none;
