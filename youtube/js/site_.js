@@ -371,11 +371,8 @@ listBtn.addEventListener('click', ()=>{
 render();
 
 
-// GLOBAL MOBILE ORIENTATION REV04 — iOS/WKWebView viewport recovery.
-// Preserves field values and the existing viewport/zoom policy.
-// Safari's proven REV03 behavior remains; VisualViewport settling is added
-// for non-Safari iOS browsers where WKWebView can report stale dimensions
-// during orientation/focus changes.
+// GLOBAL MOBILE ORIENTATION REV02 — iOS/WebKit viewport recovery.
+// Clean-baseline implementation. Preserves field values; never changes viewport meta/zoom policy.
 (() => {
   const ua = navigator.userAgent || '';
   const isIOSWebKit =
@@ -390,53 +387,37 @@ render();
     return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
   };
 
-  const visualViewport = window.visualViewport;
   let rotatedRecently = false;
   let rotationTimer = 0;
-  let recoveryTimer = 0;
-  let lastViewportWidth = visualViewport ? visualViewport.width : 0;
-  let lastViewportHeight = visualViewport ? visualViewport.height : 0;
+
+  const viewportMeta = document.querySelector('meta[name="viewport"]');
+  const originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
+
+  const lockEditingScale = () => {
+    if (!viewportMeta || originalViewportContent === null) return;
+
+    const withoutMaximumScale = originalViewportContent
+      .replace(/\s*,?\s*maximum-scale\s*=\s*[^,]+/gi, '')
+      .replace(/^\s*,|,\s*$/g, '')
+      .trim();
+
+    viewportMeta.setAttribute(
+      'content',
+      `${withoutMaximumScale}${withoutMaximumScale ? ', ' : ''}maximum-scale=1`
+    );
+  };
+
+  const restoreEditingScale = () => {
+    if (!viewportMeta || originalViewportContent === null) return;
+    viewportMeta.setAttribute('content', originalViewportContent);
+  };
 
   const refreshViewport = () => {
     const x = window.scrollX;
     const y = window.scrollY;
+    // WebKit recalculates the visual viewport when the layout viewport is touched.
     window.scrollTo(x, y + 1);
     requestAnimationFrame(() => window.scrollTo(x, y));
-  };
-
-  const recoverAfterViewportSettles = () => {
-    clearTimeout(recoveryTimer);
-
-    let stableReads = 0;
-    let attempts = 0;
-
-    const check = () => {
-      attempts += 1;
-
-      if (!visualViewport) {
-        refreshViewport();
-        return;
-      }
-
-      const width = visualViewport.width;
-      const height = visualViewport.height;
-      const stable =
-        Math.abs(width - lastViewportWidth) < 0.5 &&
-        Math.abs(height - lastViewportHeight) < 0.5;
-
-      lastViewportWidth = width;
-      lastViewportHeight = height;
-      stableReads = stable ? stableReads + 1 : 0;
-
-      if (stableReads >= 2 || attempts >= 12) {
-        refreshViewport();
-        return;
-      }
-
-      recoveryTimer = setTimeout(check, 100);
-    };
-
-    recoveryTimer = setTimeout(check, 50);
   };
 
   const onOrientationChange = () => {
@@ -448,13 +429,9 @@ render();
     rotatedRecently = true;
     clearTimeout(rotationTimer);
 
-    // Keep the REV03 recovery that already passes Safari.
+    // Let orientation/layout settle before asking WebKit to recalculate.
     setTimeout(refreshViewport, 250);
     setTimeout(refreshViewport, 650);
-
-    // WKWebView browsers can publish stale dimensions during the orientation
-    // event and silently correct them later. Recover after VisualViewport settles.
-    recoverAfterViewportSettles();
 
     rotationTimer = setTimeout(() => {
       rotatedRecently = false;
@@ -463,28 +440,34 @@ render();
 
   window.addEventListener('orientationchange', onOrientationChange);
 
-  if (visualViewport) {
-    visualViewport.addEventListener('resize', recoverAfterViewportSettles);
-    visualViewport.addEventListener('scroll', recoverAfterViewportSettles);
-  }
-
   document.addEventListener('focusin', (e) => {
     if (!isEditable(e.target)) return;
 
+    // REV05: prevent iOS/WKWebView from entering the giant focus zoom while editing.
+    // The site's original viewport policy is restored as soon as editing ends.
+    lockEditingScale();
+
     const landscapeNow = window.matchMedia('(orientation: landscape)').matches;
 
-    // Preserve REV03's initial-Landscape recovery.
+    // REV03: iOS can enter the bad visual-viewport state when an editable
+    // field is FIRST focused while already in Landscape, before any rotation.
     if (landscapeNow) {
       setTimeout(refreshViewport, 350);
-      recoverAfterViewportSettles();
     }
 
     if (!rotatedRecently) return;
 
-    // Preserve REV02/03's populated-field refocus recovery.
+    // Critical Portrait-origin Godzilla case proven by REV02:
+    // refocusing a populated field after rotation.
     setTimeout(refreshViewport, 350);
-    recoverAfterViewportSettles();
     rotatedRecently = false;
     clearTimeout(rotationTimer);
+  });
+
+  document.addEventListener('focusout', (e) => {
+    if (!isEditable(e.target)) return;
+    setTimeout(() => {
+      if (!isEditable(document.activeElement)) restoreEditingScale();
+    }, 0);
   });
 })();
