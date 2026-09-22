@@ -2577,3 +2577,21 @@ body.suggest-modal-open{overflow:hidden}
     width:110px;
   }
 }
+
+
+/* Mobile Portrait Top Actions REV01
+   Slightly reduce text and icon size on all three top action buttons only. */
+@media (orientation:portrait) and (max-width:700px){
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    font-size:11px;
+  }
+
+  .subscribe-strip-inner > .youtube-subscribe-btn svg,
+  .subscribe-strip-inner > #suggestGameBtn svg,
+  .subscribe-strip-inner > .developer-showcase-btn svg{
+    width:14px;
+    height:14px;
+  }
+}
