@@ -440,85 +440,102 @@ render();
 })();
 
 
-// GLOBAL MOBILE VIEWPORT REV07 — DIAGNOSTIC ONLY.
-// TEST instrumentation: displays viewport metrics; does not attempt to fix layout/zoom.
+// GLOBAL MOBILE VIEWPORT REV08 — iOS WKWebView keyboard-pan compensation.
+// TEST only. Built from REV03. Compensates for the visual viewport being
+// panned independently of document scroll while an editable field is active.
 (() => {
   const ua = navigator.userAgent || '';
   const isIOS =
     /iP(hone|ad|od)/.test(ua) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (!isIOS) return;
 
-  const panel = document.createElement('pre');
-  panel.id = 'viewportDiagnosticREV07';
-  Object.assign(panel.style, {
-    position: 'fixed',
-    left: '4px',
-    bottom: '4px',
-    zIndex: '2147483647',
-    margin: '0',
-    padding: '6px',
-    maxWidth: 'calc(100vw - 8px)',
-    font: '10px/1.2 monospace',
-    whiteSpace: 'pre-wrap',
-    pointerEvents: 'none',
-    background: 'rgba(0,0,0,.82)',
-    color: '#fff',
-    border: '1px solid rgba(255,255,255,.55)'
-  });
-  document.body.appendChild(panel);
+  if (!isIOS || !window.visualViewport) return;
 
-  const editable = (el) => {
+  const vv = window.visualViewport;
+  const body = document.body;
+
+  const isEditable = (el) => {
     if (!el) return false;
     const tag = el.tagName;
     return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
   };
 
-  let lastEvent = 'load';
+  let compensating = false;
+  let raf = 0;
 
-  const n = (value) => Number.isFinite(value) ? value.toFixed(2) : 'n/a';
+  // Preserve any inline transform that existed before this TEST fix.
+  const originalTransform = body.style.transform;
+  const originalTransformOrigin = body.style.transformOrigin;
 
-  const render = () => {
-    const vv = window.visualViewport;
-    const bodyRect = document.body.getBoundingClientRect();
-    const docRect = document.documentElement.getBoundingClientRect();
-    const active = document.activeElement;
-
-    panel.textContent = [
-      `REV07 DIAG | event=${lastEvent}`,
-      `orientation=${matchMedia('(orientation: landscape)').matches ? 'LANDSCAPE' : 'PORTRAIT'}`,
-      `active=${editable(active) ? (active.id || active.tagName) : 'none'}`,
-      vv
-        ? `VV offL=${n(vv.offsetLeft)} offT=${n(vv.offsetTop)} pageL=${n(vv.pageLeft)} pageT=${n(vv.pageTop)}`
-        : 'VV unavailable',
-      vv
-        ? `VV w=${n(vv.width)} h=${n(vv.height)} scale=${n(vv.scale)}`
-        : '',
-      `WIN inner=${innerWidth}x${innerHeight} scroll=${n(scrollX)},${n(scrollY)}`,
-      `BODY l=${n(bodyRect.left)} t=${n(bodyRect.top)} w=${n(bodyRect.width)} h=${n(bodyRect.height)}`,
-      `DOC  l=${n(docRect.left)} t=${n(docRect.top)} w=${n(docRect.width)} h=${n(docRect.height)}`
-    ].filter(Boolean).join('\n');
+  const clearCompensation = () => {
+    cancelAnimationFrame(raf);
+    raf = 0;
+    compensating = false;
+    body.style.transform = originalTransform;
+    body.style.transformOrigin = originalTransformOrigin;
   };
 
-  const mark = (name) => {
-    lastEvent = name;
-    render();
-    requestAnimationFrame(render);
-    setTimeout(render, 50);
-    setTimeout(render, 150);
-    setTimeout(render, 350);
-    setTimeout(render, 700);
+  const applyCompensation = () => {
+    raf = 0;
+
+    if (!compensating || !isEditable(document.activeElement)) {
+      clearCompensation();
+      return;
+    }
+
+    // WebKit bug 311821: the keyboard can pan the visual viewport while
+    // window/document scroll remain unchanged. Counter that pan directly.
+    const x = Number.isFinite(vv.offsetLeft) ? vv.offsetLeft : 0;
+    const y = Number.isFinite(vv.offsetTop) ? vv.offsetTop : 0;
+
+    body.style.transformOrigin = '0 0';
+    body.style.transform =
+      `${originalTransform && originalTransform !== 'none' ? originalTransform + ' ' : ''}translate3d(${x}px, ${y}px, 0)`;
   };
 
-  window.addEventListener('orientationchange', () => mark('orientationchange'));
-  window.addEventListener('resize', () => mark('window.resize'));
-  document.addEventListener('focusin', () => mark('focusin'), true);
-  document.addEventListener('focusout', () => mark('focusout'), true);
+  const scheduleCompensation = () => {
+    if (!compensating) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(applyCompensation);
+  };
 
-  if (window.visualViewport) {
-    visualViewport.addEventListener('resize', () => mark('vv.resize'));
-    visualViewport.addEventListener('scroll', () => mark('vv.scroll'));
-  }
+  document.addEventListener('focusin', (e) => {
+    if (!isEditable(e.target)) return;
+    if (!window.matchMedia('(orientation: landscape)').matches) return;
 
-  render();
+    compensating = true;
+    scheduleCompensation();
+
+    // The iOS keyboard/visual viewport settles asynchronously.
+    setTimeout(scheduleCompensation, 50);
+    setTimeout(scheduleCompensation, 150);
+    setTimeout(scheduleCompensation, 350);
+    setTimeout(scheduleCompensation, 700);
+  }, true);
+
+  document.addEventListener('focusout', (e) => {
+    if (!isEditable(e.target)) return;
+    setTimeout(() => {
+      if (!isEditable(document.activeElement)) clearCompensation();
+    }, 0);
+  }, true);
+
+  vv.addEventListener('resize', scheduleCompensation);
+  vv.addEventListener('scroll', scheduleCompensation);
+
+  window.addEventListener('orientationchange', () => {
+    // REV03 handles the orientation/focus lifecycle. REV08 compensation is
+    // only retained while the resulting orientation is Landscape + editing.
+    setTimeout(() => {
+      if (
+        isEditable(document.activeElement) &&
+        window.matchMedia('(orientation: landscape)').matches
+      ) {
+        compensating = true;
+        scheduleCompensation();
+      } else {
+        clearCompensation();
+      }
+    }, 100);
+  });
 })();
