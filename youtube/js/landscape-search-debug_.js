@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const ID = 'rev18-landscape-debug';
+  const ID = 'rev19-landscape-debug';
   let panel = null, peakTop = 0, peakLeft = 0, peakScale = 0, peakMinH = Infinity;
 
   function install() {
@@ -13,7 +13,7 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = ID;
-      panel.textContent = 'REV18 LIVE';
+      panel.textContent = 'REV19 LIVE';
     }
 
     /* Put the diagnostic immediately ABOVE the Search box in the same layout area. */
@@ -45,12 +45,12 @@
       const active = document.activeElement === input ? 'SEARCH' :
         (document.activeElement ? document.activeElement.tagName : 'none');
       panel.textContent =
-        `REV18 LIVE | A:${active} | VV L:${n(left)} T:${n(top)} W:${n(vw)} H:${n(vh)} S:${n(scale)} | ` +
-        `PAGE L:${n(vv ? vv.pageLeft : window.scrollX)} T:${n(vv ? vv.pageTop : window.scrollY)} | ` +
-        `WIN X:${n(window.scrollX)} Y:${n(window.scrollY)} | ` +
-        `IN L:${n(ir?.left)} R:${n(ir?.right)} W:${n(ir?.width)} | ` +
-        `BOX L:${n(br?.left)} R:${n(br?.right)} W:${n(br?.width)} | ` +
-        `PEAK L:${n(peakLeft)} T:${n(peakTop)} S:${n(peakScale)} minH:${n(peakMinH)}`;
+        `REV19 | A:${active} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
+        `PG:${n(vv ? vv.pageLeft : window.scrollX)},${n(vv ? vv.pageTop : window.scrollY)} | ` +
+        `W:${n(window.scrollX)},${n(window.scrollY)} | ` +
+        `IN:${n(ir?.left)},${n(ir?.right)},${n(ir?.width)} | ` +
+        `BX:${n(br?.left)},${n(br?.right)},${n(br?.width)} | ` +
+        `PK:${n(peakLeft)},${n(peakTop)},${n(peakScale)},${n(peakMinH)}`;
     }
     requestAnimationFrame(update);
   }
