@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-22T12:34:22.798650+00:00",
+  "updated": "2026-09-22T13:30:32.430509+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "SCd4rLn41IM",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 6 | Seesaw Bridge | All Star Coins | Normal Exit | 4K",
+      "published": "2026-09-22T13:29:11+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/SCd4rLn41IM/hqdefault.jpg"
+    },
     {
       "id": "CBkaY3Bk89M",
       "title": "Dr. Oil | Easy 100% Completion | 1000 Gamerscore | 8 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | All Star Coins | Secret Exit",
       "published": "2026-09-18T14:32:07+00:00",
       "thumbnail": "https://i.ytimg.com/vi/fJvOLH27Pas/hqdefault.jpg"
-    },
-    {
-      "id": "Q3G8N7UhOxM",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Which-Way labyrinth | 3rd Star Coin | Secret Exit",
-      "published": "2026-09-17T13:06:18+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Q3G8N7UhOxM/hqdefault.jpg"
     }
   ]
 }
