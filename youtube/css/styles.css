@@ -2689,3 +2689,11 @@ body.suggest-modal-open{overflow:hidden}
     font-size:16px;
   }
 }
+
+
+/* LANDSCAPE SEARCH — prevent iOS/WebKit focus auto-zoom in phone landscape. */
+@media (orientation: landscape) and (max-height: 500px) {
+  #searchInput {
+    font-size: 16px;
+  }
+}
