@@ -145,7 +145,7 @@
     applyView(listBtn?.classList.contains('active') ? 'list' : 'grid');
   };
 
-  fetch('data/recent_.json', { cache: 'no-store' })
+  fetch('data/recent.json', { cache: 'no-store' })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();

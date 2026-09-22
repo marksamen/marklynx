@@ -52,7 +52,7 @@
     const response = await nativeFetch(input, init);
     if (!response.ok) return response;
 
-    if (isPath(url, 'data/games_.json')) {
+    if (isPath(url, 'data/games.json')) {
       const data = await response.clone().json();
       if (Array.isArray(data)) {
         for (const testGame of TEST_GAMES) {
@@ -62,7 +62,7 @@
       return jsonResponse(data, response);
     }
 
-    if (isPath(url, 'data/recent_.json')) {
+    if (isPath(url, 'data/recent.json')) {
       const data = await response.clone().json();
       if (data && Array.isArray(data.videos)) {
         const production = data.videos.filter(video => video && video.title !== 'TEST VIDEO' && video.title !== 'TEST PLAYLIST');
@@ -72,7 +72,7 @@
     }
 
 
-    if (isPath(url, 'sections/developer_.html')) {
+    if (isPath(url, 'sections/developer.html')) {
       let html = await response.clone().text();
       const marker = '<div class="developer-cards">';
       if (html.includes(marker) && !html.includes('data-video-title="TEST DEVELOPER VIDEO"')) {
