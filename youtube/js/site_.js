@@ -170,8 +170,8 @@ function hydratePlaylistThumbs(container){
 
 function qualityBadge(q){
   const quality = String(q || '').trim().toLowerCase();
-  if(quality === '4k') return `<img class="quality-badge" src="quality-4k-60fps_.png" alt="4K 60 FPS" title="4K · 60 FPS">`;
-  if(quality === '1080p') return `<img class="quality-badge" src="quality-1080p_.png" alt="Full HD 1080p" title="Full HD · 1080p">`;
+  if(quality === '4k') return `<img class="quality-badge" src="quality-4k-60fps.png" alt="4K 60 FPS" title="4K · 60 FPS">`;
+  if(quality === '1080p') return `<img class="quality-badge" src="quality-1080p.png" alt="Full HD 1080p" title="Full HD · 1080p">`;
   return escapeHtml(q || '');
 }
 
@@ -371,165 +371,25 @@ listBtn.addEventListener('click', ()=>{
 render();
 
 
-// GLOBAL MOBILE ORIENTATION REV02 — iOS/WebKit viewport recovery.
-// Clean-baseline implementation. Preserves field values; never changes viewport meta/zoom policy.
-(() => {
-  const ua = navigator.userAgent || '';
-  const isIOSWebKit =
-    /iP(hone|ad|od)/.test(ua) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// LANDSCAPE SEARCH REV13 DIAGNOSTIC ONLY — read-only measurements.
+(()=>{let p,last='init';const land=()=>matchMedia('(orientation: landscape)').matches;
+const n=v=>Number.isFinite(v)?v.toFixed(1):'n/a';
+const rr=e=>{if(!e)return'missing';const r=e.getBoundingClientRect();return`L${n(r.left)} R${n(r.right)} W${n(r.width)}`};
+function draw(ev){last=ev||last;if(!land())return;if(!p){p=document.createElement('div');p.id='landscapeSearchDebug';document.body.appendChild(p)}
+const v=visualViewport,i=document.querySelector('.search-box input'),b=document.querySelector('.search-box'),a=document.querySelector('.landscape-search-anchor'),d=document.documentElement,bo=document.body,ir=i?.getBoundingClientRect(),br=b?.getBoundingClientRect(),vl=v?.offsetLeft||0,vw=v?.width||innerWidth,vr=vl+vw;
+p.textContent=`REV13 event:${last}
+active:${document.activeElement===i?'SEARCH':'other'}
+VV off L/T:${n(v?.offsetLeft||0)}/${n(v?.offsetTop||0)}
+VV page L/T:${n(v?.pageLeft||0)}/${n(v?.pageTop||0)}
+VV W/H:${n(v?.width||innerWidth)}/${n(v?.height||innerHeight)} scale:${n(v?.scale||1)}
+WIN W/H:${innerWidth}/${innerHeight} scroll:${n(scrollX)}/${n(scrollY)}
+DOC clientW:${d.clientWidth} scrollW:${d.scrollWidth} bodyW:${bo?.scrollWidth||0}
+SEARCH ${rr(i)}
+BOX    ${rr(b)}
+ANCHOR ${rr(a)}
+OUT input:${ir&&(ir.left<vl-.5||ir.right>vr+.5)?'YES':'no'} box:${br&&(br.left<vl-.5||br.right>vr+.5)?'YES':'no'} doc:${Math.max(d.scrollWidth,bo?.scrollWidth||0)>d.clientWidth+1?'YES':'no'}`;}
+function burst(e){draw(e);requestAnimationFrame(()=>draw(e+'+raf'));[50,150,350,700,1200].forEach(ms=>setTimeout(()=>draw(e+'+'+ms),ms))}
+document.addEventListener('focusin',e=>{if(e.target?.matches?.('.search-box input'))burst('focusin')},true);
+document.addEventListener('focusout',e=>{if(e.target?.matches?.('.search-box input'))burst('focusout')},true);
+addEventListener('resize',()=>burst('win-resize'),{passive:true});visualViewport?.addEventListener('resize',()=>burst('vv-resize'),{passive:true});visualViewport?.addEventListener('scroll',()=>burst('vv-scroll'),{passive:true});addEventListener('orientationchange',()=>burst('orientationchange'),{passive:true});setTimeout(()=>burst('ready'),0);})();
 
-  if (!isIOSWebKit) return;
-
-  const isEditable = (el) => {
-    if (!el) return false;
-    const tag = el.tagName;
-    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
-  };
-
-  let rotatedRecently = false;
-  let rotationTimer = 0;
-
-  const refreshViewport = () => {
-    const x = window.scrollX;
-    const y = window.scrollY;
-    // WebKit recalculates the visual viewport when the layout viewport is touched.
-    window.scrollTo(x, y + 1);
-    requestAnimationFrame(() => window.scrollTo(x, y));
-  };
-
-  const onOrientationChange = () => {
-    if (!window.matchMedia('(max-width: 900px)').matches) return;
-
-    const active = document.activeElement;
-    if (isEditable(active) && typeof active.blur === 'function') active.blur();
-
-    rotatedRecently = true;
-    clearTimeout(rotationTimer);
-
-    // Let orientation/layout settle before asking WebKit to recalculate.
-    setTimeout(refreshViewport, 250);
-    setTimeout(refreshViewport, 650);
-
-    rotationTimer = setTimeout(() => {
-      rotatedRecently = false;
-    }, 2500);
-  };
-
-  window.addEventListener('orientationchange', onOrientationChange);
-
-  document.addEventListener('focusin', (e) => {
-    if (!isEditable(e.target)) return;
-
-    const landscapeNow = window.matchMedia('(orientation: landscape)').matches;
-
-    // REV03: iOS can enter the bad visual-viewport state when an editable
-    // field is FIRST focused while already in Landscape, before any rotation.
-    if (landscapeNow) {
-      setTimeout(refreshViewport, 350);
-    }
-
-    if (!rotatedRecently) return;
-
-    // Critical Portrait-origin Godzilla case proven by REV02:
-    // refocusing a populated field after rotation.
-    setTimeout(refreshViewport, 350);
-    rotatedRecently = false;
-    clearTimeout(rotationTimer);
-  });
-})();
-
-
-// GLOBAL MOBILE VIEWPORT REV09 — keyboard-close recovery.
-// TEST only. Built from REV03. Does not try to prevent iOS keyboard panning.
-// After an editable field loses focus, wait for the visual viewport to settle,
-// then force a silent viewport/layout refresh while preserving page state.
-(() => {
-  const ua = navigator.userAgent || '';
-  const isIOS =
-    /iP(hone|ad|od)/.test(ua) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-  if (!isIOS) return;
-
-  const vv = window.visualViewport;
-
-  const isEditable = (el) => {
-    if (!el) return false;
-    const tag = el.tagName;
-    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
-  };
-
-  let recoveryToken = 0;
-
-  const silentViewportRefresh = () => {
-    const x = window.scrollX;
-    const y = window.scrollY;
-
-    // Force a layout read before and after the harmless scroll nudge.
-    document.documentElement.getBoundingClientRect();
-
-    window.scrollTo(x, y + 1);
-    requestAnimationFrame(() => {
-      window.scrollTo(x, y);
-      document.documentElement.getBoundingClientRect();
-
-      // One final frame lets WebKit paint using the restored viewport.
-      requestAnimationFrame(() => window.scrollTo(x, y));
-    });
-  };
-
-  const recoverAfterKeyboardClose = () => {
-    const token = ++recoveryToken;
-    let lastWidth = vv ? vv.width : window.innerWidth;
-    let lastHeight = vv ? vv.height : window.innerHeight;
-    let stableReads = 0;
-    let attempts = 0;
-
-    const check = () => {
-      if (token !== recoveryToken) return;
-      if (isEditable(document.activeElement)) return;
-
-      const width = vv ? vv.width : window.innerWidth;
-      const height = vv ? vv.height : window.innerHeight;
-      const stable =
-        Math.abs(width - lastWidth) < 0.5 &&
-        Math.abs(height - lastHeight) < 0.5;
-
-      lastWidth = width;
-      lastHeight = height;
-      stableReads = stable ? stableReads + 1 : 0;
-      attempts += 1;
-
-      if (stableReads >= 2 || attempts >= 12) {
-        requestAnimationFrame(silentViewportRefresh);
-        return;
-      }
-
-      setTimeout(check, 100);
-    };
-
-    // Let the keyboard-dismiss animation begin before sampling.
-    setTimeout(check, 50);
-  };
-
-  document.addEventListener('focusin', (e) => {
-    if (isEditable(e.target)) ++recoveryToken;
-  }, true);
-
-  document.addEventListener('focusout', (e) => {
-    if (!isEditable(e.target)) return;
-
-    // focusout can precede the keyboard animation; defer until WebKit starts
-    // restoring the visual viewport.
-    setTimeout(() => {
-      if (!isEditable(document.activeElement)) recoverAfterKeyboardClose();
-    }, 0);
-  }, true);
-
-  if (vv) {
-    vv.addEventListener('resize', () => {
-      if (!isEditable(document.activeElement)) recoverAfterKeyboardClose();
-    });
-  }
-})();
