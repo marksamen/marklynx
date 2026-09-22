@@ -390,28 +390,6 @@ render();
   let rotatedRecently = false;
   let rotationTimer = 0;
 
-  const viewportMeta = document.querySelector('meta[name="viewport"]');
-  const originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
-
-  const lockEditingScale = () => {
-    if (!viewportMeta || originalViewportContent === null) return;
-
-    const withoutMaximumScale = originalViewportContent
-      .replace(/\s*,?\s*maximum-scale\s*=\s*[^,]+/gi, '')
-      .replace(/^\s*,|,\s*$/g, '')
-      .trim();
-
-    viewportMeta.setAttribute(
-      'content',
-      `${withoutMaximumScale}${withoutMaximumScale ? ', ' : ''}maximum-scale=1`
-    );
-  };
-
-  const restoreEditingScale = () => {
-    if (!viewportMeta || originalViewportContent === null) return;
-    viewportMeta.setAttribute('content', originalViewportContent);
-  };
-
   const refreshViewport = () => {
     const x = window.scrollX;
     const y = window.scrollY;
@@ -443,10 +421,6 @@ render();
   document.addEventListener('focusin', (e) => {
     if (!isEditable(e.target)) return;
 
-    // REV05: prevent iOS/WKWebView from entering the giant focus zoom while editing.
-    // The site's original viewport policy is restored as soon as editing ends.
-    lockEditingScale();
-
     const landscapeNow = window.matchMedia('(orientation: landscape)').matches;
 
     // REV03: iOS can enter the bad visual-viewport state when an editable
@@ -462,12 +436,5 @@ render();
     setTimeout(refreshViewport, 350);
     rotatedRecently = false;
     clearTimeout(rotationTimer);
-  });
-
-  document.addEventListener('focusout', (e) => {
-    if (!isEditable(e.target)) return;
-    setTimeout(() => {
-      if (!isEditable(document.activeElement)) restoreEditingScale();
-    }, 0);
   });
 })();
