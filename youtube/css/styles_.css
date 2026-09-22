@@ -23,6 +23,7 @@
     background:#000;
     display:flex;
     justify-content:center;
+    overflow:hidden;
     position:relative;
   }
 
@@ -35,6 +36,7 @@
     height:4px;
     background:#000;
     z-index:1;
+    pointer-events:none;
   }
 
   .banner-wrap::after{
@@ -80,6 +82,7 @@
     font-weight:700;
     font-family:var(--sans);
     text-decoration:none;
+    white-space:nowrap;
     transition:background .15s, border-color .15s;
   }
   .youtube-subscribe-btn:hover{
@@ -133,6 +136,7 @@
     width:16px;
     height:16px;
     stroke:var(--text-dim);
+    pointer-events:none;
   }
   .search-box input{
     width:100%;
@@ -167,6 +171,7 @@
     display:flex;
     border:1px solid var(--line);
     border-radius:3px;
+    overflow:hidden;
     flex-shrink:0;
   }
   .view-toggle button{
@@ -205,6 +210,7 @@
     font-weight:600;
     font-family:var(--sans);
     text-decoration:none;
+    white-space:nowrap;
     transition:background .15s, border-color .15s;
     flex-shrink:0;
     cursor: pointer;
@@ -226,6 +232,7 @@
     border-radius:3px;
     font-size:13px;
     font-family:var(--sans);
+    white-space:nowrap;
     cursor:pointer;
     transition:background .15s, border-color .15s, color .15s;
     flex-shrink:0;
@@ -260,6 +267,7 @@
     background:var(--bg-card);
     border:1px solid var(--line);
     border-radius:4px;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
     transition:border-color .15s, transform .15s;
@@ -273,6 +281,7 @@
     width:100%;
     aspect-ratio:16/9;
     background:#000;
+    overflow:hidden;
     display:block;
   }
   .thumb-wrap img{
@@ -351,6 +360,7 @@
     border:1px solid #456b8a;
     padding:2px 7px;
     border-radius:20px;
+    white-space:nowrap;
   }
 
   .text-guide-badge{
@@ -363,6 +373,7 @@
     border:1px solid #3a3a3a;
     padding:2px 7px;
     border-radius:20px;
+    white-space:nowrap;
   }
   .text-guide-badge svg{width:10px;height:10px;stroke:currentColor;fill:none;flex-shrink:0;}
   .badge-row{
@@ -429,6 +440,7 @@
     background:var(--line);
     border:1px solid var(--line);
     border-radius:4px;
+    overflow:hidden;
   }
   .list-row{
     display:grid;
@@ -447,6 +459,7 @@
     width:110px;
     aspect-ratio:16/9;
     border-radius:3px;
+    overflow:hidden;
     background:#000;
     flex-shrink:0;
   }
@@ -465,6 +478,7 @@
     font-size:13px;
     color:var(--text-dim);
     text-align:right;
+    white-space:nowrap;
   }
   .list-col.gs{color:var(--red-bright); font-weight:600;}
   .list-head{
@@ -559,6 +573,7 @@
     max-width:1100px;
     max-height:90vh;
     display:flex;
+    overflow:hidden;
     box-shadow:0 20px 60px rgba(0,0,0,.6);
   }
   .video-modal-main{
@@ -664,6 +679,7 @@
     width:88px;
     aspect-ratio:16/9;
     border-radius:3px;
+    overflow:hidden;
     flex-shrink:0;
     background:#000;
   }
@@ -911,6 +927,7 @@
     display:inline-flex;
     align-items:center;
     text-align:left;
+    white-space:nowrap;
   }
 
   .recent-uploads-grid.grid-mode .recent-upload-meta.quality{
@@ -1139,6 +1156,7 @@ body.suggest-modal-open{overflow:hidden}
     width:auto !important;
     align-items:center;
     justify-content:center;
+    pointer-events:none;
   }
 
   .recent-uploads-grid.grid-mode .recent-upload-meta.quality{
@@ -1194,6 +1212,7 @@ body.suggest-modal-open{overflow:hidden}
     margin:0 !important;
     align-items:center;
     justify-content:center;
+    pointer-events:none;
   }
 
   .recent-uploads-grid.list-mode .recent-upload-meta.quality .quality-badge{
@@ -1335,6 +1354,7 @@ body.suggest-modal-open{overflow:hidden}
     font-size:11px;
     font-weight:900;
     letter-spacing:.04em;
+    white-space:nowrap;
   }
   .developer-cards{
     scrollbar-width:thin;
@@ -1357,6 +1377,7 @@ body.suggest-modal-open{overflow:hidden}
     position:relative;
     height:8px;
     margin:0 0 10px;
+    overflow:hidden;
     background:#2b2b2b;
     border:1px solid #444;
     border-radius:999px;
@@ -1600,6 +1621,7 @@ body.suggest-modal-open{overflow:hidden}
     font-size:12px;
     font-weight:700;
     line-height:1.15;
+    white-space:nowrap;
     text-align:center;
   }
 }
@@ -1619,6 +1641,7 @@ body.suggest-modal-open{overflow:hidden}
     font-size:12px;
     font-weight:700;
     line-height:1.15;
+    white-space:nowrap;
     text-align:center;
   }
 }
@@ -1719,6 +1742,7 @@ body.suggest-modal-open{overflow:hidden}
     color:var(--text-dim);
     font-size:10px;
     line-height:1.2;
+    white-space:nowrap;
   }
   .recent-uploads-grid.list-mode .recent-upload-under-title-badges{
     display:block;
@@ -1864,6 +1888,7 @@ body.suggest-modal-open{overflow:hidden}
     font-size:12px;
     font-weight:700;
     line-height:1.15;
+    white-space:nowrap;
     text-align:center;
   }
   #resultsGrid .card .diff-tag .diff-dot{display:none;}
@@ -1929,6 +1954,7 @@ body.suggest-modal-open{overflow:hidden}
     font-size:12px;
     font-weight:700;
     line-height:1.15;
+    white-space:nowrap;
     text-align:center;
   }
 }
@@ -2669,6 +2695,7 @@ body.suggest-modal-open{overflow:hidden}
     padding-left:2px;
     box-sizing:border-box;
     box-shadow:0 2px 6px rgba(0,0,0,.6);
+    pointer-events:none;
   }
 }
 
@@ -2806,24 +2833,8 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV25 — LANDSCAPE 16PX TEST. */
-#rev18-landscape-debug{
-  display:none;
-}
-@media (orientation:landscape) and (max-height:900px){
-  #rev18-landscape-debug{
-    display:block;
-    box-sizing:border-box;
-    width:100%;
-    margin:0 0 2px 0;
-    background:rgba(0,0,0,.92);
-    color:#fff;
-    border:1px solid #fff;
-  }
-}
-
-
-/* LANDSCAPE SEARCH REV25 — use the existing proven landscape-phone anti-focus-zoom scope. */
+/* LANDSCAPE SEARCH REV26 — clean candidate.
+   Prevent iOS/WebKit focus auto-zoom by keeping Search at 16px in phone landscape. */
 @media (orientation: landscape) and (max-height: 500px) {
   #searchInput {
     font-size: 16px;
