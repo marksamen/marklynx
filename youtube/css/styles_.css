@@ -140,6 +140,8 @@
   }
   .search-box input{
     width:100%;
+    box-sizing:border-box;
+    min-width:0;
     background:var(--bg-raised);
     border:1px solid var(--line);
     color:var(--text);
