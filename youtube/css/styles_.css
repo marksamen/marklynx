@@ -2684,13 +2684,13 @@ body.suggest-modal-open{overflow:hidden}
     display:flex;
     align-items:center;
     justify-content:center;
-    width:38px;
-    height:27px;
-    border-radius:6px;
+    width:42px;
+    height:30px;
+    border-radius:7px;
     background:#e0392f;
     color:#fff;
     font-family:Arial,sans-serif;
-    font-size:15px;
+    font-size:17px;
     line-height:1;
     padding-left:2px;
     box-sizing:border-box;
