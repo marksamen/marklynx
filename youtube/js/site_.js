@@ -440,19 +440,19 @@ render();
 })();
 
 
-// GLOBAL MOBILE VIEWPORT REV08 — iOS WKWebView keyboard-pan compensation.
-// TEST only. Built from REV03. Compensates for the visual viewport being
-// panned independently of document scroll while an editable field is active.
+// GLOBAL MOBILE VIEWPORT REV09 — keyboard-close recovery.
+// TEST only. Built from REV03. Does not try to prevent iOS keyboard panning.
+// After an editable field loses focus, wait for the visual viewport to settle,
+// then force a silent viewport/layout refresh while preserving page state.
 (() => {
   const ua = navigator.userAgent || '';
   const isIOS =
     /iP(hone|ad|od)/.test(ua) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-  if (!isIOS || !window.visualViewport) return;
+  if (!isIOS) return;
 
   const vv = window.visualViewport;
-  const body = document.body;
 
   const isEditable = (el) => {
     if (!el) return false;
@@ -460,82 +460,76 @@ render();
     return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
   };
 
-  let compensating = false;
-  let raf = 0;
+  let recoveryToken = 0;
 
-  // Preserve any inline transform that existed before this TEST fix.
-  const originalTransform = body.style.transform;
-  const originalTransformOrigin = body.style.transformOrigin;
+  const silentViewportRefresh = () => {
+    const x = window.scrollX;
+    const y = window.scrollY;
 
-  const clearCompensation = () => {
-    cancelAnimationFrame(raf);
-    raf = 0;
-    compensating = false;
-    body.style.transform = originalTransform;
-    body.style.transformOrigin = originalTransformOrigin;
+    // Force a layout read before and after the harmless scroll nudge.
+    document.documentElement.getBoundingClientRect();
+
+    window.scrollTo(x, y + 1);
+    requestAnimationFrame(() => {
+      window.scrollTo(x, y);
+      document.documentElement.getBoundingClientRect();
+
+      // One final frame lets WebKit paint using the restored viewport.
+      requestAnimationFrame(() => window.scrollTo(x, y));
+    });
   };
 
-  const applyCompensation = () => {
-    raf = 0;
+  const recoverAfterKeyboardClose = () => {
+    const token = ++recoveryToken;
+    let lastWidth = vv ? vv.width : window.innerWidth;
+    let lastHeight = vv ? vv.height : window.innerHeight;
+    let stableReads = 0;
+    let attempts = 0;
 
-    if (!compensating || !isEditable(document.activeElement)) {
-      clearCompensation();
-      return;
-    }
+    const check = () => {
+      if (token !== recoveryToken) return;
+      if (isEditable(document.activeElement)) return;
 
-    // WebKit bug 311821: the keyboard can pan the visual viewport while
-    // window/document scroll remain unchanged. Counter that pan directly.
-    const x = Number.isFinite(vv.offsetLeft) ? vv.offsetLeft : 0;
-    const y = Number.isFinite(vv.offsetTop) ? vv.offsetTop : 0;
+      const width = vv ? vv.width : window.innerWidth;
+      const height = vv ? vv.height : window.innerHeight;
+      const stable =
+        Math.abs(width - lastWidth) < 0.5 &&
+        Math.abs(height - lastHeight) < 0.5;
 
-    body.style.transformOrigin = '0 0';
-    body.style.transform =
-      `${originalTransform && originalTransform !== 'none' ? originalTransform + ' ' : ''}translate3d(${x}px, ${y}px, 0)`;
-  };
+      lastWidth = width;
+      lastHeight = height;
+      stableReads = stable ? stableReads + 1 : 0;
+      attempts += 1;
 
-  const scheduleCompensation = () => {
-    if (!compensating) return;
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(applyCompensation);
+      if (stableReads >= 2 || attempts >= 12) {
+        requestAnimationFrame(silentViewportRefresh);
+        return;
+      }
+
+      setTimeout(check, 100);
+    };
+
+    // Let the keyboard-dismiss animation begin before sampling.
+    setTimeout(check, 50);
   };
 
   document.addEventListener('focusin', (e) => {
-    if (!isEditable(e.target)) return;
-    if (!window.matchMedia('(orientation: landscape)').matches) return;
-
-    compensating = true;
-    scheduleCompensation();
-
-    // The iOS keyboard/visual viewport settles asynchronously.
-    setTimeout(scheduleCompensation, 50);
-    setTimeout(scheduleCompensation, 150);
-    setTimeout(scheduleCompensation, 350);
-    setTimeout(scheduleCompensation, 700);
+    if (isEditable(e.target)) ++recoveryToken;
   }, true);
 
   document.addEventListener('focusout', (e) => {
     if (!isEditable(e.target)) return;
+
+    // focusout can precede the keyboard animation; defer until WebKit starts
+    // restoring the visual viewport.
     setTimeout(() => {
-      if (!isEditable(document.activeElement)) clearCompensation();
+      if (!isEditable(document.activeElement)) recoverAfterKeyboardClose();
     }, 0);
   }, true);
 
-  vv.addEventListener('resize', scheduleCompensation);
-  vv.addEventListener('scroll', scheduleCompensation);
-
-  window.addEventListener('orientationchange', () => {
-    // REV03 handles the orientation/focus lifecycle. REV08 compensation is
-    // only retained while the resulting orientation is Landscape + editing.
-    setTimeout(() => {
-      if (
-        isEditable(document.activeElement) &&
-        window.matchMedia('(orientation: landscape)').matches
-      ) {
-        compensating = true;
-        scheduleCompensation();
-      } else {
-        clearCompensation();
-      }
-    }, 100);
-  });
+  if (vv) {
+    vv.addEventListener('resize', () => {
+      if (!isEditable(document.activeElement)) recoverAfterKeyboardClose();
+    });
+  }
 })();
