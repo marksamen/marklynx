@@ -371,8 +371,11 @@ listBtn.addEventListener('click', ()=>{
 render();
 
 
-// GLOBAL MOBILE ORIENTATION REV02 — iOS/WebKit viewport recovery.
-// Clean-baseline implementation. Preserves field values; never changes viewport meta/zoom policy.
+// GLOBAL MOBILE ORIENTATION REV04 — iOS/WKWebView viewport recovery.
+// Preserves field values and the existing viewport/zoom policy.
+// Safari's proven REV03 behavior remains; VisualViewport settling is added
+// for non-Safari iOS browsers where WKWebView can report stale dimensions
+// during orientation/focus changes.
 (() => {
   const ua = navigator.userAgent || '';
   const isIOSWebKit =
@@ -387,15 +390,53 @@ render();
     return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
   };
 
+  const visualViewport = window.visualViewport;
   let rotatedRecently = false;
   let rotationTimer = 0;
+  let recoveryTimer = 0;
+  let lastViewportWidth = visualViewport ? visualViewport.width : 0;
+  let lastViewportHeight = visualViewport ? visualViewport.height : 0;
 
   const refreshViewport = () => {
     const x = window.scrollX;
     const y = window.scrollY;
-    // WebKit recalculates the visual viewport when the layout viewport is touched.
     window.scrollTo(x, y + 1);
     requestAnimationFrame(() => window.scrollTo(x, y));
+  };
+
+  const recoverAfterViewportSettles = () => {
+    clearTimeout(recoveryTimer);
+
+    let stableReads = 0;
+    let attempts = 0;
+
+    const check = () => {
+      attempts += 1;
+
+      if (!visualViewport) {
+        refreshViewport();
+        return;
+      }
+
+      const width = visualViewport.width;
+      const height = visualViewport.height;
+      const stable =
+        Math.abs(width - lastViewportWidth) < 0.5 &&
+        Math.abs(height - lastViewportHeight) < 0.5;
+
+      lastViewportWidth = width;
+      lastViewportHeight = height;
+      stableReads = stable ? stableReads + 1 : 0;
+
+      if (stableReads >= 2 || attempts >= 12) {
+        refreshViewport();
+        return;
+      }
+
+      recoveryTimer = setTimeout(check, 100);
+    };
+
+    recoveryTimer = setTimeout(check, 50);
   };
 
   const onOrientationChange = () => {
@@ -407,9 +448,13 @@ render();
     rotatedRecently = true;
     clearTimeout(rotationTimer);
 
-    // Let orientation/layout settle before asking WebKit to recalculate.
+    // Keep the REV03 recovery that already passes Safari.
     setTimeout(refreshViewport, 250);
     setTimeout(refreshViewport, 650);
+
+    // WKWebView browsers can publish stale dimensions during the orientation
+    // event and silently correct them later. Recover after VisualViewport settles.
+    recoverAfterViewportSettles();
 
     rotationTimer = setTimeout(() => {
       rotatedRecently = false;
@@ -418,22 +463,27 @@ render();
 
   window.addEventListener('orientationchange', onOrientationChange);
 
+  if (visualViewport) {
+    visualViewport.addEventListener('resize', recoverAfterViewportSettles);
+    visualViewport.addEventListener('scroll', recoverAfterViewportSettles);
+  }
+
   document.addEventListener('focusin', (e) => {
     if (!isEditable(e.target)) return;
 
     const landscapeNow = window.matchMedia('(orientation: landscape)').matches;
 
-    // REV03: iOS can enter the bad visual-viewport state when an editable
-    // field is FIRST focused while already in Landscape, before any rotation.
+    // Preserve REV03's initial-Landscape recovery.
     if (landscapeNow) {
       setTimeout(refreshViewport, 350);
+      recoverAfterViewportSettles();
     }
 
     if (!rotatedRecently) return;
 
-    // Critical Portrait-origin Godzilla case proven by REV02:
-    // refocusing a populated field after rotation.
+    // Preserve REV02/03's populated-field refocus recovery.
     setTimeout(refreshViewport, 350);
+    recoverAfterViewportSettles();
     rotatedRecently = false;
     clearTimeout(rotationTimer);
   });
