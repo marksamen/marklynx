@@ -438,3 +438,87 @@ render();
     clearTimeout(rotationTimer);
   });
 })();
+
+
+// GLOBAL MOBILE VIEWPORT REV07 — DIAGNOSTIC ONLY.
+// TEST instrumentation: displays viewport metrics; does not attempt to fix layout/zoom.
+(() => {
+  const ua = navigator.userAgent || '';
+  const isIOS =
+    /iP(hone|ad|od)/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!isIOS) return;
+
+  const panel = document.createElement('pre');
+  panel.id = 'viewportDiagnosticREV07';
+  Object.assign(panel.style, {
+    position: 'fixed',
+    left: '4px',
+    bottom: '4px',
+    zIndex: '2147483647',
+    margin: '0',
+    padding: '6px',
+    maxWidth: 'calc(100vw - 8px)',
+    font: '10px/1.2 monospace',
+    whiteSpace: 'pre-wrap',
+    pointerEvents: 'none',
+    background: 'rgba(0,0,0,.82)',
+    color: '#fff',
+    border: '1px solid rgba(255,255,255,.55)'
+  });
+  document.body.appendChild(panel);
+
+  const editable = (el) => {
+    if (!el) return false;
+    const tag = el.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
+  };
+
+  let lastEvent = 'load';
+
+  const n = (value) => Number.isFinite(value) ? value.toFixed(2) : 'n/a';
+
+  const render = () => {
+    const vv = window.visualViewport;
+    const bodyRect = document.body.getBoundingClientRect();
+    const docRect = document.documentElement.getBoundingClientRect();
+    const active = document.activeElement;
+
+    panel.textContent = [
+      `REV07 DIAG | event=${lastEvent}`,
+      `orientation=${matchMedia('(orientation: landscape)').matches ? 'LANDSCAPE' : 'PORTRAIT'}`,
+      `active=${editable(active) ? (active.id || active.tagName) : 'none'}`,
+      vv
+        ? `VV offL=${n(vv.offsetLeft)} offT=${n(vv.offsetTop)} pageL=${n(vv.pageLeft)} pageT=${n(vv.pageTop)}`
+        : 'VV unavailable',
+      vv
+        ? `VV w=${n(vv.width)} h=${n(vv.height)} scale=${n(vv.scale)}`
+        : '',
+      `WIN inner=${innerWidth}x${innerHeight} scroll=${n(scrollX)},${n(scrollY)}`,
+      `BODY l=${n(bodyRect.left)} t=${n(bodyRect.top)} w=${n(bodyRect.width)} h=${n(bodyRect.height)}`,
+      `DOC  l=${n(docRect.left)} t=${n(docRect.top)} w=${n(docRect.width)} h=${n(docRect.height)}`
+    ].filter(Boolean).join('\n');
+  };
+
+  const mark = (name) => {
+    lastEvent = name;
+    render();
+    requestAnimationFrame(render);
+    setTimeout(render, 50);
+    setTimeout(render, 150);
+    setTimeout(render, 350);
+    setTimeout(render, 700);
+  };
+
+  window.addEventListener('orientationchange', () => mark('orientationchange'));
+  window.addEventListener('resize', () => mark('window.resize'));
+  document.addEventListener('focusin', () => mark('focusin'), true);
+  document.addEventListener('focusout', () => mark('focusout'), true);
+
+  if (window.visualViewport) {
+    visualViewport.addEventListener('resize', () => mark('vv.resize'));
+    visualViewport.addEventListener('scroll', () => mark('vv.scroll'));
+  }
+
+  render();
+})();
