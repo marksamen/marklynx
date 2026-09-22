@@ -2480,20 +2480,20 @@ body.suggest-modal-open{overflow:hidden}
 /* PROD-frozen Game Guides section. */
 .game-guides-section{max-width:1400px;margin:12px auto 0;padding:0 28px;}
 .game-guides-section .game-guides-head{margin:0 0 12px;}
-.game-guides-section .game-guides-head h2{margin:0;font-size:22px;line-height:1.2;color:var(--text);font-family:inherit;font-weight:700;text-transform:none;letter-spacing:normal;}
+.game-guides-section .game-guides-head h2{
+  margin:0;font-size:22px;line-height:1.2;color:var(--text);
+  font-family:inherit;font-weight:700;text-transform:none;letter-spacing:normal;
+}
 .game-guides-section .game-guides-count{max-width:none;margin:0 0 12px;padding:0;}
 .game-guides-section + .container{padding-top:0;}
 
-/* TEST Sticky Controls REV03 */
-@media (max-height:1199px){
-  .toolbar.toolbar-stuck .clear-filters-btn,
-  .toolbar.toolbar-stuck .suggest-btn{
-    display:none !important;
-  }
-}
-
-/* REV02 retained: only genuinely tall viewports keep the whole top unit. */
-@media (min-height:1200px){
-  .site-top-unit{position:sticky;top:0;z-index:50;background:var(--bg);}
-  .site-top-unit .toolbar{position:relative;top:auto;}
+/* TEST Sticky Controls REV04:
+   Production .toolbar sticky behavior is untouched.
+   Suggest A Game is outside that sticky toolbar so it scrolls away. */
+.suggest-scroll-away{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 28px;
+  display:flex;
+  justify-content:flex-end;
 }
