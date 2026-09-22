@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const ID = 'rev22-landscape-debug';
+  const ID = 'rev23-landscape-debug';
   let panel = null, peakTop = 0, peakLeft = 0, peakScale = 0, peakMinH = Infinity;
 
   function install() {
@@ -13,10 +13,10 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = ID;
-      panel.textContent = 'REV22 LIVE';
+      panel.textContent = 'REV23 LIVE';
     }
 
-    /* REV22: start immediately above Search; long tail may extend across Search. */
+    /* REV23: start immediately above Search; long tail may extend across Search. */
     if (panel.nextSibling !== box) box.parentNode.insertBefore(panel, box);
 
     Object.assign(panel.style, {
@@ -69,7 +69,7 @@
       const active = document.activeElement === input ? 'SEARCH' :
         (document.activeElement ? document.activeElement.tagName : 'none');
       panel.textContent =
-        `REV22 | A:${active} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
+        `REV23 | A:${active} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
         `PG:${n(vv ? vv.pageLeft : window.scrollX)},${n(vv ? vv.pageTop : window.scrollY)} | ` +
         `W:${n(window.scrollX)},${n(window.scrollY)} | ` +
         `IN:${n(ir?.left)},${n(ir?.right)},${n(ir?.width)} | ` +
