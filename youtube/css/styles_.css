@@ -2470,3 +2470,44 @@ body.suggest-modal-open{overflow:hidden}
 .game-guides-section + .container{
   padding-top:0;
 }
+
+/* TOP ACTIONS REV01 CLEAN: approved geometry/color; no Recent Uploads changes. */
+.subscribe-strip-inner{
+  gap:10px;
+  align-items:center;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn,
+.subscribe-strip-inner > #suggestGameBtn,
+.subscribe-strip-inner > .developer-showcase-btn{
+  box-sizing:border-box;
+  padding:9px 14px;
+  font-size:13px;
+  margin:0;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn svg,
+.subscribe-strip-inner > #suggestGameBtn svg,
+.subscribe-strip-inner > .developer-showcase-btn svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+.subscribe-strip-inner > #suggestGameBtn{
+  background:#681b1b;
+  border:1px solid #9a3030;
+  color:#fff;
+}
+@media (hover:hover) and (pointer:fine){
+  .subscribe-strip-inner > #suggestGameBtn:hover{
+    background:#7b2222;
+    border-color:#b33a3a;
+  }
+}
+@media (max-width:700px){
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    flex:1 1 0;
+    min-width:0;
+    justify-content:center;
+  }
+}
