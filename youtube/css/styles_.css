@@ -140,8 +140,6 @@
   }
   .search-box input{
     width:100%;
-    box-sizing:border-box;
-    min-width:0;
     background:var(--bg-raised);
     border:1px solid var(--line);
     color:var(--text);
@@ -2599,237 +2597,109 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* PLAY BUTTON REV01 — thumbnail overlay only.
-   Normal GRID reuses the existing play SVG and makes it permanently visible.
-   Normal LIST and Recent use CSS-only overlays so no Recent JS/HTML/data is touched. */
+/* PLAY BUTTON — FINAL VERIFIED IMPLEMENTATION */
 
-/* Normal Game Guides GRID — existing proven play badge, now always visible. */
+/* Normal Game Guides GRID: permanently show the site's existing play SVG. */
 .card .play-badge svg{
   opacity:1;
 }
 
-/* Normal Game Guides LIST — sized for the 110px thumbnail. */
+/* Normal LIST: real YouTube SVG overlay. */
 #resultsList .list-thumb::after{
-  content:"▶";
+  content:"";
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
   z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   width:34px;
   height:24px;
-  border-radius:6px;
-  background:#e0392f;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  font-size:14px;
-  line-height:1;
-  padding-left:2px;
-  box-sizing:border-box;
-  box-shadow:0 2px 6px rgba(0,0,0,.6);
+  padding:0;
+  background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+  box-shadow:none;
   pointer-events:none;
 }
 
-/* Recent Uploads — same design, deliberately smaller for its smaller thumbnail. */
+/* Recent Uploads: real YouTube SVG overlay. */
 .recent-upload-thumb::after{
-  content:"▶";
+  content:"";
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
   z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   width:28px;
   height:20px;
-  border-radius:5px;
-  background:#e0392f;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  line-height:1;
-  padding-left:2px;
-  box-sizing:border-box;
-  box-shadow:0 2px 5px rgba(0,0,0,.6);
+  padding:0;
+  background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+  box-shadow:none;
   pointer-events:none;
 }
 
-
-/* PLAY BUTTON REV03 — DESKTOP GRID sizing only.
-   LIST remains exactly as REV01. Mobile remains unchanged. */
 @media (min-width:901px){
-  /* Recent GRID: slightly larger than REV02. */
   .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
     width:42px;
     height:30px;
-    border-radius:7px;
-    font-size:17px;
   }
-}
-
-
-/* PLAY BUTTON REV04 — Normal GRID only.
-   Copy the PASSED Normal LIST CSS-overlay method; slightly enlarged for GRID.
-   Passed Recent REV03 rules remain untouched. */
-@media (min-width:901px){
-  #resultsGrid .card-thumb::after{
-    content:"▶";
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    z-index:3;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  #resultsGrid .card .play-badge svg{
     width:42px;
     height:30px;
-    border-radius:7px;
-    background:#e0392f;
-    color:#fff;
-    font-family:Arial,sans-serif;
-    font-size:17px;
-    line-height:1;
-    padding-left:2px;
-    box-sizing:border-box;
-    box-shadow:0 2px 6px rgba(0,0,0,.6);
-    pointer-events:none;
   }
 }
 
-
-/* PLAY BUTTON REV06 — MOBILE PORTRAIT Normal LIST only.
-   Copy desktop LIST's clean single-overlay treatment by suppressing the
-   legacy play-badge layer in this context. Size/position remain unchanged. */
-@media (max-width:900px) and (orientation:portrait){
-  #resultsList .list-thumb .play-badge{
-    display:none !important;
-  }
-}
-
-
-/* PLAY BUTTON REV07 — MOBILE PORTRAIT Recent GRID only.
-   Copy the working Normal portrait GRID play-button treatment.
-   No Recent LIST, Normal LIST, desktop, or landscape changes. */
-@media (max-width:900px) and (orientation:portrait){
-  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
-    width:42px;
-    height:30px;
-    border-radius:7px;
-    background:#e0392f;
-    color:#fff;
-    font-family:Arial,sans-serif;
-    font-size:17px;
-    line-height:1;
-    padding-left:2px;
-    box-sizing:border-box;
-    box-shadow:0 2px 6px rgba(0,0,0,.6);
-  }
-}
-
-
-/* PLAY BUTTON REV08 — MOBILE PORTRAIT Recent GRID only.
-   Use the exact SVG artwork from the working Normal card play-badge.
-   This removes the CSS Unicode triangle that was rendering grey/two-tone. */
-@media (max-width:900px) and (orientation:portrait){
-  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
-    content:"";
-    width:44px;
-    height:31px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
-  }
-}
-
-
-/* PLAY BUTTON REV09 — MOBILE PORTRAIT Normal GRID sizing only.
-   Slightly enlarge the already-passed existing SVG. */
 @media (max-width:900px) and (orientation:portrait){
   #resultsGrid .card .play-badge svg{
     width:52px;
     height:37px;
   }
-}
-
-
-/* PLAY BUTTON REV10 — MOBILE PORTRAIT LIST only.
-   Copy the proven real-SVG treatment from passed Portrait GRID.
-   Preserve LIST sizing: Normal 34x24; Recent 28x20. */
-@media (max-width:900px) and (orientation:portrait){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    width:44px;
+    height:31px;
+  }
   #resultsList .list-thumb::after{
-    content:"";
     width:34px;
     height:24px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
   }
-
   .recent-uploads-grid.list-mode .recent-upload-thumb::after{
-    content:"";
     width:28px;
     height:20px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
   }
 }
 
-
-/* PLAY BUTTON REV11 — MOBILE LANDSCAPE Recent GRID only.
-   Copy proven real-SVG treatment. Preserve existing 42x30 sizing.
-   Normal GRID, both LIST modes, portrait and desktop untouched. */
 @media (orientation:landscape) and (max-height:900px){
   .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
-    content:"";
     width:42px;
     height:30px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
   }
-}
-
-
-/* PLAY BUTTON REV12 — MOBILE LANDSCAPE LIST only.
-   Apply the now-proven real YouTube SVG treatment to BOTH LIST sections.
-   Preserve existing LIST sizing. Desktop, Portrait and Landscape GRID untouched. */
-@media (orientation:landscape) and (max-height:900px){
   #resultsList .list-thumb::after{
-    content:"";
     width:34px;
     height:24px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
   }
-
   .recent-uploads-grid.list-mode .recent-upload-thumb::after{
-    content:"";
     width:28px;
     height:20px;
-    border-radius:0;
-    padding:0;
-    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
-    box-shadow:none;
   }
 }
 
 
-/* SEARCH ZOOM REV01 — mobile main Search only.
+/* SEARCH ZOOM — mobile main Search only.
    Match the proven Developer/Suggest anti-focus-zoom treatment. */
 @media (max-width:900px){
   #searchInput{
     font-size:16px;
   }
 }
+
+/* LANDSCAPE SEARCH REV11 — isolate the already-landscape focus case only.
+   Keep the Search flex item shrinkable and keep the 100%-wide input inside
+   that item's actual box. Portrait and orientation-transition behavior untouched. */
+@media (orientation:landscape) and (max-height:900px){
+  .search-box{
+    min-width:0;
+  }
+  .search-box input{
+    box-sizing:border-box;
+    min-width:0;
+  }
+}
+
