@@ -2477,34 +2477,20 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* PROD-frozen REV12: Game Guides heading shared by LIST and GRID. */
-.game-guides-section{
-  max-width:1400px;
-  margin:12px auto 0;
-  padding:0 28px;
-}
+/* PROD-frozen Game Guides section. */
+.game-guides-section{max-width:1400px;margin:12px auto 0;padding:0 28px;}
 .game-guides-section .game-guides-head{margin:0 0 12px;}
 .game-guides-section .game-guides-head h2{
-  margin:0;
-  font-size:22px;
-  line-height:1.2;
-  color:var(--text);
-  font-family:inherit;
-  font-weight:700;
-  text-transform:none;
-  letter-spacing:normal;
+  margin:0;font-size:22px;line-height:1.2;color:var(--text);
+  font-family:inherit;font-weight:700;text-transform:none;letter-spacing:normal;
 }
-.game-guides-section .game-guides-count{
-  max-width:none;
-  margin:0 0 12px;
-  padding:0;
-}
+.game-guides-section .game-guides-count{max-width:none;margin:0 0 12px;padding:0;}
 .game-guides-section + .container{padding-top:0;}
 
-/* TEST REV13: keep the existing top unit together only where requested:
-   portrait viewports, or genuinely tall landscape/desktop viewports.
-   Normal/short landscape and typical 1080p-height desktop remain unchanged. */
-@media (orientation: portrait), (min-height: 1200px){
+/* TEST Sticky Header REV02:
+   REV01 mechanism retained, but restricted to genuinely tall viewports.
+   Mobile portrait/landscape and normal-height desktop retain original behavior. */
+@media (min-height: 1200px){
   .site-top-unit{
     position:sticky;
     top:0;
