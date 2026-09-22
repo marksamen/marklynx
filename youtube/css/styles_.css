@@ -2477,16 +2477,13 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TEST REV12: exact approved LIST Game Guides header copied to GRID.
-   Recent Uploads remains untouched. */
+/* PROD-frozen REV12: Game Guides heading shared by LIST and GRID. */
 .game-guides-section{
   max-width:1400px;
   margin:12px auto 0;
   padding:0 28px;
 }
-.game-guides-section .game-guides-head{
-  margin:0 0 12px;
-}
+.game-guides-section .game-guides-head{margin:0 0 12px;}
 .game-guides-section .game-guides-head h2{
   margin:0;
   font-size:22px;
@@ -2502,6 +2499,20 @@ body.suggest-modal-open{overflow:hidden}
   margin:0 0 12px;
   padding:0;
 }
-.game-guides-section + .container{
-  padding-top:0;
+.game-guides-section + .container{padding-top:0;}
+
+/* TEST REV13: keep the existing top unit together only where requested:
+   portrait viewports, or genuinely tall landscape/desktop viewports.
+   Normal/short landscape and typical 1080p-height desktop remain unchanged. */
+@media (orientation: portrait), (min-height: 1200px){
+  .site-top-unit{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--bg);
+  }
+  .site-top-unit .toolbar{
+    position:relative;
+    top:auto;
+  }
 }
