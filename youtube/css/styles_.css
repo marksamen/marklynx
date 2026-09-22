@@ -2708,3 +2708,23 @@ body.suggest-modal-open{overflow:hidden}
     display:none !important;
   }
 }
+
+
+/* PLAY BUTTON REV07 — MOBILE PORTRAIT Recent GRID only.
+   Copy the working Normal portrait GRID play-button treatment.
+   No Recent LIST, Normal LIST, desktop, or landscape changes. */
+@media (max-width:900px) and (orientation:portrait){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    width:42px;
+    height:30px;
+    border-radius:7px;
+    background:#e0392f;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    font-size:17px;
+    line-height:1;
+    padding-left:2px;
+    box-sizing:border-box;
+    box-shadow:0 2px 6px rgba(0,0,0,.6);
+  }
+}
