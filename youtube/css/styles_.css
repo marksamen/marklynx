@@ -2541,3 +2541,22 @@ body.suggest-modal-open{overflow:hidden}
     padding-right:0;
   }
 }
+
+
+/* Mobile Landscape Normal Videos Quality REV01
+   Anchor only the normal-video LIST quality badge to the far-right edge.
+   Portrait, Grid, Desktop, Playlists and Recent Uploads untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row {
+    position: relative;
+    padding-right: 82px;
+  }
+
+  #resultsList .list-col.quality {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+  }
+}
