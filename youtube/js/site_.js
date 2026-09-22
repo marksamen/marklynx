@@ -369,3 +369,26 @@ listBtn.addEventListener('click', ()=>{
 });
 
 render();
+
+
+// GLOBAL MOBILE ORIENTATION REV01
+// If the device rotates while the user is actively editing a field, release
+// that focus/keyboard state so the mobile browser recalculates its viewport.
+// Entered text/value is preserved; only focus is dismissed.
+(() => {
+  const isEditableField = (el) => {
+    if (!el) return false;
+    const tag = el.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
+  };
+
+  const releaseActiveEditor = () => {
+    if (!window.matchMedia('(max-width: 900px)').matches) return;
+    const active = document.activeElement;
+    if (isEditableField(active) && typeof active.blur === 'function') {
+      active.blur();
+    }
+  };
+
+  window.addEventListener('orientationchange', releaseActiveEditor);
+})();
