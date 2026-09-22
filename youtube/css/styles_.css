@@ -2563,3 +2563,17 @@ body.suggest-modal-open{overflow:hidden}
     margin:0;
   }
 }
+
+
+/* Mobile Landscape Normal Videos LIST Title REV01
+   Copy desktop's proven left-side LIST geometry so the title/content begins
+   cleanly after the thumbnail. Keep the approved Gamerscore + Quality columns. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row{
+    grid-template-columns:120px minmax(0,1fr) auto auto;
+  }
+
+  #resultsList .list-thumb{
+    width:110px;
+  }
+}
