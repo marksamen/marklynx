@@ -369,31 +369,3 @@ listBtn.addEventListener('click', ()=>{
 });
 
 render();
-
-
-/* TEST Sticky Controls REV03: preserve Search -> GRID/LIST when toolbar sticks. */
-(function(){
-  function initStickyToolbarState(){
-    const toolbar=document.querySelector('.toolbar');
-    if(!toolbar || toolbar.dataset.stickyStateInit==='1') return;
-    toolbar.dataset.stickyStateInit='1';
-
-    function update(){
-      if(window.innerHeight>=1200){
-        toolbar.classList.remove('toolbar-stuck');
-        return;
-      }
-      const r=toolbar.getBoundingClientRect();
-      toolbar.classList.toggle('toolbar-stuck', r.top<=0 && window.scrollY>0);
-    }
-
-    window.addEventListener('scroll', update, {passive:true});
-    window.addEventListener('resize', update, {passive:true});
-    update();
-  }
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', initStickyToolbarState, {once:true});
-  }else{
-    initStickyToolbarState();
-  }
-})();

@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=20260921-sticky-controls-REV03', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=20260921-sticky-controls-REV04', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260917-panda', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260916-prod2', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260916-prod2', 'footerModuleMount');
@@ -182,7 +182,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260918-cache-REV07');
-      await loadScript('js/site_.js?v=20260921-sticky-controls-REV03');
+      await loadScript('js/site_.js?v=20260921-sticky-controls-REV04');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=rev61');
       await loadScript('js/suggest_game_.js?v=20260919-suggest-close-REV18');
