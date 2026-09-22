@@ -371,24 +371,58 @@ listBtn.addEventListener('click', ()=>{
 render();
 
 
-// GLOBAL MOBILE ORIENTATION REV01
-// If the device rotates while the user is actively editing a field, release
-// that focus/keyboard state so the mobile browser recalculates its viewport.
-// Entered text/value is preserved; only focus is dismissed.
+// GLOBAL MOBILE ORIENTATION REV02 — iOS/WebKit viewport recovery.
+// Clean-baseline implementation. Preserves field values; never changes viewport meta/zoom policy.
 (() => {
-  const isEditableField = (el) => {
+  const ua = navigator.userAgent || '';
+  const isIOSWebKit =
+    /iP(hone|ad|od)/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  if (!isIOSWebKit) return;
+
+  const isEditable = (el) => {
     if (!el) return false;
     const tag = el.tagName;
     return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
   };
 
-  const releaseActiveEditor = () => {
-    if (!window.matchMedia('(max-width: 900px)').matches) return;
-    const active = document.activeElement;
-    if (isEditableField(active) && typeof active.blur === 'function') {
-      active.blur();
-    }
+  let rotatedRecently = false;
+  let rotationTimer = 0;
+
+  const refreshViewport = () => {
+    const x = window.scrollX;
+    const y = window.scrollY;
+    // WebKit recalculates the visual viewport when the layout viewport is touched.
+    window.scrollTo(x, y + 1);
+    requestAnimationFrame(() => window.scrollTo(x, y));
   };
 
-  window.addEventListener('orientationchange', releaseActiveEditor);
+  const onOrientationChange = () => {
+    if (!window.matchMedia('(max-width: 900px)').matches) return;
+
+    const active = document.activeElement;
+    if (isEditable(active) && typeof active.blur === 'function') active.blur();
+
+    rotatedRecently = true;
+    clearTimeout(rotationTimer);
+
+    // Let orientation/layout settle before asking WebKit to recalculate.
+    setTimeout(refreshViewport, 250);
+    setTimeout(refreshViewport, 650);
+
+    rotationTimer = setTimeout(() => {
+      rotatedRecently = false;
+    }, 2500);
+  };
+
+  window.addEventListener('orientationchange', onOrientationChange);
+
+  document.addEventListener('focusin', (e) => {
+    if (!rotatedRecently || !isEditable(e.target)) return;
+    // Critical Godzilla case: refocusing a populated field after rotation.
+    setTimeout(refreshViewport, 350);
+    rotatedRecently = false;
+    clearTimeout(rotationTimer);
+  });
 })();
