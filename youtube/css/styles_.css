@@ -2806,7 +2806,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV23 — DIAGNOSTIC + NON-STICKY TOOLBAR TEST. */
+/* LANDSCAPE SEARCH REV24 — FONTSIZE DIAGNOSTIC ONLY. */
 #rev18-landscape-debug{
   display:none;
 }
@@ -2819,15 +2819,5 @@ body.suggest-modal-open{overflow:hidden}
     background:rgba(0,0,0,.92);
     color:#fff;
     border:1px solid #fff;
-  }
-}
-
-
-/* LANDSCAPE SEARCH REV23 — single hypothesis:
-   temporarily remove sticky positioning from the toolbar while testing keyboard focus. */
-@media (orientation:landscape) and (max-height:900px){
-  .toolbar{
-    position:relative;
-    top:auto;
   }
 }
