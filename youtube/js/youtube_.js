@@ -498,5 +498,10 @@ function closeVideoModal(){
 }
 
 videoModalClose.addEventListener('click', closeVideoModal);
-videoModalOverlay.addEventListener('click', (e)=>{ if(e.target === videoModalOverlay) closeVideoModal(); });
+videoModalOverlay.addEventListener('click', (e)=>{
+  // VIDEO BACKDROP REV01: normal single videos close deliberately via X,
+  // not by clicking/tapping the backdrop. Playlist backdrop behavior is unchanged.
+  const singleVideoOpen = videoModalSidebar.style.display === 'none';
+  if(e.target === videoModalOverlay && !singleVideoOpen) closeVideoModal();
+});
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeVideoModal(); });

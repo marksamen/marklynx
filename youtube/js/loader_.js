@@ -181,7 +181,7 @@
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
+      await loadScript('js/youtube_.js?v=20260922-video-backdrop-REV01');
       await loadScript('js/site_.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=20260921-prod-promotion-01');
