@@ -2744,3 +2744,13 @@ body.suggest-modal-open{overflow:hidden}
     box-shadow:none;
   }
 }
+
+
+/* PLAY BUTTON REV09 — MOBILE PORTRAIT Normal GRID sizing only.
+   Slightly enlarge the already-passed existing SVG. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card .play-badge svg{
+    width:52px;
+    height:37px;
+  }
+}
