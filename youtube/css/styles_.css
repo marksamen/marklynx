@@ -2606,3 +2606,18 @@ body.suggest-modal-open{overflow:hidden}
 .developer-card-studio{
   font-weight:500;
 }
+
+
+/* Developer Bold REV02
+   Further soften Developer Showcase typography only to reduce heavy/blurry rendering. */
+.developer-card-title{
+  font-weight:500;
+}
+
+.developer-card-studio{
+  font-weight:400;
+}
+
+.developer-card-meta span{
+  font-weight:500;
+}
