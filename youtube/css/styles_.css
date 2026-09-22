@@ -2698,3 +2698,13 @@ body.suggest-modal-open{overflow:hidden}
     pointer-events:none;
   }
 }
+
+
+/* PLAY BUTTON REV06 — MOBILE PORTRAIT Normal LIST only.
+   Copy desktop LIST's clean single-overlay treatment by suppressing the
+   legacy play-badge layer in this context. Size/position remain unchanged. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsList .list-thumb .play-badge{
+    display:none !important;
+  }
+}
