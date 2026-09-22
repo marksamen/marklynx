@@ -498,5 +498,5 @@ function closeVideoModal(){
 }
 
 videoModalClose.addEventListener('click', closeVideoModal);
-videoModalOverlay.addEventListener('click', (e)=>{ if(e.target === videoModalOverlay) closeVideoModal(); });
+videoModalOverlay.addEventListener('click', (e)=>{ /* Background click intentionally does not close video/playlist modal. */ });
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeVideoModal(); });
