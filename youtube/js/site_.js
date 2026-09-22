@@ -371,14 +371,19 @@ listBtn.addEventListener('click', ()=>{
 render();
 
 
-// LANDSCAPE SEARCH REV13 DIAGNOSTIC ONLY — read-only measurements.
-(()=>{let p,last='init';const land=()=>matchMedia('(orientation: landscape)').matches;
+// LANDSCAPE SEARCH REV14 DIAGNOSTIC ONLY — read-only measurements.
+(()=>{let p,last='init',peak={score:-1,text:'none yet'};const land=()=>matchMedia('(orientation: landscape)').matches;
 const n=v=>Number.isFinite(v)?v.toFixed(1):'n/a';
 const rr=e=>{if(!e)return'missing';const r=e.getBoundingClientRect();return`L${n(r.left)} R${n(r.right)} W${n(r.width)}`};
 function draw(ev){last=ev||last;if(!land())return;if(!p){p=document.createElement('div');p.id='landscapeSearchDebug';document.body.appendChild(p)}
 const v=visualViewport,i=document.querySelector('.search-box input'),b=document.querySelector('.search-box'),a=document.querySelector('.landscape-search-anchor'),d=document.documentElement,bo=document.body,ir=i?.getBoundingClientRect(),br=b?.getBoundingClientRect(),vl=v?.offsetLeft||0,vw=v?.width||innerWidth,vr=vl+vw;
-p.textContent=`REV13 event:${last}
-active:${document.activeElement===i?'SEARCH':'other'}
+const active=document.activeElement===i;
+const score=Math.abs(v?.offsetLeft||0)*1000+Math.abs(v?.offsetTop||0)*10+Math.abs((v?.scale||1)-1)*100;
+const snap=`off:${n(v?.offsetLeft||0)}/${n(v?.offsetTop||0)} page:${n(v?.pageLeft||0)}/${n(v?.pageTop||0)} W/H:${n(v?.width||innerWidth)}/${n(v?.height||innerHeight)} scale:${n(v?.scale||1)} SEARCH:${rr(i)} BOX:${rr(b)}`;
+if(active && score>=peak.score) peak={score,text:snap};
+p.textContent=`REV14 event:${last}
+PEAK ${peak.text}
+active:${active?'SEARCH':'other'}
 VV off L/T:${n(v?.offsetLeft||0)}/${n(v?.offsetTop||0)}
 VV page L/T:${n(v?.pageLeft||0)}/${n(v?.pageTop||0)}
 VV W/H:${n(v?.width||innerWidth)}/${n(v?.height||innerHeight)} scale:${n(v?.scale||1)}
