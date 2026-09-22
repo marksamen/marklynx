@@ -2655,3 +2655,27 @@ body.suggest-modal-open{overflow:hidden}
   box-shadow:0 2px 5px rgba(0,0,0,.6);
   pointer-events:none;
 }
+
+
+/* PLAY BUTTON REV02 — DESKTOP GRID sizing only.
+   LIST sizing from REV01 remains untouched. */
+@media (min-width:901px){
+  /* Recent GRID: larger thumbnail -> larger play overlay. */
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    width:36px;
+    height:26px;
+    border-radius:7px;
+    font-size:15px;
+  }
+
+  /* Normal Game Guides GRID: smaller card thumbnail -> smaller existing play badge. */
+  #resultsGrid .card .play-badge{
+    width:36px;
+    height:26px;
+    border-radius:7px;
+  }
+  #resultsGrid .card .play-badge svg{
+    width:14px;
+    height:14px;
+  }
+}
