@@ -2806,7 +2806,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV24 — FONTSIZE DIAGNOSTIC ONLY. */
+/* LANDSCAPE SEARCH REV25 — LANDSCAPE 16PX TEST. */
 #rev18-landscape-debug{
   display:none;
 }
@@ -2819,5 +2819,13 @@ body.suggest-modal-open{overflow:hidden}
     background:rgba(0,0,0,.92);
     color:#fff;
     border:1px solid #fff;
+  }
+}
+
+
+/* LANDSCAPE SEARCH REV25 — use the existing proven landscape-phone anti-focus-zoom scope. */
+@media (orientation: landscape) and (max-height: 500px) {
+  #searchInput {
+    font-size: 16px;
   }
 }
