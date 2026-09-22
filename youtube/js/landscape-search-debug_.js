@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const ID = 'rev19-landscape-debug';
+  const ID = 'rev20-landscape-debug';
   let panel = null, peakTop = 0, peakLeft = 0, peakScale = 0, peakMinH = Infinity;
 
   function install() {
@@ -13,7 +13,7 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = ID;
-      panel.textContent = 'REV19 LIVE';
+      panel.textContent = 'REV20 LIVE';
     }
 
     /* Put the diagnostic immediately ABOVE the Search box in the same layout area. */
@@ -45,7 +45,7 @@
       const active = document.activeElement === input ? 'SEARCH' :
         (document.activeElement ? document.activeElement.tagName : 'none');
       panel.textContent =
-        `REV19 | A:${active} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
+        `REV20 | A:${active} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
         `PG:${n(vv ? vv.pageLeft : window.scrollX)},${n(vv ? vv.pageTop : window.scrollY)} | ` +
         `W:${n(window.scrollX)},${n(window.scrollY)} | ` +
         `IN:${n(ir?.left)},${n(ir?.right)},${n(ir?.width)} | ` +
