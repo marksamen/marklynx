@@ -2595,3 +2595,14 @@ body.suggest-modal-open{overflow:hidden}
     height:14px;
   }
 }
+
+
+/* Developer Bold REV01
+   Reduce excessive bold weight in Developer Showcase card text only. */
+.developer-card-title{
+  font-weight:600;
+}
+
+.developer-card-studio{
+  font-weight:500;
+}
