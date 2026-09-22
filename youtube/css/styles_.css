@@ -2780,3 +2780,19 @@ body.suggest-modal-open{overflow:hidden}
     box-shadow:none;
   }
 }
+
+
+/* PLAY BUTTON REV11 — MOBILE LANDSCAPE Recent GRID only.
+   Copy proven real-SVG treatment. Preserve existing 42x30 sizing.
+   Normal GRID, both LIST modes, portrait and desktop untouched. */
+@media (orientation:landscape) and (max-height:900px){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    content:"";
+    width:42px;
+    height:30px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+}
