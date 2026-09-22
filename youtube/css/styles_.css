@@ -2483,6 +2483,30 @@ body.suggest-modal-open{overflow:hidden}
 .game-guides-section .game-guides-count{max-width:none;margin:0 0 12px;padding:0;}
 .game-guides-section + .container{padding-top:0;}
 
-/* TEST REV05: three top-level actions share the existing action strip.
-   Existing individual button designs remain unchanged. */
-.subscribe-strip #suggestGameBtn{margin:0;}
+/* TEST REV06: equal top-action geometry + restrained burgundy Suggest button. */
+.subscribe-strip{
+  gap:10px;
+  align-items:center;
+}
+.subscribe-strip > a,
+.subscribe-strip > button{
+  box-sizing:border-box;
+  min-height:38px;
+  height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+}
+.subscribe-strip #suggestGameBtn{
+  padding:0 16px;
+  background:#681b1b;
+  border:1px solid #9a3030;
+  color:#fff;
+}
+@media (hover:hover) and (pointer:fine){
+  .subscribe-strip #suggestGameBtn:hover{
+    background:#7b2222;
+    border-color:#b33a3a;
+  }
+}
