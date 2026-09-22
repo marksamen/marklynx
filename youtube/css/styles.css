@@ -2470,3 +2470,74 @@ body.suggest-modal-open{overflow:hidden}
 .game-guides-section + .container{
   padding-top:0;
 }
+
+/* TOP ACTIONS REV01 CLEAN: approved geometry/color; no Recent Uploads changes. */
+.subscribe-strip-inner{
+  gap:10px;
+  align-items:center;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn,
+.subscribe-strip-inner > #suggestGameBtn,
+.subscribe-strip-inner > .developer-showcase-btn{
+  box-sizing:border-box;
+  padding:9px 14px;
+  font-size:13px;
+  margin:0;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn svg,
+.subscribe-strip-inner > #suggestGameBtn svg,
+.subscribe-strip-inner > .developer-showcase-btn svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+.subscribe-strip-inner > #suggestGameBtn{
+  background:#681b1b;
+  border:1px solid #9a3030;
+  color:#fff;
+}
+@media (hover:hover) and (pointer:fine){
+  .subscribe-strip-inner > #suggestGameBtn:hover{
+    background:#7b2222;
+    border-color:#b33a3a;
+  }
+}
+
+/* TOP ACTIONS REV02 CLEAN: mobile-only centered three-button row. */
+@media (max-width:700px){
+  .subscribe-strip-inner{
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    flex:0 1 auto;
+    min-width:0;
+    padding:8px 8px;
+    font-size:12px;
+    justify-content:center;
+  }
+  .subscribe-strip-inner > .youtube-subscribe-btn svg,
+  .subscribe-strip-inner > #suggestGameBtn svg,
+  .subscribe-strip-inner > .developer-showcase-btn svg{
+    width:16px;
+    height:16px;
+  }
+}
+
+/* TOP ACTIONS REV03 CLEAN: iOS/mobile landscape safe-area centering only. */
+@media (orientation:landscape) and (max-height:500px){
+  .subscribe-strip{
+    padding-left:max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+  }
+  .subscribe-strip-inner{
+    width:100%;
+    max-width:none;
+    justify-content:center;
+    padding-left:0;
+    padding-right:0;
+  }
+}
