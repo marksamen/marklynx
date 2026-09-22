@@ -2541,3 +2541,25 @@ body.suggest-modal-open{overflow:hidden}
     padding-right:0;
   }
 }
+
+
+
+
+
+
+/* Mobile Landscape Normal Videos Quality REV03
+   Copy desktop's normal grid-flow relationship for the right-side pair:
+   Gamerscore and Quality remain adjacent auto columns with the desktop 16px gap. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row{
+    grid-template-columns:88px minmax(0,1fr) auto auto;
+    gap:16px;
+  }
+
+  #resultsList .list-col.gs,
+  #resultsList .list-col.quality{
+    position:static;
+    transform:none;
+    margin:0;
+  }
+}
