@@ -2806,7 +2806,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV22 — DIAGNOSTIC + TA WIDTH TEST. */
+/* LANDSCAPE SEARCH REV23 — DIAGNOSTIC + NON-STICKY TOOLBAR TEST. */
 #rev18-landscape-debug{
   display:none;
 }
@@ -2823,18 +2823,11 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE SEARCH REV22 — TA structural width hypothesis ONLY.
-   Temporary diagnostic experiment: bound Search instead of flex-growing. */
+/* LANDSCAPE SEARCH REV23 — single hypothesis:
+   temporarily remove sticky positioning from the toolbar while testing keyboard focus. */
 @media (orientation:landscape) and (max-height:900px){
-  .search-box{
-    flex:0 0 175px;
-    min-width:150px;
-    max-width:175px;
-    box-sizing:border-box;
-  }
-  .search-box input{
-    min-width:0;
-    width:100%;
-    box-sizing:border-box;
+  .toolbar{
+    position:relative;
+    top:auto;
   }
 }
