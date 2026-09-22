@@ -2514,3 +2514,14 @@ body.suggest-modal-open{overflow:hidden}
     border-color:#b33a3a;
   }
 }
+
+/* TEST REV08: mobile-only equal sizing for the frozen three-button top action row. */
+@media (max-width: 700px){
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    flex:1 1 0;
+    min-width:0;
+    justify-content:center;
+  }
+}
