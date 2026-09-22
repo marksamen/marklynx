@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const ID = 'rev24-landscape-debug';
+  const ID = 'rev25-landscape-debug';
   let panel = null, peakTop = 0, peakLeft = 0, peakScale = 0, peakMinH = Infinity;
 
   function install() {
@@ -13,10 +13,10 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = ID;
-      panel.textContent = 'REV24 LIVE';
+      panel.textContent = 'REV25 LIVE';
     }
 
-    /* REV24: start immediately above Search; long tail may extend across Search. */
+    /* REV25: start immediately above Search; long tail may extend across Search. */
     if (panel.nextSibling !== box) box.parentNode.insertBefore(panel, box);
 
     Object.assign(panel.style, {
@@ -70,7 +70,7 @@
         (document.activeElement ? document.activeElement.tagName : 'none');
       const fs = input ? getComputedStyle(input).fontSize : 'na';
       panel.textContent =
-        `REV24 | A:${active} | FS:${fs} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
+        `REV25 | A:${active} | FS:${fs} | VV:${n(left)},${n(top)},${n(vw)},${n(vh)},${n(scale)} | ` +
         `PG:${n(vv ? vv.pageLeft : window.scrollX)},${n(vv ? vv.pageTop : window.scrollY)} | ` +
         `W:${n(window.scrollX)},${n(window.scrollY)} | ` +
         `IN:${n(ir?.left)},${n(ir?.right)},${n(ir?.width)} | ` +
