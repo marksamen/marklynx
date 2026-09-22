@@ -2526,3 +2526,18 @@ body.suggest-modal-open{overflow:hidden}
     height:16px;
   }
 }
+
+/* TOP ACTIONS REV03 CLEAN: iOS/mobile landscape safe-area centering only. */
+@media (orientation:landscape) and (max-height:500px){
+  .subscribe-strip{
+    padding-left:max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+  }
+  .subscribe-strip-inner{
+    width:100%;
+    max-width:none;
+    justify-content:center;
+    padding-left:0;
+    padding-right:0;
+  }
+}
