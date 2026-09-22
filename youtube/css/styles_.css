@@ -2595,3 +2595,63 @@ body.suggest-modal-open{overflow:hidden}
     height:14px;
   }
 }
+
+
+/* PLAY BUTTON REV01 — thumbnail overlay only.
+   Normal GRID reuses the existing play SVG and makes it permanently visible.
+   Normal LIST and Recent use CSS-only overlays so no Recent JS/HTML/data is touched. */
+
+/* Normal Game Guides GRID — existing proven play badge, now always visible. */
+.card .play-badge svg{
+  opacity:1;
+}
+
+/* Normal Game Guides LIST — sized for the 110px thumbnail. */
+#resultsList .list-thumb::after{
+  content:"▶";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:24px;
+  border-radius:6px;
+  background:#e0392f;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  line-height:1;
+  padding-left:2px;
+  box-sizing:border-box;
+  box-shadow:0 2px 6px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+
+/* Recent Uploads — same design, deliberately smaller for its smaller thumbnail. */
+.recent-upload-thumb::after{
+  content:"▶";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:20px;
+  border-radius:5px;
+  background:#e0392f;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  line-height:1;
+  padding-left:2px;
+  box-sizing:border-box;
+  box-shadow:0 2px 5px rgba(0,0,0,.6);
+  pointer-events:none;
+}
