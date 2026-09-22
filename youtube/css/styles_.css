@@ -2502,12 +2502,27 @@ body.suggest-modal-open{overflow:hidden}
     border-color:#b33a3a;
   }
 }
+
+/* TOP ACTIONS REV02 CLEAN: mobile-only centered three-button row. */
 @media (max-width:700px){
+  .subscribe-strip-inner{
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
   .subscribe-strip-inner > .youtube-subscribe-btn,
   .subscribe-strip-inner > #suggestGameBtn,
   .subscribe-strip-inner > .developer-showcase-btn{
-    flex:1 1 0;
+    flex:0 1 auto;
     min-width:0;
+    padding:8px 8px;
+    font-size:12px;
     justify-content:center;
+  }
+  .subscribe-strip-inner > .youtube-subscribe-btn svg,
+  .subscribe-strip-inner > #suggestGameBtn svg,
+  .subscribe-strip-inner > .developer-showcase-btn svg{
+    width:16px;
+    height:16px;
   }
 }
