@@ -2364,56 +2364,11 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-
-/* Priority 1 REV01: PHONE LANDSCAPE rotation overflow — Normal Videos LIST only.
-   Landscape phones can exceed the 900px width breakpoint and fall back to the
-   desktop 7-column list, forcing horizontal page overflow. Keep the approved
-   compact mobile list geometry whenever the device is landscape + phone-height.
-   Portrait, Grid, Recent Uploads, Developer/Suggest and desktop are untouched. */
-@media (orientation: landscape) and (max-height: 900px) {
-  #resultsList .list-row,
-  #resultsList .list-head {
-    grid-template-columns: 88px minmax(0,1fr) auto;
-    gap: 10px;
-  }
-
-  #resultsList .list-thumb {
-    width: 88px;
-  }
-
-  #resultsList .list-row > span:nth-child(2) {
-    min-width: 0;
-  }
-
-  #resultsList .list-name,
-  #resultsList .list-sub {
-    overflow-wrap: anywhere;
-  }
-
-  #resultsList .list-col.time,
-  #resultsList .list-col.type,
-  #resultsList .list-col.diff,
-  #resultsList .list-col.quality,
-  #resultsList .list-head .h-time,
-  #resultsList .list-head .h-type,
-  #resultsList .list-head .h-diff,
-  #resultsList .list-head .h-quality {
-    display: none !important;
-  }
-}
-
-/* Developer Landscape REV01: prevent mobile browser focus-zoom on form fields.
-   Developer form only. Suggest A Game, portrait, and all other site areas untouched. */
+/* Mobile landscape forms: prevent browser focus-zoom on Developer and Suggest fields.
+   Both changes were independently tested and approved in TEST. */
 @media (orientation: landscape) and (max-height: 500px) {
   .developer-contact-form input,
-  .developer-contact-form textarea {
-    font-size: 16px;
-  }
-}
-
-/* Suggest Landscape REV01: prevent mobile browser focus-zoom on form fields.
-   Same proven landscape-phone treatment as Developer. Suggest form only. */
-@media (orientation: landscape) and (max-height: 500px) {
+  .developer-contact-form textarea,
   .suggest-game-form input[type=text],
   .suggest-game-form input[type=email],
   .suggest-game-form textarea {
@@ -2444,7 +2399,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 
   .developer-card {
-    flex: 0 0 42%;
+    flex: 0 0 86%;
     min-width: 0;
     scroll-snap-align: start;
   }
@@ -2477,51 +2432,41 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-.game-guides-section{max-width:1400px;margin:12px auto 0;padding:0 28px;}
-.game-guides-section .game-guides-head{margin:0 0 12px;}
-.game-guides-section .game-guides-head h2{margin:0;font-size:22px;line-height:1.2;color:var(--text);font-family:inherit;font-weight:700;text-transform:none;letter-spacing:normal;}
-.game-guides-section .game-guides-count{max-width:none;margin:0 0 12px;padding:0;}
-.game-guides-section + .container{padding-top:0;}
-
-/* TEST REV07: normalize all three top actions to production-proven geometry. */
-.subscribe-strip-inner{
-  gap:10px;
-  align-items:center;
+/* PROD: Developer landscape card sizing — exact passed TEST selector */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-card {
+    flex: 0 0 42%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
 }
-.subscribe-strip-inner > .youtube-subscribe-btn,
-.subscribe-strip-inner > #suggestGameBtn,
-.subscribe-strip-inner > .developer-showcase-btn{
-  box-sizing:border-box;
-  padding:9px 14px;
-  font-size:13px;
+
+
+/* PROD REV12: TEST-approved Game Guides header shared by LIST and GRID.
+   Recent Uploads remains untouched. */
+.game-guides-section{
+  max-width:1400px;
+  margin:12px auto 0;
+  padding:0 28px;
+}
+.game-guides-section .game-guides-head{
+  margin:0 0 12px;
+}
+.game-guides-section .game-guides-head h2{
   margin:0;
+  font-size:22px;
+  line-height:1.2;
+  color:var(--text);
+  font-family:inherit;
+  font-weight:700;
+  text-transform:none;
+  letter-spacing:normal;
 }
-.subscribe-strip-inner > .youtube-subscribe-btn svg,
-.subscribe-strip-inner > #suggestGameBtn svg,
-.subscribe-strip-inner > .developer-showcase-btn svg{
-  width:18px;
-  height:18px;
-  flex-shrink:0;
+.game-guides-section .game-guides-count{
+  max-width:none;
+  margin:0 0 12px;
+  padding:0;
 }
-.subscribe-strip-inner > #suggestGameBtn{
-  background:#681b1b;
-  border:1px solid #9a3030;
-  color:#fff;
-}
-@media (hover:hover) and (pointer:fine){
-  .subscribe-strip-inner > #suggestGameBtn:hover{
-    background:#7b2222;
-    border-color:#b33a3a;
-  }
-}
-
-/* TEST REV08: mobile-only equal sizing for the frozen three-button top action row. */
-@media (max-width: 700px){
-  .subscribe-strip-inner > .youtube-subscribe-btn,
-  .subscribe-strip-inner > #suggestGameBtn,
-  .subscribe-strip-inner > .developer-showcase-btn{
-    flex:1 1 0;
-    min-width:0;
-    justify-content:center;
-  }
+.game-guides-section + .container{
+  padding-top:0;
 }
