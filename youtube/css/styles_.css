@@ -2483,29 +2483,33 @@ body.suggest-modal-open{overflow:hidden}
 .game-guides-section .game-guides-count{max-width:none;margin:0 0 12px;padding:0;}
 .game-guides-section + .container{padding-top:0;}
 
-/* TEST REV06: equal top-action geometry + restrained burgundy Suggest button. */
-.subscribe-strip{
+/* TEST REV07: normalize all three top actions to production-proven geometry. */
+.subscribe-strip-inner{
   gap:10px;
   align-items:center;
 }
-.subscribe-strip > a,
-.subscribe-strip > button{
+.subscribe-strip-inner > .youtube-subscribe-btn,
+.subscribe-strip-inner > #suggestGameBtn,
+.subscribe-strip-inner > .developer-showcase-btn{
   box-sizing:border-box;
-  min-height:38px;
-  height:38px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  padding:9px 14px;
+  font-size:13px;
   margin:0;
 }
-.subscribe-strip #suggestGameBtn{
-  padding:0 16px;
+.subscribe-strip-inner > .youtube-subscribe-btn svg,
+.subscribe-strip-inner > #suggestGameBtn svg,
+.subscribe-strip-inner > .developer-showcase-btn svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+.subscribe-strip-inner > #suggestGameBtn{
   background:#681b1b;
   border:1px solid #9a3030;
   color:#fff;
 }
 @media (hover:hover) and (pointer:fine){
-  .subscribe-strip #suggestGameBtn:hover{
+  .subscribe-strip-inner > #suggestGameBtn:hover{
     background:#7b2222;
     border-color:#b33a3a;
   }
