@@ -182,7 +182,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site_.js?v=20260922-global-mobile-orientation-REV02');
+      await loadScript('js/site_.js?v=20260922-global-mobile-orientation-REV03');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=20260921-prod-promotion-01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');

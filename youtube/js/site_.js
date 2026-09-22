@@ -419,8 +419,20 @@ render();
   window.addEventListener('orientationchange', onOrientationChange);
 
   document.addEventListener('focusin', (e) => {
-    if (!rotatedRecently || !isEditable(e.target)) return;
-    // Critical Godzilla case: refocusing a populated field after rotation.
+    if (!isEditable(e.target)) return;
+
+    const landscapeNow = window.matchMedia('(orientation: landscape)').matches;
+
+    // REV03: iOS can enter the bad visual-viewport state when an editable
+    // field is FIRST focused while already in Landscape, before any rotation.
+    if (landscapeNow) {
+      setTimeout(refreshViewport, 350);
+    }
+
+    if (!rotatedRecently) return;
+
+    // Critical Portrait-origin Godzilla case proven by REV02:
+    // refocusing a populated field after rotation.
     setTimeout(refreshViewport, 350);
     rotatedRecently = false;
     clearTimeout(rotationTimer);
