@@ -2831,3 +2831,28 @@ body.suggest-modal-open{overflow:hidden}
     font-size:16px;
   }
 }
+
+
+/* LANDSCAPE SEARCH REV17 — DIAGNOSTIC ONLY. No Search behavior changes. */
+#rev17-landscape-debug{
+  display:none;
+}
+@media (orientation:landscape) and (max-height:900px){
+  #rev17-landscape-debug{
+    display:block;
+    position:fixed;
+    z-index:2147483647;
+    top:0;
+    left:0;
+    right:0;
+    box-sizing:border-box;
+    padding:3px 6px;
+    background:rgba(0,0,0,.92);
+    color:#fff;
+    border-bottom:1px solid #fff;
+    font:700 10px/1.15 monospace;
+    white-space:nowrap;
+    overflow:hidden;
+    pointer-events:none;
+  }
+}
