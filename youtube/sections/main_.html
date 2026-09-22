@@ -171,3 +171,37 @@
     </div>
   </div>
 </div>
+
+
+<div id="landscapeSearchDebug15" aria-hidden="true">REV15 loading…</div>
+<script>
+(()=>{
+ const ID='REV15', panel=document.getElementById('landscapeSearchDebug15');
+ let peak='none yet', peakScore=-1, last='ready';
+ const n=v=>Number.isFinite(v)?v.toFixed(1):'n/a';
+ const rect=e=>{if(!e)return'missing';const r=e.getBoundingClientRect();return`${n(r.left)}/${n(r.right)}/${n(r.width)}`};
+ function render(ev){
+  last=ev||last;
+  const vv=window.visualViewport, i=document.querySelector('.search-box input'),
+        b=document.querySelector('.search-box'), a=document.querySelector('.landscape-search-anchor'),
+        de=document.documentElement, bo=document.body;
+  const active=document.activeElement===i, ir=i?.getBoundingClientRect(), br=b?.getBoundingClientRect(),
+        vl=vv?.offsetLeft||0, vw=vv?.width||innerWidth, vr=vl+vw;
+  const outI=!!ir&&(ir.left<vl-.5||ir.right>vr+.5), outB=!!br&&(br.left<vl-.5||br.right>vr+.5),
+        outD=Math.max(de.scrollWidth,bo?.scrollWidth||0)>de.clientWidth+1;
+  const score=Math.abs(vv?.offsetTop||0)*10+Math.abs(vv?.offsetLeft||0)*100+
+              Math.abs((vv?.scale||1)-1)*1000+Math.abs(scrollY||0);
+  const snap=`off ${n(vv?.offsetLeft||0)}/${n(vv?.offsetTop||0)} | page ${n(vv?.pageLeft||0)}/${n(vv?.pageTop||0)} | size ${n(vv?.width||innerWidth)}×${n(vv?.height||innerHeight)} | scale ${n(vv?.scale||1)} | scroll ${n(scrollX)}/${n(scrollY)} | S ${rect(i)} | B ${rect(b)}`;
+  if(active && score>=peakScore){peakScore=score;peak=snap;}
+  panel.textContent=
+   `${ID} | ${last} | ${active?'SEARCH':'other'} | VV ${n(vv?.offsetLeft||0)}/${n(vv?.offsetTop||0)} ${n(vv?.width||innerWidth)}×${n(vv?.height||innerHeight)} @${n(vv?.scale||1)} | scroll ${n(scrollX)}/${n(scrollY)} | SEARCH ${rect(i)} | BOX ${rect(b)} | ANCH ${rect(a)} | OUT I:${outI?'Y':'N'} B:${outB?'Y':'N'} D:${outD?'Y':'N'}\nPEAK | ${peak}`;
+ }
+ function burst(e){render(e);requestAnimationFrame(()=>render(e+'+raf'));[50,150,350,700,1200].forEach(ms=>setTimeout(()=>render(e+'+'+ms),ms))}
+ document.addEventListener('focusin',e=>{if(e.target?.matches?.('.search-box input'))burst('focusin')},true);
+ document.addEventListener('focusout',e=>{if(e.target?.matches?.('.search-box input'))burst('focusout')},true);
+ addEventListener('resize',()=>burst('win-resize'),{passive:true});
+ visualViewport?.addEventListener('resize',()=>burst('vv-resize'),{passive:true});
+ visualViewport?.addEventListener('scroll',()=>burst('vv-scroll'),{passive:true});
+ setTimeout(()=>burst('ready'),0);
+})();
+</script>
