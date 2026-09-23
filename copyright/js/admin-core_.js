@@ -79,6 +79,12 @@ async function setTestDataSource(source){
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
+  testManualDataSource=null;
+  const identityStatus=document.getElementById("databaseIdentityStatus");
+  if(verifiedTestDatabaseIdentity){
+    identityStatus.textContent="SUPABASE TEST — VERIFYING SOURCE…";
+    identityStatus.style.color="#b8c0cc";
+  }
   message.style.color="#ffd36d";
   message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
   try{
