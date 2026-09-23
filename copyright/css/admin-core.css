@@ -1,0 +1,79 @@
+html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
+
+body{display:grid;place-items:center;text-align:center}
+
+h1{margin:0 0 .35rem}
+
+p{margin:0;opacity:.7}
+
+#admin{display:none}
+
+form{display:grid;gap:.8rem;margin-top:1.5rem}
+
+input,button{box-sizing:border-box;width:100%;padding:.85rem 1rem;border-radius:8px;font:inherit}
+
+input{border:1px solid #555;background:#1c1c1c;color:#fff}
+
+button{border:0;cursor:pointer;font-weight:700}
+
+.admin-link{box-sizing:border-box;display:block;width:100%;margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;text-decoration:none;font-weight:700}
+
+#claims{margin-top:1.5rem;background:#fff;color:#111}
+
+#youtubeClaims{background:#c62828;color:#fff}
+
+#developerSubmissions{background:#6a1b9a;color:#fff}
+
+#adminWorkspace{display:grid;grid-template-columns:minmax(280px,340px) minmax(560px,760px);gap:22px;align-items:start;justify-content:center;width:min(1160px,96vw);margin:18px auto 0}
+
+#adminControls{min-width:0}
+
+#adminGameColumn{min-width:0}
+
+#gameSuggestions{background:#f4f4f4!important;color:#111!important;border-color:#fff!important;font-weight:800}
+
+#gameSuggestions:hover{background:#fff!important;color:#111!important}
+
+@media (max-width:900px){
+#adminWorkspace{grid-template-columns:1fr;width:min(700px,94vw)}
+#adminGameColumn{grid-row:auto}
+}
+
+#admin{max-width:none!important;width:100%!important}
+
+#adminWorkspace{margin-left:auto!important;margin-right:auto!important}
+
+#admin > #signOut,#admin > button#signOut{display:block;width:min(1160px,96vw);max-width:1160px;margin:14px auto 0}
+
+body{background:
+radial-gradient(circle at 50% 10%,rgba(198,40,40,.10),transparent 28rem),
+linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
+
+#admin{padding:38px 22px 46px;box-sizing:border-box}
+
+#adminHeader{width:min(1160px,96vw);margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;text-align:left}
+
+#adminHeader h1{font-size:1.85rem;letter-spacing:-.025em;margin:0}
+
+#adminHeader p{margin-top:4px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
+
+#adminWorkspace{padding:18px;background:rgba(22,22,24,.72);border:1px solid #2e2e32;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.32);backdrop-filter:blur(8px)}
+
+#adminControls,#adminGameColumn{min-width:0}
+
+#developerSubmissions,#gameSuggestions,#youtubeClaims{border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.16)}
+
+#trafficPanel,#testPanel,#gameDevPanel{border-color:#35353a!important;background:linear-gradient(180deg,#19191b,#151517)!important;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+
+#gameDevPanel h2,#trafficPanel h2{letter-spacing:.01em}
+
+@media (max-width:900px){
+#admin{padding:24px 14px 36px}
+#adminHeader{width:min(700px,94vw)}
+#adminWorkspace{padding:12px}
+}
+
+@media (max-width:520px){
+#adminHeader{align-items:flex-start;gap:12px}
+#adminHeader h1{font-size:1.45rem}
+}
