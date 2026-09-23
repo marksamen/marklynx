@@ -19,11 +19,6 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-// Supabase PROD connection constants. Defined before auth callbacks so
-// data-source status can safely use them during the initial login event.
-const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
-const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-
 function loggedOut(){admin.style.display="none";login.style.display="block";}
 function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
 
@@ -65,7 +60,7 @@ async function loadDataSourceStatus(){
   }
 }
 
-async function setProdDataSource(source){
+async function setTestDataSource(source){
   if(source!=="supabase"&&source!=="json")return;
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
@@ -85,7 +80,7 @@ async function setProdDataSource(source){
     if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
     await loadDataSourceStatus();
     message.style.color="#6dff8b";
-    message.textContent=`✓ PROD manual override set to ${source.toUpperCase()}.`;
+    message.textContent=`✓ PROD manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
   }catch(e){
     message.style.color="#ff6d6d";
     message.textContent=`SOURCE CHANGE FAILED — ${e?.message||e}`;
@@ -95,8 +90,8 @@ async function setProdDataSource(source){
   }
 }
 
-document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setProdDataSource("supabase"));
-document.getElementById("dataSourceUseJson").addEventListener("click",()=>setProdDataSource("json"));
+document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setTestDataSource("supabase"));
+document.getElementById("dataSourceUseJson").addEventListener("click",()=>setTestDataSource("json"));
 
 function drawTrafficValue(elementId,data){
   const el=document.getElementById(elementId);
@@ -582,6 +577,8 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
 
 
 // Supabase PROD recovery export — public SELECT only. No database writes.
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 async function fetchAllSupabaseTestGames(){
@@ -669,3 +666,28 @@ testToggle.addEventListener("click",()=>{
   drawTestControl();
 });
 drawTestControl();
+
+
+// Admin submissions/suggestions modal
+const adminPageModal=document.getElementById("adminPageModal");
+const adminPageModalFrame=document.getElementById("adminPageModalFrame");
+const adminPageModalTitle=document.getElementById("adminPageModalTitle");
+const adminPageModalClose=document.getElementById("adminPageModalClose");
+function openAdminPageModal(url,title){
+  adminPageModalTitle.textContent=title;
+  adminPageModalFrame.src=url;
+  adminPageModal.classList.add("open");
+  adminPageModal.setAttribute("aria-hidden","false");
+  document.body.classList.add("admin-modal-open");
+  adminPageModalClose.focus();
+}
+function closeAdminPageModal(){
+  adminPageModal.classList.remove("open");
+  adminPageModal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("admin-modal-open");
+  adminPageModalFrame.src="about:blank";
+}
+document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
+adminPageModalClose.addEventListener("click",closeAdminPageModal);
+adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal)closeAdminPageModal();});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open"))closeAdminPageModal();});
