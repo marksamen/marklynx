@@ -5,194 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
 <title>Mark Lynx Admin</title>
-<style>
-html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
-body{display:grid;place-items:center;text-align:center}
-h1{margin:0 0 .35rem}p{margin:0;opacity:.7}
-#login,#admin{width:min(92vw,420px)}
-#admin{display:none}
-form{display:grid;gap:.8rem;margin-top:1.5rem}
-input,button{box-sizing:border-box;width:100%;padding:.85rem 1rem;border-radius:8px;font:inherit}
-input{border:1px solid #555;background:#1c1c1c;color:#fff}
-button{border:0;cursor:pointer;font-weight:700}
-#error{min-height:1.2em;margin-top:.8rem;color:#ff8d8d;opacity:1}
-.admin-link{box-sizing:border-box;display:block;width:100%;margin-top:.8rem;padding:.85rem 1rem;border-radius:8px;text-decoration:none;font-weight:700}
-#claims{margin-top:1.5rem;background:#fff;color:#111}
-#youtubeClaims{background:#c62828;color:#fff}
-#developerSubmissions{background:#6a1b9a;color:#fff}
-#trafficPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
-#trafficPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
-#trafficGrid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
-.traffic-card{padding:.75rem;border:1px solid #444;border-radius:8px;background:#151515;text-align:center}
-.traffic-card strong{display:block;margin-bottom:.35rem}
-.traffic-values{font-size:.9rem;line-height:1.45;opacity:.85}
-#trafficUpdated{margin-top:.75rem;text-align:center;font-size:.8rem;opacity:.6}
-#trafficError{margin-top:.75rem;text-align:center;color:#ff8d8d;opacity:1}
-#testPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c}
-#siteLinks{display:grid;gap:.55rem;margin-top:.8rem}
-#siteLinks .admin-link{margin-top:0;background:#2b2b2b;color:#fff;border:1px solid #555}
-#siteLinks .primary{background:#1565c0;border-color:#1565c0}
-#testStatus{margin:0 0 .8rem;font-weight:700;opacity:1}
-#testStatus.on{color:#6dff8b}
-#testStatus.off{color:#ff6d6d}
-#testToggle.enable{background:#1f9d49;color:#fff}
-#testToggle.disable{background:#a82d2d;color:#fff}
-#gameDevPanel{box-sizing:border-box;width:min(96vw,980px);margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
-#gameDevPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
-#gameDevStatus{text-align:center;font-weight:700}
-#gameDevDetails{font-size:.88rem;line-height:1.55;opacity:.85;white-space:pre-line}
-#gameDevError{text-align:center;color:#ff8d8d;opacity:1}
-#gameDevTools{display:none;margin-top:1rem;border-top:1px solid #444;padding-top:1rem}
-#gameDevList{width:100%;padding:.75rem;border-radius:8px;border:1px solid #555;background:#151515;color:#fff}
-#gameDevForm{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem}
-#gameDevForm label{font-size:.78rem;opacity:.9;text-align:left}
-#gameDevForm .field-help{display:block;margin-top:.25rem;font-size:.7rem;line-height:1.35;color:#aaa;font-weight:400}
-#gameDevForm input,#gameDevForm select,#gameDevSearch{margin-top:.25rem;width:100%;padding:.7rem;border-radius:7px;border:1px solid #555;background:#151515;color:#fff;box-sizing:border-box}
-#gameDevForm .wide{grid-column:1/-1}
-.choice-box{border:1px solid #555;border-radius:7px;background:#151515;padding:.6rem;margin-top:.25rem}
-.choice-grid{display:flex;flex-wrap:wrap;gap:.45rem .8rem}
-.choice-grid label{display:flex;align-items:center;gap:.3rem;font-size:.76rem!important}
-.choice-grid input{width:auto!important;margin:0!important;padding:0!important}
-.media-fields{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.5rem}
-.inline-pair{display:grid;grid-template-columns:1fr 130px;gap:.45rem;align-items:end}
-.inline-pair select{margin-top:.25rem}
-.field-error{display:block;min-height:1em;margin-top:.2rem;color:#ff6d6d;font-size:.7rem}
-#gdQualityOther{display:none;margin-top:.45rem}
-@media(max-width:700px){.media-fields{grid-template-columns:1fr}}
-#gameDevActions{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.8rem}
-#gameDevSave{background:#1565c0;color:#fff}
-#gameDevReload{background:#333;color:#fff;border:1px solid #555}
-#gameDevWriteStatus{margin:.75rem 0 0;text-align:center;font-weight:700}
-@media(max-width:700px){#gameDevForm,#gameDevActions{grid-template-columns:1fr}#gameDevForm .wide{grid-column:auto}}
-
-.multi-select{position:relative;margin-top:.25rem}
-.multi-select summary{list-style:none;cursor:pointer;padding:.7rem;border:1px solid #555;border-radius:7px;background:#151515;color:#fff;font-size:.78rem;user-select:none}
-.multi-select summary::-webkit-details-marker{display:none}
-.multi-select summary:after{content:"▼";float:right;opacity:.7}
-.multi-select[open] summary:after{content:"▲"}
-.multi-select .choice-box{margin-top:.35rem;max-height:210px;overflow:auto}
-.multi-select .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.35rem}
-.multi-select .choice-grid label{padding:.35rem .45rem;border-radius:5px;background:#1d1d1d}
-.gd-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.78);padding:3vh 2vw;overflow:auto}
-.gd-modal.open{display:block}
-.gd-modal-card{box-sizing:border-box;width:min(94vw,900px);margin:0 auto;padding:1rem;border:1px solid #555;border-radius:12px;background:#1c1c1c;box-shadow:0 18px 60px rgba(0,0,0,.55);text-align:left}
-.gd-modal-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid #444;padding-bottom:.7rem}
-.gd-modal-head h2{margin:0;font-size:1.15rem}
-#gameDevAddClose{width:42px;padding:.35rem .6rem;background:#333;color:#fff;border:1px solid #555;font-size:1.4rem;line-height:1}
-.gd-modal-note{margin:.7rem 0 0!important;font-size:.82rem;opacity:.75!important}
-#gameDevAddModal #gameDevForm{margin-top:1rem}
-#gameDevAddModal #gameDevActions{grid-template-columns:1fr 1fr}
-@media(max-width:700px){.multi-select .choice-grid{grid-template-columns:1fr}.gd-modal{padding:1vh 1vw}.gd-modal-card{width:98vw}.gd-modal-head{position:sticky;top:0;background:#1c1c1c;z-index:2}}
-#logout{margin-top:.8rem}
-</style>
-<style id="gameDevRev28Style">
-#gameDevPanel{border:1px solid #3a3a3a;border-top:3px solid #c62828;background:#111;border-radius:10px;overflow:hidden}
-#gameDevPanel h2{color:#fff;letter-spacing:.02em}
-#gameDevPanel .gd-console{background:#0a0a0a;border:1px solid #2d2d2d;border-radius:8px;padding:14px;margin-top:12px}
-#gameDevPanel .gd-toolbar{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end;margin-top:12px}
-#gameDevPanel .gd-toolbar button{min-height:42px}
-#gameDevPanel #gameDevAdd{background:#c62828;color:#fff;border-color:#e33;font-weight:800}
-#gameDevPanel #gameDevReload{background:#1b1b1b;color:#fff;border-color:#444}
-#gameDevPanel #gameDevList{border-color:#444;background:#111;color:#fff}
-#gameDevPanel #gameDevSearch{border-color:#444;background:#111;color:#fff}
-#gameDevEditorHome{display:none}
-.gd-modal-card{border-top:3px solid #c62828!important;background:#171717!important}
-.gd-modal-head{border-bottom:1px solid #3a3a3a}
-.gd-modal-head h2{color:#fff}
-#gameDevEditModal #gameDevSave{background:#c62828;color:#fff;border-color:#e33;font-weight:800}
-#gameDevEditModal #gameDevDelete{background:#2a0d0d;color:#ff7777;border:1px solid #8f2525;font-weight:800}
-#gameDevEditModal #gameDevReload{display:none!important}
-#gameDevDeleteModal .gd-delete-target{font-size:1.1rem;font-weight:800;color:#fff;background:#0b0b0b;border:1px solid #7b1f1f;border-radius:8px;padding:14px;margin:14px 0}
-#gameDevDeleteConfirm{background:#b71c1c;color:#fff;border-color:#ef5350;font-weight:900}
-#gameDevDeleteCancel{background:#eee;color:#111}
-.gd-danger-note{color:#ff8a80;font-weight:700}
-@media(max-width:720px){#gameDevPanel .gd-toolbar{grid-template-columns:1fr}#gameDevPanel .gd-toolbar button{width:100%}}
-</style>
-<style id="adminLayoutRev29">
-#adminWorkspace{display:grid;grid-template-columns:minmax(280px,340px) minmax(560px,760px);gap:22px;align-items:start;justify-content:center;width:min(1160px,96vw);margin:18px auto 0}
-#adminControls{min-width:0}
-#adminGameColumn{min-width:0}
-#adminGameColumn #gameDevPanel{margin:0;width:auto;max-width:none}
-#gameSuggestions{background:#f4f4f4!important;color:#111!important;border-color:#fff!important;font-weight:800}
-#gameSuggestions:hover{background:#fff!important;color:#111!important}
-@media(max-width:900px){
-  #adminWorkspace{grid-template-columns:1fr;width:min(700px,94vw)}
-  #adminGameColumn{grid-row:auto}
-}
-</style>
-<style id="adminLayoutRev30">
-#admin{max-width:none!important;width:100%!important}
-#adminWorkspace{margin-left:auto!important;margin-right:auto!important}
-#adminGameColumn #trafficPanel{margin-top:14px;width:auto;max-width:none}
-#admin > #signOut,#admin > button#signOut{display:block;width:min(1160px,96vw);max-width:1160px;margin:14px auto 0}
-</style>
-<style id="adminVisualRev31">
-body{background:
-radial-gradient(circle at 50% 10%,rgba(198,40,40,.10),transparent 28rem),
-linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
-#admin{padding:38px 22px 46px;box-sizing:border-box}
-#adminHeader{width:min(1160px,96vw);margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;text-align:left}
-#adminHeader h1{font-size:1.85rem;letter-spacing:-.025em;margin:0}
-#adminHeader p{margin-top:4px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
-#logout{width:auto;min-width:110px;padding:.7rem 1rem;background:#18181a;color:#fff;border:1px solid #444;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
-#logout:hover{border-color:#c62828;background:#211313}
-#adminWorkspace{padding:18px;background:rgba(22,22,24,.72);border:1px solid #2e2e32;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.32);backdrop-filter:blur(8px)}
-#adminControls,#adminGameColumn{min-width:0}
-#developerSubmissions,#gameSuggestions,#youtubeClaims{border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.16)}
-#trafficPanel,#testPanel,#gameDevPanel{border-color:#35353a!important;background:linear-gradient(180deg,#19191b,#151517)!important;box-shadow:0 10px 28px rgba(0,0,0,.18)}
-#gameDevPanel{border-top-color:#d32f2f!important}
-#gameDevPanel h2,#trafficPanel h2{letter-spacing:.01em}
-#gameDevPanel #gameDevSearch,#gameDevPanel #gameDevList{border-radius:9px;min-height:42px}
-#gameDevPanel .gd-toolbar{margin-top:10px}
-#gameDevPanel .gd-toolbar button{border-radius:9px;transition:transform .12s ease,filter .12s ease}
-#gameDevPanel .gd-toolbar button:hover{filter:brightness(1.08);transform:translateY(-1px)}
-#trafficGrid{gap:8px}
-.traffic-card{background:#111113;border-color:#343438;border-radius:10px}
-@media(max-width:900px){
- #admin{padding:24px 14px 36px}
- #adminHeader{width:min(700px,94vw)}
- #adminWorkspace{padding:12px}
-}
-@media(max-width:520px){
- #adminHeader{align-items:flex-start;gap:12px}
- #adminHeader h1{font-size:1.45rem}
- #logout{min-width:88px;padding:.6rem .75rem}
-}
-</style>
-<style id="gameDevSafetyVisualRev32">
-#gameDevEditClose,#gameDevAddClose,#gameDevDeleteClose{
- width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;
- display:grid!important;place-items:center!important;flex:0 0 34px!important;border-radius:8px!important;
- background:#242426!important;color:#fff!important;border:1px solid #4a4a4f!important;
- font-size:1.15rem!important;line-height:1!important
-}
-#gameDevEditClose:hover,#gameDevAddClose:hover,#gameDevDeleteClose:hover{background:#331616!important;border-color:#c62828!important}
-#gdRaw{background:#09090a!important;color:#8e939b!important;border:1px dashed #484b50!important;
- cursor:not-allowed!important;opacity:.78!important}
-.gd-readonly-label{display:inline-flex;align-items:center;margin-left:8px;padding:2px 7px;border-radius:999px;
- background:#29292c;color:#b8bcc3;border:1px solid #45454a;font-size:.68rem;font-weight:800;letter-spacing:.06em}
-
-/* TEST-only read-only data source status */
-#dataSourceStatusPanel{margin-top:14px;padding:14px;border:1px solid #444;border-radius:10px;background:#111113}
-#dataSourceStatusPanel h2{margin:0 0 10px}
-#dataSourceStatusPanel p{margin:5px 0}
-#dataSourceConfigured,#dataSourceOverride{font-weight:800}
-#dataSourceActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#dataSourceActions button{width:auto;margin:0;padding:9px 12px}
-#dataSourceControlMessage{min-height:1.2em;margin-top:8px!important;font-weight:700}
-
-/* TEST Admin submissions/suggestions modal — REV02 */
-#adminPageModal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.78)}
-#adminPageModal.open{display:flex}
-#adminPageModalShell{width:min(1180px,96vw);height:min(860px,92vh);background:#111113;border:1px solid #45454a;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden;display:flex;flex-direction:column}
-#adminPageModalHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:#19191b;border-bottom:1px solid #35353a}
-#adminPageModalTitle{margin:0;font-size:1rem;font-weight:800;color:#fff}
-#adminPageModalClose{width:36px;height:36px;min-width:36px;padding:0;border-radius:8px;background:#242426;color:#fff;border:1px solid #4a4a4f;font-size:1.2rem;line-height:1;cursor:pointer}
-#adminPageModalClose:hover{background:#331616;border-color:#c62828}
-#adminPageModalFrame{width:100%;height:100%;border:0;background:#111}
-body.admin-modal-open{overflow:hidden}
-@media(max-width:600px){#adminPageModal{padding:8px}#adminPageModalShell{width:100%;height:96vh}}
-</style>
+<link rel="stylesheet" href="css/admin-core.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/games.css">
+<link rel="stylesheet" href="css/traffic-analytics.css">
+<link rel="stylesheet" href="css/test-tools.css">
+<link rel="stylesheet" href="css/admin-pages.css">
 </head>
 <body>
 <main id="login">
@@ -210,8 +28,8 @@ body.admin-modal-open{overflow:hidden}
   <button id="logout" type="button">Sign Out</button>
 </div>
 <div id="adminWorkspace"><div id="adminControls">
-<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/index_.html" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
-<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/index_.html" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
+<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
+<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
 
 <a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
 <section id="testPanel" aria-label="Test content control">
