@@ -369,7 +369,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
-  document.getElementById("gdRaw").value="NEW games_TEST record";
+  document.getElementById("gdRaw").value="NEW games record";
   document.getElementById("gameDevSave").style.display="none";
   document.getElementById("gameDevDelete").style.display="none";
   document.getElementById("gameDevReload").style.display="none";
@@ -611,7 +611,7 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
+  writeStatus.textContent="Reading Supabase TEST and generating games.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
     if(!games.length)throw new Error("Supabase TEST returned zero games.");
@@ -620,17 +620,17 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games_.json";
+    a.download="games.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase TEST (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase TEST games_.json export failed:",e);
+    console.error("Supabase TEST games.json export failed:",e);
   }finally{
     button.disabled=false;
   }
