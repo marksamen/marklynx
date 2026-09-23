@@ -3,6 +3,7 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js";
+import { initAdminPageModal } from "./admin-page-modal_.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -701,26 +702,4 @@ document.getElementById("logout").addEventListener("click",()=>signOut(auth));
 initTestContentControl();
 
 
-// TEST Admin submissions/suggestions modal — REV02
-const adminPageModal=document.getElementById("adminPageModal");
-const adminPageModalFrame=document.getElementById("adminPageModalFrame");
-const adminPageModalTitle=document.getElementById("adminPageModalTitle");
-const adminPageModalClose=document.getElementById("adminPageModalClose");
-function openAdminPageModal(url,title){
-  adminPageModalTitle.textContent=title;
-  adminPageModalFrame.src=url;
-  adminPageModal.classList.add("open");
-  adminPageModal.setAttribute("aria-hidden","false");
-  document.body.classList.add("admin-modal-open");
-  adminPageModalClose.focus();
-}
-function closeAdminPageModal(){
-  adminPageModal.classList.remove("open");
-  adminPageModal.setAttribute("aria-hidden","true");
-  document.body.classList.remove("admin-modal-open");
-  adminPageModalFrame.src="about:blank";
-}
-document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
-adminPageModalClose.addEventListener("click",closeAdminPageModal);
-adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal)closeAdminPageModal();});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open"))closeAdminPageModal();});
+initAdminPageModal();
