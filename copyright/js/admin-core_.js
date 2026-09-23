@@ -28,6 +28,11 @@ let testManualDataSource=null;
 function renderVerifiedTestDatabaseIdentity(){
   if(!verifiedTestDatabaseIdentity)return;
   const status=document.getElementById("databaseIdentityStatus");
+  if(testManualDataSource===null){
+    status.textContent="SUPABASE TEST — SOURCE STATUS PENDING";
+    status.style.color="#ffd36d";
+    return;
+  }
   const offlineJson=testManualDataSource==="json";
   const mode=offlineJson?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
   status.textContent=`SUPABASE TEST — ${mode}`;
@@ -79,6 +84,8 @@ async function setTestDataSource(source){
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
+  testManualDataSource=null;
+  renderVerifiedTestDatabaseIdentity();
   message.style.color="#ffd36d";
   message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
   try{
