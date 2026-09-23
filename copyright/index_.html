@@ -192,6 +192,27 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 #adminPageModalFrame{width:100%;height:100%;border:0;background:#111}
 body.admin-modal-open{overflow:hidden}
 @media(max-width:600px){#adminPageModal{padding:8px}#adminPageModalShell{width:100%;height:96vh}}
+
+/* Quality Badge Management — TEST UI REV01 (UI only; no persistence) */
+#qualityBadgeManager{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #35353a;border-radius:10px;background:linear-gradient(180deg,#19191b,#151517);text-align:left}
+#qualityBadgeManager h2{margin:0 0 .35rem;font-size:1.05rem;text-align:center}
+#qualityBadgeManager .qbm-intro{margin:0 0 .8rem!important;text-align:center;font-size:.78rem;line-height:1.4;opacity:.68}
+#qualityBadgeList{display:grid;gap:.55rem}
+.qbm-row{display:grid;grid-template-columns:82px minmax(0,1fr) auto;gap:.7rem;align-items:center;padding:.65rem;border:1px solid #343438;border-radius:9px;background:#111113}
+.qbm-preview{height:48px;display:flex;align-items:center;justify-content:center;padding:4px;border:1px solid #303034;border-radius:7px;background:#080809;overflow:hidden}
+.qbm-preview img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+.qbm-name{font-weight:800}.qbm-usage{display:block;margin-top:.2rem;font-size:.72rem;color:#aaa}
+.qbm-actions{display:flex;gap:.4rem}.qbm-actions button{width:auto;padding:.55rem .65rem;font-size:.72rem;border:1px solid #4a4a4f;background:#242426;color:#fff}
+.qbm-actions .qbm-delete{border-color:#7b1f1f;color:#ff8a80;background:#2a0d0d}.qbm-actions button:disabled{cursor:not-allowed;opacity:.35}
+#qualityBadgeAdd{margin-top:.7rem;background:#c62828;color:#fff;border:1px solid #e33}
+#qualityBadgeRequirement{margin:.5rem 0 0!important;text-align:center;font-size:.72rem;line-height:1.4;color:#aaa;opacity:1}
+#qualityBadgeMessage{min-height:1.2em;margin:.55rem 0 0!important;text-align:center;font-size:.76rem;font-weight:700;opacity:1}
+#qualityBadgeModal{z-index:10020}.qbm-form{display:grid;gap:.8rem;margin-top:1rem}.qbm-form label{font-size:.78rem;font-weight:700}.qbm-form input{margin-top:.25rem}.qbm-file{border:1px solid #555;background:#151515;color:#fff}
+#qualityBadgeImagePreview{min-height:120px;display:flex;align-items:center;justify-content:center;border:1px dashed #555;border-radius:9px;background:#0b0b0c;padding:12px}
+#qualityBadgeImagePreview img{max-width:min(100%,300px);max-height:180px;object-fit:contain}
+#qualityBadgeImageInfo{font-size:.74rem;line-height:1.45;color:#aaa;text-align:center}
+#qualityBadgeModalActions{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}#qualityBadgeSave{background:#c62828;color:#fff}#qualityBadgeCancel{background:#eee;color:#111}
+@media(max-width:520px){.qbm-row{grid-template-columns:70px 1fr}.qbm-actions{grid-column:1/-1}.qbm-actions button{flex:1}#qualityBadgeModalActions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -233,6 +254,15 @@ body.admin-modal-open{overflow:hidden}
 <button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
 </div>
 <p id="dataSourceControlMessage" aria-live="polite"></p>
+</section>
+
+<section id="qualityBadgeManager" aria-label="Quality Badge Management">
+<h2>Quality Badge Management</h2>
+<p class="qbm-intro">Manage the artwork used for game quality badges. TEST UI only — changes in REV01 are not saved.</p>
+<div id="qualityBadgeList"></div>
+<button id="qualityBadgeAdd" type="button">Add Quality Badge</button>
+<p id="qualityBadgeRequirement"><strong>Badge image:</strong> PNG · 3:2 aspect ratio recommended · high-resolution image recommended.</p>
+<p id="qualityBadgeMessage" aria-live="polite"></p>
 </section>
 </div>
 <div id="adminGameColumn">
@@ -302,6 +332,19 @@ body.admin-modal-open{overflow:hidden}
 </div>
 </div>
 </main>
+
+<div id="qualityBadgeModal" class="gd-modal" aria-hidden="true">
+<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="qualityBadgeModalTitle">
+<div class="gd-modal-head"><h2 id="qualityBadgeModalTitle">Add Quality Badge</h2><button id="qualityBadgeModalClose" type="button" aria-label="Close Quality Badge editor">×</button></div>
+<p id="qualityBadgeModalNote" class="gd-modal-note">REV01 is UI-only. Nothing here is written to the database or website.</p>
+<div class="qbm-form">
+<label>Quality Name<input id="qualityBadgeName" maxlength="30" placeholder="Example: 8K"></label>
+<label>Badge Image (PNG)<input id="qualityBadgeImage" class="qbm-file" type="file" accept="image/png"></label>
+<div id="qualityBadgeImagePreview"><span>No image selected</span></div>
+<div id="qualityBadgeImageInfo">PNG · 3:2 aspect ratio recommended.</div>
+<div id="qualityBadgeModalActions"><button id="qualityBadgeSave" type="button">Add Badge to TEST Preview</button><button id="qualityBadgeCancel" type="button">Cancel</button></div>
+</div>
+</div></div>
 <div id="adminPageModal" aria-hidden="true">
   <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
     <div id="adminPageModalHeader">
@@ -480,6 +523,7 @@ async function loadGamesTest(){
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     populateGameDev(games);
+    renderQualityBadgeManager();
   }catch(e){
     status.textContent="FAILED — could not read Supabase TEST games.";
     status.style.color="#ff6d6d";
@@ -981,7 +1025,7 @@ testToggle.addEventListener("click",()=>{
 });
 drawTestControl();
 
-
+\n\n// Quality Badge Management — TEST UI REV01. Session preview only; no database/storage writes.\nconst QBM_BASE=[\n  {name:"4K",src:"../youtube/quality-4k-60fps_.png",objectUrl:false},\n  {name:"1080p",src:"../youtube/quality-1080p_.png",objectUrl:false}\n];\nlet qbmItems=QBM_BASE.map(item=>({...item}));\nlet qbmEditIndex=null;\nlet qbmPendingImage=null;\nconst qbmModal=document.getElementById("qualityBadgeModal");\nconst qbmName=document.getElementById("qualityBadgeName");\nconst qbmImage=document.getElementById("qualityBadgeImage");\nconst qbmPreview=document.getElementById("qualityBadgeImagePreview");\nconst qbmInfo=document.getElementById("qualityBadgeImageInfo");\nconst qbmMessage=document.getElementById("qualityBadgeMessage");\n\nfunction qbmUsage(name){return (window.GAMEDEV_RAW||[]).filter(game=>String(game.q||"").trim().toLowerCase()===String(name||"").trim().toLowerCase()).length;}\nfunction qbmSetMessage(text,color="#aaa"){qbmMessage.textContent=text;qbmMessage.style.color=color;}\nfunction renderQualityBadgeManager(){\n  const list=document.getElementById("qualityBadgeList");\n  list.innerHTML="";\n  qbmItems.forEach((item,index)=>{\n    const usage=qbmUsage(item.name);\n    const row=document.createElement("div");row.className="qbm-row";\n    const preview=document.createElement("div");preview.className="qbm-preview";\n    const img=document.createElement("img");img.src=item.src;img.alt=`${item.name} badge`;preview.appendChild(img);\n    const meta=document.createElement("div");\n    const name=document.createElement("span");name.className="qbm-name";name.textContent=item.name;\n    const count=document.createElement("span");count.className="qbm-usage";count.textContent=`Used by ${usage} game${usage===1?"":"s"}`;meta.append(name,count);\n    const actions=document.createElement("div");actions.className="qbm-actions";\n    const edit=document.createElement("button");edit.type="button";edit.textContent="EDIT";edit.addEventListener("click",()=>openQualityBadgeEditor(index));\n    const del=document.createElement("button");del.type="button";del.textContent="DELETE";del.className="qbm-delete";del.disabled=usage>0;del.title=usage>0?`Cannot delete ${item.name} — currently used by ${usage} games.`:"Delete this unused badge";del.addEventListener("click",()=>deleteQualityBadgePreview(index));\n    actions.append(edit,del);row.append(preview,meta,actions);list.appendChild(row);\n  });\n}\nfunction resetQbmImage(){if(qbmPendingImage?.objectUrl)URL.revokeObjectURL(qbmPendingImage.src);qbmPendingImage=null;qbmImage.value="";qbmPreview.innerHTML="<span>No image selected</span>";qbmInfo.textContent="PNG · 3:2 aspect ratio recommended.";qbmInfo.style.color="#aaa";}\nfunction openQualityBadgeEditor(index=null){\n  resetQbmImage();qbmEditIndex=index;const editing=index!==null;const item=editing?qbmItems[index]:null;const usage=editing?qbmUsage(item.name):0;\n  document.getElementById("qualityBadgeModalTitle").textContent=editing?`Edit ${item.name} Badge`:"Add Quality Badge";\n  qbmName.value=editing?item.name:"";qbmName.disabled=editing&&usage>0;\n  document.getElementById("qualityBadgeSave").textContent=editing?"Apply to TEST Preview":"Add Badge to TEST Preview";\n  document.getElementById("qualityBadgeModalNote").textContent=editing&&usage>0?`${item.name} is used by ${usage} games. Its name is locked while in use. Replacing its image will affect all ${usage} games once this feature is connected in Part 2.`:"REV01 is UI-only. Nothing here is written to the database or website.";\n  if(editing){qbmPreview.innerHTML="";const img=document.createElement("img");img.src=item.src;img.alt=`${item.name} badge`;qbmPreview.appendChild(img);}\n  qbmModal.classList.add("open");qbmModal.setAttribute("aria-hidden","false");qbmName.focus();\n}\nfunction closeQualityBadgeEditor(){resetQbmImage();qbmModal.classList.remove("open");qbmModal.setAttribute("aria-hidden","true");qbmEditIndex=null;}\nqbmImage.addEventListener("change",()=>{\n  resetQbmImage();const file=qbmImage.files?.[0];if(!file)return;\n  if(file.type!=="image/png"){qbmInfo.textContent="Invalid file type — choose a PNG image.";qbmInfo.style.color="#ff6d6d";qbmImage.value="";return;}\n  const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{\n    const ratio=img.naturalWidth/img.naturalHeight;const nearThreeTwo=Math.abs(ratio-1.5)<=0.08;\n    qbmPendingImage={src:url,objectUrl:true,width:img.naturalWidth,height:img.naturalHeight,nearThreeTwo};\n    qbmPreview.innerHTML="";const shown=document.createElement("img");shown.src=url;shown.alt="Selected badge preview";qbmPreview.appendChild(shown);\n    qbmInfo.textContent=`${img.naturalWidth} × ${img.naturalHeight}px · ${nearThreeTwo?"3:2-compatible":"outside the recommended 3:2 shape"}`;qbmInfo.style.color=nearThreeTwo?"#6dff8b":"#ffd36d";\n  };img.onerror=()=>{URL.revokeObjectURL(url);qbmInfo.textContent="Could not read this PNG image.";qbmInfo.style.color="#ff6d6d";};img.src=url;\n});\ndocument.getElementById("qualityBadgeSave").addEventListener("click",()=>{\n  const name=qbmName.value.trim();if(!name){qbmInfo.textContent="Enter a quality name first.";qbmInfo.style.color="#ff6d6d";return;}\n  const duplicate=qbmItems.findIndex((item,i)=>i!==qbmEditIndex&&item.name.toLowerCase()===name.toLowerCase());if(duplicate!==-1){qbmInfo.textContent=`${name} already exists.`;qbmInfo.style.color="#ff6d6d";return;}\n  if(qbmEditIndex===null&&!qbmPendingImage){qbmInfo.textContent="Choose a PNG badge image.";qbmInfo.style.color="#ff6d6d";return;}\n  if(qbmEditIndex!==null){const item=qbmItems[qbmEditIndex],usage=qbmUsage(item.name);if(qbmPendingImage&&usage>0&&!confirm(`${item.name} is currently used by ${usage} games. Replacing this badge would affect all ${usage} games once Part 2 is connected. Continue with this TEST preview?`))return;if(item.objectUrl&&qbmPendingImage)URL.revokeObjectURL(item.src);item.name=name;if(qbmPendingImage){item.src=qbmPendingImage.src;item.objectUrl=true;qbmPendingImage.objectUrl=false;}qbmSetMessage(`${name} updated in this REV01 browser preview only.`,"#6dff8b");}\n  else{qbmItems.push({name,src:qbmPendingImage.src,objectUrl:true});qbmPendingImage.objectUrl=false;qbmSetMessage(`${name} added to this REV01 browser preview only.`,"#6dff8b");}\n  renderQualityBadgeManager();closeQualityBadgeEditor();\n});\nfunction deleteQualityBadgePreview(index){const item=qbmItems[index],usage=qbmUsage(item.name);if(usage>0){alert(`Cannot delete ${item.name} — currently used by ${usage} games. Change those games to another quality first.`);return;}if(!confirm(`Delete ${item.name} from this TEST preview?`))return;if(item.objectUrl)URL.revokeObjectURL(item.src);qbmItems.splice(index,1);renderQualityBadgeManager();qbmSetMessage(`${item.name} deleted from this REV01 browser preview only.`,"#ffd36d");}\ndocument.getElementById("qualityBadgeAdd").addEventListener("click",()=>openQualityBadgeEditor());\ndocument.getElementById("qualityBadgeModalClose").addEventListener("click",closeQualityBadgeEditor);\ndocument.getElementById("qualityBadgeCancel").addEventListener("click",closeQualityBadgeEditor);\nqbmModal.addEventListener("click",event=>{if(event.target===qbmModal)closeQualityBadgeEditor();});\ndocument.addEventListener("keydown",event=>{if(event.key==="Escape"&&qbmModal.classList.contains("open"))closeQualityBadgeEditor();});\nrenderQualityBadgeManager();\n
 // TEST Admin submissions/suggestions modal — REV02
 const adminPageModal=document.getElementById("adminPageModal");
 const adminPageModalFrame=document.getElementById("adminPageModalFrame");
