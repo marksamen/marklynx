@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebas
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
+import { initTestContentControl } from "./admin-test-content_.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -697,22 +698,7 @@ form.addEventListener("submit",async e=>{
 
 document.getElementById("logout").addEventListener("click",()=>signOut(auth));
 
-const TEST_KEY="marklynxTestContent";
-const testStatus=document.getElementById("testStatus");
-const testToggle=document.getElementById("testToggle");
-function testHidden(){return (localStorage.getItem(TEST_KEY)||"Y").toUpperCase()==="Y";}
-function drawTestControl(){
-  const hidden=testHidden();
-  testStatus.textContent="TEST CONTENT: "+(hidden?"OFF":"ON");
-  testStatus.className=hidden?"off":"on";
-  testToggle.textContent=hidden?"TURN TEST CONTENT ON":"TURN TEST CONTENT OFF";
-  testToggle.className=hidden?"enable":"disable";
-}
-testToggle.addEventListener("click",()=>{
-  localStorage.setItem(TEST_KEY,testHidden()?"N":"Y");
-  drawTestControl();
-});
-drawTestControl();
+initTestContentControl();
 
 
 // TEST Admin submissions/suggestions modal — REV02
