@@ -22,6 +22,17 @@ const error = document.getElementById("error");
 function loggedOut(){admin.style.display="none";login.style.display="block";}
 function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
 
+let verifiedTestDatabaseIdentity=false;
+let testManualDataSource=null;
+
+function renderVerifiedTestDatabaseIdentity(){
+  if(!verifiedTestDatabaseIdentity)return;
+  const status=document.getElementById("databaseIdentityStatus");
+  const mode=testManualDataSource==="json"?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
+  status.textContent=`SUPABASE TEST — ${mode}`;
+  status.style.color="#6dff8b";
+}
+
 async function loadDataSourceStatus(){
   const configured=document.getElementById("dataSourceConfigured");
   const override=document.getElementById("dataSourceOverride");
@@ -53,7 +64,9 @@ async function loadDataSourceStatus(){
     if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
     const source=String(result?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
+    testManualDataSource=source;
     override.textContent=source.toUpperCase();
+    renderVerifiedTestDatabaseIdentity();
   }catch(e){
     override.textContent="UNAVAILABLE";
     console.error("TEST data source override read failed:",e);
@@ -144,16 +157,18 @@ async function verifyTestDatabaseIdentity(){
       actual.environment===EXPECTED_TEST_DATABASE_IDENTITY.environment &&
       actual.identity_marker===EXPECTED_TEST_DATABASE_IDENTITY.identity_marker;
     if(!verified){
+      verifiedTestDatabaseIdentity=false;
       status.textContent="NOT VERIFIED — DATABASE IDENTITY MISMATCH";
       status.style.color="#ff6d6d";
       details.textContent=`Database returned: environment=${actual.environment??"?"} · marker=${actual.identity_marker??"?"}`;
       return false;
     }
-    status.textContent="SUPABASE TEST — VERIFIED";
-    status.style.color="#6dff8b";
+    verifiedTestDatabaseIdentity=true;
+    renderVerifiedTestDatabaseIdentity();
     details.textContent=`Database returned: ${actual.environment} · ${actual.identity_marker}`;
     return true;
   }catch(e){
+    verifiedTestDatabaseIdentity=false;
     status.textContent="NOT VERIFIED — IDENTITY CHECK FAILED";
     status.style.color="#ff6d6d";
     details.textContent=e?.message||String(e);
