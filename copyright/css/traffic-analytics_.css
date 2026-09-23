@@ -1,0 +1,21 @@
+#trafficPanel{box-sizing:border-box;width:100%;margin-top:.8rem;padding:1rem;border:1px solid #444;border-radius:8px;background:#1c1c1c;text-align:left}
+
+#trafficPanel h2{margin:0 0 .8rem;font-size:1.05rem;text-align:center}
+
+#trafficGrid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+
+.traffic-card{padding:.75rem;border:1px solid #444;border-radius:8px;background:#151515;text-align:center}
+
+.traffic-card strong{display:block;margin-bottom:.35rem}
+
+.traffic-values{font-size:.9rem;line-height:1.45;opacity:.85}
+
+#trafficUpdated{margin-top:.75rem;text-align:center;font-size:.8rem;opacity:.6}
+
+#trafficError{margin-top:.75rem;text-align:center;color:#ff8d8d;opacity:1}
+
+#adminGameColumn #trafficPanel{margin-top:14px;width:auto;max-width:none}
+
+#trafficGrid{gap:8px}
+
+.traffic-card{background:#111113;border-color:#343438;border-radius:10px}
