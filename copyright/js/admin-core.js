@@ -27,17 +27,17 @@ async function loadDataSourceStatus(){
   const override=document.getElementById("dataSourceOverride");
   const note=document.getElementById("dataSourceStatusNote");
   try{
-    const response=await fetch("../youtube/data/data-source_.json?status="+Date.now(),{cache:"no-store"});
+    const response=await fetch("../youtube/data/data-source.json?status="+Date.now(),{cache:"no-store"});
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const config=await response.json();
     const source=String(config?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown source value");
     configured.textContent=source.toUpperCase();
-    note.textContent="Read-only TEST status from data-source_.json.";
+    note.textContent="Read-only PROD status from data-source.json.";
   }catch(e){
     configured.textContent="UNAVAILABLE";
-    note.textContent="Could not read TEST data-source_.json.";
-    console.error("TEST data source status read failed:",e);
+    note.textContent="Could not read PROD data-source.json.";
+    console.error("PROD data source status read failed:",e);
   }
 
   try{
@@ -56,7 +56,7 @@ async function loadDataSourceStatus(){
     override.textContent=source.toUpperCase();
   }catch(e){
     override.textContent="UNAVAILABLE";
-    console.error("TEST data source override read failed:",e);
+    console.error("PROD data source override read failed:",e);
   }
 }
 
@@ -66,7 +66,7 @@ async function setTestDataSource(source){
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
   message.style.color="#ffd36d";
-  message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
+  message.textContent=`Setting PROD manual override to ${source.toUpperCase()}…`;
   try{
     const user=auth.currentUser;
     if(!user)throw new Error("Admin authentication is required.");
@@ -80,7 +80,7 @@ async function setTestDataSource(source){
     if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
     await loadDataSourceStatus();
     message.style.color="#6dff8b";
-    message.textContent=`✓ TEST manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
+    message.textContent=`✓ PROD manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
   }catch(e){
     message.style.color="#ff6d6d";
     message.textContent=`SOURCE CHANGE FAILED — ${e?.message||e}`;
@@ -668,7 +668,7 @@ testToggle.addEventListener("click",()=>{
 drawTestControl();
 
 
-// TEST Admin submissions/suggestions modal — REV02
+// Admin submissions/suggestions modal
 const adminPageModal=document.getElementById("adminPageModal");
 const adminPageModalFrame=document.getElementById("adminPageModalFrame");
 const adminPageModalTitle=document.getElementById("adminPageModalTitle");
