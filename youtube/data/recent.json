@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-23T15:30:01.109316+00:00",
+  "updated": "2026-09-23T16:31:13.447540+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "a0i1PPh5Clo",
+      "title": "Ammo Pigs: Cocked and Loaded | Easy 100% Completion | 1000 Gamerscore | 6-7 Minute Completion | 4K",
+      "published": "2026-09-23T16:21:54+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/a0i1PPh5Clo/hqdefault.jpg"
+    },
     {
       "id": "PKzOCMvZwxA",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 7 | Wiggler Stampede | All Star Coins | Normal Exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | No Star Coins | Normal Exit",
       "published": "2026-09-19T20:25:02+00:00",
       "thumbnail": "https://i.ytimg.com/vi/D2Sq5vdLx7Q/hqdefault.jpg"
-    },
-    {
-      "id": "nV19bdRPgPY",
-      "title": "Bravion | Easy 100% Completion | 3000 Gamerscore | 9 Minute Completion | 4K | 60FPS",
-      "published": "2026-09-19T14:43:36+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/nV19bdRPgPY/hqdefault.jpg"
     }
   ]
 }
