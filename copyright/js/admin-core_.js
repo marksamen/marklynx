@@ -118,6 +118,50 @@ async function loadTrafficAnalytics(){
 }
 
 
+const EXPECTED_TEST_DATABASE_IDENTITY={
+  id:"primary",
+  environment:"TEST",
+  identity_marker:"MARKLYNX-GAMEDEV-TEST"
+};
+
+async function verifyTestDatabaseIdentity(){
+  const status=document.getElementById("databaseIdentityStatus");
+  const details=document.getElementById("databaseIdentityDetails");
+  status.textContent="VERIFYING…";
+  status.style.color="#ffd36d";
+  details.textContent="Reading identity directly from Supabase TEST…";
+  try{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/system_identity?id=eq.primary&select=id,environment,identity_marker`,{
+      headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},
+      cache:"no-store"
+    });
+    if(!response.ok)throw new Error(`Identity read failed (${response.status}).`);
+    const rows=await response.json();
+    if(!Array.isArray(rows)||rows.length!==1)throw new Error(`Expected exactly one primary identity row; received ${Array.isArray(rows)?rows.length:"invalid payload"}.`);
+    const actual=rows[0]||{};
+    const verified=
+      actual.id===EXPECTED_TEST_DATABASE_IDENTITY.id &&
+      actual.environment===EXPECTED_TEST_DATABASE_IDENTITY.environment &&
+      actual.identity_marker===EXPECTED_TEST_DATABASE_IDENTITY.identity_marker;
+    if(!verified){
+      status.textContent="NOT VERIFIED — DATABASE IDENTITY MISMATCH";
+      status.style.color="#ff6d6d";
+      details.textContent=`Database returned: environment=${actual.environment??"?"} · marker=${actual.identity_marker??"?"}`;
+      return false;
+    }
+    status.textContent="SUPABASE TEST — VERIFIED";
+    status.style.color="#6dff8b";
+    details.textContent=`Database returned: ${actual.environment} · ${actual.identity_marker}`;
+    return true;
+  }catch(e){
+    status.textContent="NOT VERIFIED — IDENTITY CHECK FAILED";
+    status.style.color="#ff6d6d";
+    details.textContent=e?.message||String(e);
+    console.error("TEST database identity verification failed:",e);
+    return false;
+  }
+}
+
 async function loadGamesTest(){
   const status=document.getElementById("gameDevStatus");
   const details=document.getElementById("gameDevDetails");
@@ -137,6 +181,8 @@ async function loadGamesTest(){
     const rows=await response.json();
     if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid games payload.");
 
+    const databaseIdentityVerified=await verifyTestDatabaseIdentity();
+
     const games=rows.map(row=>({
       ...row,
       id:String(Number(row.id)).padStart(4,"0"),
@@ -148,14 +194,17 @@ async function loadGamesTest(){
     const first=games[0];
     const last=games[games.length-1];
     const passed=
+      databaseIdentityVerified &&
       games.length>=320 &&
       first?.id==="0001" &&
       first?.n==="7 Days Of Rose" &&
       games.some(g=>g.id==="0320" && g.n==="Hole In Many");
 
     status.textContent=passed
-      ?"PASS — Supabase TEST returned the expected GAMEDEV dataset."
-      :"CHECK REQUIRED — Supabase TEST responded, but the dataset did not match the expected baseline.";
+      ?"PASS — Supabase TEST identity and GAMEDEV dataset verified."
+      :databaseIdentityVerified
+        ?"CHECK REQUIRED — Supabase TEST identity verified, but the dataset did not match the expected baseline."
+        :"FAILED — database identity was not verified. GAMEDEV dataset is not trusted.";
 
     details.textContent=
       `Total records: ${games.length}\n`+
