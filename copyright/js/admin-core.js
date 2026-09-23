@@ -22,6 +22,18 @@ const error = document.getElementById("error");
 function loggedOut(){admin.style.display="none";login.style.display="block";}
 function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
 
+let verifiedProdDatabaseIdentity=false;
+let prodManualDataSource=null;
+
+function renderVerifiedProdDatabaseIdentity(){
+  if(!verifiedProdDatabaseIdentity||prodManualDataSource===null)return;
+  const status=document.getElementById("databaseIdentityStatus");
+  const offlineJson=prodManualDataSource==="json";
+  const mode=offlineJson?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
+  status.textContent=`SUPABASE PROD — ${mode}`;
+  status.style.color=offlineJson?"#ffd36d":"#6dff8b";
+}
+
 async function loadDataSourceStatus(){
   const configured=document.getElementById("dataSourceConfigured");
   const override=document.getElementById("dataSourceOverride");
@@ -53,7 +65,9 @@ async function loadDataSourceStatus(){
     if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
     const source=String(result?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
+    prodManualDataSource=source;
     override.textContent=source.toUpperCase();
+    renderVerifiedProdDatabaseIdentity();
   }catch(e){
     override.textContent="UNAVAILABLE";
     console.error("PROD data source override read failed:",e);
@@ -65,6 +79,12 @@ async function setTestDataSource(source){
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
+  prodManualDataSource=null;
+  const identityStatus=document.getElementById("databaseIdentityStatus");
+  if(verifiedProdDatabaseIdentity){
+    identityStatus.textContent="SUPABASE PROD — VERIFYING SOURCE…";
+    identityStatus.style.color="#b8c0cc";
+  }
   message.style.color="#ffd36d";
   message.textContent=`Setting PROD manual override to ${source.toUpperCase()}…`;
   try{
@@ -128,7 +148,7 @@ async function verifyProdDatabaseIdentity(){
   const status=document.getElementById("databaseIdentityStatus");
   const details=document.getElementById("databaseIdentityDetails");
   status.textContent="VERIFYING…";
-  status.style.color="#ffd36d";
+  status.style.color="#b8c0cc";
   details.textContent="Reading identity directly from Supabase PROD…";
   try{
     const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/system_identity?id=eq.primary&select=id,environment,identity_marker`,{
@@ -144,16 +164,18 @@ async function verifyProdDatabaseIdentity(){
       actual.environment===EXPECTED_PROD_DATABASE_IDENTITY.environment &&
       actual.identity_marker===EXPECTED_PROD_DATABASE_IDENTITY.identity_marker;
     if(!verified){
+      verifiedProdDatabaseIdentity=false;
       status.textContent="NOT VERIFIED — DATABASE IDENTITY MISMATCH";
       status.style.color="#ff6d6d";
       details.textContent=`Database returned: environment=${actual.environment??"?"} · marker=${actual.identity_marker??"?"}`;
       return false;
     }
-    status.textContent="SUPABASE PROD — VERIFIED";
-    status.style.color="#6dff8b";
+    verifiedProdDatabaseIdentity=true;
+    renderVerifiedProdDatabaseIdentity();
     details.textContent=`Database returned: ${actual.environment} · ${actual.identity_marker}`;
     return true;
   }catch(e){
+    verifiedProdDatabaseIdentity=false;
     status.textContent="NOT VERIFIED — IDENTITY CHECK FAILED";
     status.style.color="#ff6d6d";
     details.textContent=e?.message||String(e);
