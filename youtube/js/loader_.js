@@ -64,7 +64,7 @@
 
       installVisibilitySync();
 
-      // DATA SOURCE TEST: one tiny config chooses Supabase PROD or static games.json.
+      // DATA SOURCE TEST: one tiny config chooses Supabase TEST or static games_.json.
       // Keep the rest of the website completely independent of the chosen source.
       const dataSourceResponse = await fetch('data/data-source_.json', { cache: 'no-store' });
       if (!dataSourceResponse.ok) {
@@ -98,8 +98,8 @@
       };
 
       const loadGamesFromSupabase = async () => {
-        const baseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games';
-        const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const baseUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/games';
+        const apiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const pageSize = 1000;
         const rows = [];
 
@@ -125,12 +125,12 @@
         return rows.map(normalizeGame);
       };
 
-      // Manual PROD override lives in Supabase site_control. If that control
+      // Manual TEST override lives in Supabase TEST site_control. If that control
       // cannot be reached, keep using the existing static data-source.json config.
       // This control lookup is optional: automatic JSON recovery must not depend on it.
       const loadManualDataSourceOverride = async () => {
-        const controlUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
-        const apiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const controlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
+        const apiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const response = await fetch(controlUrl, {
           headers: { apikey: apiKey },
           cache: 'no-store'
@@ -147,9 +147,9 @@
       let selectedDataSource = dataSource;
       try {
         selectedDataSource = await loadManualDataSourceOverride();
-        console.info(`[PRODUCTION] Manual source override: ${selectedDataSource.toUpperCase()}`);
+        console.info(`[TEST] Manual source override: ${selectedDataSource.toUpperCase()}`);
       } catch (controlError) {
-        console.warn('[PRODUCTION] Manual source override unavailable; using data-source.json:', controlError);
+        console.warn('[TEST] Manual source override unavailable; using data-source_.json:', controlError);
       }
 
       let activeDataSource = selectedDataSource;
@@ -157,11 +157,11 @@
       if (selectedDataSource === 'supabase') {
         try {
           if (dataSourceConfig.testForceSupabaseFailure === true) {
-            throw new Error('Supabase failure forced by PROD config');
+            throw new Error('Supabase failure forced by TEST config');
           }
           window.RAW = await loadGamesFromSupabase();
         } catch (supabaseError) {
-          console.warn('[PRODUCTION] Supabase unavailable; falling back to games.json:', supabaseError);
+          console.warn('[TEST] Supabase unavailable; falling back to games_.json:', supabaseError);
           window.RAW = await loadGamesFromJson();
           activeDataSource = 'json-fallback';
         }
@@ -171,7 +171,7 @@
         throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
       }
 
-      console.info(`[PRODUCTION] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
+      console.info(`[TEST] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
       const statsResponse = await fetch('data/stats.json?v=20260921-prod-promotion-01', { cache: 'no-store' });
