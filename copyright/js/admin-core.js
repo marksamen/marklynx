@@ -154,14 +154,14 @@ async function loadGamesTest(){
       games.some(g=>g.id==="0320" && g.n==="Hole In Many");
 
     status.textContent=passed
-      ?"PASS — Supabase TEST returned the expected GAMEDEV dataset."
+      ?"PASS — Supabase PROD returned the expected GAMEDEV dataset."
       :"CHECK REQUIRED — Supabase TEST responded, but the dataset did not match the expected baseline.";
 
     details.textContent=
       `Total records: ${games.length}\n`+
       `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
       `Last: ${last?.id ?? "?"} — ${last?.n ?? "?"}\n`+
-      `Source: Supabase TEST`;
+      `Source: Supabase PROD`;
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
