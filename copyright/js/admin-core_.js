@@ -26,13 +26,8 @@ let verifiedTestDatabaseIdentity=false;
 let testManualDataSource=null;
 
 function renderVerifiedTestDatabaseIdentity(){
-  if(!verifiedTestDatabaseIdentity)return;
+  if(!verifiedTestDatabaseIdentity||testManualDataSource===null)return;
   const status=document.getElementById("databaseIdentityStatus");
-  if(testManualDataSource===null){
-    status.textContent="SUPABASE TEST — SOURCE STATUS PENDING";
-    status.style.color="#ffd36d";
-    return;
-  }
   const offlineJson=testManualDataSource==="json";
   const mode=offlineJson?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
   status.textContent=`SUPABASE TEST — ${mode}`;
@@ -147,7 +142,7 @@ async function verifyTestDatabaseIdentity(){
   const status=document.getElementById("databaseIdentityStatus");
   const details=document.getElementById("databaseIdentityDetails");
   status.textContent="VERIFYING…";
-  status.style.color="#ffd36d";
+  status.style.color="#b8c0cc";
   details.textContent="Reading identity directly from Supabase TEST…";
   try{
     const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/system_identity?id=eq.primary&select=id,environment,identity_marker`,{
