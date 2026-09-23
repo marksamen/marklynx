@@ -36,7 +36,7 @@ button:hover,a.btn:hover{filter:brightness(1.15)}
 <main id="viewer">
   <header class="topbar">
     <div><h1>Developer Submissions</h1><p class="subtitle">Private developer contact inbox</p></div>
-    <div class="actions"><a class="btn" href="/copyright/index_.html">Back to Admin</a><button id="refresh" type="button">Refresh</button><button id="signout" type="button">Sign Out</button></div>
+    <div class="actions"><button id="refresh" type="button">Refresh</button></div>
   </header>
   <div class="summary"><span class="pill"><strong id="totalCount">0</strong> submissions</span><span class="pill"><strong id="newCount">0</strong> new</span></div>
   <div class="filters" aria-label="Filter submissions"><button class="filter active" type="button" data-filter="All">All</button><button class="filter" type="button" data-filter="New">New</button><button class="filter" type="button" data-filter="Reviewed">Reviewed</button><button class="filter" type="button" data-filter="Contacted">Contacted</button><button class="filter" type="button" data-filter="Closed">Closed</button></div>
@@ -87,7 +87,7 @@ onAuthStateChanged(auth,user=>{if(!user){location.replace('/copyright/');return;
 document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;activeFilter=b.dataset.filter;render();});
 list.addEventListener('change',e=>{if(e.target.matches('.statusSelect'))changeStatus(e.target.dataset.id,e.target.value,e.target);});
 list.addEventListener('click',e=>{const b=e.target.closest('.delete');if(b)removeSubmission(b.dataset.id,b);});
-document.getElementById('refresh').addEventListener('click',load);document.getElementById('signout').addEventListener('click',async()=>{await signOut(auth);location.replace('/copyright/');});
+document.getElementById('refresh').addEventListener('click',load);
 </script>
 </body>
 </html>
