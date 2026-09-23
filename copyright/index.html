@@ -55,7 +55,7 @@
 </div>
 <div id="adminGameColumn">
 <section id="gameDevPanel" aria-label="Game Management Firestore test">
-<h2>Game Management — games_TEST</h2>
+<h2>Game Management — games</h2>
 <p id="gameDevStatus">Waiting for authentication…</p>
 <p id="gameDevDetails"></p>
 <p id="gameDevError"></p>
@@ -66,7 +66,7 @@
   <button id="gameDevAddLauncher" type="button">Add New Game</button>
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
-  <button id="gameDevExportSupabase" type="button">Generate games_.json</button>
+  <button id="gameDevExportSupabase" type="button">Generate games.json</button>
 </div>
 <div id="gameDevEditorHome"><form id="gameDevForm">
 <label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
@@ -102,20 +102,20 @@
 <div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
 <div class="gd-modal-head"><h2 id="gameDevEditTitle">Edit Game</h2><button id="gameDevEditClose" type="button" aria-label="Close Edit Game">×</button></div>
-<p class="gd-modal-note" id="gameDevEditNote">Review the selected games_TEST record before saving changes.</p>
+<p class="gd-modal-note" id="gameDevEditNote">Review the selected games record before saving changes.</p>
 <div id="gameDevEditMount"></div>
 </div></div>
 <div id="gameDevDeleteModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevDeleteTitle">
 <div class="gd-modal-head"><h2 id="gameDevDeleteTitle">Delete Game?</h2><button id="gameDevDeleteClose" type="button" aria-label="Close Delete confirmation">×</button></div>
-<p class="gd-danger-note">This permanently deletes one record from games_TEST.</p>
+<p class="gd-danger-note">This permanently deletes one record from games.</p>
 <div id="gameDevDeleteTarget" class="gd-delete-target"></div>
 <div class="gd-modal-actions"><button id="gameDevDeleteConfirm" type="button">Yes — Delete This Game</button><button id="gameDevDeleteCancel" type="button">Cancel</button></div>
 </div></div>
 <div id="gameDevAddModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevAddTitle">
 <div class="gd-modal-head"><h2 id="gameDevAddTitle">Add New Game</h2><button id="gameDevAddClose" type="button" aria-label="Close Add New Game">×</button></div>
-<p class="gd-modal-note">Create a new <strong>games_TEST</strong> record. Nothing is written until you click Create New Game.</p>
+<p class="gd-modal-note">Create a new <strong>games</strong> record. Nothing is written until you click Create New Game.</p>
 <div id="gameDevAddMount"></div>
 </div>
 </div>
