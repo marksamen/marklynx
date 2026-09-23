@@ -28,9 +28,10 @@ let testManualDataSource=null;
 function renderVerifiedTestDatabaseIdentity(){
   if(!verifiedTestDatabaseIdentity)return;
   const status=document.getElementById("databaseIdentityStatus");
-  const mode=testManualDataSource==="json"?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
+  const offlineJson=testManualDataSource==="json";
+  const mode=offlineJson?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
   status.textContent=`SUPABASE TEST — ${mode}`;
-  status.style.color="#6dff8b";
+  status.style.color=offlineJson?"#ffd36d":"#6dff8b";
 }
 
 async function loadDataSourceStatus(){
