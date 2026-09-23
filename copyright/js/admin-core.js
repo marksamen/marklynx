@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+import { loadTrafficAnalytics } from "./admin-traffic.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -20,17 +21,17 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
-let verifiedProdDatabaseIdentity=false;
-let prodManualDataSource=null;
+let verifiedTestDatabaseIdentity=false;
+let testManualDataSource=null;
 
-function renderVerifiedProdDatabaseIdentity(){
-  if(!verifiedProdDatabaseIdentity||prodManualDataSource===null)return;
+function renderVerifiedTestDatabaseIdentity(){
+  if(!verifiedTestDatabaseIdentity||testManualDataSource===null)return;
   const status=document.getElementById("databaseIdentityStatus");
-  const offlineJson=prodManualDataSource==="json";
+  const offlineJson=testManualDataSource==="json";
   const mode=offlineJson?"OFFLINE JSON VERIFIED":"ONLINE DB VERIFIED";
-  status.textContent=`SUPABASE PROD — ${mode}`;
+  status.textContent=`SUPABASE TEST — ${mode}`;
   status.style.color=offlineJson?"#ffd36d":"#6dff8b";
 }
 
@@ -39,38 +40,38 @@ async function loadDataSourceStatus(){
   const override=document.getElementById("dataSourceOverride");
   const note=document.getElementById("dataSourceStatusNote");
   try{
-    const response=await fetch("../youtube/data/data-source.json?status="+Date.now(),{cache:"no-store"});
+    const response=await fetch("../youtube/data/data-source_.json?status="+Date.now(),{cache:"no-store"});
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const config=await response.json();
     const source=String(config?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown source value");
     configured.textContent=source.toUpperCase();
-    note.textContent="Read-only PROD status from data-source.json.";
+    note.textContent="Read-only TEST status from data-source_.json.";
   }catch(e){
     configured.textContent="UNAVAILABLE";
-    note.textContent="Could not read PROD data-source.json.";
-    console.error("PROD data source status read failed:",e);
+    note.textContent="Could not read TEST data-source_.json.";
+    console.error("TEST data source status read failed:",e);
   }
 
   try{
     const user=auth.currentUser;
     if(!user)throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
       body:JSON.stringify({action:"get-data-source"})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
     const source=String(result?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
-    prodManualDataSource=source;
+    testManualDataSource=source;
     override.textContent=source.toUpperCase();
-    renderVerifiedProdDatabaseIdentity();
+    renderVerifiedTestDatabaseIdentity();
   }catch(e){
     override.textContent="UNAVAILABLE";
-    console.error("PROD data source override read failed:",e);
+    console.error("TEST data source override read failed:",e);
   }
 }
 
@@ -79,28 +80,28 @@ async function setTestDataSource(source){
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
-  prodManualDataSource=null;
+  testManualDataSource=null;
   const identityStatus=document.getElementById("databaseIdentityStatus");
-  if(verifiedProdDatabaseIdentity){
-    identityStatus.textContent="SUPABASE PROD — VERIFYING SOURCE…";
+  if(verifiedTestDatabaseIdentity){
+    identityStatus.textContent="SUPABASE TEST — VERIFYING SOURCE…";
     identityStatus.style.color="#b8c0cc";
   }
   message.style.color="#ffd36d";
-  message.textContent=`Setting PROD manual override to ${source.toUpperCase()}…`;
+  message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
   try{
     const user=auth.currentUser;
     if(!user)throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
       body:JSON.stringify({action:"set-data-source",source})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
     await loadDataSourceStatus();
     message.style.color="#6dff8b";
-    message.textContent=`✓ PROD manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
+    message.textContent=`✓ TEST manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
   }catch(e){
     message.style.color="#ff6d6d";
     message.textContent=`SOURCE CHANGE FAILED — ${e?.message||e}`;
@@ -113,46 +114,21 @@ async function setTestDataSource(source){
 document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setTestDataSource("supabase"));
 document.getElementById("dataSourceUseJson").addEventListener("click",()=>setTestDataSource("json"));
 
-function drawTrafficValue(elementId,data){
-  const el=document.getElementById(elementId);
-  el.textContent=`${data?.activeUsers ?? 0} active users · ${data?.pageViews ?? 0} page views`;
-}
-async function loadTrafficAnalytics(){
-  const trafficError=document.getElementById("trafficError");
-  const trafficUpdated=document.getElementById("trafficUpdated");
-  trafficError.textContent="";
-  try{
-    const snap=await getDoc(doc(db,"trafficAnalytics","current"));
-    if(!snap.exists()) throw new Error("Traffic analytics snapshot not found.");
-    const data=snap.data();
-    drawTrafficValue("trafficToday",data.today);
-    drawTrafficValue("traffic7",data.last7Days);
-    drawTrafficValue("traffic30",data.last30Days);
-    drawTrafficValue("trafficAll",data.allTime);
-    const updated=data.updatedAt?.toDate?.();
-    trafficUpdated.textContent=updated?`Last updated: ${updated.toLocaleString()}`:"";
-  }catch(e){
-    trafficError.textContent="Traffic analytics unavailable.";
-    console.error(e);
-  }
-}
-
-
-const EXPECTED_PROD_DATABASE_IDENTITY={
+const EXPECTED_TEST_DATABASE_IDENTITY={
   id:"primary",
-  environment:"PROD",
-  identity_marker:"MARKLYNX-GAMEDEV-PROD"
+  environment:"TEST",
+  identity_marker:"MARKLYNX-GAMEDEV-TEST"
 };
 
-async function verifyProdDatabaseIdentity(){
+async function verifyTestDatabaseIdentity(){
   const status=document.getElementById("databaseIdentityStatus");
   const details=document.getElementById("databaseIdentityDetails");
   status.textContent="VERIFYING…";
   status.style.color="#b8c0cc";
-  details.textContent="Reading identity directly from Supabase PROD…";
+  details.textContent="Reading identity directly from Supabase TEST…";
   try{
-    const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/system_identity?id=eq.primary&select=id,environment,identity_marker`,{
-      headers:{apikey:SUPABASE_PROD_PUBLISHABLE_KEY},
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/system_identity?id=eq.primary&select=id,environment,identity_marker`,{
+      headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},
       cache:"no-store"
     });
     if(!response.ok)throw new Error(`Identity read failed (${response.status}).`);
@@ -160,26 +136,26 @@ async function verifyProdDatabaseIdentity(){
     if(!Array.isArray(rows)||rows.length!==1)throw new Error(`Expected exactly one primary identity row; received ${Array.isArray(rows)?rows.length:"invalid payload"}.`);
     const actual=rows[0]||{};
     const verified=
-      actual.id===EXPECTED_PROD_DATABASE_IDENTITY.id &&
-      actual.environment===EXPECTED_PROD_DATABASE_IDENTITY.environment &&
-      actual.identity_marker===EXPECTED_PROD_DATABASE_IDENTITY.identity_marker;
+      actual.id===EXPECTED_TEST_DATABASE_IDENTITY.id &&
+      actual.environment===EXPECTED_TEST_DATABASE_IDENTITY.environment &&
+      actual.identity_marker===EXPECTED_TEST_DATABASE_IDENTITY.identity_marker;
     if(!verified){
-      verifiedProdDatabaseIdentity=false;
+      verifiedTestDatabaseIdentity=false;
       status.textContent="NOT VERIFIED — DATABASE IDENTITY MISMATCH";
       status.style.color="#ff6d6d";
       details.textContent=`Database returned: environment=${actual.environment??"?"} · marker=${actual.identity_marker??"?"}`;
       return false;
     }
-    verifiedProdDatabaseIdentity=true;
-    renderVerifiedProdDatabaseIdentity();
+    verifiedTestDatabaseIdentity=true;
+    renderVerifiedTestDatabaseIdentity();
     details.textContent=`Database returned: ${actual.environment} · ${actual.identity_marker}`;
     return true;
   }catch(e){
-    verifiedProdDatabaseIdentity=false;
+    verifiedTestDatabaseIdentity=false;
     status.textContent="NOT VERIFIED — IDENTITY CHECK FAILED";
     status.style.color="#ff6d6d";
     details.textContent=e?.message||String(e);
-    console.error("PROD database identity verification failed:",e);
+    console.error("TEST database identity verification failed:",e);
     return false;
   }
 }
@@ -188,22 +164,22 @@ async function loadGamesTest(){
   const status=document.getElementById("gameDevStatus");
   const details=document.getElementById("gameDevDetails");
   const gameError=document.getElementById("gameDevError");
-  status.textContent="Reading games from Supabase PROD…";
+  status.textContent="Reading games from Supabase TEST…";
   details.textContent="";
   gameError.textContent="";
 
   try{
-    const endpoint="https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games?select=*&order=id.asc&limit=1000";
-    const publishableKey="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
+    const endpoint="https://aikifibkcjibubqegvmb.supabase.co/rest/v1/games?select=*&order=id.asc&limit=1000";
+    const publishableKey="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
     const response=await fetch(endpoint,{
       headers:{"apikey":publishableKey},
       cache:"no-store"
     });
-    if(!response.ok) throw new Error(`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
     const rows=await response.json();
-    if(!Array.isArray(rows)) throw new Error("Supabase PROD returned an invalid games payload.");
+    if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid games payload.");
 
-    const databaseIdentityVerified=await verifyProdDatabaseIdentity();
+    const databaseIdentityVerified=await verifyTestDatabaseIdentity();
 
     const games=rows.map(row=>({
       ...row,
@@ -223,25 +199,25 @@ async function loadGamesTest(){
       games.some(g=>g.id==="0320" && g.n==="Hole In Many");
 
     status.textContent=passed
-      ?"PASS — Supabase PROD identity and GAMEDEV dataset verified."
+      ?"PASS — Supabase TEST identity and GAMEDEV dataset verified."
       :databaseIdentityVerified
-        ?"CHECK REQUIRED — Supabase PROD identity verified, but the dataset did not match the expected baseline."
+        ?"CHECK REQUIRED — Supabase TEST identity verified, but the dataset did not match the expected baseline."
         :"FAILED — database identity was not verified. GAMEDEV dataset is not trusted.";
 
     details.textContent=
       `Total records: ${games.length}\n`+
       `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
       `Last: ${last?.id ?? "?"} — ${last?.n ?? "?"}\n`+
-      `Source: Supabase PROD`;
+      `Source: Supabase TEST`;
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     populateGameDev(games);
   }catch(e){
-    status.textContent="FAILED — could not read Supabase PROD games.";
+    status.textContent="FAILED — could not read Supabase TEST games.";
     status.style.color="#ff6d6d";
     gameError.textContent=e?.message || String(e);
-    console.error("GAMEDEV Supabase PROD read failed:",e);
+    console.error("GAMEDEV Supabase TEST read failed:",e);
   }
 }
 
@@ -440,7 +416,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
-  document.getElementById("gdRaw").value="NEW games record";
+  document.getElementById("gdRaw").value="NEW games_TEST record";
   document.getElementById("gameDevSave").style.display="none";
   document.getElementById("gameDevDelete").style.display="none";
   document.getElementById("gameDevReload").style.display="none";
@@ -489,7 +465,7 @@ async function createGameDev(){
   record.u=media.url;
   if(document.getElementById("gdAdult").value==="true") record.adult=true;
   if(document.getElementById("gdKinect").value==="true") record.kinect=true;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase PROD…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
@@ -511,7 +487,7 @@ async function createGameDev(){
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false"
     };
-    const response=await fetch("https://igmunmyxaskizltdvvti.supabase.co/functions/v1/games-admin",{
+    const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
         "Authorization":`Bearer ${firebaseToken}`,
@@ -520,7 +496,7 @@ async function createGameDev(){
       body:JSON.stringify({action:"add",game:supabaseRecord})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     cancelAddMode();
     await loadGamesTest();
     const refreshedList=document.getElementById("gameDevList");
@@ -529,10 +505,10 @@ async function createGameDev(){
       drawSelectedGame();
     }
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${id} — ${name} was added to Supabase PROD successfully.`);
+    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${id} — ${name} was added to Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase PROD was not changed.";console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase TEST was not changed.";console.error(e);
   }
 }
 
@@ -562,12 +538,12 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
   const writeStatus=document.getElementById("gameDevWriteStatus");
   document.getElementById("gameDevDeleteConfirm").disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent=`Deleting ${target.id} from Supabase PROD…`;
+  writeStatus.textContent=`Deleting ${target.id} from Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch("https://igmunmyxaskizltdvvti.supabase.co/functions/v1/games-admin",{
+    const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
         "Authorization":`Bearer ${firebaseToken}`,
@@ -576,16 +552,16 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
       body:JSON.stringify({action:"delete",id:Number(target.id)})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     closeDeleteConfirm();
     closeEditModal();
     await loadGamesTest();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase PROD successfully.`);
+    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase TEST successfully.`);
   }catch(e){
     writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent=`DELETE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
+    writeStatus.textContent=`DELETE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
     console.error(e);
   }finally{
     document.getElementById("gameDevDeleteConfirm").disabled=false;
@@ -622,34 +598,34 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   patch.u=media.url;
   patch.v=media.type==="video" ? media.id : null;
   patch.pl=media.type==="playlist" ? media.id : null;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase PROD…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
       body:JSON.stringify({action:"update",game:patch})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     closeEditModal();
     await loadGamesTest();
     document.getElementById("gameDevList").value=g.id;
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase PROD successfully.`);
+    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;console.error(e);
   }
 });
 
 
-// Supabase PROD recovery export — public SELECT only. No database writes.
-const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
-const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
+// Supabase TEST recovery export — public SELECT only. No database writes.
+const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
+const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 async function fetchAllSupabaseTestGames(){
@@ -657,13 +633,13 @@ async function fetchAllSupabaseTestGames(){
   const all=[];
   for(let from=0;;from+=pageSize){
     const to=from+pageSize-1;
-    const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/games?select=*&order=id.asc`,{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/games?select=*&order=id.asc`,{
       headers:{
-        apikey:SUPABASE_PROD_PUBLISHABLE_KEY,
+        apikey:SUPABASE_TEST_PUBLISHABLE_KEY,
         Range:`${from}-${to}`
       }
     });
-    if(!response.ok)throw new Error(`Supabase PROD read failed (${response.status}).`);
+    if(!response.ok)throw new Error(`Supabase TEST read failed (${response.status}).`);
     const page=await response.json();
     all.push(...page);
     if(page.length<pageSize)break;
@@ -682,26 +658,26 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase PROD and generating games.json…";
+  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
-    if(!games.length)throw new Error("Supabase PROD returned zero games.");
+    if(!games.length)throw new Error("Supabase TEST returned zero games.");
     const cleanGames=games.map(cleanGameForJson);
     const blob=new Blob([JSON.stringify(cleanGames,null,2)+"\n"],{type:"application/json"});
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games.json";
+    a.download="games_.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase PROD (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase PROD games.json export failed:",e);
+    console.error("Supabase TEST games_.json export failed:",e);
   }finally{
     button.disabled=false;
   }
@@ -739,7 +715,7 @@ testToggle.addEventListener("click",()=>{
 drawTestControl();
 
 
-// Admin submissions/suggestions modal
+// TEST Admin submissions/suggestions modal — REV02
 const adminPageModal=document.getElementById("adminPageModal");
 const adminPageModalFrame=document.getElementById("adminPageModalFrame");
 const adminPageModalTitle=document.getElementById("adminPageModalTitle");
