@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
 <title>Mark Lynx Admin</title>
 <style>
 html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
@@ -84,15 +84,6 @@ button{border:0;cursor:pointer;font-weight:700}
 #gameDevAddModal #gameDevActions{grid-template-columns:1fr 1fr}
 @media(max-width:700px){.multi-select .choice-grid{grid-template-columns:1fr}.gd-modal{padding:1vh 1vw}.gd-modal-card{width:98vw}.gd-modal-head{position:sticky;top:0;background:#1c1c1c;z-index:2}}
 #logout{margin-top:.8rem}
-
-/* PROD data source status and manual recovery controls */
-#dataSourceStatusPanel{margin-top:14px;padding:14px;border:1px solid #444;border-radius:10px;background:#111113}
-#dataSourceStatusPanel h2{margin:0 0 10px}
-#dataSourceStatusPanel p{margin:5px 0}
-#dataSourceConfigured,#dataSourceOverride{font-weight:800}
-#dataSourceActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#dataSourceActions button{width:auto;margin:0;padding:9px 12px}
-#dataSourceControlMessage{min-height:1.2em;margin-top:8px!important;font-weight:700}
 </style>
 <style id="gameDevRev28Style">
 #gameDevPanel{border:1px solid #3a3a3a;border-top:3px solid #c62828;background:#111;border-radius:10px;overflow:hidden}
@@ -180,6 +171,27 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
  cursor:not-allowed!important;opacity:.78!important}
 .gd-readonly-label{display:inline-flex;align-items:center;margin-left:8px;padding:2px 7px;border-radius:999px;
  background:#29292c;color:#b8bcc3;border:1px solid #45454a;font-size:.68rem;font-weight:800;letter-spacing:.06em}
+
+/* TEST-only read-only data source status */
+#dataSourceStatusPanel{margin-top:14px;padding:14px;border:1px solid #444;border-radius:10px;background:#111113}
+#dataSourceStatusPanel h2{margin:0 0 10px}
+#dataSourceStatusPanel p{margin:5px 0}
+#dataSourceConfigured,#dataSourceOverride{font-weight:800}
+#dataSourceActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#dataSourceActions button{width:auto;margin:0;padding:9px 12px}
+#dataSourceControlMessage{min-height:1.2em;margin-top:8px!important;font-weight:700}
+
+/* TEST Admin submissions/suggestions modal — REV02 */
+#adminPageModal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.78)}
+#adminPageModal.open{display:flex}
+#adminPageModalShell{width:min(1180px,96vw);height:min(860px,92vh);background:#111113;border:1px solid #45454a;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden;display:flex;flex-direction:column}
+#adminPageModalHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:#19191b;border-bottom:1px solid #35353a}
+#adminPageModalTitle{margin:0;font-size:1rem;font-weight:800;color:#fff}
+#adminPageModalClose{width:36px;height:36px;min-width:36px;padding:0;border-radius:8px;background:#242426;color:#fff;border:1px solid #4a4a4f;font-size:1.2rem;line-height:1;cursor:pointer}
+#adminPageModalClose:hover{background:#331616;border-color:#c62828}
+#adminPageModalFrame{width:100%;height:100%;border:0;background:#111}
+body.admin-modal-open{overflow:hidden}
+@media(max-width:600px){#adminPageModal{padding:8px}#adminPageModalShell{width:100%;height:96vh}}
 </style>
 </head>
 <body>
@@ -194,12 +206,12 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 </main>
 <main id="admin">
 <div id="adminHeader">
-  <div><h1>Mark Lynx Admin</h1><p>PRODUCTION</p></div>
+  <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV19</p></div>
   <button id="logout" type="button">Sign Out</button>
 </div>
 <div id="adminWorkspace"><div id="adminControls">
-<a id="developerSubmissions" class="admin-link" href="developers/">Developer Submissions</a>
-<a id="gameSuggestions" class="admin-link" href="suggestions/">Game Suggestions</a>
+<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/index_.html" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
+<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/index_.html" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
 
 <a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
 <section id="testPanel" aria-label="Test content control">
@@ -214,7 +226,7 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 <section id="dataSourceStatusPanel" aria-label="Data Source Status">
 <h2>Data Source Status</h2>
 <p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
-<p id="dataSourceStatusNote">Read-only PROD status from data-source.json.</p>
+<p id="dataSourceStatusNote">Read-only TEST status from data-source_.json.</p>
 <p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
 <div id="dataSourceActions">
 <button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
@@ -224,8 +236,8 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 </section>
 </div>
 <div id="adminGameColumn">
-<section id="gameDevPanel" aria-label="Game Management">
-<h2>Game Management — games</h2>
+<section id="gameDevPanel" aria-label="Game Management Firestore test">
+<h2>Game Management — games_TEST</h2>
 <p id="gameDevStatus">Waiting for authentication…</p>
 <p id="gameDevDetails"></p>
 <p id="gameDevError"></p>
@@ -236,7 +248,7 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
   <button id="gameDevAddLauncher" type="button">Add New Game</button>
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
-  <button id="gameDevExportSupabase" type="button">Generate games.json</button>
+  <button id="gameDevExportSupabase" type="button">Generate games_.json</button>
 </div>
 <div id="gameDevEditorHome"><form id="gameDevForm">
 <label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
@@ -272,24 +284,33 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 <div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
 <div class="gd-modal-head"><h2 id="gameDevEditTitle">Edit Game</h2><button id="gameDevEditClose" type="button" aria-label="Close Edit Game">×</button></div>
-<p class="gd-modal-note" id="gameDevEditNote">Review the selected games record before saving changes.</p>
+<p class="gd-modal-note" id="gameDevEditNote">Review the selected games_TEST record before saving changes.</p>
 <div id="gameDevEditMount"></div>
 </div></div>
 <div id="gameDevDeleteModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevDeleteTitle">
 <div class="gd-modal-head"><h2 id="gameDevDeleteTitle">Delete Game?</h2><button id="gameDevDeleteClose" type="button" aria-label="Close Delete confirmation">×</button></div>
-<p class="gd-danger-note">This permanently deletes one record from games.</p>
+<p class="gd-danger-note">This permanently deletes one record from games_TEST.</p>
 <div id="gameDevDeleteTarget" class="gd-delete-target"></div>
 <div class="gd-modal-actions"><button id="gameDevDeleteConfirm" type="button">Yes — Delete This Game</button><button id="gameDevDeleteCancel" type="button">Cancel</button></div>
 </div></div>
 <div id="gameDevAddModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevAddTitle">
 <div class="gd-modal-head"><h2 id="gameDevAddTitle">Add New Game</h2><button id="gameDevAddClose" type="button" aria-label="Close Add New Game">×</button></div>
-<p class="gd-modal-note">Create a new <strong>games</strong> record. Nothing is written until you click Create New Game.</p>
+<p class="gd-modal-note">Create a new <strong>games_TEST</strong> record. Nothing is written until you click Create New Game.</p>
 <div id="gameDevAddMount"></div>
 </div>
 </div>
 </main>
+<div id="adminPageModal" aria-hidden="true">
+  <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
+    <div id="adminPageModalHeader">
+      <h2 id="adminPageModalTitle">Admin</h2>
+      <button id="adminPageModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <iframe id="adminPageModalFrame" title="Admin content"></iframe>
+  </div>
+</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
@@ -312,11 +333,6 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-// Supabase PROD connection constants. Defined before auth callbacks so
-// data-source status can safely use them during the initial login event.
-const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
-const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-
 function loggedOut(){admin.style.display="none";login.style.display="block";}
 function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
 
@@ -325,17 +341,17 @@ async function loadDataSourceStatus(){
   const override=document.getElementById("dataSourceOverride");
   const note=document.getElementById("dataSourceStatusNote");
   try{
-    const response=await fetch("../youtube/data/data-source.json?status="+Date.now(),{cache:"no-store"});
+    const response=await fetch("../youtube/data/data-source_.json?status="+Date.now(),{cache:"no-store"});
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const config=await response.json();
     const source=String(config?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown source value");
     configured.textContent=source.toUpperCase();
-    note.textContent="Read-only PROD status from data-source.json.";
+    note.textContent="Read-only TEST status from data-source_.json.";
   }catch(e){
     configured.textContent="UNAVAILABLE";
-    note.textContent="Could not read PROD data-source.json.";
-    console.error("PROD data source status read failed:",e);
+    note.textContent="Could not read TEST data-source_.json.";
+    console.error("TEST data source status read failed:",e);
   }
 
   try{
@@ -348,23 +364,23 @@ async function loadDataSourceStatus(){
       body:JSON.stringify({action:"get-data-source"})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
     const source=String(result?.source||"").toLowerCase();
     if(source!=="supabase"&&source!=="json")throw new Error("Unknown override value");
     override.textContent=source.toUpperCase();
   }catch(e){
     override.textContent="UNAVAILABLE";
-    console.error("PROD data source override read failed:",e);
+    console.error("TEST data source override read failed:",e);
   }
 }
 
-async function setProdDataSource(source){
+async function setTestDataSource(source){
   if(source!=="supabase"&&source!=="json")return;
   const message=document.getElementById("dataSourceControlMessage");
   const buttons=[document.getElementById("dataSourceUseSupabase"),document.getElementById("dataSourceUseJson")];
   buttons.forEach(button=>button.disabled=true);
   message.style.color="#ffd36d";
-  message.textContent=`Setting PROD manual override to ${source.toUpperCase()}…`;
+  message.textContent=`Setting TEST manual override to ${source.toUpperCase()}…`;
   try{
     const user=auth.currentUser;
     if(!user)throw new Error("Admin authentication is required.");
@@ -375,10 +391,10 @@ async function setProdDataSource(source){
       body:JSON.stringify({action:"set-data-source",source})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);
     await loadDataSourceStatus();
     message.style.color="#6dff8b";
-    message.textContent=`✓ PROD manual override set to ${source.toUpperCase()}.`;
+    message.textContent=`✓ TEST manual override set to ${source.toUpperCase()}. Loader does not use this override yet.`;
   }catch(e){
     message.style.color="#ff6d6d";
     message.textContent=`SOURCE CHANGE FAILED — ${e?.message||e}`;
@@ -388,8 +404,8 @@ async function setProdDataSource(source){
   }
 }
 
-document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setProdDataSource("supabase"));
-document.getElementById("dataSourceUseJson").addEventListener("click",()=>setProdDataSource("json"));
+document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setTestDataSource("supabase"));
+document.getElementById("dataSourceUseJson").addEventListener("click",()=>setTestDataSource("json"));
 
 function drawTrafficValue(elementId,data){
   const el=document.getElementById(elementId);
@@ -420,7 +436,7 @@ async function loadGamesTest(){
   const status=document.getElementById("gameDevStatus");
   const details=document.getElementById("gameDevDetails");
   const gameError=document.getElementById("gameDevError");
-  status.textContent="Reading games from Supabase PROD…";
+  status.textContent="Reading games from Supabase TEST…";
   details.textContent="";
   gameError.textContent="";
 
@@ -431,9 +447,9 @@ async function loadGamesTest(){
       headers:{"apikey":publishableKey},
       cache:"no-store"
     });
-    if(!response.ok) throw new Error(`Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
     const rows=await response.json();
-    if(!Array.isArray(rows)) throw new Error("Supabase PROD returned an invalid games payload.");
+    if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid games payload.");
 
     const games=rows.map(row=>({
       ...row,
@@ -452,23 +468,23 @@ async function loadGamesTest(){
       games.some(g=>g.id==="0320" && g.n==="Hole In Many");
 
     status.textContent=passed
-      ?"PASS — Supabase PROD returned the expected GAMEDEV dataset."
-      :"CHECK REQUIRED — Supabase PROD responded, but the dataset did not match the expected baseline.";
+      ?"PASS — Supabase TEST returned the expected GAMEDEV dataset."
+      :"CHECK REQUIRED — Supabase TEST responded, but the dataset did not match the expected baseline.";
 
     details.textContent=
       `Total records: ${games.length}\n`+
       `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
       `Last: ${last?.id ?? "?"} — ${last?.n ?? "?"}\n`+
-      `Source: Supabase PROD`;
+      `Source: Supabase TEST`;
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     populateGameDev(games);
   }catch(e){
-    status.textContent="FAILED — could not read Supabase PROD games.";
+    status.textContent="FAILED — could not read Supabase TEST games.";
     status.style.color="#ff6d6d";
     gameError.textContent=e?.message || String(e);
-    console.error("GAMEDEV Supabase PROD read failed:",e);
+    console.error("GAMEDEV Supabase TEST read failed:",e);
   }
 }
 
@@ -667,7 +683,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
-  document.getElementById("gdRaw").value="NEW games record";
+  document.getElementById("gdRaw").value="NEW games_TEST record";
   document.getElementById("gameDevSave").style.display="none";
   document.getElementById("gameDevDelete").style.display="none";
   document.getElementById("gameDevReload").style.display="none";
@@ -716,7 +732,7 @@ async function createGameDev(){
   record.u=media.url;
   if(document.getElementById("gdAdult").value==="true") record.adult=true;
   if(document.getElementById("gdKinect").value==="true") record.kinect=true;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase PROD…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
@@ -747,7 +763,7 @@ async function createGameDev(){
       body:JSON.stringify({action:"add",game:supabaseRecord})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     cancelAddMode();
     await loadGamesTest();
     const refreshedList=document.getElementById("gameDevList");
@@ -756,10 +772,10 @@ async function createGameDev(){
       drawSelectedGame();
     }
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${id} — ${name} was added to Supabase PROD successfully.`);
+    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${id} — ${name} was added to Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase PROD was not changed.";console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase TEST was not changed.";console.error(e);
   }
 }
 
@@ -789,7 +805,7 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
   const writeStatus=document.getElementById("gameDevWriteStatus");
   document.getElementById("gameDevDeleteConfirm").disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent=`Deleting ${target.id} from Supabase PROD…`;
+  writeStatus.textContent=`Deleting ${target.id} from Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
@@ -803,16 +819,16 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
       body:JSON.stringify({action:"delete",id:Number(target.id)})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     closeDeleteConfirm();
     closeEditModal();
     await loadGamesTest();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase PROD successfully.`);
+    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase TEST successfully.`);
   }catch(e){
     writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent=`DELETE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
+    writeStatus.textContent=`DELETE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
     console.error(e);
   }finally{
     document.getElementById("gameDevDeleteConfirm").disabled=false;
@@ -849,7 +865,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   patch.u=media.url;
   patch.v=media.type==="video" ? media.id : null;
   patch.pl=media.type==="playlist" ? media.id : null;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase PROD…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase TEST…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
@@ -860,21 +876,23 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
       body:JSON.stringify({action:"update",game:patch})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     closeEditModal();
     await loadGamesTest();
     document.getElementById("gameDevList").value=g.id;
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase PROD successfully.`);
+    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
+    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;console.error(e);
   }
 });
 
 
-// Supabase PROD recovery export — public SELECT only. No database writes.
+// Supabase TEST recovery export — public SELECT only. No database writes.
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 async function fetchAllSupabaseTestGames(){
@@ -888,7 +906,7 @@ async function fetchAllSupabaseTestGames(){
         Range:`${from}-${to}`
       }
     });
-    if(!response.ok)throw new Error(`Supabase PROD read failed (${response.status}).`);
+    if(!response.ok)throw new Error(`Supabase TEST read failed (${response.status}).`);
     const page=await response.json();
     all.push(...page);
     if(page.length<pageSize)break;
@@ -907,26 +925,26 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase PROD and generating games.json…";
+  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
-    if(!games.length)throw new Error("Supabase PROD returned zero games.");
+    if(!games.length)throw new Error("Supabase TEST returned zero games.");
     const cleanGames=games.map(cleanGameForJson);
     const blob=new Blob([JSON.stringify(cleanGames,null,2)+"\n"],{type:"application/json"});
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games.json";
+    a.download="games_.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase PROD (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase PROD games.json export failed:",e);
+    console.error("Supabase TEST games_.json export failed:",e);
   }finally{
     button.disabled=false;
   }
@@ -962,6 +980,31 @@ testToggle.addEventListener("click",()=>{
   drawTestControl();
 });
 drawTestControl();
+
+
+// TEST Admin submissions/suggestions modal — REV02
+const adminPageModal=document.getElementById("adminPageModal");
+const adminPageModalFrame=document.getElementById("adminPageModalFrame");
+const adminPageModalTitle=document.getElementById("adminPageModalTitle");
+const adminPageModalClose=document.getElementById("adminPageModalClose");
+function openAdminPageModal(url,title){
+  adminPageModalTitle.textContent=title;
+  adminPageModalFrame.src=url;
+  adminPageModal.classList.add("open");
+  adminPageModal.setAttribute("aria-hidden","false");
+  document.body.classList.add("admin-modal-open");
+  adminPageModalClose.focus();
+}
+function closeAdminPageModal(){
+  adminPageModal.classList.remove("open");
+  adminPageModal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("admin-modal-open");
+  adminPageModalFrame.src="about:blank";
+}
+document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
+adminPageModalClose.addEventListener("click",closeAdminPageModal);
+adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal)closeAdminPageModal();});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open"))closeAdminPageModal();});
 </script>
 </body>
 </html>
