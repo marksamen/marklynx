@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+import { loadTrafficAnalytics } from "./admin-traffic_.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -20,7 +21,7 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics();loadGamesTest();loadDataSourceStatus();}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
 let verifiedTestDatabaseIdentity=false;
 let testManualDataSource=null;
@@ -112,31 +113,6 @@ async function setTestDataSource(source){
 
 document.getElementById("dataSourceUseSupabase").addEventListener("click",()=>setTestDataSource("supabase"));
 document.getElementById("dataSourceUseJson").addEventListener("click",()=>setTestDataSource("json"));
-
-function drawTrafficValue(elementId,data){
-  const el=document.getElementById(elementId);
-  el.textContent=`${data?.activeUsers ?? 0} active users · ${data?.pageViews ?? 0} page views`;
-}
-async function loadTrafficAnalytics(){
-  const trafficError=document.getElementById("trafficError");
-  const trafficUpdated=document.getElementById("trafficUpdated");
-  trafficError.textContent="";
-  try{
-    const snap=await getDoc(doc(db,"trafficAnalytics","current"));
-    if(!snap.exists()) throw new Error("Traffic analytics snapshot not found.");
-    const data=snap.data();
-    drawTrafficValue("trafficToday",data.today);
-    drawTrafficValue("traffic7",data.last7Days);
-    drawTrafficValue("traffic30",data.last30Days);
-    drawTrafficValue("trafficAll",data.allTime);
-    const updated=data.updatedAt?.toDate?.();
-    trafficUpdated.textContent=updated?`Last updated: ${updated.toLocaleString()}`:"";
-  }catch(e){
-    trafficError.textContent="Traffic analytics unavailable.";
-    console.error(e);
-  }
-}
-
 
 const EXPECTED_TEST_DATABASE_IDENTITY={
   id:"primary",
