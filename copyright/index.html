@@ -7,7 +7,7 @@
 <title>Mark Lynx Admin</title>
 <link rel="stylesheet" href="css/admin-core.css">
 <link rel="stylesheet" href="css/auth.css">
-<link rel="stylesheet" href="css/games.css">
+<link rel="stylesheet" href="css/games.css?v=post-save-recovery-prod-rev01">
 <link rel="stylesheet" href="css/traffic-analytics.css">
 <link rel="stylesheet" href="css/test-tools.css">
 <link rel="stylesheet" href="css/admin-pages.css">
@@ -122,6 +122,20 @@
 </div>
 </div>
 </main>
+<div id="gameDevResultModal" class="gd-modal gd-result-modal" aria-hidden="true">
+  <div id="gameDevResultCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
+    <h2 id="gameDevResultTitle"></h2>
+    <p id="gameDevResultMessage"></p>
+    <p id="gameDevResultQuestion"></p>
+    <div id="gameDevResultRecoveryActions" class="gd-result-actions">
+      <button id="gameDevResultYes" type="button">YES</button>
+      <button id="gameDevResultNo" type="button">NO</button>
+    </div>
+    <div id="gameDevResultOkActions" class="gd-result-actions gd-result-actions-single">
+      <button id="gameDevResultOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
 <div id="adminPageModal" aria-hidden="true">
   <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
     <div id="adminPageModalHeader">
@@ -131,6 +145,6 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core.js?v=20260924-prod-db-recovery-rev03"></script>
+<script type="module" src="js/admin-core.js?v=20260924-post-save-recovery-prod-rev01"></script>
 </body>
 </html>
