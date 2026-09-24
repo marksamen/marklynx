@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-24T12:35:50.223992+00:00",
+  "updated": "2026-09-24T13:31:25.086373+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "spinN90aqtU",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Flight of the Pera Beetles | All Star Coins | Normal",
+      "published": "2026-09-24T13:31:06+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/spinN90aqtU/hqdefault.jpg"
+    },
     {
       "id": "a0i1PPh5Clo",
       "title": "Ammo Pigs: Cocked and Loaded | Easy 100% Completion | 1000 Gamerscore | 6-7 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | All Star Coins | Secret Exit",
       "published": "2026-09-20T15:44:02+00:00",
       "thumbnail": "https://i.ytimg.com/vi/IgVnOFJJ5uw/hqdefault.jpg"
-    },
-    {
-      "id": "D2Sq5vdLx7Q",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 4 | Painted Swampland | No Star Coins | Normal Exit",
-      "published": "2026-09-19T20:25:02+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/D2Sq5vdLx7Q/hqdefault.jpg"
     }
   ]
 }
