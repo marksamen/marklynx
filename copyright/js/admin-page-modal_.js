@@ -1,4 +1,4 @@
-// TEST Admin submissions/suggestions modal — REV02
+// TEST Admin submissions/suggestions modal — Game Suggestions X-only close REV01
 export function initAdminPageModal(){
   const adminPageModal=document.getElementById("adminPageModal");
   const adminPageModalFrame=document.getElementById("adminPageModalFrame");
@@ -23,6 +23,6 @@ export function initAdminPageModal(){
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);
-  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/"))closeAdminPageModal();});
-  document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/"))closeAdminPageModal();});
+  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/"))closeAdminPageModal();});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/"))closeAdminPageModal();});
 }
