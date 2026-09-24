@@ -205,7 +205,8 @@
 .gd-collapsible-fields .wide{grid-column:1/-1}
 @media (max-width:700px){.gd-collapsible-fields{grid-template-columns:1fr}.gd-collapsible-fields .wide{grid-column:auto}}
 
-/* Developer / Publisher side-by-side collapsed sections — TEST REV03 */
-#gameDevForm .wide.gd-collapsible:not([open]){grid-column:span 1}
-#gameDevForm .wide.gd-collapsible[open]{grid-column:1/-1}
-@media (max-width:700px){#gameDevForm .wide.gd-collapsible:not([open]){grid-column:1/-1}}
+/* Developer / Publisher dedicated side-by-side row — TEST REV04 */
+#gameDevForm .gd-collapsible-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+#gameDevForm .gd-collapsible-row>.gd-collapsible{min-width:0}
+#gameDevForm .gd-collapsible-row>.gd-collapsible[open]{grid-column:1/-1}
+@media (max-width:700px){#gameDevForm .gd-collapsible-row{grid-template-columns:1fr}}
