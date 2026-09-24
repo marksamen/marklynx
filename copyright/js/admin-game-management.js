@@ -5,6 +5,30 @@ const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
+let resultYesAction=null;
+
+function closeGameDevResult(){
+  const modal=document.getElementById("gameDevResultModal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  resultYesAction=null;
+}
+function showGameDevResult({title,message,question="",kind="success",offerRecovery=false,onYes=null}){
+  const modal=document.getElementById("gameDevResultModal");
+  const card=document.getElementById("gameDevResultCard");
+  document.getElementById("gameDevResultTitle").textContent=title;
+  document.getElementById("gameDevResultMessage").textContent=message;
+  const questionEl=document.getElementById("gameDevResultQuestion");
+  questionEl.textContent=question;
+  questionEl.style.display=question?"block":"none";
+  document.getElementById("gameDevResultRecoveryActions").style.display=offerRecovery?"grid":"none";
+  document.getElementById("gameDevResultOkActions").style.display=offerRecovery?"none":"grid";
+  card.classList.toggle("failure",kind==="failure");
+  resultYesAction=offerRecovery?onYes:null;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+}
+
 export function initGameManagement(deps){
   auth=deps.auth;
   verifyProdDatabaseIdentity=deps.verifyProdDatabaseIdentity;
@@ -356,9 +380,9 @@ async function createGameDev(){
     }
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${id} — ${name} was added to Supabase PROD successfully.`);
+    showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase PROD was not changed.";console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
 }
 
@@ -408,10 +432,11 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
     await loadGamesProd();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase PROD successfully.`);
+    showGameDevResult({title:"Game Deleted Successfully",message:`${target.id} — ${target.n} was deleted from Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent=`DELETE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
+    showGameDevResult({title:"GAME NOT DELETED",message:`Delete failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});
     console.error(e);
   }finally{
     document.getElementById("gameDevDeleteConfirm").disabled=false;
@@ -466,9 +491,9 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
-    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase PROD successfully.`);
+    showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
 });
 
@@ -499,7 +524,7 @@ function cleanGameForJson(game){
   return clean;
 }
 
-document.getElementById("gameDevExportSupabase").addEventListener("click",async()=>{
+async function downloadRecoveryJson(){
   const button=document.getElementById("gameDevExportSupabase");
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
@@ -527,5 +552,14 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   }finally{
     button.disabled=false;
   }
+}
+
+document.getElementById("gameDevExportSupabase").addEventListener("click",downloadRecoveryJson);
+document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
+  const action=resultYesAction;
+  closeGameDevResult();
+  if(action)await action();
 });
+document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
+document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
