@@ -175,7 +175,6 @@
 .gd-result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
 .gd-result-card{box-sizing:border-box;width:min(92vw,520px);margin:auto;padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65);text-align:left}
 .gd-result-card.failure{border-top-color:#d32f2f}
-.gd-result-card.test-info{border-top-color:#d6a52a}
 .gd-result-card h2{margin:0 0 12px;color:#fff;font-size:1.15rem}
 .gd-result-card p{margin:0;color:#d7d7d7;font-size:.9rem;line-height:1.5}
 #gameDevResultQuestion{margin-top:12px;font-weight:700;color:#fff}
