@@ -171,6 +171,25 @@
         throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
       }
 
+      // TEST CONTENT OFF must hide the underlying TEST media, not only the row
+      // carrying testContent=true. This prevents a non-TEST duplicate record from
+      // exposing the same TEST YouTube video/playlist while TEST content is hidden.
+      const testContentHidden = (localStorage.getItem('marklynxTestContent') || 'Y').toUpperCase() === 'Y';
+      if (testContentHidden) {
+        const testVideoIds = new Set(
+          window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
+        );
+        const testPlaylistIds = new Set(
+          window.RAW.filter(game => game?.testContent === true && game.pl).map(game => String(game.pl))
+        );
+
+        window.RAW = window.RAW.filter(game =>
+          game?.testContent !== true &&
+          (!game?.v || !testVideoIds.has(String(game.v))) &&
+          (!game?.pl || !testPlaylistIds.has(String(game.pl)))
+        );
+      }
+
       console.info(`[TEST] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
@@ -184,7 +203,7 @@
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
       await loadScript('js/site_.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
-      await loadScript('js/recent_.js?v=20260921-prod-promotion-01');
+      await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
     } catch (error) {
       console.error('Modular site startup failed:', error);

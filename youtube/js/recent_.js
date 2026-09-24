@@ -49,11 +49,18 @@
       .toLowerCase()
       .replace(/\s+/g, ' ');
 
-  const gameByVideoId = new Map(
-    rawGames
-      .filter(game => game && game.v)
-      .map(game => [String(game.v), game])
-  );
+  const gameByVideoId = new Map();
+  rawGames
+    .filter(game => game && game.v)
+    .forEach(game => {
+      const key = String(game.v);
+      const existing = gameByVideoId.get(key);
+      // If duplicate rows reference the permanent TEST video while TEST content is
+      // visible, keep the authoritative testContent=true row for Recent metadata.
+      if (!existing || (game.testContent === true && existing.testContent !== true)) {
+        gameByVideoId.set(key, game);
+      }
+    });
 
   const gameByName = new Map();
   rawGames.forEach(game => {
