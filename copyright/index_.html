@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/traffic-analytics_.css">
 <link rel="stylesheet" href="css/test-tools_.css">
 <link rel="stylesheet" href="css/admin-pages_.css">
+<link rel="stylesheet" href="css/admin-devpub-search_.css?v=devpub-search-rev01">
 </head>
 <body>
 <main id="login">
@@ -109,6 +110,12 @@
 <label class="wide">Raw record preview <span class="gd-readonly-label">READ ONLY</span><input id="gdRaw" disabled aria-readonly="true"></label>
 </form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
 </div>
+</section>
+<section id="devPubSearchPanel" aria-label="Developer Publisher Search">
+<h2>Developer / Publisher Search</h2>
+<input id="devPubSearch" type="search" placeholder="Search company or developer…" autocomplete="off" aria-label="Search developer or publisher">
+<p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
+<div id="devPubSearchResults" aria-live="polite"></div>
 </section>
 <div id="recentRefreshControl">
 <button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
