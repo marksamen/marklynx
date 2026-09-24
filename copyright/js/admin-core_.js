@@ -6,6 +6,7 @@ import { initTestContentControl } from "./admin-test-content_.js";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest } from "./admin-game-management_.js?v=game-modal-state-rev01";
+import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -34,6 +35,7 @@ const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiH
 
 initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyTestDatabaseIdentity});
+initRecentRefresh({auth});
 
 
 await setPersistence(auth,browserLocalPersistence);
