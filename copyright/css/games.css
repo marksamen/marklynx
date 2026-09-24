@@ -187,3 +187,24 @@
 #gameDevResultYes:hover{filter:brightness(1.08)}
 #gameDevResultNo:hover,#gameDevResultOk:hover{background:#303034}
 @media (max-width:520px){.gd-result-card{width:96vw;padding:18px}.gd-result-actions{grid-template-columns:1fr}}
+
+/* Developer / Publisher collapsible sections — PROD */
+.gd-collapsible{border:1px solid #444;border-radius:7px;background:#181818}
+.gd-collapsible>summary{cursor:pointer;padding:.7rem;font-size:.82rem;font-weight:700;text-align:left;user-select:none}
+.gd-collapsible[open]>summary{border-bottom:1px solid #444}
+.gd-collapsible>summary::marker{content:""}
+.gd-collapsible>summary::before{content:"▶ ";}
+.gd-collapsible[open]>summary::before{content:"▼ ";}
+.gd-collapsible>summary::after{content:""}
+.gd-collapsible[open]>summary{font-size:0}
+.gd-collapsible[open]>summary::before{font-size:.82rem}
+.gd-collapsible[open]>summary::after{content:"Developers — Collapse";font-size:.82rem}
+.gd-publishers[open]>summary::after{content:"Publishers — Collapse"}
+.gd-collapsible-fields{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;padding:.7rem}
+.gd-collapsible-fields .wide{grid-column:1/-1}
+@media (max-width:700px){.gd-collapsible-fields{grid-template-columns:1fr}.gd-collapsible-fields .wide{grid-column:auto}}
+
+/* Developer / Publisher fixed side-by-side columns — PROD */
+#gameDevForm .gd-collapsible-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:.7rem;align-items:start}
+#gameDevForm .gd-collapsible-row>.gd-collapsible{min-width:0}
+@media (max-width:700px){#gameDevForm .gd-collapsible-row{grid-template-columns:1fr}}
