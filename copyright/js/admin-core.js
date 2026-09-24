@@ -4,8 +4,8 @@ import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateD
 import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=game-suggestions-x-only-rev01";
-import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source.js";
-import { initGameManagement, loadGamesTest } from "./admin-game-management.js";
+import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js";
+import { initGameManagement, loadGamesProd } from "./admin-game-management.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -25,15 +25,15 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesProd();loadDataSourceStatus();}
 
 
-// Supabase TEST recovery export — public SELECT only. No database writes.
-const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
-const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
+// Supabase PROD recovery export — public SELECT only. No database writes.
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 
-initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
-initGameManagement({auth,verifyTestDatabaseIdentity});
+initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
+initGameManagement({auth,verifyProdDatabaseIdentity});
 
 
 await setPersistence(auth,browserLocalPersistence);

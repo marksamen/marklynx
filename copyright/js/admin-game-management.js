@@ -1,35 +1,35 @@
 let auth = null;
-let verifyTestDatabaseIdentity = null;
+let verifyProdDatabaseIdentity = null;
 
-const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
-const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 export function initGameManagement(deps){
   auth=deps.auth;
-  verifyTestDatabaseIdentity=deps.verifyTestDatabaseIdentity;
+  verifyProdDatabaseIdentity=deps.verifyProdDatabaseIdentity;
 }
 
-export async function loadGamesTest(){
+export async function loadGamesProd(){
   const status=document.getElementById("gameDevStatus");
   const details=document.getElementById("gameDevDetails");
   const gameError=document.getElementById("gameDevError");
-  status.textContent="Reading games from Supabase TEST…";
+  status.textContent="Reading games from Supabase PROD…";
   details.textContent="";
   gameError.textContent="";
 
   try{
-    const endpoint="https://aikifibkcjibubqegvmb.supabase.co/rest/v1/games?select=*&order=id.asc&limit=1000";
-    const publishableKey="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
+    const endpoint="https://igmunmyxaskizltdvvti.supabase.co/rest/v1/games?select=*&order=id.asc&limit=1000";
+    const publishableKey="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
     const response=await fetch(endpoint,{
       headers:{"apikey":publishableKey},
       cache:"no-store"
     });
-    if(!response.ok) throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(`Supabase PROD returned HTTP ${response.status}.`);
     const rows=await response.json();
-    if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid games payload.");
+    if(!Array.isArray(rows)) throw new Error("Supabase PROD returned an invalid games payload.");
 
-    const databaseIdentityVerified=await verifyTestDatabaseIdentity();
+    const databaseIdentityVerified=await verifyProdDatabaseIdentity();
 
     const games=rows.map(row=>({
       ...row,
@@ -49,25 +49,25 @@ export async function loadGamesTest(){
       games.some(g=>g.id==="0320" && g.n==="Hole In Many");
 
     status.textContent=passed
-      ?"PASS — Supabase TEST identity and GAMEDEV dataset verified."
+      ?"PASS — Supabase PROD identity and GAMEDEV dataset verified."
       :databaseIdentityVerified
-        ?"CHECK REQUIRED — Supabase TEST identity verified, but the dataset did not match the expected baseline."
+        ?"CHECK REQUIRED — Supabase PROD identity verified, but the dataset did not match the expected baseline."
         :"FAILED — database identity was not verified. GAMEDEV dataset is not trusted.";
 
     details.textContent=
       `Total records: ${games.length}\n`+
       `First: ${first?.id ?? "?"} — ${first?.n ?? "?"}\n`+
       `Last: ${last?.id ?? "?"} — ${last?.n ?? "?"}\n`+
-      `Source: Supabase TEST`;
+      `Source: Supabase PROD`;
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     populateGameDev(games);
   }catch(e){
-    status.textContent="FAILED — could not read Supabase TEST games.";
+    status.textContent="FAILED — could not read Supabase PROD games.";
     status.style.color="#ff6d6d";
     gameError.textContent=e?.message || String(e);
-    console.error("GAMEDEV Supabase TEST read failed:",e);
+    console.error("GAMEDEV Supabase PROD read failed:",e);
   }
 }
 
@@ -315,7 +315,7 @@ async function createGameDev(){
   record.u=media.url;
   if(document.getElementById("gdAdult").value==="true") record.adult=true;
   if(document.getElementById("gdKinect").value==="true") record.kinect=true;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase TEST…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Creating ${id} in Supabase PROD…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
@@ -337,7 +337,7 @@ async function createGameDev(){
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false"
     };
-    const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
+    const response=await fetch("https://igmunmyxaskizltdvvti.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
         "Authorization":`Bearer ${firebaseToken}`,
@@ -346,25 +346,25 @@ async function createGameDev(){
       body:JSON.stringify({action:"add",game:supabaseRecord})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
     cancelAddMode();
-    await loadGamesTest();
+    await loadGamesProd();
     const refreshedList=document.getElementById("gameDevList");
     if([...refreshedList.options].some(option=>option.value===id)){
       refreshedList.value=id;
       drawSelectedGame();
     }
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
-    alert(`✓ ${id} — ${name} was added to Supabase TEST successfully.`);
+    writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
+    alert(`✓ ${id} — ${name} was added to Supabase PROD successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase TEST was not changed.";console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase PROD was not changed.";console.error(e);
   }
 }
 
 document.getElementById("gameDevAddLauncher").addEventListener("click",beginAddGame);
 document.getElementById("gameDevEditLauncher").addEventListener("click",openEditModal);
-document.getElementById("gameDevReloadLauncher").addEventListener("click",()=>loadGamesTest());
+document.getElementById("gameDevReloadLauncher").addEventListener("click",()=>loadGamesProd());
 document.getElementById("gameDevEditClose").addEventListener("click",closeEditModal);
 document.getElementById("gameDevAdd").addEventListener("click",()=>{
   const add=document.getElementById("gameDevAdd");
@@ -380,7 +380,7 @@ document.addEventListener("keydown",e=>{
 });
 document.getElementById("gameDevSearch").addEventListener("input",filterGameDevList);
 document.getElementById("gameDevList").addEventListener("change",()=>{document.getElementById("gameDevWriteStatus").textContent="";});
-document.getElementById("gameDevReload").addEventListener("click",()=>{cancelAddMode();loadGamesTest();});
+document.getElementById("gameDevReload").addEventListener("click",()=>{cancelAddMode();loadGamesProd();});
 document.getElementById("gameDevDelete").addEventListener("click",openDeleteConfirm);
 document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()=>{
   if(!pendingDeleteGame)return;
@@ -388,12 +388,12 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
   const writeStatus=document.getElementById("gameDevWriteStatus");
   document.getElementById("gameDevDeleteConfirm").disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent=`Deleting ${target.id} from Supabase TEST…`;
+  writeStatus.textContent=`Deleting ${target.id} from Supabase PROD…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
+    const response=await fetch("https://igmunmyxaskizltdvvti.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
         "Authorization":`Bearer ${firebaseToken}`,
@@ -402,16 +402,16 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
       body:JSON.stringify({action:"delete",id:Number(target.id)})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
     closeDeleteConfirm();
     closeEditModal();
-    await loadGamesTest();
+    await loadGamesProd();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase TEST. List refreshed automatically.`;
-    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase TEST successfully.`);
+    writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase PROD. List refreshed automatically.`;
+    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase PROD successfully.`);
   }catch(e){
     writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent=`DELETE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
+    writeStatus.textContent=`DELETE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
     console.error(e);
   }finally{
     document.getElementById("gameDevDeleteConfirm").disabled=false;
@@ -448,27 +448,27 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   patch.u=media.url;
   patch.v=media.type==="video" ? media.id : null;
   patch.pl=media.type==="playlist" ? media.id : null;
-  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase TEST…`;
+  writeStatus.style.color="#ffd36d";writeStatus.textContent=`Saving ${g.id} to Supabase PROD…`;
   try{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
+    const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
       body:JSON.stringify({action:"update",game:patch})
     });
     const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
     closeEditModal();
-    await loadGamesTest();
+    await loadGamesProd();
     document.getElementById("gameDevList").value=g.id;
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
-    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase TEST successfully.`);
+    writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
+    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase PROD successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;console.error(e);
   }
 });
 
@@ -479,13 +479,13 @@ async function fetchAllSupabaseTestGames(){
   const all=[];
   for(let from=0;;from+=pageSize){
     const to=from+pageSize-1;
-    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/games?select=*&order=id.asc`,{
+    const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/games?select=*&order=id.asc`,{
       headers:{
-        apikey:SUPABASE_TEST_PUBLISHABLE_KEY,
+        apikey:SUPABASE_PROD_PUBLISHABLE_KEY,
         Range:`${from}-${to}`
       }
     });
-    if(!response.ok)throw new Error(`Supabase TEST read failed (${response.status}).`);
+    if(!response.ok)throw new Error(`Supabase PROD read failed (${response.status}).`);
     const page=await response.json();
     all.push(...page);
     if(page.length<pageSize)break;
@@ -504,26 +504,26 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
+  writeStatus.textContent="Reading Supabase PROD and generating games.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
-    if(!games.length)throw new Error("Supabase TEST returned zero games.");
+    if(!games.length)throw new Error("Supabase PROD returned zero games.");
     const cleanGames=games.map(cleanGameForJson);
     const blob=new Blob([JSON.stringify(cleanGames,null,2)+"\n"],{type:"application/json"});
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games_.json";
+    a.download="games.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase PROD (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase TEST games_.json export failed:",e);
+    console.error("Supabase PROD games.json export failed:",e);
   }finally{
     button.disabled=false;
   }
