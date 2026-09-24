@@ -357,6 +357,7 @@ async function createGameDev(){
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
     alert(`✓ ${id} — ${name} was added to Supabase TEST successfully.`);
+    await offerRecoveryJsonDownload();
   }catch(e){
     writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase TEST was not changed.";console.error(e);
   }
@@ -409,6 +410,7 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase TEST. List refreshed automatically.`;
     alert(`✓ ${target.id} — ${target.n} was deleted from Supabase TEST successfully.`);
+    await offerRecoveryJsonDownload();
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent=`DELETE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
@@ -467,6 +469,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
     alert(`✓ ${g.id} — ${patch.n} was updated in Supabase TEST successfully.`);
+    await offerRecoveryJsonDownload();
   }catch(e){
     writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;console.error(e);
   }
@@ -499,7 +502,7 @@ function cleanGameForJson(game){
   return clean;
 }
 
-document.getElementById("gameDevExportSupabase").addEventListener("click",async()=>{
+async function downloadRecoveryJson(){
   const button=document.getElementById("gameDevExportSupabase");
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
@@ -527,5 +530,13 @@ document.getElementById("gameDevExportSupabase").addEventListener("click",async(
   }finally{
     button.disabled=false;
   }
-});
+}
+
+async function offerRecoveryJsonDownload(){
+  if(confirm("Would you like to download an updated recovery games_.json now?")){
+    await downloadRecoveryJson();
+  }
+}
+
+document.getElementById("gameDevExportSupabase").addEventListener("click",downloadRecoveryJson);
 
