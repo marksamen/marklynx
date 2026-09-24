@@ -5,7 +5,6 @@ const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
-let forceNextWriteFailure=false;
 let resultYesAction=null;
 
 function closeGameDevResult(){
@@ -25,19 +24,10 @@ function showGameDevResult({title,message,question="",kind="success",offerRecove
   document.getElementById("gameDevResultRecoveryActions").style.display=offerRecovery?"grid":"none";
   document.getElementById("gameDevResultOkActions").style.display=offerRecovery?"none":"grid";
   card.classList.toggle("failure",kind==="failure");
-  card.classList.toggle("test-info",kind==="test-info");
   resultYesAction=offerRecovery?onYes:null;
   modal.classList.add("open");
   modal.setAttribute("aria-hidden","false");
 }
-function consumeForcedWriteFailure(){
-  if(!forceNextWriteFailure)return;
-  forceNextWriteFailure=false;
-  const button=document.getElementById("gameDevForceWriteFailure");
-  if(button)button.textContent="TEST ONLY: Force Next Write Failure";
-  throw new Error("TEST ONLY simulated write failure. No request was sent to Supabase TEST.");
-}
-
 export function initGameManagement(deps){
   auth=deps.auth;
   verifyTestDatabaseIdentity=deps.verifyTestDatabaseIdentity;
@@ -370,7 +360,6 @@ async function createGameDev(){
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false"
     };
-    consumeForcedWriteFailure();
     const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
@@ -427,7 +416,6 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    consumeForcedWriteFailure();
     const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
@@ -489,7 +477,6 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
-    consumeForcedWriteFailure();
     const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
@@ -574,9 +561,4 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 });
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
-document.getElementById("gameDevForceWriteFailure").addEventListener("click",()=>{
-  forceNextWriteFailure=true;
-  document.getElementById("gameDevForceWriteFailure").textContent="TEST ONLY: Failure ARMED";
-  showGameDevResult({title:"TEST Failure Armed",message:"The next Create, Edit/Save, or Delete will fail before any request is sent to Supabase TEST.",kind:"test-info"});
-});
 
