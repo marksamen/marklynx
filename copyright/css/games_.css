@@ -204,3 +204,8 @@
 .gd-collapsible-fields{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;padding:.7rem}
 .gd-collapsible-fields .wide{grid-column:1/-1}
 @media (max-width:700px){.gd-collapsible-fields{grid-template-columns:1fr}.gd-collapsible-fields .wide{grid-column:auto}}
+
+/* Developer / Publisher collapsed headers side-by-side — TEST REV02 */
+.gd-collapsible:not([open]){grid-column:span 1}
+.gd-collapsible[open]{grid-column:1/-1}
+@media (max-width:700px){.gd-collapsible:not([open]){grid-column:1/-1}}
