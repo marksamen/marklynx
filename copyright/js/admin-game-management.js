@@ -237,6 +237,7 @@ function openEditModal(){
 function closeEditModal(){
   gameDevFormHome.after(document.getElementById("gameDevForm"));
   gameDevActionsHome.after(document.getElementById("gameDevActions"));
+  document.getElementById("gameDevAdd").style.display="block";
   document.getElementById("gameDevEditModal").classList.remove("open");
   document.getElementById("gameDevEditModal").setAttribute("aria-hidden","true");
   document.body.style.overflow="";
