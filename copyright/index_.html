@@ -84,6 +84,16 @@
 <label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
 <label>Kinect Required<select id="gdKinect"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes only when Kinect hardware is required to play/complete the game. Otherwise leave No.</span></label>
 <label>Test Content<select id="gdTest"><option value="false">No — normal record</option><option value="true">Yes — TEST only</option></select><span class="field-help">New games default to No. Choose Yes only for deliberate QA/test records.</span></label>
+<div class="wide"><strong>Developer(s)</strong><span class="field-help">Up to 5 developers. Leave unused fields blank.</span></div>
+<label>Developer 1<input id="gdDeveloper1" placeholder="Developer 1"></label>
+<label>Developer 2<input id="gdDeveloper2" placeholder="Developer 2"></label>
+<label>Developer 3<input id="gdDeveloper3" placeholder="Developer 3"></label>
+<label>Developer 4<input id="gdDeveloper4" placeholder="Developer 4"></label>
+<label>Developer 5<input id="gdDeveloper5" placeholder="Developer 5"></label>
+<div class="wide"><strong>Publisher(s)</strong><span class="field-help">Up to 3 publishers. Leave unused fields blank.</span></div>
+<label>Publisher 1<input id="gdPublisher1" placeholder="Publisher 1"></label>
+<label>Publisher 2<input id="gdPublisher2" placeholder="Publisher 2"></label>
+<label>Publisher 3<input id="gdPublisher3" placeholder="Publisher 3"></label>
 <label class="wide">Raw record preview <span class="gd-readonly-label">READ ONLY</span><input id="gdRaw" disabled aria-readonly="true"></label>
 </form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
 </div>
