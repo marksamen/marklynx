@@ -130,6 +130,8 @@
 
 #gameDevEditModal #gameDevReload{display:none!important}
 
+#gameDevDeleteModal .gd-modal-card{width:min(94vw,560px)}
+
 #gameDevDeleteModal .gd-delete-target{font-size:1.1rem;font-weight:800;color:#fff;background:#0b0b0b;border:1px solid #7b1f1f;border-radius:8px;padding:14px;margin:14px 0}
 
 #gameDevDeleteConfirm{background:#b71c1c;color:#fff;border-color:#ef5350;font-weight:900}
