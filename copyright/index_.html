@@ -69,6 +69,7 @@
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
   <button id="gameDevExportSupabase" type="button">Generate games_.json</button>
+  <button id="gameDevForceWriteFailure" type="button">TEST ONLY: Force Next Write Failure</button>
 </div>
 <div id="gameDevEditorHome"><form id="gameDevForm">
 <label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
@@ -121,11 +122,13 @@
 <div id="gameDevAddMount"></div>
 </div>
 </div>
-<div id="gameDevRecoveryModal" class="gd-modal" aria-hidden="true">
-<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevRecoveryTitle">
-<div class="gd-modal-head"><h2 id="gameDevRecoveryTitle">Update Recovery JSON?</h2></div>
-<p class="gd-modal-note">Would you like to download an updated recovery <strong>games_.json</strong> now?</p>
-<div class="gd-modal-actions"><button id="gameDevRecoveryYes" type="button">Yes</button><button id="gameDevRecoveryNo" type="button">No</button></div>
+<div id="gameDevResultModal" class="gd-modal" aria-hidden="true">
+<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
+<div class="gd-modal-head"><h2 id="gameDevResultTitle">Game Management</h2></div>
+<p id="gameDevResultMessage" class="gd-modal-note"></p>
+<p id="gameDevResultDetail" class="gd-modal-note"></p>
+<div class="gd-modal-actions" id="gameDevResultSuccessActions"><button id="gameDevRecoveryYes" type="button">Yes</button><button id="gameDevRecoveryNo" type="button">No</button></div>
+<div class="gd-modal-actions" id="gameDevResultErrorActions" style="display:none"><button id="gameDevResultOk" type="button">OK</button></div>
 </div></div>
 </main>
 <div id="adminPageModal" aria-hidden="true">
