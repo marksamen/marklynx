@@ -7,7 +7,7 @@
 <title>(TEST) Mark Lynx Admin</title>
 <link rel="stylesheet" href="css/admin-core_.css">
 <link rel="stylesheet" href="css/auth_.css">
-<link rel="stylesheet" href="css/games_.css">
+<link rel="stylesheet" href="css/games_.css?v=post-save-recovery-rev04">
 <link rel="stylesheet" href="css/traffic-analytics_.css">
 <link rel="stylesheet" href="css/test-tools_.css">
 <link rel="stylesheet" href="css/admin-pages_.css">
@@ -122,15 +122,21 @@
 <div id="gameDevAddMount"></div>
 </div>
 </div>
-<div id="gameDevResultModal" class="gd-modal" aria-hidden="true">
-<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
-<div class="gd-modal-head"><h2 id="gameDevResultTitle">Game Management</h2></div>
-<p id="gameDevResultMessage" class="gd-modal-note"></p>
-<p id="gameDevResultDetail" class="gd-modal-note"></p>
-<div class="gd-modal-actions" id="gameDevResultSuccessActions"><button id="gameDevRecoveryYes" type="button">Yes</button><button id="gameDevRecoveryNo" type="button">No</button></div>
-<div class="gd-modal-actions" id="gameDevResultErrorActions" style="display:none"><button id="gameDevResultOk" type="button">OK</button></div>
-</div></div>
 </main>
+<div id="gameDevResultModal" class="gd-modal gd-result-modal" aria-hidden="true">
+  <div id="gameDevResultCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
+    <h2 id="gameDevResultTitle"></h2>
+    <p id="gameDevResultMessage"></p>
+    <p id="gameDevResultQuestion"></p>
+    <div id="gameDevResultRecoveryActions" class="gd-result-actions">
+      <button id="gameDevResultYes" type="button">YES</button>
+      <button id="gameDevResultNo" type="button">NO</button>
+    </div>
+    <div id="gameDevResultOkActions" class="gd-result-actions gd-result-actions-single">
+      <button id="gameDevResultOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
 <div id="adminPageModal" aria-hidden="true">
   <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
     <div id="adminPageModalHeader">
