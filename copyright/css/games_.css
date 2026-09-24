@@ -182,7 +182,7 @@
 .gd-result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
 .gd-result-actions-single{grid-template-columns:1fr}
 .gd-result-actions button{min-height:42px;border:1px solid #4a4a4f;border-radius:8px;background:#242426;color:#fff;font-weight:800}
-#gameDevResultYes{background:#b71c1c;border-color:#ef5350}
+#gameDevResultYes{background:#2e7d32;border-color:#43a047}
 #gameDevResultYes:hover{filter:brightness(1.08)}
 #gameDevResultNo:hover,#gameDevResultOk:hover{background:#303034}
 @media (max-width:520px){.gd-result-card{width:96vw;padding:18px}.gd-result-actions{grid-template-columns:1fr}}
