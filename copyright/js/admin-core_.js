@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest } from "./admin-game-management_.js?v=post-save-recovery-rev06";
+import { initGameManagement, loadGamesTest } from "./admin-game-management_.js?v=id-gap-reuse-rev01";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
