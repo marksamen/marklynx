@@ -5,30 +5,6 @@ const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
-let resultYesAction=null;
-
-function closeGameDevResult(){
-  const modal=document.getElementById("gameDevResultModal");
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden","true");
-  resultYesAction=null;
-}
-function showGameDevResult({title,message,question="",kind="success",offerRecovery=false,onYes=null}){
-  const modal=document.getElementById("gameDevResultModal");
-  const card=document.getElementById("gameDevResultCard");
-  document.getElementById("gameDevResultTitle").textContent=title;
-  document.getElementById("gameDevResultMessage").textContent=message;
-  const questionEl=document.getElementById("gameDevResultQuestion");
-  questionEl.textContent=question;
-  questionEl.style.display=question?"block":"none";
-  document.getElementById("gameDevResultRecoveryActions").style.display=offerRecovery?"grid":"none";
-  document.getElementById("gameDevResultOkActions").style.display=offerRecovery?"none":"grid";
-  card.classList.toggle("failure",kind==="failure");
-  resultYesAction=offerRecovery?onYes:null;
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden","false");
-}
-
 export function initGameManagement(deps){
   auth=deps.auth;
   verifyTestDatabaseIdentity=deps.verifyTestDatabaseIdentity;
@@ -380,9 +356,9 @@ async function createGameDev(){
     }
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
-    showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase TEST.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    alert(`✓ ${id} — ${name} was added to Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase TEST was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE FAILED — Supabase TEST was not changed.";console.error(e);
   }
 }
 
@@ -432,11 +408,10 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
     await loadGamesTest();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase TEST. List refreshed automatically.`;
-    showGameDevResult({title:"Game Deleted Successfully",message:`${target.id} — ${target.n} was deleted from Supabase TEST.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    alert(`✓ ${target.id} — ${target.n} was deleted from Supabase TEST successfully.`);
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent=`DELETE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
-    showGameDevResult({title:"GAME NOT DELETED",message:`Delete failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});
     console.error(e);
   }finally{
     document.getElementById("gameDevDeleteConfirm").disabled=false;
@@ -491,9 +466,9 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
-    showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase TEST.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    alert(`✓ ${g.id} — ${patch.n} was updated in Supabase TEST successfully.`);
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;console.error(e);
   }
 });
 
@@ -524,12 +499,12 @@ function cleanGameForJson(game){
   return clean;
 }
 
-async function downloadRecoveryJson(){
+document.getElementById("gameDevExportSupabase").addEventListener("click",async()=>{
   const button=document.getElementById("gameDevExportSupabase");
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase TEST and generating games.json…";
+  writeStatus.textContent="Reading Supabase TEST and generating games_.json…";
   try{
     const games=await fetchAllSupabaseTestGames();
     if(!games.length)throw new Error("Supabase TEST returned zero games.");
@@ -538,28 +513,19 @@ async function downloadRecoveryJson(){
     const url=URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download="games.json";
+    a.download="games_.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase TEST (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games_.json downloaded from Supabase TEST (${cleanGames.length} games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase TEST games.json export failed:",e);
+    console.error("Supabase TEST games_.json export failed:",e);
   }finally{
     button.disabled=false;
   }
-}
-
-document.getElementById("gameDevExportSupabase").addEventListener("click",downloadRecoveryJson);
-document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
-  const action=resultYesAction;
-  closeGameDevResult();
-  if(action)await action();
 });
-document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
-document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
