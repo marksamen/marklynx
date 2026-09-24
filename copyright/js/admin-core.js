@@ -4,8 +4,8 @@ import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateD
 import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=game-suggestions-x-only-rev01";
-import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js";
-import { initGameManagement, loadGamesProd } from "./admin-game-management.js";
+import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
+import { initGameManagement, loadGamesProd } from "./admin-game-management.js?v=20260924-prod-db-recovery-rev02";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
