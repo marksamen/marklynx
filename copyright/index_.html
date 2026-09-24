@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
 <title>(TEST) Mark Lynx Admin</title>
-<link rel="stylesheet" href="css/admin-core_.css">
+<link rel="stylesheet" href="css/admin-core_.css?v=recent-refresh-rev03">
 <link rel="stylesheet" href="css/auth_.css">
 <link rel="stylesheet" href="css/games_.css?v=post-save-recovery-rev07">
 <link rel="stylesheet" href="css/traffic-analytics_.css">
@@ -88,6 +88,10 @@
 </form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
 </div>
 </section>
+<div id="recentRefreshControl">
+<button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
+<p id="recentRefreshStatus" aria-live="polite"></p>
+</div>
 <section id="trafficPanel" aria-label="Traffic Analytics">
 <h2>Traffic Analytics</h2>
 <div id="trafficGrid">
@@ -99,8 +103,6 @@
 <p id="trafficUpdated"></p>
 <p id="trafficError"></p>
 </section>
-<button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
-<p id="recentRefreshStatus" aria-live="polite"></p>
 </div></div>
 <div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
