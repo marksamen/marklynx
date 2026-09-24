@@ -184,6 +184,17 @@ document.addEventListener("click",e=>{
 });
 document.getElementById("gdTimeUnit").addEventListener("change",()=>updateCreateButtonState());
 
+function setDeveloperPublisherFields(g={}){
+  for(let i=1;i<=5;i++) document.getElementById(`gdDeveloper${i}`).value=g[`developer_${i}`]??"";
+  for(let i=1;i<=3;i++) document.getElementById(`gdPublisher${i}`).value=g[`publisher_${i}`]??"";
+}
+function getDeveloperPublisherFields(){
+  const fields={};
+  for(let i=1;i<=5;i++) fields[`developer_${i}`]=document.getElementById(`gdDeveloper${i}`).value.trim()||null;
+  for(let i=1;i<=3;i++) fields[`publisher_${i}`]=document.getElementById(`gdPublisher${i}`).value.trim()||null;
+  return fields;
+}
+
 function drawSelectedGame(){
   const g=selectedGame(); if(!g)return;
   document.getElementById("gdId").value=g.id||"";
@@ -200,6 +211,7 @@ function drawSelectedGame(){
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");
   document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  setDeveloperPublisherFields(g);
   const mediaUrl=g.pl ? `https://www.youtube.com/playlist?list=${g.pl}` : (g.v ? `https://www.youtube.com/watch?v=${g.v}` : (g.u||""));
   document.getElementById("gdYoutubeLink").value=mediaUrl;
   document.getElementById("gdYoutubeLinkError").textContent="";
@@ -292,6 +304,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
+  setDeveloperPublisherFields({});
   document.getElementById("gdRaw").value="NEW games_TEST record";
   document.getElementById("gameDevSave").style.display="none";
   document.getElementById("gameDevDelete").style.display="none";
@@ -361,7 +374,8 @@ async function createGameDev(){
       pl:record.pl || null,
       kinect:record.kinect===true ? "true" : null,
       adult:record.adult===true ? "true" : null,
-      testContent:record.testContent===true ? "true" : "false"
+      testContent:record.testContent===true ? "true" : "false",
+      ...getDeveloperPublisherFields()
     };
     const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
@@ -463,7 +477,8 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     df:document.getElementById("gdDifficulty").value.trim() || null,
     adult:document.getElementById("gdAdult").value==="true",
     kinect:document.getElementById("gdKinect").value==="true",
-    testContent:document.getElementById("gdTest").value==="true" ? "true" : "false"
+    testContent:document.getElementById("gdTest").value==="true" ? "true" : "false",
+    ...getDeveloperPublisherFields()
   };
   const media=parseYoutubeLink(document.getElementById("gdYoutubeLink").value);
   if(!media){
