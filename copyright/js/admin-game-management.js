@@ -211,8 +211,10 @@ function drawSelectedGame(){
 function nextGameDevIdentity(){
   const games=window.GAMEDEV_RAW||[];
   const maxOrder=games.reduce((m,g)=>Number.isInteger(Number(g.order))?Math.max(m,Number(g.order)):m,0);
-  const maxId=games.reduce((m,g)=>/^\d+$/.test(g.id||"")?Math.max(m,Number(g.id)):m,0);
-  return {id:String(maxId+1).padStart(4,"0"),order:maxOrder+1};
+  const usedIds=new Set(games.filter(g=>/^\d+$/.test(g.id||"")).map(g=>Number(g.id)));
+  let nextId=1;
+  while(usedIds.has(nextId)) nextId++;
+  return {id:String(nextId).padStart(4,"0"),order:maxOrder+1};
 }
 const gameDevFormHome=document.createComment("gameDevForm home");
 const gameDevActionsHome=document.createComment("gameDevActions home");
