@@ -7,6 +7,7 @@ import { initAdminPageModal } from "./admin-page-modal.js?v=game-suggestions-x-o
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
 import { initGameManagement, loadGamesProd } from "./admin-game-management.js?v=devpub-collapse-reset-prod-rev01";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
+import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
@@ -36,6 +37,7 @@ const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QF
 initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyProdDatabaseIdentity});
 initRecentRefresh({auth});
+initDeveloperPublisherSearch();
 
 
 await setPersistence(auth,browserLocalPersistence);
