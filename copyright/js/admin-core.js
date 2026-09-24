@@ -3,7 +3,7 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
-import { initAdminPageModal } from "./admin-page-modal.js";
+import { initAdminPageModal } from "./admin-page-modal.js?v=dev-x-only-rev03";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source.js";
 import { initGameManagement, loadGamesTest } from "./admin-game-management.js";
 
