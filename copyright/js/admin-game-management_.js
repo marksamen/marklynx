@@ -184,6 +184,10 @@ document.addEventListener("click",e=>{
 });
 document.getElementById("gdTimeUnit").addEventListener("change",()=>updateCreateButtonState());
 
+function collapseDeveloperPublisherSections(){
+  document.querySelectorAll("details.gd-collapsible").forEach(d=>d.open=false);
+}
+
 function setDeveloperPublisherFields(g={}){
   for(let i=1;i<=5;i++) document.getElementById(`gdDeveloper${i}`).value=g[`developer_${i}`]??"";
   for(let i=1;i<=3;i++) document.getElementById(`gdPublisher${i}`).value=g[`publisher_${i}`]??"";
@@ -233,6 +237,7 @@ document.getElementById("gameDevForm").before(gameDevFormHome);
 document.getElementById("gameDevActions").before(gameDevActionsHome);
 function openEditModal(){
   const g=selectedGame(); if(!g)return;
+  collapseDeveloperPublisherSections();
   drawSelectedGame();
   document.getElementById("gameDevEditTitle").textContent=`Edit ${g.id} — ${g.n||"(unnamed)"}`;
   document.getElementById("gameDevEditMount").append(document.getElementById("gameDevForm"),document.getElementById("gameDevActions"));
@@ -268,6 +273,7 @@ function closeDeleteConfirm(){
   document.getElementById("gameDevDeleteModal").setAttribute("aria-hidden","true");
 }
 function openAddModal(){
+  collapseDeveloperPublisherSections();
   const mount=document.getElementById("gameDevAddMount");
   mount.append(document.getElementById("gameDevForm"),document.getElementById("gameDevActions"));
   document.getElementById("gameDevAddModal").classList.add("open");
