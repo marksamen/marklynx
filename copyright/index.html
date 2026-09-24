@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/traffic-analytics.css">
 <link rel="stylesheet" href="css/test-tools.css">
 <link rel="stylesheet" href="css/admin-pages.css">
+<link rel="stylesheet" href="css/admin-devpub-search.css?v=devpub-search-prod-rev01">
 </head>
 <body>
 <main id="login">
@@ -111,6 +112,12 @@
 </form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
 </div>
 </section>
+<section id="devPubSearchPanel" aria-label="Developer Publisher Search">
+<h2>Developer / Publisher Search</h2>
+<input id="devPubSearch" type="search" placeholder="Search company or developer…" autocomplete="off" aria-label="Search developer or publisher">
+<p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
+<div id="devPubSearchResults" aria-live="polite"></div>
+</section>
 <div id="recentRefreshControl">
 <button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
 <p id="recentRefreshStatus" aria-live="polite"></p>
@@ -171,6 +178,6 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core.js?v=devpub-admin-prod-rev01"></script>
+<script type="module" src="js/admin-core.js?v=devpub-search-prod-rev01"></script>
 </body>
 </html>
