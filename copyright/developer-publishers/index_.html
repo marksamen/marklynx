@@ -18,10 +18,12 @@ label{display:grid;gap:7px;font-weight:700;color:#ddd}
 input,select,textarea{width:100%;border:1px solid #555;border-radius:8px;background:#1b1b1b;color:#fff;padding:.75rem .85rem;font:inherit}
 textarea{min-height:120px;resize:vertical}
 .field-help{font-size:.8rem;font-weight:400;color:#888;line-height:1.35}
+.contact-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.contact-dates[hidden]{display:none}
 .actions{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:4px}
 button{border:1px solid #285784;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;color:#fff;background:#173a63}
 button:disabled{opacity:.55;cursor:not-allowed}
-@media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.actions{grid-column:auto}}
+@media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.contact-dates{grid-template-columns:1fr}.actions{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -33,11 +35,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <label class="wide">Official Name
 <input id="companyOfficialName" type="text" autocomplete="off" required placeholder="Example: Nintendo">
 <span class="field-help">Required. Canonical company/developer name used by Admin and game relationships.</span>
-</label>
-
-<label>Public Display Name
-<input id="companyPublicDisplayName" type="text" autocomplete="off" placeholder="Optional">
-<span class="field-help">Optional public-facing name when different from the official name.</span>
 </label>
 
 <label>Company Type
@@ -67,6 +64,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </select>
 </label>
 
+<div id="companyContactDates" class="wide contact-dates" hidden>
 <label>First Contact Date
 <input id="companyFirstContactDate" type="date">
 </label>
@@ -74,6 +72,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <label>Last Contact Date
 <input id="companyLastContactDate" type="date">
 </label>
+</div>
 
 <label class="wide">Relationship Notes
 <textarea id="companyRelationshipNotes" placeholder="Optional notes about the developer/publisher relationship"></textarea>
@@ -84,5 +83,15 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </div>
 </form>
 </main>
+
+<script>
+const relationshipStatus=document.getElementById("companyRelationshipStatus");
+const contactDates=document.getElementById("companyContactDates");
+function updateContactDateVisibility(){
+  contactDates.hidden=relationshipStatus.value==="NOT_CONTACTED";
+}
+relationshipStatus.addEventListener("change",updateContactDateVisibility);
+updateContactDateVisibility();
+</script>
 </body>
 </html>
