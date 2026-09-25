@@ -1168,7 +1168,7 @@
     "testContent": null
   },
   {
-    "n": "Darl Elven Legacy",
+    "n": "Dark Elven Legacy",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "5,000G",
     "t": "29 Minutes",
@@ -1176,12 +1176,12 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/6ZF8Xb0LL9k",
+    "u": "https://www.youtube.com/watch?v=6ZF8Xb0LL9k",
     "v": "6ZF8Xb0LL9k",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "DARKGEMS",
@@ -1264,7 +1264,7 @@
     "testContent": null
   },
   {
-    "n": "Detactive Inspector: Mysterious Clues",
+    "n": "Detective Inspector: Mysterious Clues",
     "p": "XBOX ONE | XBOX Series S/X",
     "g": "1,000G",
     "t": "10 Minutes",
@@ -1272,12 +1272,12 @@
     "tx": "Yes (All Circled)",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/qPU9Ucpl41w",
+    "u": "https://www.youtube.com/watch?v=qPU9Ucpl41w",
     "v": "qPU9Ucpl41w",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Devoured By Darkness",
@@ -2368,7 +2368,7 @@
     "testContent": null
   },
   {
-    "n": "Lord of the Click",
+    "n": "Lord of the Click: Interstellar Wars",
     "p": "XBOX ONE | XBOX Series S/X",
     "g": "1,000G",
     "t": "3 Minutes",
@@ -2376,12 +2376,12 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/JYODy7bFEtg",
+    "u": "https://www.youtube.com/watch?v=JYODy7bFEtg",
     "v": "JYODy7bFEtg",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Lord of the Click III",
@@ -2680,12 +2680,12 @@
     "tx": "No (Screenshot of moves)",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/st-nZzbB-tI",
+    "u": "https://www.youtube.com/watch?v=st-nZzbB-tI",
     "v": "st-nZzbB-tI",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Moves: Perfect Pair",
@@ -2904,12 +2904,12 @@
     "tx": "No",
     "q": "1080p",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/8L6QG4wNmYg",
+    "u": "https://www.youtube.com/watch?v=8L6QG4wNmYg",
     "v": "8L6QG4wNmYg",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Out of Moves",
@@ -3848,12 +3848,12 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/sqjsEmGA2_I",
+    "u": "https://www.youtube.com/watch?v=sqjsEmGA2_I",
     "v": "sqjsEmGA2_I",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Torii Guardian",
@@ -3872,7 +3872,7 @@
     "testContent": null
   },
   {
-    "n": "Torphy",
+    "n": "Trophy",
     "p": "XBOX ONE | XBOX Series S/X",
     "g": "1,000G",
     "t": "4-8 Minutes",
@@ -3880,12 +3880,12 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/0xHJ2_eHP_U",
+    "u": "https://www.youtube.com/watch?v=0xHJ2_eHP_U",
     "v": "0xHJ2_eHP_U",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Vengeful Heart",
@@ -4443,9 +4443,9 @@
     "u": "https://www.youtube.com/playlist?list=PLul5qMfT4fQzrh5l29bZYrpZB1vqWeoDd",
     "v": null,
     "pl": "PLul5qMfT4fQzrh5l29bZYrpZB1vqWeoDd",
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Life Is Strange: Remastered",
@@ -4577,7 +4577,7 @@
   },
   {
     "n": "Bioshock (Remastered)",
-    "p": "XBOX 360 | XBOX ONE| XBOX Series S/X",
+    "p": "XBOX 360 | XBOX ONE | XBOX Series S/X",
     "g": "1,500G",
     "t": "25-30 Hours",
     "ty": "Adventure",
@@ -4587,9 +4587,9 @@
     "u": "https://www.youtube.com/playlist?list=PLul5qMfT4fQyQPQ2he-NgNHwji5aVLbz4",
     "v": null,
     "pl": "PLul5qMfT4fQyQPQ2he-NgNHwji5aVLbz4",
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Mafia III: Faster, Baby! DLC",
@@ -5210,6 +5210,22 @@
     "df": "Quick & Easy",
     "u": "https://www.youtube.com/watch?v=a0i1PPh5Clo",
     "v": "a0i1PPh5Clo",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false"
+  },
+  {
+    "n": "Alexio",
+    "p": "XBOX ONE | XBOX Series S/X",
+    "g": "1,000G",
+    "t": "7-8 Minutes",
+    "ty": "Platformer",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=wFkTJMbEHEE",
+    "v": "wFkTJMbEHEE",
     "pl": null,
     "kinect": null,
     "adult": null,
