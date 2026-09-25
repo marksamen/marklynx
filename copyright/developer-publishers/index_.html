@@ -22,6 +22,15 @@ textarea{min-height:120px;resize:vertical}
 .contact-dates[hidden]{display:none}
 .actions{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:4px}
 #companySaveStatus{min-height:20px;margin:0;font-size:14px}
+.company-result-modal{position:fixed;inset:0;z-index:1000;display:none;background:rgba(0,0,0,.72)}
+.company-result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.company-result-card{box-sizing:border-box;width:min(92vw,520px);margin:auto;padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65);text-align:left}
+.company-result-card h2{margin:0 0 12px;color:#fff;font-size:1.15rem}
+.company-result-card p{margin:0;color:#d7d7d7;font-size:.9rem;line-height:1.5}
+.company-result-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+.company-result-actions button{min-height:42px;border:1px solid #4a4a4f;border-radius:8px;background:#242426;color:#fff;font-weight:800;cursor:pointer}
+.company-result-actions button:hover{background:#303034}
+@media (max-width:520px){.company-result-card{width:96vw;padding:18px}}
 button{border:1px solid #285784;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;color:#fff;background:#173a63}
 button:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.contact-dates{grid-template-columns:1fr}.actions{grid-column:auto}}
@@ -86,6 +95,16 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </form>
 </main>
 
+<div id="companyResultModal" class="company-result-modal" aria-hidden="true">
+  <div class="company-result-card" role="dialog" aria-modal="true" aria-labelledby="companyResultTitle">
+    <h2 id="companyResultTitle">Developer / Publisher Added Successfully</h2>
+    <p id="companyResultMessage"></p>
+    <div class="company-result-actions">
+      <button id="companyResultOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
@@ -109,6 +128,25 @@ const relationshipStatus=document.getElementById("companyRelationshipStatus");
 const contactDates=document.getElementById("companyContactDates");
 const saveButton=document.getElementById("companySave");
 const saveStatus=document.getElementById("companySaveStatus");
+const resultModal=document.getElementById("companyResultModal");
+const resultMessage=document.getElementById("companyResultMessage");
+const resultOk=document.getElementById("companyResultOk");
+
+function showCompanySaved(name){
+  resultMessage.textContent=`${name} was added to Supabase TEST successfully.`;
+  resultModal.classList.add("open");
+  resultModal.setAttribute("aria-hidden","false");
+  resultOk.focus();
+}
+
+function closeCompanyScreenAfterSuccess(){
+  resultModal.classList.remove("open");
+  resultModal.setAttribute("aria-hidden","true");
+  const parentClose=window.parent?.document?.getElementById("adminPageModalClose");
+  if(parentClose) parentClose.click();
+}
+
+resultOk.addEventListener("click",closeCompanyScreenAfterSuccess);
 
 function updateContactDateVisibility(){
   contactDates.hidden=relationshipStatus.value==="NOT_CONTACTED";
@@ -176,7 +214,7 @@ saveButton.addEventListener("click",async()=>{
     }
 
     saveStatus.textContent=`SAVED — ${result.company.official_name} added to Supabase TEST.`;
-    alert(`✓ ${result.company.official_name} was added to Supabase TEST successfully.`);
+    showCompanySaved(result.company.official_name);
   }catch(error){
     saveStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${error?.message||error}`;
     console.error("Developer / Publisher TEST save failed:",error);
