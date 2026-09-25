@@ -198,6 +198,13 @@ function getDeveloperPublisherFields(){
   for(let i=1;i<=3;i++) fields[`publisher_${i}`]=document.getElementById(`gdPublisher${i}`).value.trim()||null;
   return fields;
 }
+function friendlyDeveloperPublisherError(error){
+  const message=error?.message||String(error);
+  const prefix="Unknown developer/publisher:";
+  if(!message.startsWith(prefix)) return null;
+  const name=message.slice(prefix.length).trim();
+  return `Cannot find “${name}” in the Developer / Publisher list. Check the spelling, or add the company first. Supabase TEST was not changed.`;
+}
 
 function drawSelectedGame(){
   const g=selectedGame(); if(!g)return;
@@ -404,7 +411,11 @@ async function createGameDev(){
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase TEST. List refreshed automatically.`;
     showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase TEST.`,question:"Download an updated recovery games_.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase TEST was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    const friendlyError=friendlyDeveloperPublisherError(e);
+    writeStatus.style.color="#ff6d6d";
+    writeStatus.textContent=friendlyError?`CREATE FAILED — ${friendlyError}`:`CREATE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
+    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Create failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});
+    console.error(e);
   }
 }
 
@@ -516,7 +527,11 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase TEST. List refreshed automatically.`;
     showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase TEST.`,question:"Download an updated recovery games_.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    const friendlyError=friendlyDeveloperPublisherError(e);
+    writeStatus.style.color="#ff6d6d";
+    writeStatus.textContent=friendlyError?`SAVE FAILED — ${friendlyError}`:`SAVE FAILED — Supabase TEST was not changed. ${e?.message||e}`;
+    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Update failed. Supabase TEST was not changed. ${e?.message||e}`,kind:"failure"});
+    console.error(e);
   }
 });
 
