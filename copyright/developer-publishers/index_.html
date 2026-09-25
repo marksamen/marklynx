@@ -87,22 +87,23 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </main>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyBT_hUyqu1TVfSQbL4A44UEvIZjCZWRbVQ",
+  apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
   authDomain:"mark-lynx-admin.firebaseapp.com",
   projectId:"mark-lynx-admin",
   storageBucket:"mark-lynx-admin.firebasestorage.app",
-  messagingSenderId:"555525409122",
-  appId:"1:555525409122:web:440cbeeb242ab86067d16e"
+  messagingSenderId:"749999035332",
+  appId:"1:749999035332:web:52c78e6e358c1fef794a91"
 };
 
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
+await setPersistence(auth,browserLocalPersistence);
 
 const relationshipStatus=document.getElementById("companyRelationshipStatus");
 const contactDates=document.getElementById("companyContactDates");
