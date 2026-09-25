@@ -1,7 +1,19 @@
 {
-  "updated": "2026-09-25T08:31:02.484399+00:00",
+  "updated": "2026-09-25T22:31:11.169111+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "wFkTJMbEHEE",
+      "title": "Alexio | Easy 100% Completion | 1000 Gamerscore | 7-8 Minute Completion | 4K",
+      "published": "2026-09-25T17:03:55+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/wFkTJMbEHEE/hqdefault.jpg"
+    },
+    {
+      "id": "BiEiJN0ROWY",
+      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Iggy's Volcanic Castle | All Star Coins | Normal Exit",
+      "published": "2026-09-25T14:21:27+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/BiEiJN0ROWY/hqdefault.jpg"
+    },
     {
       "id": "spinN90aqtU",
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Flight of the Pera Beetles | All Star Coins | Normal",
@@ -37,18 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | No Star Coins | Normal Exit",
       "published": "2026-09-21T13:53:37+00:00",
       "thumbnail": "https://i.ytimg.com/vi/Ghz5fmoOVwI/hqdefault.jpg"
-    },
-    {
-      "id": "bf20in9LmYA",
-      "title": "Cursed Island | Easy 100% Completion | 1000 Gamerscore | 3 Minute Completion | 4K | 60FPS",
-      "published": "2026-09-20T19:49:59+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/bf20in9LmYA/hqdefault.jpg"
-    },
-    {
-      "id": "IgVnOFJJ5uw",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | All Star Coins | Secret Exit",
-      "published": "2026-09-20T15:44:02+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/IgVnOFJJ5uw/hqdefault.jpg"
     }
   ]
 }
