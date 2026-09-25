@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<title>Add New Developer / Publisher — Mark Lynx Admin</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111;color:#fff}
+body{padding:24px}
+main{width:min(1180px,100%);margin:0 auto}
+h1{margin:0 0 .35rem;font-size:clamp(1.6rem,4vw,2.25rem)}
+.subtitle{margin:.35rem 0 22px;color:#aaa}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{display:grid;gap:7px;font-weight:700;color:#ddd}
+.wide{grid-column:1/-1}
+input,select,textarea{width:100%;border:1px solid #555;border-radius:8px;background:#1b1b1b;color:#fff;padding:.75rem .85rem;font:inherit}
+textarea{min-height:120px;resize:vertical}
+.field-help{font-size:.8rem;font-weight:400;color:#888;line-height:1.35}
+.contact-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.contact-dates[hidden]{display:none}
+.actions{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:4px}
+#companySaveStatus{min-height:20px;margin:0;font-size:14px}
+#companySave{cursor:pointer}
+.company-result-modal{position:fixed;inset:0;z-index:1000;display:none;background:rgba(0,0,0,.72)}
+.company-result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.company-result-card{box-sizing:border-box;width:min(92vw,520px);margin:auto;padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65);text-align:left}
+.company-result-card h2{margin:0 0 12px;color:#fff;font-size:1.15rem}
+.company-result-card p{margin:0;color:#d7d7d7;font-size:.9rem;line-height:1.5}
+.company-result-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+.company-result-actions button{min-height:42px;border:1px solid #4a4a4f;border-radius:8px;background:#242426;color:#fff;font-weight:800;cursor:pointer}
+.company-result-actions button:hover{background:#303034}
+@media (max-width:520px){.company-result-card{width:96vw;padding:18px}}
+button{border:1px solid #285784;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;color:#fff;background:#173a63}
+button:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.contact-dates{grid-template-columns:1fr}.actions{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<h1>Add New Developer / Publisher</h1>
+<p class="subtitle">Create a new company record. Database saving is connected to the Admin backend.</p>
+
+<form id="devPubCompanyForm">
+<label class="wide">Official Name
+<input id="companyOfficialName" type="text" autocomplete="off" required placeholder="Example: Nintendo">
+<span class="field-help">Required. Canonical company/developer name used by Admin and game relationships.</span>
+</label>
+
+<label>Company Type
+<select id="companyType" required>
+<option value="">Select type…</option>
+<option value="Developer">Developer</option>
+<option value="Publisher">Publisher</option>
+<option value="Developer + Publisher">Developer + Publisher</option>
+<option value="Solo Developer">Solo Developer</option>
+</select>
+</label>
+
+<label>Country / Location
+<input id="companyCountry" type="text" autocomplete="off" placeholder="Optional">
+</label>
+
+<label>Website URL
+<input id="companyWebsiteUrl" type="url" autocomplete="off" placeholder="https://">
+</label>
+
+<label>Relationship Status
+<select id="companyRelationshipStatus">
+<option value="NOT_CONTACTED">Not Contacted</option>
+<option value="WAITING_FOR_RESPONSE">Waiting for Response</option>
+<option value="ACTIVE_RELATIONSHIP">Active Relationship</option>
+<option value="DO_NOT_CONTACT">Do Not Contact</option>
+</select>
+</label>
+
+<div id="companyContactDates" class="wide contact-dates" hidden>
+<label>First Contact Date
+<input id="companyFirstContactDate" type="date">
+</label>
+
+<label>Last Contact Date
+<input id="companyLastContactDate" type="date">
+</label>
+</div>
+
+<label class="wide">Relationship Notes
+<textarea id="companyRelationshipNotes" placeholder="Optional notes about the developer/publisher relationship"></textarea>
+</label>
+
+<div class="actions">
+<button id="companySave" type="button">Save Developer / Publisher</button>
+</div>
+<p id="companySaveStatus" class="wide" aria-live="polite"></p>
+</form>
+</main>
+
+<div id="companyResultModal" class="company-result-modal" aria-hidden="true">
+  <div class="company-result-card" role="dialog" aria-modal="true" aria-labelledby="companyResultTitle">
+    <h2 id="companyResultTitle">Developer / Publisher Added Successfully</h2>
+    <p id="companyResultMessage"></p>
+    <div class="company-result-actions">
+      <button id="companyResultOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",
+  authDomain:"mark-lynx-admin.firebaseapp.com",
+  projectId:"mark-lynx-admin",
+  storageBucket:"mark-lynx-admin.firebasestorage.app",
+  messagingSenderId:"749999035332",
+  appId:"1:749999035332:web:52c78e6e358c1fef794a91"
+};
+
+const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+await setPersistence(auth,browserLocalPersistence);
+
+const relationshipStatus=document.getElementById("companyRelationshipStatus");
+const contactDates=document.getElementById("companyContactDates");
+const saveButton=document.getElementById("companySave");
+const saveStatus=document.getElementById("companySaveStatus");
+const resultModal=document.getElementById("companyResultModal");
+const resultMessage=document.getElementById("companyResultMessage");
+const resultOk=document.getElementById("companyResultOk");
+
+function showCompanySaved(name){
+  resultMessage.textContent=`${name} was added to Supabase PROD successfully.`;
+  resultModal.classList.add("open");
+  resultModal.setAttribute("aria-hidden","false");
+  resultOk.focus();
+}
+
+function closeCompanyScreenAfterSuccess(){
+  resultModal.classList.remove("open");
+  resultModal.setAttribute("aria-hidden","true");
+  const parentClose=window.parent?.document?.getElementById("adminPageModalClose");
+  if(parentClose) parentClose.click();
+}
+
+resultOk.addEventListener("click",closeCompanyScreenAfterSuccess);
+
+function updateContactDateVisibility(){
+  contactDates.hidden=relationshipStatus.value==="NOT_CONTACTED";
+}
+relationshipStatus.addEventListener("change",updateContactDateVisibility);
+updateContactDateVisibility();
+
+let currentUser=null;
+saveButton.disabled=true;
+saveStatus.textContent="Checking Admin authentication…";
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  saveButton.disabled=!user;
+  saveStatus.textContent=user?"":"Admin authentication required.";
+});
+
+saveButton.addEventListener("click",async()=>{
+  if(!currentUser){
+    saveStatus.textContent="Admin authentication required.";
+    return;
+  }
+
+  const company={
+    official_name:document.getElementById("companyOfficialName").value.trim(),
+    company_type:document.getElementById("companyType").value,
+    country:document.getElementById("companyCountry").value.trim(),
+    website_url:document.getElementById("companyWebsiteUrl").value.trim(),
+    relationship_status:relationshipStatus.value,
+    first_contact_date:document.getElementById("companyFirstContactDate").value,
+    last_contact_date:document.getElementById("companyLastContactDate").value,
+    relationship_notes:document.getElementById("companyRelationshipNotes").value.trim()
+  };
+
+  if(!company.official_name){
+    saveStatus.textContent="Official Name is required.";
+    document.getElementById("companyOfficialName").focus();
+    return;
+  }
+
+  if(!company.company_type){
+    saveStatus.textContent="Company Type is required.";
+    document.getElementById("companyType").focus();
+    return;
+  }
+
+  saveButton.disabled=true;
+  saveStatus.textContent="Saving to Supabase PROD…";
+
+  try{
+    const firebaseToken=await currentUser.getIdToken();
+    const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
+      method:"POST",
+      headers:{
+        "Authorization":`Bearer ${firebaseToken}`,
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({action:"add-company",company})
+    });
+
+    const result=await response.json().catch(()=>({}));
+
+    if(!response.ok){
+      throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+    }
+
+    saveStatus.textContent=`SAVED — ${result.company.official_name} added to Supabase PROD.`;
+    showCompanySaved(result.company.official_name);
+  }catch(error){
+    saveStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${error?.message||error}`;
+    console.error("Developer / Publisher PROD save failed:",error);
+  }finally{
+    saveButton.disabled=!currentUser;
+  }
+});
+</script>
+</body>
+</html>
