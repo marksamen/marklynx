@@ -15,7 +15,8 @@
 <style>
 #devPubSearchHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
 #devPubSearchHeader h2{margin:0}
-#devPubAddCompany{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
+#devPubSearchActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#devPubAddCompany,#devPubManageCompanies{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
 @media(max-width:600px){#devPubSearchHeader{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -120,7 +121,10 @@
 <section id="devPubSearchPanel" aria-label="Developer Publisher Search">
 <div id="devPubSearchHeader">
 <h2>Developer / Publisher Search</h2>
+<div id="devPubSearchActions">
+<button id="devPubManageCompanies" class="admin-link" type="button" data-admin-modal-url="developer-publishers/manage_.html" data-admin-modal-title="Manage Developer / Publisher">Manage Developer / Publisher</button>
 <button id="devPubAddCompany" class="admin-link" type="button" data-admin-modal-url="developer-publishers/index_.html" data-admin-modal-title="Add New Developer / Publisher">Add New Developer / Publisher</button>
+</div>
 </div>
 <input id="devPubSearch" type="search" placeholder="Search company or developer…" autocomplete="off" aria-label="Search developer or publisher">
 <p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
