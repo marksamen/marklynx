@@ -11,13 +11,78 @@ html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111;
 body{padding:24px}
 main{width:min(1180px,100%);margin:0 auto}
 h1{margin:0 0 .35rem;font-size:clamp(1.6rem,4vw,2.25rem)}
-p{margin:.35rem 0;color:#aaa}
+.subtitle{margin:.35rem 0 22px;color:#aaa}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{display:grid;gap:7px;font-weight:700;color:#ddd}
+.wide{grid-column:1/-1}
+input,select,textarea{width:100%;border:1px solid #555;border-radius:8px;background:#1b1b1b;color:#fff;padding:.75rem .85rem;font:inherit}
+textarea{min-height:120px;resize:vertical}
+.field-help{font-size:.8rem;font-weight:400;color:#888;line-height:1.35}
+.actions{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:4px}
+button{border:1px solid #285784;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;color:#fff;background:#173a63}
+button:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.actions{grid-column:auto}}
 </style>
 </head>
 <body>
 <main>
 <h1>Add New Developer / Publisher</h1>
-<p>Developer / Publisher management form will be added in the next step.</p>
+<p class="subtitle">Create a new company record. Database saving will be connected in a later TEST step.</p>
+
+<form id="devPubCompanyForm">
+<label class="wide">Official Name
+<input id="companyOfficialName" type="text" autocomplete="off" required placeholder="Example: Nintendo">
+<span class="field-help">Required. Canonical company/developer name used by Admin and game relationships.</span>
+</label>
+
+<label>Public Display Name
+<input id="companyPublicDisplayName" type="text" autocomplete="off" placeholder="Optional">
+<span class="field-help">Optional public-facing name when different from the official name.</span>
+</label>
+
+<label>Company Type
+<select id="companyType" required>
+<option value="">Select type…</option>
+<option value="Developer">Developer</option>
+<option value="Publisher">Publisher</option>
+<option value="Developer + Publisher">Developer + Publisher</option>
+<option value="Solo Developer">Solo Developer</option>
+</select>
+</label>
+
+<label>Country / Location
+<input id="companyCountry" type="text" autocomplete="off" placeholder="Optional">
+</label>
+
+<label>Website URL
+<input id="companyWebsiteUrl" type="url" autocomplete="off" placeholder="https://">
+</label>
+
+<label>Relationship Status
+<select id="companyRelationshipStatus">
+<option value="NOT_CONTACTED">Not Contacted</option>
+<option value="WAITING_FOR_RESPONSE">Waiting for Response</option>
+<option value="ACTIVE_RELATIONSHIP">Active Relationship</option>
+<option value="DO_NOT_CONTACT">Do Not Contact</option>
+</select>
+</label>
+
+<label>First Contact Date
+<input id="companyFirstContactDate" type="date">
+</label>
+
+<label>Last Contact Date
+<input id="companyLastContactDate" type="date">
+</label>
+
+<label class="wide">Relationship Notes
+<textarea id="companyRelationshipNotes" placeholder="Optional notes about the developer/publisher relationship"></textarea>
+</label>
+
+<div class="actions">
+<button id="companySave" type="button" disabled>Save Developer / Publisher</button>
+</div>
+</form>
 </main>
 </body>
 </html>
