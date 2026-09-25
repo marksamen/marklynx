@@ -21,6 +21,7 @@ textarea{min-height:120px;resize:vertical}
 .contact-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .contact-dates[hidden]{display:none}
 .actions{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:4px}
+#companySaveStatus{min-height:20px;margin:0;font-size:14px}
 button{border:1px solid #285784;border-radius:8px;padding:.8rem 1rem;font:inherit;font-weight:700;color:#fff;background:#173a63}
 button:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:720px){body{padding:14px}form{grid-template-columns:1fr}.wide{grid-column:auto}.contact-dates{grid-template-columns:1fr}.actions{grid-column:auto}}
@@ -79,19 +80,109 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </label>
 
 <div class="actions">
-<button id="companySave" type="button" disabled>Save Developer / Publisher</button>
+<button id="companySave" type="button">Save Developer / Publisher</button>
 </div>
+<p id="companySaveStatus" class="wide" aria-live="polite"></p>
 </form>
 </main>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyBT_hUyqu1TVfSQbL4A44UEvIZjCZWRbVQ",
+  authDomain:"mark-lynx-admin.firebaseapp.com",
+  projectId:"mark-lynx-admin",
+  storageBucket:"mark-lynx-admin.firebasestorage.app",
+  messagingSenderId:"555525409122",
+  appId:"1:555525409122:web:440cbeeb242ab86067d16e"
+};
+
+const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
 const relationshipStatus=document.getElementById("companyRelationshipStatus");
 const contactDates=document.getElementById("companyContactDates");
+const saveButton=document.getElementById("companySave");
+const saveStatus=document.getElementById("companySaveStatus");
+
 function updateContactDateVisibility(){
   contactDates.hidden=relationshipStatus.value==="NOT_CONTACTED";
 }
 relationshipStatus.addEventListener("change",updateContactDateVisibility);
 updateContactDateVisibility();
+
+let currentUser=null;
+saveButton.disabled=true;
+saveStatus.textContent="Checking Admin authentication…";
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  saveButton.disabled=!user;
+  saveStatus.textContent=user?"":"Admin authentication required.";
+});
+
+saveButton.addEventListener("click",async()=>{
+  if(!currentUser){
+    saveStatus.textContent="Admin authentication required.";
+    return;
+  }
+
+  const company={
+    official_name:document.getElementById("companyOfficialName").value.trim(),
+    company_type:document.getElementById("companyType").value,
+    country:document.getElementById("companyCountry").value.trim(),
+    website_url:document.getElementById("companyWebsiteUrl").value.trim(),
+    relationship_status:relationshipStatus.value,
+    first_contact_date:document.getElementById("companyFirstContactDate").value,
+    last_contact_date:document.getElementById("companyLastContactDate").value,
+    relationship_notes:document.getElementById("companyRelationshipNotes").value.trim()
+  };
+
+  if(!company.official_name){
+    saveStatus.textContent="Official Name is required.";
+    document.getElementById("companyOfficialName").focus();
+    return;
+  }
+
+  if(!company.company_type){
+    saveStatus.textContent="Company Type is required.";
+    document.getElementById("companyType").focus();
+    return;
+  }
+
+  saveButton.disabled=true;
+  saveStatus.textContent="Saving to Supabase TEST…";
+
+  try{
+    const firebaseToken=await currentUser.getIdToken();
+    const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
+      method:"POST",
+      headers:{
+        "Authorization":`Bearer ${firebaseToken}`,
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({action:"add-company",company})
+    });
+
+    const result=await response.json().catch(()=>({}));
+
+    if(!response.ok){
+      throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    }
+
+    saveStatus.textContent=`SAVED — ${result.company.official_name} added to Supabase TEST.`;
+    alert(`✓ ${result.company.official_name} was added to Supabase TEST successfully.`);
+  }catch(error){
+    saveStatus.textContent=`SAVE FAILED — Supabase TEST was not changed. ${error?.message||error}`;
+    console.error("Developer / Publisher TEST save failed:",error);
+  }finally{
+    saveButton.disabled=!currentUser;
+  }
+});
 </script>
 </body>
 </html>
