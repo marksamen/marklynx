@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-26T08:29:38.778418+00:00",
+  "updated": "2026-09-26T19:46:00.738694+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "zjvOPdWsEPY",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 1 | Fuzzy Clifftop | All Star Coins | Normal Exit",
+      "published": "2026-09-26T13:43:42+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/zjvOPdWsEPY/hqdefault.jpg"
+    },
     {
       "id": "wFkTJMbEHEE",
       "title": "Alexio | Easy 100% Completion | 1000 Gamerscore | 7-8 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "Dr. Oil | Easy 100% Completion | 1000 Gamerscore | 8 Minute Completion | 4K | 60FPS",
       "published": "2026-09-21T19:56:58+00:00",
       "thumbnail": "https://i.ytimg.com/vi/CBkaY3Bk89M/hqdefault.jpg"
-    },
-    {
-      "id": "Ghz5fmoOVwI",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 5 | Deepsea Ruins | No Star Coins | Normal Exit",
-      "published": "2026-09-21T13:53:37+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Ghz5fmoOVwI/hqdefault.jpg"
     }
   ]
 }
