@@ -6,6 +6,145 @@ const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QF
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 let resultYesAction=null;
+let providedDeveloperCompanies=[];
+let providedDeveloperByGame=new Map();
+
+async function callGamesAdmin(action,payload={}){
+  const user=auth?.currentUser;
+  if(!user) throw new Error("Admin authentication is required.");
+  const firebaseToken=await user.getIdToken();
+  const response=await fetch(`${SUPABASE_URL}/functions/v1/games-admin`,{
+    method:"POST",
+    headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
+    body:JSON.stringify({action,...payload})
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
+  return result;
+}
+
+async function loadProvidedDeveloperAdminData(){
+  // REV37 deliberately uses the already-established company/provided-game
+  // backend actions instead of the new REV36 combined read action.
+  const companyResult=await callGamesAdmin("list-companies");
+  providedDeveloperCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
+    .filter(company=>["ACTIVE_RELATIONSHIP","DO_NOT_CONTACT"].includes(String(company.relationship_status)))
+    .sort((a,b)=>String(a.official_name||"").localeCompare(String(b.official_name||""),undefined,{sensitivity:"base"}));
+
+  providedDeveloperByGame=new Map();
+  for(const company of providedDeveloperCompanies){
+    const providedResult=await callGamesAdmin("list-provided-games",{id:Number(company.id)});
+    for(const game of (Array.isArray(providedResult.games)?providedResult.games:[])){
+      providedDeveloperByGame.set(Number(game.id),Number(company.id));
+    }
+  }
+
+  const select=document.getElementById("gdProvidedByDeveloper");
+  const current=select.value;
+  select.innerHTML='<option value="">None</option>';
+  for(const company of providedDeveloperCompanies){
+    const option=document.createElement("option");
+    option.value=String(company.id);
+    option.textContent=company.official_name;
+    select.appendChild(option);
+  }
+  if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+}
+function setProvidedDeveloperForGame(gameId){
+  const companyId=providedDeveloperByGame.get(Number(gameId));
+  document.getElementById("gdProvidedByDeveloper").value=companyId?String(companyId):"";
+}
+function providedDeveloperCompanyId(){
+  const value=document.getElementById("gdProvidedByDeveloper").value;
+  return value?Number(value):null;
+}
+
+function firstEmptyRoleSelect(prefix){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById(`${prefix}${i}`);
+    if(el && !el.value.trim()) return el;
+  }
+  return null;
+}
+function roleAlreadyContains(prefix,name){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById(`${prefix}${i}`);
+    if(el && el.value.trim().toLowerCase()===name.trim().toLowerCase()) return true;
+  }
+  return false;
+}
+function addCompanyToRole(prefix,name){
+  if(roleAlreadyContains(prefix,name)) return true;
+  const target=firstEmptyRoleSelect(prefix);
+  if(!target) return false;
+  target.value=name;
+  return true;
+}
+function chooseProvidedDeveloperRole(companyName){
+  return new Promise(resolve=>{
+    const modal=document.getElementById("gdProvidedRoleModal");
+    const msg=document.getElementById("gdProvidedRoleMsg");
+    const developer=document.getElementById("gdProvidedRoleDeveloper");
+    const publisher=document.getElementById("gdProvidedRolePublisher");
+    const both=document.getElementById("gdProvidedRoleBoth");
+    if(!modal || !msg || !developer || !publisher || !both){ resolve(null); return; }
+    msg.textContent=`What is ${companyName}'s role for this game?`;
+    const finish=value=>{
+      developer.onclick=null; publisher.onclick=null; both.onclick=null;
+      modal.style.display="none";
+      resolve(value);
+    };
+    developer.onclick=()=>finish("Developer");
+    publisher.onclick=()=>finish("Publisher");
+    both.onclick=()=>finish("Both");
+    modal.style.display="flex";
+  });
+}
+async function handleProvidedDeveloperSelection(){
+  const select=document.getElementById("gdProvidedByDeveloper");
+  const companyId=Number(select.value);
+  if(!companyId) return;
+  const company=providedDeveloperCompanies.find(item=>Number(item.id)===companyId);
+  if(!company) return;
+  const name=String(company.official_name||"").trim();
+  if(!name) return;
+
+  const hasDeveloper=roleAlreadyContains("gdDeveloper",name);
+  const hasPublisher=roleAlreadyContains("gdPublisher",name);
+  if(hasDeveloper || hasPublisher) return;
+
+  const role=await chooseProvidedDeveloperRole(name);
+  if(!role){ select.value=""; return; }
+
+  if(role==="Developer" || role==="Both"){
+    if(!addCompanyToRole("gdDeveloper",name)){
+      showResultModal("No empty Developer field is available. Nothing was changed.",false);
+      select.value="";
+      return;
+    }
+  }
+  if(role==="Publisher" || role==="Both"){
+    if(!addCompanyToRole("gdPublisher",name)){
+      // If Both partially populated Developer, undo only the field we just added.
+      if(role==="Both"){
+        for(let i=5;i>=1;i--){
+          const el=document.getElementById(`gdDeveloper${i}`);
+          if(el && el.value.trim().toLowerCase()===name.toLowerCase()){ el.value=""; break; }
+        }
+      }
+      showResultModal("No empty Publisher field is available. Nothing was changed.",false);
+      select.value="";
+    }
+  }
+}
+function wireProvidedDeveloperRolePrompt(){
+  const select=document.getElementById("gdProvidedByDeveloper");
+  if(!select || select.dataset.rolePromptWired==="1") return;
+  select.dataset.rolePromptWired="1";
+  select.addEventListener("change",handleProvidedDeveloperSelection);
+}
+
+
 
 function closeGameDevResult(){
   const modal=document.getElementById("gameDevResultModal");
@@ -86,6 +225,7 @@ export async function loadGamesProd(){
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
+    await loadProvidedDeveloperAdminData();
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase PROD games.";
@@ -216,6 +356,7 @@ function drawSelectedGame(){
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");
   document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  setProvidedDeveloperForGame(g.id);
   setDeveloperPublisherFields(g);
   const mediaUrl=g.pl ? `https://www.youtube.com/playlist?list=${g.pl}` : (g.v ? `https://www.youtube.com/watch?v=${g.v}` : (g.u||""));
   document.getElementById("gdYoutubeLink").value=mediaUrl;
@@ -311,6 +452,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
+  document.getElementById("gdProvidedByDeveloper").value="";
   setDeveloperPublisherFields({});
   document.getElementById("gdRaw").value="NEW games_TEST record";
   document.getElementById("gameDevSave").style.display="none";
@@ -382,6 +524,7 @@ async function createGameDev(){
       kinect:record.kinect===true ? "true" : null,
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false",
+      provided_company_id:providedDeveloperCompanyId(),
       ...getDeveloperPublisherFields()
     };
     const response=await fetch("https://igmunmyxaskizltdvvti.supabase.co/functions/v1/games-admin",{
@@ -485,6 +628,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     adult:document.getElementById("gdAdult").value==="true",
     kinect:document.getElementById("gdKinect").value==="true",
     testContent:document.getElementById("gdTest").value==="true" ? "true" : "false",
+    provided_company_id:providedDeveloperCompanyId(),
     ...getDeveloperPublisherFields()
   };
   const media=parseYoutubeLink(document.getElementById("gdYoutubeLink").value);
@@ -587,3 +731,9 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",wireProvidedDeveloperRolePrompt,{once:true});
+}else{
+  wireProvidedDeveloperRolePrompt();
+}
