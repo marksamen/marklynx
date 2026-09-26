@@ -224,7 +224,7 @@
       await loadScript('js/site_.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
-      await loadScript('js/suggest_game_.js?v=20260926-suggest-desktop-close-REV33');
+      await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
