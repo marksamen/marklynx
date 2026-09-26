@@ -13,7 +13,7 @@ async function callGamesAdmin(action,payload={}){
   const user=auth?.currentUser;
   if(!user) throw new Error("Admin authentication is required.");
   const firebaseToken=await user.getIdToken();
-  const response=await fetch(`${SUPABASE_URL}/functions/v1/games-admin`,{
+  const response=await fetch(`${SUPABASE_PROD_URL}/functions/v1/games-admin`,{
     method:"POST",
     headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
     body:JSON.stringify({action,...payload})
