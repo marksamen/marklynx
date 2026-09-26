@@ -192,26 +192,6 @@
 
       console.info(`[PRODUCTION] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
-      // Public Developer Showcase: sanitized, public-only database feed.
-      // Failure here must never take down the website; developer.js retains the
-      // existing hard-coded cards as a fallback if this optional feed is unavailable.
-      window.PUBLIC_DEVELOPER_SHOWCASE = null;
-      try {
-        const showcaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/public_developer_showcase?select=company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const showcaseApiKey = 'sb_publishable_Xxv8ZVZx6YhB0R7hP2Qq3Q_4Xc9WmTg';
-        const showcaseResponse = await fetch(showcaseUrl, {
-          headers: { apikey: showcaseApiKey },
-          cache: 'no-store'
-        });
-        if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
-        const showcaseRows = await showcaseResponse.json();
-        if (!Array.isArray(showcaseRows)) throw new Error('public_developer_showcase: invalid response');
-        window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-        console.info(`[PRODUCTION] Public Developer Showcase loaded: ${showcaseRows.length} games`);
-      } catch (showcaseError) {
-        console.warn('[PRODUCTION] Public Developer Showcase unavailable; keeping existing fallback cards:', showcaseError);
-      }
-
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
       const statsResponse = await fetch('data/stats.json?v=20260921-prod-promotion-01', { cache: 'no-store' });
       if (!statsResponse.ok) throw new Error(`stats.json: HTTP ${statsResponse.status}`);
@@ -222,7 +202,7 @@
 
       await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
       await loadScript('js/site.js?v=20260921-game-guides-REV12');
-      await loadScript('js/developer.js?v=20260926-db-showcase-REV47');
+      await loadScript('js/developer.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
     } catch (error) {
