@@ -49,6 +49,7 @@ async function loadProvidedDeveloperAdminData(){
     select.appendChild(option);
   }
   if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+  wireProvidedDeveloperRolePrompt();
 }
 function setProvidedDeveloperForGame(gameId){
   const companyId=providedDeveloperByGame.get(Number(gameId));
@@ -57,6 +58,108 @@ function setProvidedDeveloperForGame(gameId){
 function providedDeveloperCompanyId(){
   const value=document.getElementById("gdProvidedByDeveloper").value;
   return value?Number(value):null;
+}
+
+function firstEmptyRoleSelect(prefix){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById(`${prefix}${i}`);
+    if(el && !el.value.trim()) return el;
+  }
+  return null;
+}
+function roleAlreadyContains(prefix,name){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById(`${prefix}${i}`);
+    if(el && el.value.trim().toLowerCase()===name.trim().toLowerCase()) return true;
+  }
+  return false;
+}
+function addCompanyToRole(prefix,name){
+  if(roleAlreadyContains(prefix,name)) return true;
+  const target=firstEmptyRoleSelect(prefix);
+  if(!target) return false;
+  target.value=name;
+  return true;
+}
+function chooseProvidedDeveloperRole(companyName){
+  return new Promise(resolve=>{
+    const modal=document.getElementById("gdResultModal");
+    const box=modal?.querySelector(".gd-result-box");
+    const msg=document.getElementById("gdResultMsg");
+    const yes=document.getElementById("gdResultYes");
+    const no=document.getElementById("gdResultNo");
+    if(!modal || !box || !msg || !yes || !no){ resolve(null); return; }
+
+    msg.textContent=`What is ${companyName}'s role for this game?`;
+    yes.textContent="Developer";
+    no.textContent="Publisher";
+
+    let both=document.getElementById("gdResultBoth");
+    if(!both){
+      both=document.createElement("button");
+      both.id="gdResultBoth";
+      both.type="button";
+      both.className=yes.className;
+      no.insertAdjacentElement("afterend",both);
+    }
+    both.textContent="Both";
+    both.style.display="inline-block";
+
+    const finish=value=>{
+      yes.onclick=null; no.onclick=null; both.onclick=null;
+      yes.textContent="Yes"; no.textContent="No";
+      both.style.display="none";
+      modal.style.display="none";
+      resolve(value);
+    };
+    yes.onclick=()=>finish("Developer");
+    no.onclick=()=>finish("Publisher");
+    both.onclick=()=>finish("Both");
+    modal.style.display="flex";
+  });
+}
+async function handleProvidedDeveloperSelection(){
+  const select=document.getElementById("gdProvidedByDeveloper");
+  const companyId=Number(select.value);
+  if(!companyId) return;
+  const company=providedDeveloperCompanies.find(item=>Number(item.id)===companyId);
+  if(!company) return;
+  const name=String(company.official_name||"").trim();
+  if(!name) return;
+
+  const hasDeveloper=roleAlreadyContains("gdDeveloper",name);
+  const hasPublisher=roleAlreadyContains("gdPublisher",name);
+  if(hasDeveloper || hasPublisher) return;
+
+  const role=await chooseProvidedDeveloperRole(name);
+  if(!role){ select.value=""; return; }
+
+  if(role==="Developer" || role==="Both"){
+    if(!addCompanyToRole("gdDeveloper",name)){
+      showResultModal("No empty Developer field is available. Nothing was changed.",false);
+      select.value="";
+      return;
+    }
+  }
+  if(role==="Publisher" || role==="Both"){
+    if(!addCompanyToRole("gdPublisher",name)){
+      // If Both partially populated Developer, undo only the field we just added.
+      if(role==="Both"){
+        for(let i=5;i>=1;i--){
+          const el=document.getElementById(`gdDeveloper${i}`);
+          if(el && el.value.trim().toLowerCase()===name.toLowerCase()){ el.value=""; break; }
+        }
+      }
+      showResultModal("No empty Publisher field is available. Nothing was changed.",false);
+      select.value="";
+    }
+  }
+}
+function wireProvidedDeveloperRolePrompt(){
+  const select=document.getElementById("gdProvidedByDeveloper");
+  if(!select || select.dataset.rolePromptWired==="1") return;
+  select.dataset.rolePromptWired="1";
+  select.addEventListener("change",handleProvidedDeveloperSelection);
 }
 
 
