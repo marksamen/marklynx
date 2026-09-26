@@ -174,8 +174,28 @@
       // TEST CONTENT OFF must hide the underlying TEST media, not only the row
       // carrying testContent=true. This prevents a non-TEST duplicate record from
       // exposing the same TEST YouTube video/playlist while TEST content is hidden.
-      const testContentHidden = (localStorage.getItem('marklynxTestContent') || 'Y').toUpperCase() === 'Y';
-      if (testContentHidden) {
+      // TEST content visibility is shared through Supabase TEST so Admin and
+      // youtube.marklynx.com use the same authoritative setting across subdomains/devices.
+      const loadTestContentEnabled = async () => {
+        const controlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/feature_control?id=eq.test_content&select=enabled';
+        const apiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
+        const response = await fetch(controlUrl, { headers: { apikey: apiKey }, cache: 'no-store' });
+        if (!response.ok) throw new Error(`Supabase feature_control: HTTP ${response.status}`);
+        const rows = await response.json();
+        if (!Array.isArray(rows) || rows.length !== 1 || typeof rows[0]?.enabled !== 'boolean') {
+          throw new Error('Supabase feature_control: invalid test_content value');
+        }
+        return rows[0].enabled;
+      };
+
+      let testContentEnabled = false;
+      try {
+        testContentEnabled = await loadTestContentEnabled();
+      } catch (controlError) {
+        console.warn('[TEST] TEST content control unavailable; defaulting OFF:', controlError);
+      }
+      console.info(`[TEST] TEST CONTENT: ${testContentEnabled ? 'ON' : 'OFF'}`);
+      if (!testContentEnabled) {
         const testVideoIds = new Set(
           window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
         );
@@ -204,7 +224,7 @@
       await loadScript('js/site_.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer_.js?v=20260921-dev-video-backdrop-REV01');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
-      await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
+      await loadScript('js/suggest_game_.js?v=20260926-suggest-desktop-close-REV33');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
