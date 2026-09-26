@@ -49,7 +49,6 @@ async function loadProvidedDeveloperAdminData(){
     select.appendChild(option);
   }
   if(current && [...select.options].some(option=>option.value===current)) select.value=current;
-  wireProvidedDeveloperRolePrompt();
 }
 function setProvidedDeveloperForGame(gameId){
   const companyId=providedDeveloperByGame.get(Number(gameId));
@@ -83,37 +82,20 @@ function addCompanyToRole(prefix,name){
 }
 function chooseProvidedDeveloperRole(companyName){
   return new Promise(resolve=>{
-    const modal=document.getElementById("gdResultModal");
-    const box=modal?.querySelector(".gd-result-box");
-    const msg=document.getElementById("gdResultMsg");
-    const yes=document.getElementById("gdResultYes");
-    const no=document.getElementById("gdResultNo");
-    if(!modal || !box || !msg || !yes || !no){ resolve(null); return; }
-
+    const modal=document.getElementById("gdProvidedRoleModal");
+    const msg=document.getElementById("gdProvidedRoleMsg");
+    const developer=document.getElementById("gdProvidedRoleDeveloper");
+    const publisher=document.getElementById("gdProvidedRolePublisher");
+    const both=document.getElementById("gdProvidedRoleBoth");
+    if(!modal || !msg || !developer || !publisher || !both){ resolve(null); return; }
     msg.textContent=`What is ${companyName}'s role for this game?`;
-    yes.textContent="Developer";
-    no.textContent="Publisher";
-
-    let both=document.getElementById("gdResultBoth");
-    if(!both){
-      both=document.createElement("button");
-      both.id="gdResultBoth";
-      both.type="button";
-      both.className=yes.className;
-      no.insertAdjacentElement("afterend",both);
-    }
-    both.textContent="Both";
-    both.style.display="inline-block";
-
     const finish=value=>{
-      yes.onclick=null; no.onclick=null; both.onclick=null;
-      yes.textContent="Yes"; no.textContent="No";
-      both.style.display="none";
+      developer.onclick=null; publisher.onclick=null; both.onclick=null;
       modal.style.display="none";
       resolve(value);
     };
-    yes.onclick=()=>finish("Developer");
-    no.onclick=()=>finish("Publisher");
+    developer.onclick=()=>finish("Developer");
+    publisher.onclick=()=>finish("Publisher");
     both.onclick=()=>finish("Both");
     modal.style.display="flex";
   });
@@ -762,3 +744,9 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",wireProvidedDeveloperRolePrompt,{once:true});
+}else{
+  wireProvidedDeveloperRolePrompt();
+}
