@@ -9,19 +9,36 @@ let resultYesAction=null;
 let providedDeveloperCompanies=[];
 let providedDeveloperByGame=new Map();
 
-async function loadProvidedDeveloperAdminData(){
+async function callGamesAdmin(action,payload={}){
   const user=auth?.currentUser;
   if(!user) throw new Error("Admin authentication is required.");
   const firebaseToken=await user.getIdToken();
   const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
     method:"POST",
     headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
-    body:JSON.stringify({action:"provided-game-admin-data"})
+    body:JSON.stringify({action,...payload})
   });
   const result=await response.json().catch(()=>({}));
   if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
-  providedDeveloperCompanies=Array.isArray(result.companies)?result.companies:[];
-  providedDeveloperByGame=new Map((Array.isArray(result.links)?result.links:[]).map(link=>[Number(link.game_id),Number(link.company_id)]));
+  return result;
+}
+
+async function loadProvidedDeveloperAdminData(){
+  // REV37 deliberately uses the already-established company/provided-game
+  // backend actions instead of the new REV36 combined read action.
+  const companyResult=await callGamesAdmin("list-companies");
+  providedDeveloperCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
+    .filter(company=>["ACTIVE_RELATIONSHIP","DO_NOT_CONTACT"].includes(String(company.relationship_status)))
+    .sort((a,b)=>String(a.official_name||"").localeCompare(String(b.official_name||""),undefined,{sensitivity:"base"}));
+
+  providedDeveloperByGame=new Map();
+  for(const company of providedDeveloperCompanies){
+    const providedResult=await callGamesAdmin("list-provided-games",{id:Number(company.id)});
+    for(const game of (Array.isArray(providedResult.games)?providedResult.games:[])){
+      providedDeveloperByGame.set(Number(game.id),Number(company.id));
+    }
+  }
+
   const select=document.getElementById("gdProvidedByDeveloper");
   const current=select.value;
   select.innerHTML='<option value="">None</option>';
