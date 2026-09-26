@@ -117,6 +117,7 @@ function getFiltered(){
       if(r.df !== df) return false;
     }
     if(feature === '__TEXT_GUIDE__' && !hasTextGuide(r.tx)) return false;
+    if(feature === '__DEVELOPER_PROVIDED__' && !r.developerProvidedBy) return false;
     return true;
   });
   const sort = sortSelect.value;
@@ -134,6 +135,12 @@ function textGuideBadge(r){
   if(!hasTextGuide(r.tx)) return '';
   const label = (r.tx && r.tx.trim().toLowerCase() !== 'yes') ? r.tx : 'Text Guide Included';
   return `<span class="text-guide-badge" title="${escapeHtml(r.tx)}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>${escapeHtml(label)}</span>`;
+}
+
+function developerProvidedBadge(r){
+  if(!r.developerProvidedBy) return '';
+  const provider = escapeHtml(r.developerProvidedBy);
+  return `<span class="developer-provided-badge" title="Provided directly by ${provider}">Provided by ${provider}</span>`;
 }
 
 function playlistPill(r){
@@ -211,6 +218,7 @@ function cardHtml(r){
         <span class="game-meta-quality">${qualityBadge(r.q)}</span>
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
+        ${developerProvidedBadge(r)}
       </div>
     </span>
   </${tag}>`;
@@ -241,7 +249,7 @@ function listRowHtml(r){
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
       </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
-      ${(r.kinect || hasTextGuide(r.tx)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}</div>` : ''}
+      ${(r.kinect || hasTextGuide(r.tx) || r.developerProvidedBy) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}${developerProvidedBadge(r)}</div>` : ''}
     </span>
     <span class="list-col type game-meta-pill list-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
     <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
