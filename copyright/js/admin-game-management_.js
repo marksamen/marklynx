@@ -6,6 +6,42 @@ const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiH
 const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 
 let resultYesAction=null;
+let providedDeveloperCompanies=[];
+let providedDeveloperByGame=new Map();
+
+async function loadProvidedDeveloperAdminData(){
+  const user=auth?.currentUser;
+  if(!user) throw new Error("Admin authentication is required.");
+  const firebaseToken=await user.getIdToken();
+  const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
+    method:"POST",
+    headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
+    body:JSON.stringify({action:"provided-game-admin-data"})
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+  providedDeveloperCompanies=Array.isArray(result.companies)?result.companies:[];
+  providedDeveloperByGame=new Map((Array.isArray(result.links)?result.links:[]).map(link=>[Number(link.game_id),Number(link.company_id)]));
+  const select=document.getElementById("gdProvidedByDeveloper");
+  const current=select.value;
+  select.innerHTML='<option value="">None</option>';
+  for(const company of providedDeveloperCompanies){
+    const option=document.createElement("option");
+    option.value=String(company.id);
+    option.textContent=company.official_name;
+    select.appendChild(option);
+  }
+  if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+}
+function setProvidedDeveloperForGame(gameId){
+  const companyId=providedDeveloperByGame.get(Number(gameId));
+  document.getElementById("gdProvidedByDeveloper").value=companyId?String(companyId):"";
+}
+function providedDeveloperCompanyId(){
+  const value=document.getElementById("gdProvidedByDeveloper").value;
+  return value?Number(value):null;
+}
+
 
 function closeGameDevResult(){
   const modal=document.getElementById("gameDevResultModal");
@@ -85,6 +121,7 @@ export async function loadGamesTest(){
 
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
+    await loadProvidedDeveloperAdminData();
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase TEST games.";
@@ -222,6 +259,7 @@ function drawSelectedGame(){
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");
   document.getElementById("gdTest").value=g.testContent===true?"true":"false";
+  setProvidedDeveloperForGame(g.id);
   setDeveloperPublisherFields(g);
   const mediaUrl=g.pl ? `https://www.youtube.com/playlist?list=${g.pl}` : (g.v ? `https://www.youtube.com/watch?v=${g.v}` : (g.u||""));
   document.getElementById("gdYoutubeLink").value=mediaUrl;
@@ -317,6 +355,7 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
+  document.getElementById("gdProvidedByDeveloper").value="";
   setDeveloperPublisherFields({});
   document.getElementById("gdRaw").value="NEW games_TEST record";
   document.getElementById("gameDevSave").style.display="none";
@@ -388,6 +427,7 @@ async function createGameDev(){
       kinect:record.kinect===true ? "true" : null,
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false",
+      provided_company_id:providedDeveloperCompanyId(),
       ...getDeveloperPublisherFields()
     };
     const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
@@ -495,6 +535,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     adult:document.getElementById("gdAdult").value==="true",
     kinect:document.getElementById("gdKinect").value==="true",
     testContent:document.getElementById("gdTest").value==="true" ? "true" : "false",
+    provided_company_id:providedDeveloperCompanyId(),
     ...getDeveloperPublisherFields()
   };
   const media=parseYoutubeLink(document.getElementById("gdYoutubeLink").value);
