@@ -13,129 +13,90 @@
   // TEST REV23: permanent mobile Developer Showcase indicator ABOVE the card rail.
   // Recalculate when the hidden Developer overlay becomes visible so the bar exists before the first swipe.
   const developerCards = overlay.querySelector('.developer-cards');
-  if (developerCards) {
-    const indicator = document.createElement('div');
-    indicator.className = 'developer-scroll-indicator';
-    indicator.setAttribute('aria-hidden', 'true');
-    const thumb = document.createElement('div');
-    thumb.className = 'developer-scroll-indicator-thumb';
-    indicator.appendChild(thumb);
-    developerCards.insertAdjacentElement('beforebegin', indicator);
 
-    const syncDeveloperScrollIndicator = () => {
-      const viewport = developerCards.clientWidth;
-      const total = developerCards.scrollWidth;
-      const maxScroll = Math.max(0, total - viewport);
-      const track = indicator.clientWidth;
-      const thumbWidth = total > 0 ? Math.max(34, track * Math.min(1, viewport / total)) : track;
-      const maxThumbTravel = Math.max(0, track - thumbWidth);
-      const progress = maxScroll > 0 ? developerCards.scrollLeft / maxScroll : 0;
-      thumb.style.width = `${thumbWidth}px`;
-      thumb.style.transform = `translateX(${maxThumbTravel * progress}px)`;
-      indicator.hidden = total <= viewport + 1;
-    };
+  // REV46 TEST: replace the four legacy hard-coded public cards with the sanitized
+  // database showcase feed. Preserve any TEST-only injected card already in the rail.
+  const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
+    ? window.PUBLIC_DEVELOPER_SHOWCASE.slice()
+    : null;
 
-    developerCards.addEventListener('scroll', syncDeveloperScrollIndicator, { passive: true });
-    window.addEventListener('resize', syncDeveloperScrollIndicator, { passive: true });
-    if (window.ResizeObserver) {
-      new ResizeObserver(syncDeveloperScrollIndicator).observe(developerCards);
+  if (developerCards && showcaseRows) {
+    const testCards = [...developerCards.querySelectorAll('.developer-card')]
+      .filter(card => card.dataset.videoTitle === 'TEST DEVELOPER VIDEO');
+
+    const companyOrder = row => Number.isFinite(Number(row.public_display_order))
+      ? Number(row.public_display_order)
+      : Number.MAX_SAFE_INTEGER;
+
+    showcaseRows.sort((a, b) => {
+      const companyDiff = companyOrder(a) - companyOrder(b);
+      if (companyDiff) return companyDiff;
+      const companyIdDiff = Number(a.company_id) - Number(b.company_id);
+      if (companyIdDiff) return companyIdDiff;
+      const mode = String(a.public_games_sort || 'RECENT').toUpperCase();
+      if (mode === 'ALPHABETICAL') {
+        return String(a.game_name || '').localeCompare(String(b.game_name || ''), undefined, { sensitivity: 'base' });
+      }
+      return Number(b.game_id) - Number(a.game_id);
+    });
+
+    const fragment = document.createDocumentFragment();
+    for (const row of showcaseRows) {
+      const videoId = String(row.video_id || '').trim();
+      const playlistId = String(row.playlist_id || '').trim();
+      if (!videoId && !playlistId) continue;
+
+      const title = String(row.game_name || '').trim();
+      const company = String(row.public_display_name || '').trim();
+      const href = String(row.youtube_url || '').trim()
+        || (playlistId
+          ? `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`
+          : `https://youtu.be/${encodeURIComponent(videoId)}`);
+
+      const card = document.createElement('a');
+      card.className = 'developer-card';
+      card.href = href;
+      if (playlistId) {
+        card.dataset.playlistId = playlistId;
+        card.dataset.playlistTitle = title;
+      } else {
+        card.dataset.videoId = videoId;
+        card.dataset.videoTitle = title;
+      }
+
+      const thumbWrap = document.createElement('div');
+      thumbWrap.className = 'developer-card-thumb';
+      const img = document.createElement('img');
+      if (videoId) img.src = `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`;
+      img.alt = `${title} walkthrough thumbnail`;
+      thumbWrap.appendChild(img);
+
+      const top = document.createElement('div');
+      top.className = 'developer-card-top';
+      const strong = document.createElement('strong');
+      strong.textContent = title;
+      const studio = document.createElement('span');
+      studio.textContent = company;
+      top.append(strong, studio);
+
+      const meta = document.createElement('div');
+      meta.className = 'developer-card-meta';
+      for (const value of [row.gamerscore, row.completion_time, row.quality]) {
+        const span = document.createElement('span');
+        span.textContent = String(value || '');
+        meta.appendChild(span);
+      }
+
+      const link = document.createElement('div');
+      link.className = 'developer-card-link';
+      link.textContent = 'Watch walkthrough →';
+
+      card.append(thumbWrap, top, meta, link);
+      fragment.appendChild(card);
     }
-    requestAnimationFrame(syncDeveloperScrollIndicator);
+
+    developerCards.replaceChildren(...testCards, fragment);
   }
-
-  const TURNSTILE_SITE_KEY = '0x4AAAAAAE3AJPCXDRsIdRB-';
-  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbws5IDNItlGS2LJpUiHkszoAqgkYBgjcxLWe9e083QjusoS2TAPhwvNXDm4scjORjCWrQ/exec';
-  let turnstileToken = '';
-  let turnstileWidgetId = null;
-  let lastFocus = null;
-  let submissionSucceeded = false;
-  let developerMediaSuspended = false;
-
-  const setStatus = (message, type = '') => {
-    if (!status) return;
-    status.textContent = message;
-    status.className = `developer-form-status${type ? ` ${type}` : ''}`;
-  };
-
-  const loadTurnstile = () => new Promise((resolve, reject) => {
-    if (window.turnstile) return resolve();
-    const existing = document.querySelector('script[data-marklynx-turnstile]');
-    if (existing) {
-      existing.addEventListener('load', resolve, { once: true });
-      existing.addEventListener('error', reject, { once: true });
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    script.async = true;
-    script.defer = true;
-    script.dataset.marklynxTurnstile = '1';
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-
-  const renderTurnstile = async () => {
-    if (!turnstileMount || turnstileWidgetId !== null) return;
-    try {
-      await loadTurnstile();
-      turnstileWidgetId = window.turnstile.render(turnstileMount, {
-        sitekey: TURNSTILE_SITE_KEY,
-        theme: 'dark',
-        action: 'developer_contact',
-        callback: token => {
-          turnstileToken = token;
-          setStatus('');
-        },
-        'expired-callback': () => { turnstileToken = ''; },
-        'error-callback': () => {
-          turnstileToken = '';
-          setStatus('Human verification could not load. Please try again.', 'error');
-        }
-      });
-    } catch (error) {
-      console.error('Turnstile failed to load:', error);
-      setStatus('Human verification could not load. Please try again.', 'error');
-    }
-  };
-
-  const resetForNewSubmission = () => {
-    if (!submissionSucceeded || !form) return;
-    form.reset();
-    submissionSucceeded = false;
-    turnstileToken = '';
-    setStatus('');
-    if (formStage) formStage.hidden = false;
-    if (successPanel) successPanel.hidden = true;
-    if (sendBtn) {
-      sendBtn.disabled = false;
-      sendBtn.textContent = 'Send Message';
-    }
-    if (window.turnstile && turnstileWidgetId !== null) {
-      window.turnstile.reset(turnstileWidgetId);
-    }
-  };
-
-  const open = () => {
-    lastFocus = document.activeElement;
-    resetForNewSubmission();
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden', 'false');
-    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
-    document.body.classList.add('developer-modal-open');
-    closeBtn.focus();
-    renderTurnstile();
-  };
-
-  const close = () => {
-    overlay.classList.remove('open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('developer-modal-open');
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
-  };
-
-  openBtn.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
 
   // TEST REV16: iOS uses a smaller/panned visual viewport while the keyboard is open.
   // Keep the already-fixed mobile close button inside that visible viewport when a form field has focus.
