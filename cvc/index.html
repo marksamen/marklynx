@@ -1,0 +1,777 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Allocation Generator</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #4a90e2;
+            --border-color: #dddddd;
+            --row-even: #f8fafc;
+            --row-odd: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #2c3e50;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .input-section {
+            background: #eef2f7;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input, button {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .btn-add {
+            padding: 10px 25px;
+        }
+
+        .bulk-section {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: monospace;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--row-even);
+        }
+
+        tr:nth-child(odd) {
+            background-color: var(--row-odd);
+        }
+
+        .output-cell {
+            font-family: monospace;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .bold-txt {
+            font-weight: bold;
+        }
+
+        .action-btn {
+            background: #e74c3c;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .action-btn:hover {
+            background: #c0392b;
+        }
+
+        .btn-copy-all {
+            background-color: #2ecc71;
+            margin-bottom: 15px;
+        }
+
+        .btn-copy-all:hover {
+            background-color: #27ae60;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sort-info {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 700px) {
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .controls > div {
+                display: flex;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Game Allocation String Generator</h1>
+
+    <div class="input-section">
+
+        <h3>Add Single Entry</h3>
+
+        <div class="input-row">
+
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="e.g., Kilo1984"
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="bonus">Bonus %</label>
+                <input
+                    type="text"
+                    id="bonus"
+                    placeholder="e.g., 361%"
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="games">Games to Play</label>
+                <input
+                    type="number"
+                    id="games"
+                    placeholder="e.g., 13"
+                    min="1"
+                >
+            </div>
+
+            <button class="btn-add" onclick="addPlayer()">
+                Add Player
+            </button>
+
+        </div>
+
+        <div class="bulk-section">
+
+            <label for="bulkInput">
+                <strong>Bulk Import From Spreadsheet:</strong>
+                (Paste columns: Name, Bonus%, Total Games separated by tabs/spaces)
+            </label>
+
+            <textarea
+                id="bulkInput"
+                placeholder="Kilo1984   361%   13&#10;Kellogs    310%   13"
+            ></textarea>
+
+            <button
+                style="background-color: #f39c12;"
+                onclick="processBulk()"
+            >
+                Process Bulk Paste
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <div>
+            <h2>Allocation Sheet Table</h2>
+            <div class="sort-info">
+                Players are automatically sorted by highest Bonus % first.
+            </div>
+        </div>
+
+        <div>
+            <button class="btn-copy-all" onclick="copyColumnD()">
+                Copy Column D For Excel
+            </button>
+
+            <button class="action-btn" onclick="clearAll()">
+                Clear All
+            </button>
+        </div>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Bonus %</th>
+                    <th>Games</th>
+                    <th>Generated Output (Column D)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="playerTableBody">
+                <!-- Rows generate dynamically here -->
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+    let players = [];
+
+    const MAX_GAMES_PER_HASHTAG = 6;
+
+
+    /*
+     * Get the numeric value of a bonus.
+     *
+     * Examples:
+     * "361%" -> 361
+     * "310%" -> 310
+     * "425"  -> 425
+     */
+    function getBonusValue(bonus) {
+        if (!bonus) {
+            return 0;
+        }
+
+        return parseFloat(
+            String(bonus).replace('%', '').trim()
+        ) || 0;
+    }
+
+
+    /*
+     * Render the table.
+     *
+     * Players are sorted from highest bonus to lowest bonus
+     * before their allocations are generated.
+     */
+    function renderTable() {
+
+        const tbody = document.getElementById('playerTableBody');
+
+        tbody.innerHTML = '';
+
+
+        /*
+         * Sort players by Bonus %.
+         *
+         * Higher bonus = earlier in the list.
+         */
+        players.sort((a, b) => {
+
+            const bonusA = getBonusValue(a.bonus);
+            const bonusB = getBonusValue(b.bonus);
+
+            return bonusB - bonusA;
+
+        });
+
+
+        /*
+         * Hashtag allocation starts at #1.
+         *
+         * Each hashtag can contain a maximum of 6 games.
+         */
+        let currentHashtag = 1;
+        let currentHashtagFilled = 0;
+
+
+        players.forEach((player, index) => {
+
+            let remainingGames = parseInt(player.games) || 0;
+
+            let allocationParts = [];
+
+
+            while (
+                remainingGames > 0 &&
+                currentHashtag <= 30
+            ) {
+
+                let spaceLeft =
+                    MAX_GAMES_PER_HASHTAG - currentHashtagFilled;
+
+                let take =
+                    Math.min(
+                        remainingGames,
+                        spaceLeft
+                    );
+
+
+                /*
+                 * If the player gets all 6 available
+                 * games on an empty hashtag, display:
+                 *
+                 * Play all games on #1
+                 */
+                if (
+                    take === MAX_GAMES_PER_HASHTAG &&
+                    currentHashtagFilled === 0
+                ) {
+
+                    allocationParts.push(
+                        `Play <span class="bold-txt">all</span> games on <span class="bold-txt">#${currentHashtag}</span>`
+                    );
+
+                } else {
+
+                    allocationParts.push(
+                        `Play <span class="bold-txt">${take}</span> game${take > 1 ? 's' : ''} on <span class="bold-txt">#${currentHashtag}</span>`
+                    );
+
+                }
+
+
+                remainingGames -= take;
+
+                currentHashtagFilled += take;
+
+
+                /*
+                 * Move to the next hashtag once
+                 * the current one reaches 6 games.
+                 */
+                if (
+                    currentHashtagFilled >=
+                    MAX_GAMES_PER_HASHTAG
+                ) {
+
+                    currentHashtag++;
+
+                    currentHashtagFilled = 0;
+
+                }
+
+            }
+
+
+            const outputHtml =
+                allocationParts.join(' | ');
+
+
+            const tr = document.createElement('tr');
+
+
+            tr.innerHTML = `
+                <td>${escapeHtml(player.username)}</td>
+
+                <td>${escapeHtml(player.bonus)}</td>
+
+                <td>${player.games}</td>
+
+                <td class="output-cell">
+                    ${outputHtml}
+                </td>
+
+                <td>
+                    <button
+                        class="action-btn"
+                        onclick="removePlayer('${player.id}')"
+                    >
+                        Remove
+                    </button>
+                </td>
+            `;
+
+
+            tbody.appendChild(tr);
+
+        });
+
+    }
+
+
+    /*
+     * Escape user-entered text before placing it
+     * into the HTML table.
+     */
+    function escapeHtml(value) {
+
+        const div = document.createElement('div');
+
+        div.textContent = value;
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+     * Add a single player.
+     */
+    function addPlayer() {
+
+        const username =
+            document.getElementById('username').value.trim();
+
+        const bonus =
+            document.getElementById('bonus').value.trim();
+
+        const games =
+            document.getElementById('games').value.trim();
+
+
+        if (!username || !games) {
+
+            alert(
+                'Please fill out Username and Games count.'
+            );
+
+            return;
+
+        }
+
+
+        players.push({
+
+            id: generateId(),
+
+            username: username,
+
+            bonus: bonus,
+
+            games: parseInt(games)
+
+        });
+
+
+        renderTable();
+
+
+        /*
+         * Clear entry inputs.
+         */
+        document.getElementById('username').value = '';
+
+        document.getElementById('bonus').value = '';
+
+        document.getElementById('games').value = '';
+
+    }
+
+
+    /*
+     * Process bulk spreadsheet paste.
+     */
+    function processBulk() {
+
+        const rawText =
+            document.getElementById('bulkInput').value.trim();
+
+
+        if (!rawText) {
+            return;
+        }
+
+
+        const lines =
+            rawText.split(/\r?\n/);
+
+
+        lines.forEach(line => {
+
+            const tokens =
+                line.trim().split(/\s+/);
+
+
+            if (tokens.length >= 2) {
+
+                let username = tokens[0];
+
+                let bonus = "";
+
+                let games = 0;
+
+
+                /*
+                 * Two columns:
+                 * Username + Games
+                 */
+                if (tokens.length === 2) {
+
+                    games =
+                        parseInt(tokens[1]) || 0;
+
+                }
+
+
+                /*
+                 * Three or more columns:
+                 * Username + Bonus + Games
+                 */
+                else {
+
+                    bonus = tokens[1];
+
+                    games =
+                        parseInt(tokens[2]) || 0;
+
+                }
+
+
+                if (
+                    username &&
+                    games > 0
+                ) {
+
+                    players.push({
+
+                        id: generateId(),
+
+                        username: username,
+
+                        bonus: bonus,
+
+                        games: games
+
+                    });
+
+                }
+
+            }
+
+        });
+
+
+        renderTable();
+
+
+        document.getElementById('bulkInput').value = '';
+
+    }
+
+
+    /*
+     * Remove a player using their unique ID.
+     *
+     * This is safer than using the array index because
+     * the table is sorted by bonus.
+     */
+    function removePlayer(id) {
+
+        players =
+            players.filter(
+                player => player.id !== id
+            );
+
+
+        renderTable();
+
+    }
+
+
+    /*
+     * Clear all players.
+     */
+    function clearAll() {
+
+        if (players.length > 0) {
+
+            const confirmed =
+                confirm(
+                    'Are you sure you want to clear all players?'
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+        }
+
+
+        players = [];
+
+        renderTable();
+
+    }
+
+
+    /*
+     * Copy Column D to clipboard.
+     */
+    function copyColumnD() {
+
+        const rows =
+            document.querySelectorAll(
+                '#playerTableBody tr'
+            );
+
+
+        let copyText = "";
+
+
+        rows.forEach(row => {
+
+            const cell =
+                row.querySelector('.output-cell');
+
+
+            if (cell) {
+
+                copyText +=
+                    cell.textContent.trim() + "\n";
+
+            }
+
+        });
+
+
+        if (!copyText) {
+
+            alert(
+                "No data available to copy."
+            );
+
+            return;
+
+        }
+
+
+        navigator.clipboard.writeText(
+            copyText.trim()
+        )
+        .then(() => {
+
+            alert(
+                "Column D text successfully copied to clipboard! Paste directly into Excel."
+            );
+
+        })
+        .catch(err => {
+
+            alert(
+                "Error copying text: " + err
+            );
+
+        });
+
+    }
+
+
+    /*
+     * Generate a unique ID for each player.
+     */
+    function generateId() {
+
+        return (
+            Date.now().toString(36) +
+            Math.random().toString(36).substring(2)
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
+```
+
+This version also fixes a subtle issue with the **Remove** button: because players are sorted automatically, using the row number as the removal index could remove the wrong player. Each player now gets a unique ID, so removal remains reliable after sorting.
+
+If you paste this over your existing `.html` file, it should work as-is.
