@@ -17,6 +17,7 @@
 #devPubSearchHeader h2{margin:0;white-space:nowrap;flex:0 0 auto;align-self:flex-end;transform:translateY(-2px)}
 #devPubSearchActions{display:flex;flex-direction:column;align-items:stretch;gap:10px;flex:0 0 auto}
 #devPubAddCompany,#devPubManageCompanies{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
+#devPubPublicProfiles{width:auto;display:inline-block;flex:0 0 auto;background:#5b347e;border-color:#7a4ca3;color:#fff;cursor:pointer}
 @media(max-width:600px){#devPubSearchHeader{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -122,6 +123,7 @@
 <div id="devPubSearchHeader">
 <h2>Developer / Publisher Search</h2>
 <div id="devPubSearchActions">
+<button id="devPubPublicProfiles" class="admin-link" type="button" data-admin-modal-url="developer-publishers/public-profiles_.html" data-admin-modal-title="Public Developer Profiles">Public Developer Profiles</button>
 <button id="devPubManageCompanies" class="admin-link" type="button" data-admin-modal-url="developer-publishers/manage_.html" data-admin-modal-title="Manage Developer / Publisher">Manage Developer / Publisher</button>
 <button id="devPubAddCompany" class="admin-link" type="button" data-admin-modal-url="developer-publishers/index_.html" data-admin-modal-title="Add New Developer / Publisher">Add New Developer / Publisher</button>
 </div>
@@ -190,6 +192,6 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=20260926-test-content-control-REV27"></script>
+<script type="module" src="js/admin-core_.js?v=recent-refresh-rev01"></script>
 </body>
 </html>
