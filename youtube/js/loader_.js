@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=20260926-developer-provided-REV49', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=20260926-developer-provided-REV50', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -80,17 +80,14 @@
         return value ?? null;
       };
 
-      const normalizeGame = game => ({
-        id: game.id ?? null,
-        ...Object.fromEntries(
-          gameFields.map(field => [
-            field,
-            ['kinect','adult','testContent'].includes(field)
-              ? normalizeBooleanField(game[field])
-              : (game[field] ?? null)
-          ])
-        )
-      });
+      const normalizeGame = game => Object.fromEntries(
+        gameFields.map(field => [
+          field,
+          ['kinect','adult','testContent'].includes(field)
+            ? normalizeBooleanField(game[field])
+            : (game[field] ?? null)
+        ])
+      );
 
       const loadGamesFromJson = async () => {
         const response = await fetch('data/games_.json', { cache: 'no-store' });
@@ -232,21 +229,18 @@
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
 
         // Public game-list recognition for titles supplied directly by developers.
-        // Match by authoritative game ID when Supabase is active; media IDs keep
-        // the badge/filter working during JSON fallback without exposing private data.
-        const providedByGameId = new Map();
+        // Preserve the established RAW game shape exactly; match through the existing
+        // public YouTube video/playlist identifiers already present in both data paths.
         const providedByVideoId = new Map();
         const providedByPlaylistId = new Map();
         showcaseRows.forEach(row => {
           const name = String(row.public_display_name || '').trim();
           if (!name) return;
-          if (row.game_id != null) providedByGameId.set(String(row.game_id), name);
           if (row.video_id) providedByVideoId.set(String(row.video_id), name);
           if (row.playlist_id) providedByPlaylistId.set(String(row.playlist_id), name);
         });
         window.RAW.forEach(game => {
           const provider =
-            (game.id != null ? providedByGameId.get(String(game.id)) : null) ||
             (game.v ? providedByVideoId.get(String(game.v)) : null) ||
             (game.pl ? providedByPlaylistId.get(String(game.pl)) : null) ||
             '';
@@ -267,7 +261,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site_.js?v=20260926-developer-provided-REV49');
+      await loadScript('js/site_.js?v=20260926-developer-provided-REV50');
       await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
