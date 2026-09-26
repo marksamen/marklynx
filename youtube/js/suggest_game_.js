@@ -97,6 +97,16 @@
   // TEST REV18: Keep Suggest X inside the panel corner while following the visible viewport.
   const syncCloseToVisualViewport = () => {
     if (!panel) return;
+
+    // REV31 TEST: Desktop uses the panel's native top-right close position.
+    // Preserve the existing visualViewport tracking unchanged on mobile.
+    if (window.matchMedia('(min-width: 701px)').matches) {
+      closeBtn.style.left = '';
+      closeBtn.style.right = '';
+      closeBtn.style.top = '';
+      return;
+    }
+
     const rect = panel.getBoundingClientRect();
     const vv = window.visualViewport;
     const viewportTop = vv ? vv.offsetTop : 0;
