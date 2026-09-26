@@ -72,7 +72,7 @@
     }
 
 
-    if (isPath(url, 'sections/developer.html')) {
+    if (isPath(url, 'sections/developer_.html')) {
       let html = await response.clone().text();
       const marker = '<div class="developer-cards">';
       if (html.includes(marker) && !html.includes('data-video-title="TEST DEVELOPER VIDEO"')) {
