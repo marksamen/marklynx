@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebas
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
-import { initTestContentControl, loadTestContentStatus } from "./admin-test-content_.js";
+import { initTestContentControl } from "./admin-test-content_.js";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest } from "./admin-game-management_.js?v=devpub-collapse-reset-rev01";
@@ -27,7 +27,7 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();loadTestContentStatus();}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
 
 // Supabase TEST recovery export — public SELECT only. No database writes.
@@ -54,7 +54,7 @@ form.addEventListener("submit",async e=>{
 
 document.getElementById("logout").addEventListener("click",()=>signOut(auth));
 
-initTestContentControl({auth,SUPABASE_TEST_URL});
+initTestContentControl();
 
 
 initAdminPageModal();
