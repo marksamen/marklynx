@@ -95,7 +95,7 @@
 <label>Completion Time<div class="inline-pair"><input id="gdTime" inputmode="text" placeholder="Example: 3 or 6-7"><select id="gdTimeUnit" aria-label="Completion time unit"><option value="Minutes">Minutes</option><option value="Hours">Hours</option></select></div><span class="field-help">Enter one amount or a range (example: 6-7), then choose Minutes or Hours.</span><span id="gdTimeError" class="field-error"></span></label>
 <label>Gamerscore<input id="gdGamerscore" inputmode="numeric" placeholder="Example: 2000 → 2,000G"><span class="field-help">Optional. Enter numbers only; Admin formats the value automatically. Leave blank for games/platforms without Gamerscore.</span><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="gdGamerscoreUpdate" type="checkbox" style="width:auto"> Update video</label><span class="field-help">Checked = stores the Gamerscore as, for example, 2,000G Update.</span><span id="gdGamerscoreError" class="field-error"></span></label>
 <div><strong>Platform</strong><details class="multi-select"><summary id="gdPlatformSummary">Select platforms…</summary><div id="gdPlatformChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every platform that applies. Multiple selections are supported.</span></div>
-<label>Quality<select id="gdQuality"><option value="">Select quality…</option><option value="4K">4K</option><option value="1080p">1080p</option><option value="__other__">Other / Add New…</option></select><input id="gdQualityOther" placeholder="Example: 8K"><span class="field-help">Choose an existing quality or Add New for a future/custom value.</span></label>
+<label>Quality<select id="gdQuality"><option value="">Select quality…</option></select><span class="field-help">Quality options are managed in Quality Badge Management.</span></label>
 <label>Text Guide<select id="gdTextGuide"><option value="No">No</option><option value="Yes">Yes</option></select><span class="field-help">Strict Yes or No for new games.</span></label>
 <div class="wide"><label>YouTube Link<input id="gdYoutubeLink" placeholder="Paste a YouTube video or playlist link"><span class="field-help">Paste the normal YouTube link. Admin detects Video vs Playlist and extracts the correct ID automatically.</span><span id="gdYoutubeLinkError" class="field-error"></span></label></div>
 <label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
@@ -200,7 +200,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=REV08-quality-badges-backdrop"></script>
+<script type="module" src="js/admin-core_.js?v=REV09-quality-dropdown"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
