@@ -10,21 +10,11 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST UI — REV01</div></div>
+  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV02</div></div>
   <section class="panel">
     <h2>Current Quality Badges</h2>
-    <div class="badge-list">
-      <article class="badge-row">
-        <div class="preview"><img src="../../youtube/quality-4k-60fps_.png" alt="4K badge preview"></div>
-        <div><div class="name">4K</div><div class="meta">Usage count: pending database wiring</div></div>
-        <div class="actions"><button class="replace" type="button" disabled>Replace Image</button><button type="button" disabled>Rename</button><button class="danger" type="button" disabled>Delete</button></div>
-      </article>
-      <article class="badge-row">
-        <div class="preview"><img src="../../youtube/quality-1080p_.png" alt="1080p badge preview"></div>
-        <div><div class="name">1080p</div><div class="meta">Usage count: pending database wiring</div></div>
-        <div class="actions"><button class="replace" type="button" disabled>Replace Image</button><button type="button" disabled>Rename</button><button class="danger" type="button" disabled>Delete</button></div>
-      </article>
-    </div>
+    <div id="badgeStatus" class="meta">Loading quality badges from Supabase TEST…</div>
+    <div id="badgeList" class="badge-list"></div>
   </section>
   <section class="panel">
     <h2>Add Quality Badge</h2>
@@ -34,7 +24,66 @@
       <div class="wide"><button class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV01 is visual only.</strong> No database writes, game records, quality values, public badge rendering, or existing images are changed by this screen.</p></section>
+  <section class="panel"><p class="notice"><strong>REV02 is read-only.</strong> Badge definitions are loaded from Supabase TEST. No database writes, game records, quality values, public badge rendering, or existing images are changed by this screen.</p></section>
 </div>
+<script>
+const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
+const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
+
+function localBadgeImage(assetKey){
+  const safe=String(assetKey||"").replace(/[^A-Za-z0-9_-]/g,"");
+  return `../../youtube/${safe}_.png`;
+}
+
+function renderBadge(row){
+  const article=document.createElement("article");
+  article.className="badge-row";
+
+  const preview=document.createElement("div");
+  preview.className="preview";
+  const img=document.createElement("img");
+  img.src=localBadgeImage(row.asset_key);
+  img.alt=`${row.display_name} badge preview`;
+  preview.appendChild(img);
+
+  const details=document.createElement("div");
+  const name=document.createElement("div");
+  name.className="name";
+  name.textContent=row.display_name;
+  const meta=document.createElement("div");
+  meta.className="meta";
+  meta.textContent=`Code: ${row.code} · Usage count: pending game wiring`;
+  details.append(name,meta);
+
+  const actions=document.createElement("div");
+  actions.className="actions";
+  actions.innerHTML='<button class="replace" type="button" disabled>Replace Image</button><button type="button" disabled>Rename</button><button class="danger" type="button" disabled>Delete</button>';
+
+  article.append(preview,details,actions);
+  return article;
+}
+
+async function loadQualityBadges(){
+  const status=document.getElementById("badgeStatus");
+  const list=document.getElementById("badgeList");
+  try{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,sort_order&order=sort_order.asc`,{
+      headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},
+      cache:"no-store"
+    });
+    if(!response.ok)throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
+    const rows=await response.json();
+    if(!Array.isArray(rows))throw new Error("Supabase TEST returned an invalid quality badge payload.");
+    list.replaceChildren(...rows.map(renderBadge));
+    status.textContent=`Loaded ${rows.length} quality badge${rows.length===1?"":"s"} from Supabase TEST.`;
+  }catch(error){
+    list.replaceChildren();
+    status.textContent=`FAILED — could not read quality badges from Supabase TEST. ${error?.message||error}`;
+    console.error("Quality Badge Management Supabase TEST read failed:",error);
+  }
+}
+
+loadQualityBadges();
+</script>
 </body>
 </html>
