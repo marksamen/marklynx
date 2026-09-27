@@ -337,6 +337,18 @@ function getDeveloperPublisherFields(){
   for(let i=1;i<=3;i++) fields[`publisher_${i}`]=document.getElementById(`gdPublisher${i}`).value.trim()||null;
   return fields;
 }
+function validateProvidedDeveloperRelationship(){
+  const companyId=providedDeveloperCompanyId();
+  if(!companyId) return {ok:true};
+  const company=providedDeveloperCompanies.find(item=>Number(item.id)===companyId);
+  const name=String(company?.official_name||"").trim();
+  if(!name) return {ok:false,message:"The selected Provided by Developer company could not be resolved."};
+  if(roleAlreadyContains("gdDeveloper",name) || roleAlreadyContains("gdPublisher",name)) return {ok:true};
+  return {
+    ok:false,
+    message:`${name} is selected as Provided by Developer and must also remain assigned as a Developer or Publisher for this game.`
+  };
+}
 function friendlyDeveloperPublisherError(error){
   const message=error?.message||String(error);
   const prefix="Unknown developer/publisher:";
@@ -491,6 +503,8 @@ async function createGameDev(){
   if((window.GAMEDEV_RAW||[]).some(g=>g.id===id)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${id} already exists.`;return;}
   if((window.GAMEDEV_RAW||[]).some(g=>Number(g.order)===order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — order ${order} already exists.`;return;}
   if(!validateGamerscore(true)||!validateCompletionTime(true)||!validateYoutubeLink(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — fix the highlighted field(s).";updateCreateButtonState();return;}
+  const providedRelationshipValidation=validateProvidedDeveloperRelationship();
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;return;}
   const record={
     order, n:name,
     p:getChoices("gdPlatformChoices"),
@@ -624,6 +638,8 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   const g=selectedGame(); if(!g)return;
   const writeStatus=document.getElementById("gameDevWriteStatus");
   if(!validateGamerscore(true)||!validateCompletionTime(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE BLOCKED — fix the highlighted field(s).";return;}
+  const providedRelationshipValidation=validateProvidedDeveloperRelationship();
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;return;}
   const patch={
     id:Number(g.id),
     n:document.getElementById("gdName").value.trim(),
