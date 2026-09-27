@@ -174,20 +174,7 @@
       // TEST CONTENT OFF must hide the underlying TEST media, not only the row
       // carrying testContent=true. This prevents a non-TEST duplicate record from
       // exposing the same TEST YouTube video/playlist while TEST content is hidden.
-      let testContentHidden = true;
-      try {
-        const testContentControlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/test_content_control?id=eq.test_content&select=value';
-        const testContentApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
-        const testContentResponse = await fetch(testContentControlUrl, { headers: { apikey: testContentApiKey }, cache: 'no-store' });
-        if (!testContentResponse.ok) throw new Error(`Supabase TEST CONTENT control: HTTP ${testContentResponse.status}`);
-        const testContentRows = await testContentResponse.json();
-        const testContentValue = String(testContentRows?.[0]?.value || '').toLowerCase();
-        if (testContentValue !== 'on' && testContentValue !== 'off') throw new Error(`Supabase TEST CONTENT control: invalid value ${testContentValue || '(blank)'}`);
-        testContentHidden = testContentValue !== 'on';
-        console.info(`[TEST] TEST CONTENT: ${testContentHidden ? 'OFF' : 'ON'}`);
-      } catch (testContentError) {
-        console.warn('[TEST] TEST CONTENT control unavailable; defaulting OFF:', testContentError);
-      }
+      const testContentHidden = (localStorage.getItem('marklynxTestContent_TEST') || 'Y').toUpperCase() === 'Y';
       if (testContentHidden) {
         const testVideoIds = new Set(
           window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
