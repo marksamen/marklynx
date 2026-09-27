@@ -3,7 +3,7 @@ let verifyProdDatabaseIdentity = null;
 
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-const GAME_EXPORT_FIELDS=["n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent"];
 
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
@@ -734,7 +734,7 @@ async function fetchPublicDeveloperRecoveryData(){
   const showcaseSelect="company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
   const [showcaseResponse,providedResponse]=await Promise.all([
     fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_showcase?select=${showcaseSelect}`,{headers,cache:"no-store"}),
-    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_games?select=game_id&order=game_id.asc`,{headers,cache:"no-store"})
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`,{headers,cache:"no-store"})
   ]);
   if(!showcaseResponse.ok)throw new Error(`Public Developer Showcase read failed (${showcaseResponse.status}).`);
   if(!providedResponse.ok)throw new Error(`Developer Provided read failed (${providedResponse.status}).`);
@@ -743,7 +743,10 @@ async function fetchPublicDeveloperRecoveryData(){
   if(!Array.isArray(showcase)||!Array.isArray(providedRows))throw new Error("Public developer recovery data returned an invalid response.");
   return {
     showcase,
-    providedGameIds:providedRows.map(row=>Number(row.game_id)).filter(Number.isInteger)
+    providedGameIds:providedRows.map(row=>Number(row.game_id)).filter(Number.isInteger),
+    providedGames:providedRows
+      .map(row=>({game_id:Number(row.game_id),provided_by:String(row.provided_by||"").trim()}))
+      .filter(row=>Number.isInteger(row.game_id)&&row.provided_by)
   };
 }
 
@@ -775,7 +778,7 @@ async function downloadRecoveryJson(){
     downloadJsonFile("games.json",cleanGames);
     downloadJsonFile("public-developer-data.json",publicDeveloperData);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json (${cleanGames.length} games) + public-developer-data.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGameIds.length} provided games).`;
+    writeStatus.textContent=`GENERATED — games.json (${cleanGames.length} games) + public-developer-data.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGames.length} provided games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — recovery files were not generated.";
