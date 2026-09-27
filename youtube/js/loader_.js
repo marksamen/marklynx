@@ -197,6 +197,9 @@
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
       window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
       try {
+        if (dataSourceConfig.testForceSupabaseFailure === true) {
+          throw new Error('Public developer Supabase failure forced by TEST config');
+        }
         const publicDeveloperBaseUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1';
         const publicDeveloperApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
