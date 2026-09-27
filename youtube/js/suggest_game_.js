@@ -169,5 +169,13 @@
     formStage.hidden = true;
     successPanel.hidden = false;
     sendBtn.textContent = '✓ Submitted';
+
+    // REV66 TEST: phone landscape only — the form is tall enough that submission
+    // normally occurs with this panel scrolled near the bottom. Once the short
+    // success state replaces the form, return this panel to its visible top so
+    // the existing close X remains immediately accessible.
+    if (panel && window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
+      panel.scrollTop = 0;
+    }
   });
 })();
