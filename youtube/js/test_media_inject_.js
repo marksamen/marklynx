@@ -1,15 +1,25 @@
 /* REV44 — TEST SITE ONLY
    Permanent test media uses the same games/recent data paths as normal content.
-   /test/ controls visibility via localStorage.
-   TEST CONTENT = Y means HIDDEN. N means VISIBLE. Default is Y. */
+   TEST Supabase site_control controls visibility.
+   test_content = off means HIDDEN. on means VISIBLE. Default on control failure is HIDDEN. */
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'marklynxTestContent_TEST';
-  const testContentIsHidden = () => (localStorage.getItem(STORAGE_KEY) || 'Y').toUpperCase() === 'Y';
-
-  // Hidden means do not alter the normal site at all.
-  if (testContentIsHidden()) return;
+  const TEST_CONTENT_CONTROL_URL = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.test_content&select=value';
+  const TEST_CONTENT_API_KEY = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
+  const testContentVisible = (async () => {
+    try {
+      const response = await fetch(TEST_CONTENT_CONTROL_URL, { headers: { apikey: TEST_CONTENT_API_KEY }, cache: 'no-store' });
+      if (!response.ok) throw new Error(`Supabase TEST CONTENT control: HTTP ${response.status}`);
+      const rows = await response.json();
+      const value = String(rows?.[0]?.value || '').toLowerCase();
+      if (value !== 'on' && value !== 'off') throw new Error(`Invalid TEST CONTENT value ${value || '(blank)'}`);
+      return value === 'on';
+    } catch (error) {
+      console.warn('[TEST] TEST media injection control unavailable; defaulting OFF:', error);
+      return false;
+    }
+  })();
 
   const TEST_GAMES = [
     {
@@ -51,6 +61,9 @@
     const url = requestUrl(input);
     const response = await nativeFetch(input, init);
     if (!response.ok) return response;
+
+    const controlledTestResource = isPath(url, 'data/games.json') || isPath(url, 'data/recent.json') || isPath(url, 'sections/developer_.html');
+    if (controlledTestResource && !(await testContentVisible)) return response;
 
     if (isPath(url, 'data/games.json')) {
       const data = await response.clone().json();
