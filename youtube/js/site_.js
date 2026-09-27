@@ -5,12 +5,17 @@ function hasTextGuide(tx){
   return !!tx && tx.trim() !== '' && tx.trim().toLowerCase() !== 'no' && tx.trim() !== '-' && !tx.trim().toLowerCase().startsWith('no (');
 }
 
-const developerProvidedGameIds = new Set(
-  (window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS || []).map(Number).filter(Number.isInteger)
+const developerProvidedByGame = new Map(
+  (window.PUBLIC_DEVELOPER_PROVIDED_GAMES || [])
+    .map(row => [Number(row?.game_id), String(row?.provided_by || '').trim()])
+    .filter(([id,name]) => Number.isInteger(id) && name)
 );
-function isDeveloperProvided(r){
+function developerProvidedName(r){
   const id = Number(r?.id);
-  return Number.isInteger(id) && developerProvidedGameIds.has(id);
+  return Number.isInteger(id) ? (developerProvidedByGame.get(id) || '') : '';
+}
+function isDeveloperProvided(r){
+  return !!developerProvidedName(r);
 }
 
 const DIFF_COLORS = {
@@ -146,8 +151,10 @@ function textGuideBadge(r){
 }
 
 function developerProvidedBadge(r){
-  if(!isDeveloperProvided(r)) return '';
-  return `<span class="developer-provided-badge" title="This game was provided directly by a developer or publisher"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13M3 12h18M7.5 8C5 8 5 4 7.5 4c2 0 4.5 4 4.5 4s2.5-4 4.5-4C19 4 19 8 16.5 8"></path></svg>Developer Provided</span>`;
+  const companyName=developerProvidedName(r);
+  if(!companyName) return '';
+  const safeName=escapeHtml(companyName);
+  return `<span class="developer-provided-badge" title="Provided by ${safeName}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13M3 12h18M7.5 8C5 8 5 4 7.5 4c2 0 4.5 4 4.5 4s2.5-4 4.5-4C19 4 19 8 16.5 8"></path></svg>Provided by ${safeName}</span>`;
 }
 
 function playlistPill(r){

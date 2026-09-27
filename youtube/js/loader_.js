@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=provided-developer-REV01', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=provided-developer-REV02', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -105,7 +105,7 @@
 
         for (let offset = 0; ; offset += pageSize) {
           const params = new URLSearchParams({
-            select: `id,${gameFields.join(',')}`,
+            select: gameFields.join(','),
             order: 'id.asc',
             limit: String(pageSize),
             offset: String(offset)
@@ -196,6 +196,7 @@
       // static recovery file for a Supabase outage. Private Admin data is never exposed.
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
       window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
+      window.PUBLIC_DEVELOPER_PROVIDED_GAMES = [];
       try {
         if (dataSourceConfig.testForceSupabaseFailure === true) {
           throw new Error('Public developer Supabase failure forced by TEST config');
@@ -206,7 +207,7 @@
         const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
         const [showcaseResponse, providedResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
@@ -214,7 +215,10 @@
         const providedRows = await providedResponse.json();
         if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = providedRows.map(row => Number(row.game_id)).filter(Number.isInteger);
+        window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
+          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
+          .filter(row => Number.isInteger(row.game_id) && row.provided_by);
+        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
         console.info(`[TEST] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
       } catch (publicDeveloperError) {
         console.warn('[TEST] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
@@ -222,11 +226,14 @@
           const recoveryResponse = await fetch('data/public-developer-data_.json', { cache: 'no-store' });
           if (!recoveryResponse.ok) throw new Error(`public-developer-data_.json: HTTP ${recoveryResponse.status}`);
           const recoveryData = await recoveryResponse.json();
-          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGameIds)) {
+          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGames)) {
             throw new Error('public-developer-data_.json: invalid recovery data');
           }
           window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
-          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = recoveryData.providedGameIds.map(Number).filter(Number.isInteger);
+          window.PUBLIC_DEVELOPER_PROVIDED_GAMES = recoveryData.providedGames
+            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim() }))
+            .filter(row => Number.isInteger(row.game_id) && row.provided_by);
+          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
           console.info(`[TEST] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
         } catch (recoveryError) {
           console.warn('[TEST] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
@@ -242,7 +249,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site_.js?v=provided-developer-REV01');
+      await loadScript('js/site_.js?v=provided-developer-REV02');
       await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV66-mobile-landscape-suggest-success-scroll');
