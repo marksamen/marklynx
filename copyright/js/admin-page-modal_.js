@@ -15,11 +15,15 @@ export function initAdminPageModal(){
     adminPageModalClose.focus();
   }
   function closeAdminPageModal(){
+    const closingAdminModalUrl=activeAdminModalUrl;
     adminPageModal.classList.remove("open");
     adminPageModal.setAttribute("aria-hidden","true");
     document.body.classList.remove("admin-modal-open");
     adminPageModalFrame.src="about:blank";
     activeAdminModalUrl="";
+    if(closingAdminModalUrl.startsWith("quality-badges/")){
+      window.dispatchEvent(new CustomEvent("quality-badges-modal-closed"));
+    }
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);

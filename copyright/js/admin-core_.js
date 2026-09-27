@@ -3,9 +3,9 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
-import { initAdminPageModal } from "./admin-page-modal_.js?v=quality-badges-backdrop-rev08";
+import { initAdminPageModal } from "./admin-page-modal_.js?v=quality-badges-close-refresh-rev13";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=quality-dropdown-refresh-REV12";
+import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=quality-dropdown-refresh-REV13";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
 
@@ -43,6 +43,10 @@ window.addEventListener("message",event=>{
   if(event.origin!==window.location.origin) return;
   if(event.data?.type!=="quality-badges-updated") return;
   loadQualityBadges().catch(error=>console.error("Quality badge refresh failed:",error));
+});
+
+window.addEventListener("quality-badges-modal-closed",()=>{
+  loadQualityBadges().catch(error=>console.error("Quality badge close refresh failed:",error));
 });
 
 
