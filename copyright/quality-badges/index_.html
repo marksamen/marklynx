@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>(TEST) Quality Badge Management</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(980px,100%);margin:0 auto}.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:18px}.head h1{margin:0;font-size:1.6rem}.head p{margin:6px 0 0;color:#aaa}.test{font-size:.76rem;font-weight:800;letter-spacing:.08em;color:#ffca28}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin-bottom:18px}.panel h2{margin:0 0 14px;font-size:1.05rem}.badge-list{display:grid;gap:12px}.badge-row{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;padding:14px;background:#141416;border:1px solid #303034;border-radius:10px}.preview{height:62px;display:flex;align-items:center;justify-content:center;background:#0c0c0d;border:1px solid #29292d;border-radius:8px;padding:8px}.preview img{max-width:100%;max-height:46px;object-fit:contain}.name{font-weight:800;font-size:1.05rem}.meta{margin-top:5px;color:#aaa;font-size:.86rem}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}button,input{font:inherit;border-radius:8px}button{border:1px solid #4a4a4f;background:#252529;color:#fff;padding:9px 12px;font-weight:700}button[disabled]{opacity:.45;cursor:not-allowed}.replace{background:#173a63;border-color:#285784}.danger{background:#3b1717;border-color:#713030}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form label{display:grid;gap:6px;text-align:left;font-weight:700}.form input{width:100%;padding:11px 12px;border:1px solid #4a4a4f;background:#111113;color:#fff}.form input[type="file"],.form input[type="file"]::file-selector-button,.form input[type="file"]::-webkit-file-upload-button{cursor:pointer!important}.wide{grid-column:1/-1}.help{font-size:.78rem;color:#999;font-weight:400}.add{width:auto;padding:11px 14px;background:#198754;border-color:#2a9d66;cursor:pointer}.add[disabled]{cursor:not-allowed}.notice{margin:0;color:#bbb;line-height:1.5}.notice strong{color:#fff}.result-modal{position:fixed;inset:0;z-index:1001;display:none;background:rgba(0,0,0,.72)}.result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px}.result-card{width:min(92vw,520px);padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65)}.result-card.error{border-top-color:#b64040}.result-card h2{margin:0 0 12px}.result-card p{margin:0;color:#d7d7d7;line-height:1.5}.result-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}.result-actions button{min-height:42px;cursor:pointer}@media(max-width:680px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}.badge-row{grid-template-columns:1fr}.preview{justify-content:flex-start}.actions{justify-content:flex-start}.form{grid-template-columns:1fr}.wide{grid-column:auto}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(980px,100%);margin:0 auto}.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:18px}.head h1{margin:0;font-size:1.6rem}.head p{margin:6px 0 0;color:#aaa}.test{font-size:.76rem;font-weight:800;letter-spacing:.08em;color:#ffca28}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin-bottom:18px}.panel h2{margin:0 0 14px;font-size:1.05rem}.badge-list{display:grid;gap:12px}.badge-row{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;padding:14px;background:#141416;border:1px solid #303034;border-radius:10px}.preview{height:62px;display:flex;align-items:center;justify-content:center;background:#0c0c0d;border:1px solid #29292d;border-radius:8px;padding:8px}.preview img{max-width:100%;max-height:46px;object-fit:contain}.name{font-weight:800;font-size:1.05rem}.meta{margin-top:5px;color:#aaa;font-size:.86rem}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}button,input{font:inherit;border-radius:8px}button{border:1px solid #4a4a4f;background:#252529;color:#fff;padding:9px 12px;font-weight:700}button:not([disabled]){cursor:pointer}button[disabled]{opacity:.45;cursor:not-allowed}.replace{background:#173a63;border-color:#285784}.danger{background:#3b1717;border-color:#713030}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form label{display:grid;gap:6px;text-align:left;font-weight:700}.form input{width:100%;padding:11px 12px;border:1px solid #4a4a4f;background:#111113;color:#fff}.form input[type="file"],.form input[type="file"]::file-selector-button,.form input[type="file"]::-webkit-file-upload-button{cursor:pointer!important}.wide{grid-column:1/-1}.help{font-size:.78rem;color:#999;font-weight:400}.add{width:auto;padding:11px 14px;background:#198754;border-color:#2a9d66;cursor:pointer}.add[disabled]{cursor:not-allowed}.notice{margin:0;color:#bbb;line-height:1.5}.notice strong{color:#fff}.result-modal{position:fixed;inset:0;z-index:1001;display:none;background:rgba(0,0,0,.72)}.result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px}.result-card{width:min(92vw,520px);padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65)}.result-card.error{border-top-color:#b64040}.result-card h2{margin:0 0 12px}.result-card p{margin:0;color:#d7d7d7;line-height:1.5}.result-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}.result-actions button{min-height:42px;cursor:pointer}@media(max-width:680px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}.badge-row{grid-template-columns:1fr}.preview{justify-content:flex-start}.actions{justify-content:flex-start}.form{grid-template-columns:1fr}.wide{grid-column:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV15</div></div>
+  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV17</div></div>
   <section class="panel">
     <h2>Current Quality Badges</h2>
     <div id="badgeStatus" class="meta">Loading quality badges from Supabase TEST…</div>
@@ -26,7 +26,7 @@
       <div class="wide"><button id="addQualityBadge" class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV11 adjusts image-shape validation only.</strong> Existing approved badges are 993 × 649 and 1006 × 641. New PNGs may use an aspect ratio from 1.45:1 through 1.65:1, protecting card alignment without requiring an exact match. Add/write behavior is otherwise unchanged.</p></section>
+  <section class="panel"><p class="notice"><strong>REV17 adds live usage counts and protected deletion.</strong> Badges assigned to one or more games cannot be deleted. Unused badges may be deleted only after an Admin confirmation.</p></section>
 </div>
 <div id="resultModal" class="result-modal" aria-hidden="true"><div id="resultCard" class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle"><h2 id="resultTitle">Quality Badge</h2><p id="resultMessage"></p><div class="result-actions"><button id="resultOk" type="button">OK</button></div></div></div>
 <script type="module">
@@ -41,7 +41,7 @@ function storageBadgeImage(storagePath){
   return `${SUPABASE_TEST_URL}/storage/v1/object/public/quality-badges/${safe}`;
 }
 
-function renderBadge(row){
+function renderBadge(row,usageCount){
   const article=document.createElement("article");
   article.className="badge-row";
 
@@ -58,36 +58,47 @@ function renderBadge(row){
   name.textContent=row.display_name;
   const meta=document.createElement("div");
   meta.className="meta";
-  meta.textContent=`Code: ${row.code} · Usage count: pending game wiring`;
+  meta.textContent=`Code: ${row.code} · Usage count: ${usageCount}`;
   details.append(name,meta);
 
   const actions=document.createElement("div");
   actions.className="actions";
-  actions.innerHTML='<button class="replace" type="button" disabled>Replace Image</button><button type="button" disabled>Rename</button><button class="danger" type="button" disabled>Delete</button>';
+  const replace=document.createElement("button"); replace.className="replace"; replace.type="button"; replace.disabled=true; replace.textContent="Replace Image";
+  const rename=document.createElement("button"); rename.type="button"; rename.disabled=true; rename.textContent="Rename";
+  const del=document.createElement("button"); del.className="danger"; del.type="button"; del.textContent="Delete";
+  del.disabled=!currentUser || usageCount>0;
+  del.title=usageCount>0?`Cannot delete: used by ${usageCount} game${usageCount===1?"":"s"}.`:(!currentUser?"Admin authentication required.":"Delete this unused quality badge.");
+  del.addEventListener("click",()=>requestDeleteBadge(row,usageCount));
+  actions.append(replace,rename,del);
 
   article.append(preview,details,actions);
   return article;
 }
 
+let loadedBadgeRows=[];
+let loadedUsageCounts=new Map();
 async function loadQualityBadges(){
   const status=document.getElementById("badgeStatus");
   const list=document.getElementById("badgeList");
   try{
-    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,storage_path,sort_order&order=sort_order.asc`,{
-      headers:{
-        apikey:SUPABASE_TEST_PUBLISHABLE_KEY,
-        Authorization:`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`
-      },
-      cache:"no-store"
-    });
-    if(!response.ok)throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
-    const rows=await response.json();
-    if(!Array.isArray(rows))throw new Error("Supabase TEST returned an invalid quality badge payload.");
-    list.replaceChildren(...rows.map(renderBadge));
-    status.textContent=`Loaded ${rows.length} quality badge${rows.length===1?"":"s"} from Supabase TEST.`;
+    const [badgeResponse,gamesResponse]=await Promise.all([
+      fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,storage_path,sort_order&order=sort_order.asc`,{headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY,Authorization:`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`},cache:"no-store"}),
+      fetch(`${SUPABASE_TEST_URL}/rest/v1/games?select=q`,{headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY,Authorization:`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`},cache:"no-store"})
+    ]);
+    if(!badgeResponse.ok)throw new Error(`Quality badges returned HTTP ${badgeResponse.status}.`);
+    if(!gamesResponse.ok)throw new Error(`Games usage read returned HTTP ${gamesResponse.status}.`);
+    const rows=await badgeResponse.json();
+    const games=await gamesResponse.json();
+    if(!Array.isArray(rows)||!Array.isArray(games))throw new Error("Supabase TEST returned an invalid badge or game payload.");
+    const usage=new Map();
+    for(const game of games){const code=String(game?.q||"").trim();if(code)usage.set(code,(usage.get(code)||0)+1);}
+    loadedBadgeRows=rows;
+    loadedUsageCounts=usage;
+    list.replaceChildren(...rows.map(row=>renderBadge(row,usage.get(String(row.code).trim())||0)));
+    status.textContent=`Loaded ${rows.length} quality badge${rows.length===1?"":"s"} with live game usage from Supabase TEST.`;
   }catch(error){
-    list.replaceChildren();
-    status.textContent=`FAILED — could not read quality badges from Supabase TEST. ${error?.message||error}`;
+    loadedBadgeRows=[]; loadedUsageCounts=new Map(); list.replaceChildren();
+    status.textContent=`FAILED — could not read quality badges/usage from Supabase TEST. ${error?.message||error}`;
     console.error("Quality Badge Management Supabase TEST read failed:",error);
   }
 }
@@ -109,7 +120,33 @@ const resultMessage=document.getElementById("resultMessage");
 const resultOk=document.getElementById("resultOk");
 let previewUrl="";
 function showResult(title,message,isError=false){resultTitle.textContent=title;resultMessage.textContent=message;resultCard.classList.toggle("error",isError);resultModal.classList.add("open");resultModal.setAttribute("aria-hidden","false");resultOk.focus();}
-resultOk.addEventListener("click",()=>{resultModal.classList.remove("open");resultModal.setAttribute("aria-hidden","true");});
+let pendingDeleteBadge=null;
+function requestDeleteBadge(row,usageCount){
+  if(usageCount>0){showResult("Badge In Use",`${row.display_name} is currently assigned to ${usageCount} game${usageCount===1?"":"s"}. Change those games to another Quality before deleting this badge.`,true);return;}
+  pendingDeleteBadge=row;
+  resultTitle.textContent="Delete Quality Badge?";
+  resultMessage.textContent=`Delete ${row.display_name}? This removes the unused badge definition and its PNG from Supabase TEST.`;
+  resultCard.classList.add("error");
+  resultOk.textContent="Delete Badge";
+  let cancel=document.getElementById("resultCancel");
+  if(!cancel){cancel=document.createElement("button");cancel.id="resultCancel";cancel.type="button";cancel.textContent="Cancel";document.querySelector(".result-actions").appendChild(cancel);cancel.addEventListener("click",closeResultModal);}
+  cancel.style.display="block";
+  resultModal.classList.add("open");resultModal.setAttribute("aria-hidden","false");cancel.focus();
+}
+function closeResultModal(){pendingDeleteBadge=null;resultModal.classList.remove("open");resultModal.setAttribute("aria-hidden","true");resultOk.textContent="OK";const cancel=document.getElementById("resultCancel");if(cancel)cancel.style.display="none";}
+resultOk.addEventListener("click",async()=>{
+  if(!pendingDeleteBadge){closeResultModal();return;}
+  const row=pendingDeleteBadge;
+  resultOk.disabled=true;
+  try{
+    const result=await callAdmin({action:"delete-quality-badge",code:row.code});
+    closeResultModal();
+    await loadQualityBadges();
+    window.parent.postMessage({type:"quality-badges-updated"},window.location.origin);
+    showResult("Quality Badge Deleted",`${result.display_name||row.display_name} was deleted from Supabase TEST.`);
+  }catch(error){closeResultModal();showResult("Quality Badge Not Deleted",error?.message||String(error),true);}
+  finally{resultOk.disabled=false;}
+});
 // Quality Badge modals are intentionally NOT dismissible from the backdrop.
 resultModal.addEventListener("pointerdown",event=>{if(event.target===resultModal){event.preventDefault();event.stopPropagation();}});
 resultModal.addEventListener("click",event=>{if(event.target===resultModal){event.preventDefault();event.stopPropagation();}});
@@ -142,7 +179,7 @@ qualityImage.addEventListener("change",()=>{
   probe.src=candidateUrl;
 });
 addButton.addEventListener("click",async()=>{const name=qualityName.value.trim();const file=qualityImage.files?.[0];if(!name){showResult("Quality Name Required","Enter the quality name that should be assigned to games.",true);qualityName.focus();return;}if(!file){showResult("Badge Image Required","Choose a PNG badge image.",true);return;}addButton.disabled=true;addStatus.textContent=`Adding ${name} to Supabase TEST…`;try{const imageBase64=await fileToBase64(file);const result=await callAdmin({action:"add-quality-badge",code:name,display_name:name,file_name:file.name,mime_type:file.type,image_base64:imageBase64});qualityName.value="";qualityImage.value="";if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl="";}previewWrap.style.display="none";await loadQualityBadges();window.parent.postMessage({type:"quality-badges-updated"},window.location.origin);addStatus.textContent=`ADDED — ${result.badge.display_name} saved to Supabase TEST.`;showResult("Quality Badge Added",`${result.badge.display_name} was added to Supabase TEST successfully.`);}catch(error){const message=error?.message||String(error);addStatus.textContent=`ADD FAILED — Supabase TEST was not changed. ${message}`;showResult("Quality Badge Not Added",message,true);console.error("Quality Badge TEST add failed:",error);}finally{addButton.disabled=!currentUser;}});
-onAuthStateChanged(auth,user=>{currentUser=user;addButton.disabled=!user;addStatus.textContent=user?"Admin authenticated — Add Quality Badge is ready.":"Admin authentication required.";});
+onAuthStateChanged(auth,user=>{currentUser=user;addButton.disabled=!user;addStatus.textContent=user?"Admin authenticated — Add Quality Badge is ready.":"Admin authentication required.";if(loadedBadgeRows.length){document.getElementById("badgeList").replaceChildren(...loadedBadgeRows.map(row=>renderBadge(row,loadedUsageCounts.get(String(row.code).trim())||0)));}});
 loadQualityBadges();
 </script>
 </body>
