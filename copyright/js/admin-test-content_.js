@@ -1,5 +1,5 @@
 export function initTestContentControl(){
-  const TEST_KEY="marklynxTestContent";
+  const TEST_KEY="marklynxTestContent_TEST";
   const testStatus=document.getElementById("testStatus");
   const testToggle=document.getElementById("testToggle");
   function testHidden(){return (localStorage.getItem(TEST_KEY)||"Y").toUpperCase()==="Y";}
