@@ -57,14 +57,14 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=provided-developer-REV02', 'mainModuleMount');
-      await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
-      await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
-      await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
+      await loadHtml('sections/main_.html?v=20260919-features-REV20', 'mainModuleMount');
+      await loadHtml('sections/developer_.html?v=20260917-panda', 'developerModuleMount');
+      await loadHtml('sections/recent_.html?v=20260916-prod2', 'recentModuleMount');
+      await loadHtml('sections/footer_.html?v=20260916-prod2', 'footerModuleMount');
 
       installVisibilitySync();
 
-      // DATA SOURCE TEST: one tiny config chooses Supabase TEST or static games_.json.
+      // DATA SOURCE TEST: one tiny config chooses Supabase TEST or static games.json.
       // Keep the rest of the website completely independent of the chosen source.
       const dataSourceResponse = await fetch('data/data-source_.json', { cache: 'no-store' });
       if (!dataSourceResponse.ok) {
@@ -72,7 +72,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['id','n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
+      const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
@@ -83,7 +83,7 @@
       const normalizeGame = game => Object.fromEntries(
         gameFields.map(field => [
           field,
-          ['kinect','adult','testContent'].includes(field)
+          (field === 'adult' || field === 'kinect')
             ? normalizeBooleanField(game[field])
             : (game[field] ?? null)
         ])
@@ -105,7 +105,7 @@
 
         for (let offset = 0; ; offset += pageSize) {
           const params = new URLSearchParams({
-            select: gameFields.join(','),
+            select: `id,${gameFields.join(',')}`,
             order: 'id.asc',
             limit: String(pageSize),
             offset: String(offset)
@@ -125,8 +125,8 @@
         return rows.map(normalizeGame);
       };
 
-      // Manual TEST override lives in Supabase TEST site_control. If that control
-      // cannot be reached, keep using the existing static data-source.json config.
+      // Manual TEST override lives in Supabase site_control. If that control
+      // cannot be reached, keep using the existing static data-source_.json config.
       // This control lookup is optional: automatic JSON recovery must not depend on it.
       const loadManualDataSourceOverride = async () => {
         const controlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.game_data_source&select=value';
@@ -147,9 +147,9 @@
       let selectedDataSource = dataSource;
       try {
         selectedDataSource = await loadManualDataSourceOverride();
-        console.info(`[TEST] Manual source override: ${selectedDataSource.toUpperCase()}`);
+        console.info(`[GAMEDEV] Manual source override: ${selectedDataSource.toUpperCase()}`);
       } catch (controlError) {
-        console.warn('[TEST] Manual source override unavailable; using data-source_.json:', controlError);
+        console.warn('[GAMEDEV] Manual source override unavailable; using data-source_.json:', controlError);
       }
 
       let activeDataSource = selectedDataSource;
@@ -161,7 +161,7 @@
           }
           window.RAW = await loadGamesFromSupabase();
         } catch (supabaseError) {
-          console.warn('[TEST] Supabase unavailable; falling back to games_.json:', supabaseError);
+          console.warn('[GAMEDEV] Supabase unavailable; falling back to games.json:', supabaseError);
           window.RAW = await loadGamesFromJson();
           activeDataSource = 'json-fallback';
         }
@@ -171,88 +171,55 @@
         throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
       }
 
-      // TEST CONTENT OFF must hide the underlying TEST media, not only the row
-      // carrying testContent=true. This prevents a non-TEST duplicate record from
-      // exposing the same TEST YouTube video/playlist while TEST content is hidden.
-      const testContentHidden = (localStorage.getItem('marklynxTestContent_TEST') || 'Y').toUpperCase() === 'Y';
-      if (testContentHidden) {
-        const testVideoIds = new Set(
-          window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
-        );
-        const testPlaylistIds = new Set(
-          window.RAW.filter(game => game?.testContent === true && game.pl).map(game => String(game.pl))
-        );
+      console.info(`[GAMEDEV] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
-        window.RAW = window.RAW.filter(game =>
-          game?.testContent !== true &&
-          (!game?.v || !testVideoIds.has(String(game.v))) &&
-          (!game?.pl || !testPlaylistIds.has(String(game.pl)))
-        );
-      }
-
-      console.info(`[TEST] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
-
-      // Public developer data: use sanitized Supabase views normally, with one
-      // static recovery file for a Supabase outage. Private Admin data is never exposed.
-      window.PUBLIC_DEVELOPER_SHOWCASE = null;
-      window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
-      window.PUBLIC_DEVELOPER_PROVIDED_GAMES = [];
+      // Quality Badge Management REV20: load the small TEST badge definition map once.
+      // This is independent of the game data source and does not touch Recent Uploads.
+      window.QUALITY_BADGES = {};
       try {
-        if (dataSourceConfig.testForceSupabaseFailure === true) {
-          throw new Error('Public developer Supabase failure forced by TEST config');
+        const qualityBaseUrl = 'https://aikifibkcjibubqegvmb.supabase.co';
+        const qualityApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
+        const qualityParams = new URLSearchParams({
+          select: 'code,display_name,storage_path',
+          order: 'sort_order.asc'
+        });
+        const qualityResponse = await fetch(`${qualityBaseUrl}/rest/v1/quality_badges?${qualityParams}`, {
+          headers: { apikey: qualityApiKey },
+          cache: 'no-store'
+        });
+        if (!qualityResponse.ok) throw new Error(`Supabase quality_badges: HTTP ${qualityResponse.status}`);
+        const qualityRows = await qualityResponse.json();
+        if (!Array.isArray(qualityRows)) throw new Error('Supabase quality_badges: invalid response');
+
+        for (const badge of qualityRows) {
+          const code = String(badge?.code || '').trim();
+          const storagePath = String(badge?.storage_path || '').trim();
+          if (!code || !storagePath) continue;
+          const encodedPath = storagePath.split('/').map(encodeURIComponent).join('/');
+          window.QUALITY_BADGES[code.toLowerCase()] = {
+            code,
+            displayName: String(badge?.display_name || code),
+            imageUrl: `${qualityBaseUrl}/storage/v1/object/public/quality-badges/${encodedPath}`
+          };
         }
-        const publicDeveloperBaseUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1';
-        const publicDeveloperApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
-        const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
-        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const [showcaseResponse, providedResponse] = await Promise.all([
-          fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
-        ]);
-        if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
-        if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
-        const showcaseRows = await showcaseResponse.json();
-        const providedRows = await providedResponse.json();
-        if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
-        window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-        window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
-          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
-          .filter(row => Number.isInteger(row.game_id) && row.provided_by);
-        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
-        console.info(`[TEST] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
-      } catch (publicDeveloperError) {
-        console.warn('[TEST] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
-        try {
-          const recoveryResponse = await fetch('data/public-developer-data_.json', { cache: 'no-store' });
-          if (!recoveryResponse.ok) throw new Error(`public-developer-data_.json: HTTP ${recoveryResponse.status}`);
-          const recoveryData = await recoveryResponse.json();
-          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGames)) {
-            throw new Error('public-developer-data_.json: invalid recovery data');
-          }
-          window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
-          window.PUBLIC_DEVELOPER_PROVIDED_GAMES = recoveryData.providedGames
-            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim() }))
-            .filter(row => Number.isInteger(row.game_id) && row.provided_by);
-          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
-          console.info(`[TEST] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
-        } catch (recoveryError) {
-          console.warn('[TEST] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
-        }
+        console.info(`[GAMEDEV] Quality badges loaded: ${Object.keys(window.QUALITY_BADGES).length}`);
+      } catch (qualityError) {
+        console.warn('[GAMEDEV] Quality badge definitions unavailable; using built-in badge fallback:', qualityError);
       }
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
-      const statsResponse = await fetch('data/stats.json?v=20260921-prod-promotion-01', { cache: 'no-store' });
+      const statsResponse = await fetch('data/stats_.json?v=20260915-prod1', { cache: 'no-store' });
       if (!statsResponse.ok) throw new Error(`stats.json: HTTP ${statsResponse.status}`);
       const stats = await statsResponse.json();
       const totalVideos = Number(stats.totalVideos);
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube_.js?v=20260927-mobile-landscape-prime-rev01');
-      await loadScript('js/site_.js?v=provided-developer-REV02');
-      await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
-      await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
-      await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
+      await loadScript('js/youtube_.js?v=20260918-cache-REV07');
+      await loadScript('js/site_.js?v=20260927-quality-badges-REV20');
+      await loadScript('js/developer_.js?v=20260919-developer-scrollbar-top-REV23');
+      await loadScript('js/recent_.js?v=rev61');
+      await loadScript('js/suggest_game_.js?v=20260919-suggest-close-REV18');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
