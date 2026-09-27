@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=quality-badges-backdrop-rev08";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest } from "./admin-game-management_.js?v=quality-dropdown-REV09";
+import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=quality-dropdown-refresh-REV12";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
 
@@ -38,6 +38,12 @@ initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyTestDatabaseIdentity});
 initRecentRefresh({auth});
 initDeveloperPublisherSearch();
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin) return;
+  if(event.data?.type!=="quality-badges-updated") return;
+  loadQualityBadges().catch(error=>console.error("Quality badge refresh failed:",error));
+});
 
 
 await setPersistence(auth,browserLocalPersistence);

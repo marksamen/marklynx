@@ -10,7 +10,7 @@ let providedDeveloperCompanies=[];
 let providedDeveloperByGame=new Map();
 let qualityBadges=[];
 
-async function loadQualityBadges(){
+export async function loadQualityBadges(){
   const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,sort_order&order=sort_order.asc`,{
     headers:{"apikey":SUPABASE_TEST_PUBLISHABLE_KEY},
     cache:"no-store"
