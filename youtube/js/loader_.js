@@ -174,7 +174,7 @@
       // TEST CONTENT OFF must hide the underlying TEST media, not only the row
       // carrying testContent=true. This prevents a non-TEST duplicate record from
       // exposing the same TEST YouTube video/playlist while TEST content is hidden.
-      const testContentHidden = (localStorage.getItem('marklynxTestContent') || 'Y').toUpperCase() === 'Y';
+      const testContentHidden = (localStorage.getItem('marklynxTestContent_TEST') || 'Y').toUpperCase() === 'Y';
       if (testContentHidden) {
         const testVideoIds = new Set(
           window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))

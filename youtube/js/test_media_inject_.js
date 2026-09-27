@@ -5,7 +5,7 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'marklynxTestContent';
+  const STORAGE_KEY = 'marklynxTestContent_TEST';
   const testContentIsHidden = () => (localStorage.getItem(STORAGE_KEY) || 'Y').toUpperCase() === 'Y';
 
   // Hidden means do not alter the normal site at all.
