@@ -208,3 +208,11 @@
 #gameDevForm .gd-collapsible-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:.7rem;align-items:start}
 #gameDevForm .gd-collapsible-row>.gd-collapsible{min-width:0}
 @media (max-width:700px){#gameDevForm .gd-collapsible-row{grid-template-columns:1fr}}
+
+/* REV65: validation dialog contained inside Add/Edit Game modal */
+#gameDevAddModal .gd-modal-card,#gameDevEditModal .gd-modal-card{position:relative}
+.gd-validation-overlay{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:20px;border-radius:12px;background:rgba(0,0,0,.72)}
+.gd-validation-card{box-sizing:border-box;width:min(92%,520px);padding:22px;border:1px solid #4a4a4f;border-top:3px solid #d32f2f;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65);text-align:left}
+.gd-validation-card h2{margin:0 0 12px;color:#fff;font-size:1.15rem}
+.gd-validation-card p{margin:0;color:#d7d7d7;font-size:.9rem;line-height:1.5}
+@media (max-width:520px){.gd-validation-overlay{padding:12px}.gd-validation-card{width:96%;padding:18px}}
