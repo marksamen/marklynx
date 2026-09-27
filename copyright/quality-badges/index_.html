@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>(TEST) Quality Badge Management</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(980px,100%);margin:0 auto}.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:18px}.head h1{margin:0;font-size:1.6rem}.head p{margin:6px 0 0;color:#aaa}.test{font-size:.76rem;font-weight:800;letter-spacing:.08em;color:#ffca28}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin-bottom:18px}.panel h2{margin:0 0 14px;font-size:1.05rem}.badge-list{display:grid;gap:12px}.badge-row{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;padding:14px;background:#141416;border:1px solid #303034;border-radius:10px}.preview{height:62px;display:flex;align-items:center;justify-content:center;background:#0c0c0d;border:1px solid #29292d;border-radius:8px;padding:8px}.preview img{max-width:100%;max-height:46px;object-fit:contain}.name{font-weight:800;font-size:1.05rem}.meta{margin-top:5px;color:#aaa;font-size:.86rem}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}button,input{font:inherit;border-radius:8px}button{border:1px solid #4a4a4f;background:#252529;color:#fff;padding:9px 12px;font-weight:700}button[disabled]{opacity:.45;cursor:not-allowed}.replace{background:#173a63;border-color:#285784}.danger{background:#3b1717;border-color:#713030}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form label{display:grid;gap:6px;text-align:left;font-weight:700}.form input{width:100%;padding:11px 12px;border:1px solid #4a4a4f;background:#111113;color:#fff}.wide{grid-column:1/-1}.help{font-size:.78rem;color:#999;font-weight:400}.add{width:100%;padding:11px 14px;background:#198754;border-color:#2a9d66}.notice{margin:0;color:#bbb;line-height:1.5}.notice strong{color:#fff}@media(max-width:680px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}.badge-row{grid-template-columns:1fr}.preview{justify-content:flex-start}.actions{justify-content:flex-start}.form{grid-template-columns:1fr}.wide{grid-column:auto}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(980px,100%);margin:0 auto}.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:18px}.head h1{margin:0;font-size:1.6rem}.head p{margin:6px 0 0;color:#aaa}.test{font-size:.76rem;font-weight:800;letter-spacing:.08em;color:#ffca28}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin-bottom:18px}.panel h2{margin:0 0 14px;font-size:1.05rem}.badge-list{display:grid;gap:12px}.badge-row{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;padding:14px;background:#141416;border:1px solid #303034;border-radius:10px}.preview{height:62px;display:flex;align-items:center;justify-content:center;background:#0c0c0d;border:1px solid #29292d;border-radius:8px;padding:8px}.preview img{max-width:100%;max-height:46px;object-fit:contain}.name{font-weight:800;font-size:1.05rem}.meta{margin-top:5px;color:#aaa;font-size:.86rem}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}button,input{font:inherit;border-radius:8px}button{border:1px solid #4a4a4f;background:#252529;color:#fff;padding:9px 12px;font-weight:700}button[disabled]{opacity:.45;cursor:not-allowed}.replace{background:#173a63;border-color:#285784}.danger{background:#3b1717;border-color:#713030}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form label{display:grid;gap:6px;text-align:left;font-weight:700}.form input{width:100%;padding:11px 12px;border:1px solid #4a4a4f;background:#111113;color:#fff}.wide{grid-column:1/-1}.help{font-size:.78rem;color:#999;font-weight:400}.add{width:100%;padding:11px 14px;background:#198754;border-color:#2a9d66}.notice{margin:0;color:#bbb;line-height:1.5}.notice strong{color:#fff}.result-modal{position:fixed;inset:0;z-index:1001;display:none;background:rgba(0,0,0,.72)}.result-modal.open{display:flex;align-items:center;justify-content:center;padding:20px}.result-card{width:min(92vw,520px);padding:22px;border:1px solid #4a4a4f;border-top:3px solid #2e7d32;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65)}.result-card.error{border-top-color:#b64040}.result-card h2{margin:0 0 12px}.result-card p{margin:0;color:#d7d7d7;line-height:1.5}.result-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}.result-actions button{min-height:42px;cursor:pointer}@media(max-width:680px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}.badge-row{grid-template-columns:1fr}.preview{justify-content:flex-start}.actions{justify-content:flex-start}.form{grid-template-columns:1fr}.wide{grid-column:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV04</div></div>
+  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV05</div></div>
   <section class="panel">
     <h2>Current Quality Badges</h2>
     <div id="badgeStatus" class="meta">Loading quality badges from Supabase TEST…</div>
@@ -19,14 +19,20 @@
   <section class="panel">
     <h2>Add Quality Badge</h2>
     <div class="form">
-      <label>Quality Name<input type="text" placeholder="Example: 8K" disabled><span class="help">This becomes the quality value assigned to games.</span></label>
-      <label>Badge Image<input type="text" placeholder="Image upload will be wired next" disabled><span class="help">Image preview and file/dimension validation will be added with database wiring.</span></label>
-      <div class="wide"><button class="add" type="button" disabled>Add Quality Badge</button></div>
+      <label>Quality Name<input id="qualityName" type="text" maxlength="80" placeholder="Example: 8K"><span class="help">This becomes the quality value assigned to games.</span></label>
+      <label>Badge Image<input id="qualityImage" type="file" accept="image/png,.png"><span class="help">PNG only · maximum 1 MB.</span></label>
+      <div id="newBadgePreview" class="preview wide" style="display:none"><img id="newBadgePreviewImage" alt="New quality badge preview"></div>
+      <div id="addStatus" class="meta wide">Checking Admin authentication…</div>
+      <div class="wide"><button id="addQualityBadge" class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV04 is read-only.</strong> Badge definitions are loaded from Supabase TEST and preview images are loaded from the TEST Supabase Storage quality-badges bucket. No database writes, game records, quality values, or public badge rendering are changed by this screen.</p></section>
+  <section class="panel"><p class="notice"><strong>REV05 adds one write operation.</strong> Add Quality Badge uses the authenticated TEST Admin write path to upload one PNG to TEST Supabase Storage and create its TEST quality_badges record. Existing badges, games, public quality rendering, and PROD are unchanged.</p></section>
 </div>
-<script>
+<div id="resultModal" class="result-modal" aria-hidden="true"><div id="resultCard" class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle"><h2 id="resultTitle">Quality Badge</h2><p id="resultMessage"></p><div class="result-actions"><button id="resultOk" type="button">OK</button></div></div></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",authDomain:"mark-lynx-admin.firebaseapp.com",projectId:"mark-lynx-admin",storageBucket:"mark-lynx-admin.firebasestorage.app",messagingSenderId:"749999035332",appId:"1:749999035332:web:52c78e6e358c1fef794a91"};
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 
@@ -86,6 +92,29 @@ async function loadQualityBadges(){
   }
 }
 
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+await setPersistence(auth,browserLocalPersistence);
+let currentUser=null;
+const qualityName=document.getElementById("qualityName");
+const qualityImage=document.getElementById("qualityImage");
+const addButton=document.getElementById("addQualityBadge");
+const addStatus=document.getElementById("addStatus");
+const previewWrap=document.getElementById("newBadgePreview");
+const previewImage=document.getElementById("newBadgePreviewImage");
+const resultModal=document.getElementById("resultModal");
+const resultCard=document.getElementById("resultCard");
+const resultTitle=document.getElementById("resultTitle");
+const resultMessage=document.getElementById("resultMessage");
+const resultOk=document.getElementById("resultOk");
+let previewUrl="";
+function showResult(title,message,isError=false){resultTitle.textContent=title;resultMessage.textContent=message;resultCard.classList.toggle("error",isError);resultModal.classList.add("open");resultModal.setAttribute("aria-hidden","false");resultOk.focus();}
+resultOk.addEventListener("click",()=>{resultModal.classList.remove("open");resultModal.setAttribute("aria-hidden","true");});
+function fileToBase64(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>{const value=String(reader.result||"");resolve(value.includes(",")?value.split(",",2)[1]:"");};reader.onerror=()=>reject(reader.error||new Error("Could not read PNG file."));reader.readAsDataURL(file);});}
+async function callAdmin(body){if(!currentUser)throw new Error("Admin authentication required.");const token=await currentUser.getIdToken();const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{method:"POST",headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},body:JSON.stringify(body)});const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.error||`Supabase TEST returned HTTP ${response.status}.`);return result;}
+qualityImage.addEventListener("change",()=>{if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl="";}const file=qualityImage.files?.[0];if(!file){previewWrap.style.display="none";return;}if(file.type!=="image/png"||!file.name.toLowerCase().endsWith(".png")){qualityImage.value="";previewWrap.style.display="none";showResult("PNG Required","Quality badge images must be PNG files.",true);return;}if(file.size>1024*1024){qualityImage.value="";previewWrap.style.display="none";showResult("Image Too Large","Quality badge images must be 1 MB or smaller.",true);return;}previewUrl=URL.createObjectURL(file);previewImage.src=previewUrl;previewWrap.style.display="flex";});
+addButton.addEventListener("click",async()=>{const name=qualityName.value.trim();const file=qualityImage.files?.[0];if(!name){showResult("Quality Name Required","Enter the quality name that should be assigned to games.",true);qualityName.focus();return;}if(!file){showResult("Badge Image Required","Choose a PNG badge image.",true);return;}addButton.disabled=true;addStatus.textContent=`Adding ${name} to Supabase TEST…`;try{const imageBase64=await fileToBase64(file);const result=await callAdmin({action:"add-quality-badge",code:name,display_name:name,file_name:file.name,mime_type:file.type,image_base64:imageBase64});qualityName.value="";qualityImage.value="";if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl="";}previewWrap.style.display="none";await loadQualityBadges();addStatus.textContent=`ADDED — ${result.badge.display_name} saved to Supabase TEST.`;showResult("Quality Badge Added",`${result.badge.display_name} was added to Supabase TEST successfully.`);}catch(error){const message=error?.message||String(error);addStatus.textContent=`ADD FAILED — Supabase TEST was not changed. ${message}`;showResult("Quality Badge Not Added",message,true);console.error("Quality Badge TEST add failed:",error);}finally{addButton.disabled=!currentUser;}});
+onAuthStateChanged(auth,user=>{currentUser=user;addButton.disabled=!user;addStatus.textContent=user?"Admin authenticated — Add Quality Badge is ready.":"Admin authentication required.";});
 loadQualityBadges();
 </script>
 </body>
