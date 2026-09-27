@@ -504,7 +504,7 @@ async function createGameDev(){
   if((window.GAMEDEV_RAW||[]).some(g=>Number(g.order)===order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — order ${order} already exists.`;return;}
   if(!validateGamerscore(true)||!validateCompletionTime(true)||!validateYoutubeLink(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — fix the highlighted field(s).";updateCreateButtonState();return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
-  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;return;}
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;alert("This game is marked as “Provided by Developer.” The assigned developer or publisher cannot be removed while this option is selected. Please correct the Developer/Publisher assignment and try again.");return;}
   const record={
     order, n:name,
     p:getChoices("gdPlatformChoices"),
@@ -639,7 +639,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   const writeStatus=document.getElementById("gameDevWriteStatus");
   if(!validateGamerscore(true)||!validateCompletionTime(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE BLOCKED — fix the highlighted field(s).";return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
-  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;return;}
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;alert("This game is marked as “Provided by Developer.” The assigned developer or publisher cannot be removed while this option is selected. Please correct the Developer/Publisher assignment and try again.");return;}
   const patch={
     id:Number(g.id),
     n:document.getElementById("gdName").value.trim(),
