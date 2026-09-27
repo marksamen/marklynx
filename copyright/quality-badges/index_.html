@@ -20,13 +20,13 @@
     <h2>Add Quality Badge</h2>
     <div class="form">
       <label>Quality Name<input id="qualityName" type="text" maxlength="80" placeholder="Example: 8K"><span class="help">This becomes the quality value assigned to games.</span></label>
-      <label>Badge Image<input id="qualityImage" type="file" accept="image/png,.png"><span class="help">PNG only · maximum 1 MB. Recommended canvas: about 1000 × 645 px. Existing approved badges are 993 × 649 and 1006 × 641; new badges must use the same landscape proportion.</span></label>
+      <label>Badge Image<input id="qualityImage" type="file" accept="image/png,.png"><span class="help">PNG only · maximum 1 MB. Recommended: landscape PNG approximately 3:2. Accepted aspect ratio: 1.45:1–1.65:1. Existing approved badges are 993 × 649 and 1006 × 641.</span></label>
       <div id="newBadgePreview" class="preview wide" style="display:none"><img id="newBadgePreviewImage" alt="New quality badge preview"></div>
       <div id="addStatus" class="meta wide">Checking Admin authentication…</div>
       <div class="wide"><button id="addQualityBadge" class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV10 adds image-shape validation only.</strong> Existing approved badges are 993 × 649 and 1006 × 641. New PNGs must stay within that existing landscape proportion so a badly shaped badge cannot disturb card alignment. Add/write behavior is otherwise unchanged.</p></section>
+  <section class="panel"><p class="notice"><strong>REV11 adjusts image-shape validation only.</strong> Existing approved badges are 993 × 649 and 1006 × 641. New PNGs may use an aspect ratio from 1.45:1 through 1.65:1, protecting card alignment without requiring an exact match. Add/write behavior is otherwise unchanged.</p></section>
 </div>
 <div id="resultModal" class="result-modal" aria-hidden="true"><div id="resultCard" class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle"><h2 id="resultTitle">Quality Badge</h2><p id="resultMessage"></p><div class="result-actions"><button id="resultOk" type="button">OK</button></div></div></div>
 <script type="module">
@@ -125,13 +125,13 @@ qualityImage.addEventListener("change",()=>{
   const probe=new Image();
   probe.onload=()=>{
     const ratio=probe.naturalWidth/probe.naturalHeight;
-    const minRatio=993/649;
-    const maxRatio=1006/641;
+    const minRatio=1.45;
+    const maxRatio=1.65;
     if(ratio<minRatio||ratio>maxRatio){
       URL.revokeObjectURL(candidateUrl);
       qualityImage.value="";
       previewWrap.style.display="none";
-      showResult("Badge Shape Required",`Badge images must use the same landscape proportion as the approved badges. Existing sizes are 993 × 649 and 1006 × 641. This image is ${probe.naturalWidth} × ${probe.naturalHeight}.`,true);
+      showResult("Badge Shape Required",`Badge images must use a landscape aspect ratio from 1.45:1 through 1.65:1. Existing approved sizes are 993 × 649 and 1006 × 641. This image is ${probe.naturalWidth} × ${probe.naturalHeight}.`,true);
       return;
     }
     previewUrl=candidateUrl;
