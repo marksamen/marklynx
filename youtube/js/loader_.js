@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=20260927-developer-provided-REV51', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=20260921-game-guides-REV12', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -227,19 +227,6 @@
         const showcaseRows = await showcaseResponse.json();
         if (!Array.isArray(showcaseRows)) throw new Error('public_developer_showcase: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-
-        // Developer Provided recognition stays completely separate from RAW.
-        // Recent Uploads receives the exact same RAW objects as the REV48 baseline.
-        const providedByVideoId = new Map();
-        const providedByPlaylistId = new Map();
-        showcaseRows.forEach(row => {
-          const name = String(row.public_display_name || '').trim();
-          if (!name) return;
-          if (row.video_id) providedByVideoId.set(String(row.video_id), name);
-          if (row.playlist_id) providedByPlaylistId.set(String(row.playlist_id), name);
-        });
-        window.DEVELOPER_PROVIDED_LOOKUP = { providedByVideoId, providedByPlaylistId };
-
         console.info(`[TEST] Public Developer Showcase loaded: ${showcaseRows.length} games`);
       } catch (showcaseError) {
         console.warn('[TEST] Public Developer Showcase unavailable; keeping existing fallback cards:', showcaseError);
@@ -254,7 +241,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site_.js?v=20260927-developer-provided-REV51');
+      await loadScript('js/site_.js?v=20260921-game-guides-REV12');
       await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=20260921-prod-promotion-01');
