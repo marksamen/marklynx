@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV03</div></div>
+  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV04</div></div>
   <section class="panel">
     <h2>Current Quality Badges</h2>
     <div id="badgeStatus" class="meta">Loading quality badges from Supabase TEST…</div>
@@ -24,15 +24,15 @@
       <div class="wide"><button class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV03 is read-only.</strong> Badge definitions are loaded from Supabase TEST. No database writes, game records, quality values, public badge rendering, or existing images are changed by this screen.</p></section>
+  <section class="panel"><p class="notice"><strong>REV04 is read-only.</strong> Badge definitions are loaded from Supabase TEST and preview images are loaded from the TEST Supabase Storage quality-badges bucket. No database writes, game records, quality values, or public badge rendering are changed by this screen.</p></section>
 </div>
 <script>
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 
-function localBadgeImage(assetKey){
-  const safe=String(assetKey||"").replace(/[^A-Za-z0-9_-]/g,"");
-  return `../../youtube/${safe}_.png`;
+function storageBadgeImage(storagePath){
+  const safe=String(storagePath||"").split("/").map(encodeURIComponent).join("/");
+  return `${SUPABASE_TEST_URL}/storage/v1/object/public/quality-badges/${safe}`;
 }
 
 function renderBadge(row){
@@ -42,7 +42,7 @@ function renderBadge(row){
   const preview=document.createElement("div");
   preview.className="preview";
   const img=document.createElement("img");
-  img.src=localBadgeImage(row.asset_key);
+  img.src=storageBadgeImage(row.storage_path);
   img.alt=`${row.display_name} badge preview`;
   preview.appendChild(img);
 
@@ -67,7 +67,7 @@ async function loadQualityBadges(){
   const status=document.getElementById("badgeStatus");
   const list=document.getElementById("badgeList");
   try{
-    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,sort_order&order=sort_order.asc`,{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,storage_path,sort_order&order=sort_order.asc`,{
       headers:{
         apikey:SUPABASE_TEST_PUBLISHABLE_KEY,
         Authorization:`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`
