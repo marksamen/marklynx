@@ -66,5 +66,23 @@
     102,
     104,
     169
+  ],
+  "providedGames": [
+    {
+      "game_id": 100,
+      "provided_by": "Ember Box Studio"
+    },
+    {
+      "game_id": 102,
+      "provided_by": "Ember Box Studio"
+    },
+    {
+      "game_id": 104,
+      "provided_by": "Ember Box Studio"
+    },
+    {
+      "game_id": 169,
+      "provided_by": "Paulo Pinheiro Game Dev"
+    }
   ]
 }
