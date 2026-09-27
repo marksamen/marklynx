@@ -7,12 +7,12 @@
   const sendBtn = document.getElementById('suggestGameSendBtn');
   const status = document.getElementById('suggestGameFormStatus');
   const turnstileMount = document.getElementById('suggestGameTurnstile');
-  const frame = document.getElementById('suggestGameSubmitFrame');
   const formStage = document.getElementById('suggestGameFormStage');
   const successPanel = document.getElementById('suggestGameSuccessPanel');
   if (!openBtn || !overlay || !closeBtn || !form) return;
 
   const TURNSTILE_SITE_KEY = '0x4AAAAAAE3AJPCXDRsIdRB-';
+  const SUGGEST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwjyNNxMouQFKP_Ry1uKhPbTqv5d_gZteGqRGeOYFW6r_ikTCwfVssUlQXc-NdsLKnH/exec';
   let turnstileToken = '';
   let turnstileWidgetId = null;
   let lastFocus = null;
@@ -132,50 +132,80 @@
   // Suggest closes deliberately via the persistent X (or Escape).
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) close(); });
 
-  form.addEventListener('submit', event => {
-    if (!form.reportValidity()) { event.preventDefault(); return; }
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    setStatus('');
+
+    if (!form.reportValidity()) return;
 
     const emailInput = form.querySelector('input[name="entry.677551953"]');
     const emailValue = emailInput ? emailInput.value.trim() : '';
     const emailLooksComplete = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(emailValue);
     if (!emailLooksComplete) {
-      event.preventDefault();
       setStatus('Please enter a complete email address (for example, name@example.com).', 'error');
       if (emailInput) emailInput.focus();
       return;
     }
-    if (!form.querySelector('input[name="entry.1676898685"]:checked')) {
-      event.preventDefault();
+
+    const platforms = Array.from(form.querySelectorAll('input[name="entry.1676898685"]:checked'))
+      .map(input => input.value);
+    if (!platforms.length) {
       setStatus('Please select at least one platform.', 'error');
       return;
     }
     if (!turnstileToken) {
-      event.preventDefault();
       setStatus('Please complete the human verification first.', 'error');
       return;
     }
+
+    const payload = {
+      game: form.querySelector('input[name="entry.89218863"]')?.value || '',
+      platforms,
+      reason: form.querySelector('textarea[name="entry.1799484764"]')?.value || '',
+      name: form.querySelector('input[name="entry.1649821304"]')?.value || '',
+      email: emailValue,
+      youtubeUsername: form.querySelector('input[name="entry.1861092300"]')?.value || '',
+      website: '',
+      turnstileToken
+    };
+
     submitting = true;
     sendBtn.disabled = true;
     sendBtn.textContent = 'Submitting…';
     setStatus('Submitting your suggestion…', 'sending');
-  });
 
-  frame.addEventListener('load', () => {
-    if (!submitting) return;
-    submitting = false;
-    submissionSucceeded = true;
-    turnstileToken = '';
-    setStatus('');
-    formStage.hidden = true;
-    successPanel.hidden = false;
-    sendBtn.textContent = '✓ Submitted';
+    try {
+      // Same proven request/response pattern used by Developer Contact.
+      const response = await fetch(SUGGEST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify(payload),
+        redirect: 'follow'
+      });
+      const result = await response.json();
+      if (!result.ok) throw new Error(result.message || 'Your suggestion could not be received. Please try again.');
 
-    // REV66 PROD: phone landscape only — the form is tall enough that submission
-    // normally occurs with this panel scrolled near the bottom. Once the short
-    // success state replaces the form, return this panel to its visible top so
-    // the existing close X remains immediately accessible.
-    if (panel && window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
-      panel.scrollTop = 0;
+      submitting = false;
+      submissionSucceeded = true;
+      turnstileToken = '';
+      setStatus('');
+      formStage.hidden = true;
+      successPanel.hidden = false;
+      sendBtn.disabled = true;
+      sendBtn.textContent = '✓ Submitted';
+
+      // Preserve REV66: phone landscape success state returns to the visible top.
+      if (panel && window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches) {
+        panel.scrollTop = 0;
+      }
+    } catch (error) {
+      console.error('Suggest A Game submission failed:', error);
+      submitting = false;
+      setStatus(error.message || 'Your suggestion could not be received. Please try again.', 'error');
+      turnstileToken = '';
+      if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Submit Suggestion';
     }
   });
 })();
