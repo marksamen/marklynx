@@ -2376,6 +2376,7 @@
     "publisher_3": null
   },
   {
+    "id": 100,
     "n": "Find The Cats",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G",
@@ -2424,6 +2425,7 @@
     "publisher_3": null
   },
   {
+    "id": 102,
     "n": "Find The Cats 2",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G",
@@ -2472,6 +2474,7 @@
     "publisher_3": null
   },
   {
+    "id": 104,
     "n": "Panda: Shards of Aurora",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G",
@@ -4032,6 +4035,7 @@
     "publisher_3": null
   },
   {
+    "id": 169,
     "n": "Moves: Perfect Pair",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "1,000G",
