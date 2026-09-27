@@ -245,7 +245,7 @@
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
+      await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-PROD01');
       await loadScript('js/site.js?v=provided-developer-PROD01');
       await loadScript('js/developer.js?v=20260926-db-showcase-REV48');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
