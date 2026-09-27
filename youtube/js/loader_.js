@@ -252,7 +252,7 @@
       await loadScript('js/site_.js?v=provided-developer-REV02');
       await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
-      await loadScript('js/suggest_game_.js?v=REV66-mobile-landscape-suggest-success-scroll');
+      await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
