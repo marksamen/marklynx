@@ -1,0 +1,70 @@
+{
+  "showcase": [
+    {
+      "company_id": 63,
+      "public_display_name": "Ember Box Studio",
+      "public_description": "https://emberboxstudio.com/",
+      "public_display_order": 1,
+      "public_games_sort": "RECENT",
+      "game_id": 100,
+      "game_name": "Find The Cats",
+      "gamerscore": "2,000G",
+      "completion_time": "8 Minutes",
+      "quality": "4K",
+      "youtube_url": "https://youtu.be/X8_tsmwOQJU",
+      "video_id": "X8_tsmwOQJU",
+      "playlist_id": null
+    },
+    {
+      "company_id": 63,
+      "public_display_name": "Ember Box Studio",
+      "public_description": "https://emberboxstudio.com/",
+      "public_display_order": 1,
+      "public_games_sort": "RECENT",
+      "game_id": 102,
+      "game_name": "Find The Cats 2",
+      "gamerscore": "2,000G",
+      "completion_time": "8-9 Minutes",
+      "quality": "4K",
+      "youtube_url": "https://youtu.be/KYtTBdoxy9s",
+      "video_id": "KYtTBdoxy9s",
+      "playlist_id": null
+    },
+    {
+      "company_id": 63,
+      "public_display_name": "Ember Box Studio",
+      "public_description": "https://emberboxstudio.com/",
+      "public_display_order": 1,
+      "public_games_sort": "RECENT",
+      "game_id": 104,
+      "game_name": "Panda: Shards of Aurora",
+      "gamerscore": "2,000G",
+      "completion_time": "5 Minutes",
+      "quality": "4K",
+      "youtube_url": "https://youtu.be/bO21TsR5Xg0",
+      "video_id": "bO21TsR5Xg0",
+      "playlist_id": null
+    },
+    {
+      "company_id": 130,
+      "public_display_name": "Paulo Pinheiro Game Dev",
+      "public_description": null,
+      "public_display_order": 2,
+      "public_games_sort": "RECENT",
+      "game_id": 169,
+      "game_name": "Moves: Perfect Pair",
+      "gamerscore": "1,000G",
+      "completion_time": "10 Minutes",
+      "quality": "4K",
+      "youtube_url": "https://www.youtube.com/watch?v=NB387jqcoxA",
+      "video_id": "NB387jqcoxA",
+      "playlist_id": null
+    }
+  ],
+  "providedGameIds": [
+    100,
+    102,
+    104,
+    169
+  ]
+}
