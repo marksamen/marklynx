@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=20260921-game-guides-REV12', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=provided-developer-REV01', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -72,7 +72,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
+      const gameFields = ['id','n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
@@ -242,7 +242,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site_.js?v=20260921-game-guides-REV12');
+      await loadScript('js/site_.js?v=provided-developer-REV01');
       await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV66-mobile-landscape-suggest-success-scroll');
