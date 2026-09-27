@@ -174,57 +174,8 @@
       // TEST CONTENT OFF must hide the underlying TEST media, not only the row
       // carrying testContent=true. This prevents a non-TEST duplicate record from
       // exposing the same TEST YouTube video/playlist while TEST content is hidden.
-      // TEST content visibility is shared through Supabase TEST so Admin and
-      // youtube.marklynx.com use the same authoritative setting across subdomains/devices.
-      const loadTestContentEnabled = async () => {
-        const controlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/feature_control?id=eq.test_content&select=enabled';
-        const apiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
-        const response = await fetch(controlUrl, { headers: { apikey: apiKey }, cache: 'no-store' });
-        if (!response.ok) throw new Error(`Supabase feature_control: HTTP ${response.status}`);
-        const rows = await response.json();
-        if (!Array.isArray(rows) || rows.length !== 1 || typeof rows[0]?.enabled !== 'boolean') {
-          throw new Error('Supabase feature_control: invalid test_content value');
-        }
-        return rows[0].enabled;
-      };
-
-      let testContentEnabled = false;
-      try {
-        testContentEnabled = await loadTestContentEnabled();
-      } catch (controlError) {
-        console.warn('[TEST] TEST content control unavailable; defaulting OFF:', controlError);
-      }
-      console.info(`[TEST] TEST CONTENT: ${testContentEnabled ? 'ON' : 'OFF'}`);
-
-      // Permanent TEST media metadata must exist in RAW regardless of whether the
-      // active game source is Supabase or JSON. The legacy TEST injector only
-      // augments JSON fetches, so Supabase mode can otherwise leave Recent with
-      // TEST cards but no matching game metadata. Keep this TEST-only and source-
-      // isolated: only missing testContent=true fixtures from games_.json are added.
-      if (testContentEnabled && activeDataSource === 'supabase') {
-        try {
-          const testFixtureRows = await loadGamesFromJson();
-          const permanentTestFixtures = testFixtureRows.filter(game => game?.testContent === true);
-          let restored = 0;
-
-          permanentTestFixtures.forEach(testGame => {
-            const alreadyPresent = window.RAW.some(game =>
-              game?.testContent === true &&
-              String(game?.n || '') === String(testGame?.n || '')
-            );
-            if (!alreadyPresent) {
-              window.RAW.push(testGame);
-              restored += 1;
-            }
-          });
-
-          console.info(`[TEST] Permanent TEST fixtures restored from games_.json: ${restored}`);
-        } catch (fixtureError) {
-          console.warn('[TEST] Permanent TEST fixture metadata unavailable:', fixtureError);
-        }
-      }
-
-      if (!testContentEnabled) {
+      const testContentHidden = (localStorage.getItem('marklynxTestContent') || 'Y').toUpperCase() === 'Y';
+      if (testContentHidden) {
         const testVideoIds = new Set(
           window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
         );
