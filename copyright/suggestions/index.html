@@ -28,6 +28,7 @@ button:hover,a.btn:hover{filter:brightness(1.15)}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.filter{width:auto;padding:.55rem .8rem}.filter.active{background:#6a1b9a;border-color:#8d42b8}
 .card-body{padding:17px 18px;display:grid;gap:13px}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.field{background:#141414;border:1px solid #303030;border-radius:8px;padding:10px 12px;min-width:0}.label{display:block;color:#888;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}.value{word-break:break-word}.email a{color:#8ab4f8}.message{white-space:pre-wrap;line-height:1.5}
 #errorBox{display:none;padding:16px;border:1px solid #8d3030;background:#2a1515;border-radius:10px;color:#ffb2b2}
+.delete-modal{position:fixed;inset:0;z-index:1000;display:none;background:rgba(0,0,0,.72)}.delete-modal.open{display:flex;align-items:center;justify-content:center;padding:20px}.delete-modal-card{width:min(92vw,520px);padding:22px;border:1px solid #4a4a4f;border-top:3px solid #8a3030;border-radius:12px;background:#171717;box-shadow:0 18px 60px rgba(0,0,0,.65)}.delete-modal-card h2{margin:0 0 12px}.delete-modal-card p{color:#d7d7d7;line-height:1.5}.delete-modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.delete-modal-actions button{min-height:42px}.delete-modal-actions .danger{border-color:#8a3030;background:#5a1f1f}.delete-modal-actions .danger:hover{background:#6d2626}
 @media(max-width:720px){body{padding:14px}.topbar{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.meta{grid-template-columns:1fr}.card-head{flex-direction:column}.date{text-align:left;white-space:normal}}
 </style>
 </head>
@@ -42,6 +43,7 @@ button:hover,a.btn:hover{filter:brightness(1.15)}
   <div class="filters" aria-label="Filter submissions"><button class="filter active" type="button" data-filter="All">All</button><button class="filter" type="button" data-filter="New">New</button><button class="filter" type="button" data-filter="Reviewed">Reviewed</button><button class="filter" type="button" data-filter="Contacted">Contacted</button><button class="filter" type="button" data-filter="Closed">Closed</button></div>
   <div id="errorBox"></div><div id="state">Loading submissions…</div><section id="list" aria-live="polite"></section>
 </main>
+<div id="deleteModal" class="delete-modal" aria-hidden="true"><div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle"><h2 id="deleteTitle">Delete Game Suggestion?</h2><p id="deleteMessage"></p><div class="delete-modal-actions"><button id="deleteConfirm" class="danger" type="button">Yes — Delete</button><button id="deleteCancel" type="button">Cancel</button></div></div></div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
@@ -50,7 +52,8 @@ const firebaseConfig={apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",authDomai
 const ADMIN_UID='JMNwUXCevHU1dt6fQleyX7zLXCF2';
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 let submissions=[];let activeFilter='All';
-const gate=document.getElementById('gate'),viewer=document.getElementById('viewer'),list=document.getElementById('list'),state=document.getElementById('state'),errorBox=document.getElementById('errorBox');
+const gate=document.getElementById('gate'),viewer=document.getElementById('viewer'),list=document.getElementById('list'),state=document.getElementById('state'),errorBox=document.getElementById('errorBox'),deleteModal=document.getElementById('deleteModal'),deleteMessage=document.getElementById('deleteMessage'),deleteConfirm=document.getElementById('deleteConfirm'),deleteCancel=document.getElementById('deleteCancel');
+let pendingDelete=null;
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 function formatDate(v){if(!v)return 'Unknown date';const d=v.toDate?v.toDate():new Date(v);return Number.isNaN(d.getTime())?'Unknown date':d.toLocaleString();}
 function render(){
@@ -74,19 +77,27 @@ async function changeStatus(id,newStatus,select){
   try{await updateDoc(doc(db,'gameSuggestions',id),{status:newStatus});item.data.status=newStatus;render();}
   catch(e){console.error(e);select.value=old;errorBox.style.display='block';errorBox.textContent='Could not update submission status. Firestore Admin write access may not be enabled yet.';select.disabled=false;}
 }
-async function removeSubmission(id,button){
+function openDeleteModal(id,button){
   const item=submissions.find(x=>x.id===id);if(!item)return;
   const game=item.data.game||'this suggestion';
-  if(!confirm(`Delete the suggestion for ${game}?\n\nThis cannot be undone.`))return;
-  button.disabled=true;
-  try{await deleteDoc(doc(db,'gameSuggestions',id));submissions=submissions.filter(x=>x.id!==id);render();}
-  catch(e){console.error(e);button.disabled=false;errorBox.style.display='block';errorBox.textContent='Could not delete submission. Firestore Admin delete access may not be enabled yet.';}
+  pendingDelete={id,button};deleteMessage.textContent=`Delete the suggestion for ${game}? This cannot be undone.`;deleteModal.classList.add('open');deleteModal.setAttribute('aria-hidden','false');deleteConfirm.focus();
+}
+function closeDeleteModal(){pendingDelete=null;deleteModal.classList.remove('open');deleteModal.setAttribute('aria-hidden','true');}
+async function confirmDeleteSubmission(){
+  if(!pendingDelete)return;const {id,button}=pendingDelete;deleteConfirm.disabled=true;button.disabled=true;
+  try{await deleteDoc(doc(db,'gameSuggestions',id));submissions=submissions.filter(x=>x.id!==id);closeDeleteModal();render();}
+  catch(e){console.error(e);button.disabled=false;closeDeleteModal();errorBox.style.display='block';errorBox.textContent='Could not delete submission. Firestore Admin delete access may not be enabled yet.';}
+  finally{deleteConfirm.disabled=false;}
 }
 await setPersistence(auth,browserLocalPersistence);
 onAuthStateChanged(auth,user=>{if(!user){location.replace('/copyright/');return;}if(user.uid!==ADMIN_UID){signOut(auth).finally(()=>location.replace('/copyright/'));return;}gate.style.display='none';viewer.style.display='block';load();});
 document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;activeFilter=b.dataset.filter;render();});
 list.addEventListener('change',e=>{if(e.target.matches('.statusSelect'))changeStatus(e.target.dataset.id,e.target.value,e.target);});
-list.addEventListener('click',e=>{const b=e.target.closest('.delete');if(b)removeSubmission(b.dataset.id,b);});
+list.addEventListener('click',e=>{const b=e.target.closest('.delete');if(b)openDeleteModal(b.dataset.id,b);});
+deleteConfirm.addEventListener('click',confirmDeleteSubmission);
+deleteCancel.addEventListener('click',closeDeleteModal);
+deleteModal.addEventListener('click',e=>{if(e.target===deleteModal)closeDeleteModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&deleteModal.classList.contains('open'))closeDeleteModal();});
 document.getElementById('refresh').addEventListener('click',load);
 </script>
 </body>
