@@ -176,7 +176,7 @@
       // exposing the same TEST YouTube video/playlist while TEST content is hidden.
       let testContentHidden = true;
       try {
-        const testContentControlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.test_content&select=value';
+        const testContentControlUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/test_content_control?id=eq.test_content&select=value';
         const testContentApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const testContentResponse = await fetch(testContentControlUrl, { headers: { apikey: testContentApiKey }, cache: 'no-store' });
         if (!testContentResponse.ok) throw new Error(`Supabase TEST CONTENT control: HTTP ${testContentResponse.status}`);

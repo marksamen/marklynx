@@ -5,7 +5,7 @@
 (() => {
   'use strict';
 
-  const TEST_CONTENT_CONTROL_URL = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/site_control?id=eq.test_content&select=value';
+  const TEST_CONTENT_CONTROL_URL = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/test_content_control?id=eq.test_content&select=value';
   const TEST_CONTENT_API_KEY = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
   const testContentVisible = (async () => {
     try {
