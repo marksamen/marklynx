@@ -546,7 +546,7 @@ async function createGameDev(){
     }
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
-    showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
     writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
@@ -598,7 +598,7 @@ document.getElementById("gameDevDeleteConfirm").addEventListener("click",async()
     await loadGamesProd();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`DELETED — ${target.id} — ${target.n} removed from Supabase PROD. List refreshed automatically.`;
-    showGameDevResult({title:"Game Deleted Successfully",message:`${target.id} — ${target.n} was deleted from Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    showGameDevResult({title:"Game Deleted Successfully",message:`${target.id} — ${target.n} was deleted from Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent=`DELETE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
@@ -659,7 +659,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     drawSelectedGame();
     writeStatus.style.color="#6dff8b";
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
-    showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase PROD.`,question:"Download an updated recovery games.json now?",offerRecovery:true,onYes:downloadRecoveryJson});
+    showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
     writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
@@ -692,31 +692,58 @@ function cleanGameForJson(game){
   return clean;
 }
 
+
+async function fetchPublicDeveloperRecoveryData(){
+  const headers={apikey:SUPABASE_PROD_PUBLISHABLE_KEY};
+  const showcaseSelect="company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
+  const [showcaseResponse,providedResponse]=await Promise.all([
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_showcase?select=${showcaseSelect}`,{headers,cache:"no-store"}),
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_games?select=game_id&order=game_id.asc`,{headers,cache:"no-store"})
+  ]);
+  if(!showcaseResponse.ok)throw new Error(`Public Developer Showcase read failed (${showcaseResponse.status}).`);
+  if(!providedResponse.ok)throw new Error(`Developer Provided read failed (${providedResponse.status}).`);
+  const showcase=await showcaseResponse.json();
+  const providedRows=await providedResponse.json();
+  if(!Array.isArray(showcase)||!Array.isArray(providedRows))throw new Error("Public developer recovery data returned an invalid response.");
+  return {
+    showcase,
+    providedGameIds:providedRows.map(row=>Number(row.game_id)).filter(Number.isInteger)
+  };
+}
+
+function downloadJsonFile(filename,data){
+  const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 async function downloadRecoveryJson(){
   const button=document.getElementById("gameDevExportSupabase");
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase PROD and generating games.json…";
+  writeStatus.textContent="Reading Supabase PROD and generating recovery files…";
   try{
-    const games=await fetchAllSupabaseTestGames();
+    const [games,publicDeveloperData]=await Promise.all([
+      fetchAllSupabaseTestGames(),
+      fetchPublicDeveloperRecoveryData()
+    ]);
     if(!games.length)throw new Error("Supabase PROD returned zero games.");
     const cleanGames=games.map(cleanGameForJson);
-    const blob=new Blob([JSON.stringify(cleanGames,null,2)+"\n"],{type:"application/json"});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement("a");
-    a.href=url;
-    a.download="games.json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    downloadJsonFile("games.json",cleanGames);
+    downloadJsonFile("public-developer-data.json",publicDeveloperData);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json downloaded from Supabase PROD (${cleanGames.length} games).`;
+    writeStatus.textContent=`GENERATED — games.json (${cleanGames.length} games) + public-developer-data.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGameIds.length} provided games).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent="EXPORT FAILED — no file was generated.";
-    console.error("Supabase PROD games.json export failed:",e);
+    writeStatus.textContent="EXPORT FAILED — recovery files were not generated.";
+    console.error("Supabase PROD recovery export failed:",e);
   }finally{
     button.disabled=false;
   }
