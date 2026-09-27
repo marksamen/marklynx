@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=20260921-game-guides-REV12', 'mainModuleMount');
+      await loadHtml('sections/main.html?v=provided-developer-PROD01', 'mainModuleMount');
       await loadHtml('sections/developer.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -72,7 +72,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
+      const gameFields = ['id','n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
@@ -105,7 +105,7 @@
 
         for (let offset = 0; ; offset += pageSize) {
           const params = new URLSearchParams({
-            select: `id,${gameFields.join(',')}`,
+            select: gameFields.join(','),
             order: 'id.asc',
             limit: String(pageSize),
             offset: String(offset)
@@ -196,6 +196,7 @@
       // static recovery file for a Supabase outage. Private Admin data is never exposed.
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
       window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
+      window.PUBLIC_DEVELOPER_PROVIDED_GAMES = [];
       try {
         const publicDeveloperBaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1';
         const publicDeveloperApiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
@@ -203,7 +204,7 @@
         const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
         const [showcaseResponse, providedResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
@@ -211,7 +212,10 @@
         const providedRows = await providedResponse.json();
         if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = providedRows.map(row => Number(row.game_id)).filter(Number.isInteger);
+        window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
+          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
+          .filter(row => Number.isInteger(row.game_id) && row.provided_by);
+        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
         console.info(`[PRODUCTION] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
       } catch (publicDeveloperError) {
         console.warn('[PRODUCTION] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
@@ -219,11 +223,14 @@
           const recoveryResponse = await fetch('data/public-developer-data.json', { cache: 'no-store' });
           if (!recoveryResponse.ok) throw new Error(`public-developer-data.json: HTTP ${recoveryResponse.status}`);
           const recoveryData = await recoveryResponse.json();
-          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGameIds)) {
+          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGames)) {
             throw new Error('public-developer-data.json: invalid recovery data');
           }
           window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
-          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = recoveryData.providedGameIds.map(Number).filter(Number.isInteger);
+          window.PUBLIC_DEVELOPER_PROVIDED_GAMES = recoveryData.providedGames
+            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim() }))
+            .filter(row => Number.isInteger(row.game_id) && row.provided_by);
+          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
           console.info(`[PRODUCTION] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
         } catch (recoveryError) {
           console.warn('[PRODUCTION] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
@@ -239,7 +246,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=20260921-prod-promotion-01');
-      await loadScript('js/site.js?v=20260921-game-guides-REV12');
+      await loadScript('js/site.js?v=provided-developer-PROD01');
       await loadScript('js/developer.js?v=20260926-db-showcase-REV48');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=REV66-mobile-landscape-suggest-success-scroll');

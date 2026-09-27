@@ -5,6 +5,19 @@ function hasTextGuide(tx){
   return !!tx && tx.trim() !== '' && tx.trim().toLowerCase() !== 'no' && tx.trim() !== '-' && !tx.trim().toLowerCase().startsWith('no (');
 }
 
+const developerProvidedByGame = new Map(
+  (window.PUBLIC_DEVELOPER_PROVIDED_GAMES || [])
+    .map(row => [Number(row?.game_id), String(row?.provided_by || '').trim()])
+    .filter(([id,name]) => Number.isInteger(id) && name)
+);
+function developerProvidedName(r){
+  const id = Number(r?.id);
+  return Number.isInteger(id) ? (developerProvidedByGame.get(id) || '') : '';
+}
+function isDeveloperProvided(r){
+  return !!developerProvidedName(r);
+}
+
 const DIFF_COLORS = {
   'Quick & Easy': '#4caf50',
   'Easy': '#8bc34a',
@@ -117,6 +130,7 @@ function getFiltered(){
       if(r.df !== df) return false;
     }
     if(feature === '__TEXT_GUIDE__' && !hasTextGuide(r.tx)) return false;
+    if(feature === '__DEVELOPER_PROVIDED__' && !isDeveloperProvided(r)) return false;
     return true;
   });
   const sort = sortSelect.value;
@@ -134,6 +148,13 @@ function textGuideBadge(r){
   if(!hasTextGuide(r.tx)) return '';
   const label = (r.tx && r.tx.trim().toLowerCase() !== 'yes') ? r.tx : 'Text Guide Included';
   return `<span class="text-guide-badge" title="${escapeHtml(r.tx)}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>${escapeHtml(label)}</span>`;
+}
+
+function developerProvidedBadge(r){
+  const companyName=developerProvidedName(r);
+  if(!companyName) return '';
+  const safeName=escapeHtml(companyName);
+  return `<span class="developer-provided-badge" title="Provided by ${safeName}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13M3 12h18M7.5 8C5 8 5 4 7.5 4c2 0 4.5 4 4.5 4s2.5-4 4.5-4C19 4 19 8 16.5 8"></path></svg>Provided by ${safeName}</span>`;
 }
 
 function playlistPill(r){
@@ -211,6 +232,7 @@ function cardHtml(r){
         <span class="game-meta-quality">${qualityBadge(r.q)}</span>
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
+        ${developerProvidedBadge(r)}
       </div>
     </span>
   </${tag}>`;
@@ -241,7 +263,7 @@ function listRowHtml(r){
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
       </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
-      ${(r.kinect || hasTextGuide(r.tx)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}</div>` : ''}
+      ${(r.kinect || hasTextGuide(r.tx) || isDeveloperProvided(r)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}${developerProvidedBadge(r)}</div>` : ''}
     </span>
     <span class="list-col type game-meta-pill list-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
     <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
