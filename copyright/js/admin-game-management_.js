@@ -145,6 +145,25 @@ function wireProvidedDeveloperRolePrompt(){
 }
 
 
+function showProvidedRelationshipWarning(){
+  const activeModal=document.getElementById("gameDevAddModal")?.classList.contains("open")
+    ? document.getElementById("gameDevAddModal")
+    : document.getElementById("gameDevEditModal");
+  const card=activeModal?.querySelector(".gd-modal-card");
+  if(!card) return;
+  card.querySelector(".gd-validation-overlay")?.remove();
+  const overlay=document.createElement("div");
+  overlay.className="gd-validation-overlay";
+  overlay.setAttribute("role","alertdialog");
+  overlay.setAttribute("aria-modal","true");
+  overlay.innerHTML=`<div class="gd-validation-card"><h2>Developer / Publisher Required</h2><p>This game is marked as “Provided by Developer.” The assigned developer or publisher cannot be removed while this option is selected. Please correct the Developer/Publisher assignment and try again.</p><div class="gd-result-actions gd-result-actions-single"><button type="button">OK</button></div></div>`;
+  card.appendChild(overlay);
+  const ok=overlay.querySelector("button");
+  const close=()=>overlay.remove();
+  ok.addEventListener("click",close,{once:true});
+  ok.focus();
+}
+
 function closeGameDevResult(){
   const modal=document.getElementById("gameDevResultModal");
   modal.classList.remove("open");
@@ -504,7 +523,7 @@ async function createGameDev(){
   if((window.GAMEDEV_RAW||[]).some(g=>Number(g.order)===order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — order ${order} already exists.`;return;}
   if(!validateGamerscore(true)||!validateCompletionTime(true)||!validateYoutubeLink(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — fix the highlighted field(s).";updateCreateButtonState();return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
-  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;alert("This game is marked as “Provided by Developer.” The assigned developer or publisher cannot be removed while this option is selected. Please correct the Developer/Publisher assignment and try again.");return;}
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;showProvidedRelationshipWarning();return;}
   const record={
     order, n:name,
     p:getChoices("gdPlatformChoices"),
@@ -639,7 +658,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
   const writeStatus=document.getElementById("gameDevWriteStatus");
   if(!validateGamerscore(true)||!validateCompletionTime(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE BLOCKED — fix the highlighted field(s).";return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
-  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;alert("This game is marked as “Provided by Developer.” The assigned developer or publisher cannot be removed while this option is selected. Please correct the Developer/Publisher assignment and try again.");return;}
+  if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;showProvidedRelationshipWarning();return;}
   const patch={
     id:Number(g.id),
     n:document.getElementById("gdName").value.trim(),
