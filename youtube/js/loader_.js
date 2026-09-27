@@ -195,6 +195,35 @@
         console.warn('[TEST] TEST content control unavailable; defaulting OFF:', controlError);
       }
       console.info(`[TEST] TEST CONTENT: ${testContentEnabled ? 'ON' : 'OFF'}`);
+
+      // Permanent TEST media metadata must exist in RAW regardless of whether the
+      // active game source is Supabase or JSON. The legacy TEST injector only
+      // augments JSON fetches, so Supabase mode can otherwise leave Recent with
+      // TEST cards but no matching game metadata. Keep this TEST-only and source-
+      // isolated: only missing testContent=true fixtures from games_.json are added.
+      if (testContentEnabled && activeDataSource === 'supabase') {
+        try {
+          const testFixtureRows = await loadGamesFromJson();
+          const permanentTestFixtures = testFixtureRows.filter(game => game?.testContent === true);
+          let restored = 0;
+
+          permanentTestFixtures.forEach(testGame => {
+            const alreadyPresent = window.RAW.some(game =>
+              game?.testContent === true &&
+              String(game?.n || '') === String(testGame?.n || '')
+            );
+            if (!alreadyPresent) {
+              window.RAW.push(testGame);
+              restored += 1;
+            }
+          });
+
+          console.info(`[TEST] Permanent TEST fixtures restored from games_.json: ${restored}`);
+        } catch (fixtureError) {
+          console.warn('[TEST] Permanent TEST fixture metadata unavailable:', fixtureError);
+        }
+      }
+
       if (!testContentEnabled) {
         const testVideoIds = new Set(
           window.RAW.filter(game => game?.testContent === true && game.v).map(game => String(game.v))
