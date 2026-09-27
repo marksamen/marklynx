@@ -29,7 +29,7 @@
     },
     {
       id: 'HRtSmycjwN8', title: 'TEST PLAYLIST',
-      thumbnail: 'https://i.ytimg.com/vi/HRtSmycjwN8/hqdefault.jpg',
+      thumbnail: null,
       testPlaylistId: 'PLW8_g7jLVHB0'
     }
   ];
@@ -66,7 +66,20 @@
       const data = await response.clone().json();
       if (data && Array.isArray(data.videos)) {
         const production = data.videos.filter(video => video && video.title !== 'TEST VIDEO' && video.title !== 'TEST PLAYLIST');
-        data.videos = [...TEST_RECENT, ...production];
+        const testRecent = TEST_RECENT.map(video => ({...video}));
+        const testPlaylist = testRecent.find(video => video.testPlaylistId);
+        if (testPlaylist) {
+          const playlistUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(testPlaylist.testPlaylistId)}`;
+          const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(playlistUrl)}&format=json`;
+          try {
+            const oembedResponse = await nativeFetch(oembedUrl);
+            if (oembedResponse.ok) {
+              const oembed = await oembedResponse.json();
+              if (oembed && oembed.thumbnail_url) testPlaylist.thumbnail = oembed.thumbnail_url;
+            }
+          } catch (_) {}
+        }
+        data.videos = [...testRecent, ...production];
       }
       return jsonResponse(data, response);
     }
