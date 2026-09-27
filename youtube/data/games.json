@@ -2616,12 +2616,12 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/2NYNzX5q98Q",
+    "u": "https://www.youtube.com/watch?v=2NYNzX5q98Q",
     "v": "2NYNzX5q98Q",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Mel The Cat",
@@ -2696,28 +2696,28 @@
     "tx": "Yes",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/NB387jqcoxA",
+    "u": "https://www.youtube.com/watch?v=NB387jqcoxA",
     "v": "NB387jqcoxA",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Moves: Perfect Pair",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G Update",
-    "t": "1 Minute Recompletion",
+    "t": "1 Minutes",
     "ty": "Puzzle",
     "tx": "Yes",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/4QwKAyh-adU",
+    "u": "https://www.youtube.com/watch?v=4QwKAyh-adU",
     "v": "4QwKAyh-adU",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Mr. Brocco & Co.",
@@ -4040,28 +4040,28 @@
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/NKZEU_mLBMs",
+    "u": "https://www.youtube.com/watch?v=NKZEU_mLBMs",
     "v": "NKZEU_mLBMs",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Wiz Quest: Crystal Power",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "4,000G Update",
-    "t": "Seconds",
+    "t": "1 Minutes",
     "ty": "Shoot 'em up",
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/LMbo05hqJP4",
+    "u": "https://www.youtube.com/watch?v=LMbo05hqJP4",
     "v": "LMbo05hqJP4",
     "pl": null,
-    "kinect": null,
-    "adult": null,
-    "testContent": null
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false"
   },
   {
     "n": "Words of Wisdom",
