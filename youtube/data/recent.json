@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-27T16:56:11.523707+00:00",
+  "updated": "2026-09-27T18:27:42.668857+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "0N2mIuV800c",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 2 | Porcupuffer Falls | All Star Coins | Normal Ex",
+      "published": "2026-09-27T18:15:24+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/0N2mIuV800c/hqdefault.jpg"
+    },
     {
       "id": "tOnYXFh9HbQ",
       "title": "Dino Escape | Easy 100% Completion | 3000 Gamerscore | 6-7 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle 7 | Wiggler Stampede | All Star Coins | Normal Exit",
       "published": "2026-09-23T13:28:16+00:00",
       "thumbnail": "https://i.ytimg.com/vi/PKzOCMvZwxA/hqdefault.jpg"
-    },
-    {
-      "id": "SCd4rLn41IM",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle 6 | Seesaw Bridge | All Star Coins | Normal Exit | 4K",
-      "published": "2026-09-22T13:29:11+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/SCd4rLn41IM/hqdefault.jpg"
     }
   ]
 }
