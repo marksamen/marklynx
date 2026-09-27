@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV02</div></div>
+  <div class="head"><div><h1>Quality Badge Management</h1><p>Manage the quality labels and images used by game records.</p></div><div class="test">TEST — REV03</div></div>
   <section class="panel">
     <h2>Current Quality Badges</h2>
     <div id="badgeStatus" class="meta">Loading quality badges from Supabase TEST…</div>
@@ -24,7 +24,7 @@
       <div class="wide"><button class="add" type="button" disabled>Add Quality Badge</button></div>
     </div>
   </section>
-  <section class="panel"><p class="notice"><strong>REV02 is read-only.</strong> Badge definitions are loaded from Supabase TEST. No database writes, game records, quality values, public badge rendering, or existing images are changed by this screen.</p></section>
+  <section class="panel"><p class="notice"><strong>REV03 is read-only.</strong> Badge definitions are loaded from Supabase TEST. No database writes, game records, quality values, public badge rendering, or existing images are changed by this screen.</p></section>
 </div>
 <script>
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
@@ -68,7 +68,10 @@ async function loadQualityBadges(){
   const list=document.getElementById("badgeList");
   try{
     const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,sort_order&order=sort_order.asc`,{
-      headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},
+      headers:{
+        apikey:SUPABASE_TEST_PUBLISHABLE_KEY,
+        Authorization:`Bearer ${SUPABASE_TEST_PUBLISHABLE_KEY}`
+      },
       cache:"no-store"
     });
     if(!response.ok)throw new Error(`Supabase TEST returned HTTP ${response.status}.`);
