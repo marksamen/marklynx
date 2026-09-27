@@ -9,7 +9,11 @@
 *{box-sizing:border-box}
 body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#101216;color:#eee}
 main{max-width:1050px;margin:auto;padding:24px}
-h1{margin:0 0 6px} .sub{color:#aaa;margin-bottom:20px}
+h1{margin:0 0 6px} .sub{color:#aaa;margin-bottom:16px}
+.runbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#171a20;border:1px solid #30343d;border-radius:10px;padding:12px;margin:14px 0}
+.runbar strong{margin-right:4px}
+.runbtn{background:#252a33;color:#fff;border:1px solid #444;border-radius:7px;padding:8px 12px;cursor:pointer}
+.runbtn.active{background:#eee;color:#111;border-color:#eee;font-weight:700}
 .toolbar,.add{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
 button,input,select{font:inherit}
 button{background:#252a33;color:#fff;border:1px solid #444;border-radius:7px;padding:8px 12px;cursor:pointer}
@@ -27,18 +31,28 @@ h2{font-size:17px;margin:0 0 10px}
 .stats{margin:7px 0;color:#bbb}
 .small{font-size:12px;color:#888}
 .delete{padding:2px 7px;background:transparent;border-color:#3a3a3a;color:#999}
-@media(max-width:600px){main{padding:14px}.toolbar button{flex:1}}
+.note{background:#171a20;border-left:4px solid #ddd;padding:10px 12px;margin:12px 0;color:#ccc}
+@media(max-width:600px){main{padding:14px}.toolbar button,.runbtn{flex:1}}
 </style>
 </head>
 <body>
 <main>
 <h1>Mark Lynx — Full QA Checklist</h1>
-<div class="sub">TEST → PASS → PROD → verify → freeze. Checks are saved automatically in this browser.</div>
+<div class="sub">TEST → PASS → PROD → verify → freeze. Permanent tests live in this HTML; checkmarks/custom additions are saved locally per browser.</div>
+
+<div class="runbar">
+<strong>QA Run:</strong>
+<button class="runbtn" data-run="desktop" onclick="setRun('desktop')">Desktop</button>
+<button class="runbtn" data-run="mobile1" onclick="setRun('mobile1')">Mobile #1</button>
+<button class="runbtn" data-run="mobile2" onclick="setRun('mobile2')">Mobile #2</button>
+</div>
+<div class="note" id="runNote"></div>
+
 <div class="progress"><div id="bar"></div></div>
 <div class="stats" id="stats"></div>
 <div class="toolbar">
-<button onclick="resetChecks()">Reset checks</button>
-<button onclick="exportList()">Export results</button>
+<button onclick="resetChecks()">Reset current run</button>
+<button onclick="exportList()">Export current results</button>
 </div>
 <div id="sections"></div>
 
@@ -49,135 +63,76 @@ h2{font-size:17px;margin:0 0 10px}
 <select id="newSection"></select>
 <button onclick="addItem()">Add</button>
 </div>
-<div class="small">Custom items and checkbox state are stored in localStorage on this device.</div>
+<div class="small">Send exported additions back to ChatGPT later and they can be baked permanently into this HTML/GitHub copy.</div>
 </section>
 </main>
+
 <script>
-const defaults={
-"Public Site — Core":[
-"Site loads normally with Supabase",
-"Main Guides loads and game count looks correct",
-"Search works",
-"Sort options work",
-"Clear Filters works",
-"List view works",
-"Grid view works",
-"Normal single-video guide opens/closes correctly",
-"Normal playlist guide opens/closes correctly"
-],
-"Filters / Features":[
-"All Features dropdown works",
-"Developer Provided filter works",
-"Provided by [Company] attribution is correct",
-"Text Guide filter works",
-"Difficulty filter works",
-"Genre filter works",
-"Other existing filters still work together"
-],
-"Recent Uploads — DO NOT MODIFY":[
-"Recent Uploads loads correctly",
-"Recent normal video opens correctly",
-"Recent playlist opens correctly",
-"Recent metadata/badges look correct",
-"TEST VIDEO / TEST PLAYLIST behavior is correct when enabled"
-],
-"Developer Area":[
-"Developer area opens correctly",
-"Developer/company entries display correctly",
-"Provided games appear under correct company",
-"Developer video opens correctly",
-"Closing Developer content behaves as expected"
-],
-"Suggest a Game":[
-"Suggest a Game opens",
-"Form submits",
-"Success state displays",
-"Close X remains accessible",
-"Notification/backend workflow behaves correctly"
-],
-"Admin":[
-"Admin loads/authenticates",
-"Game Add works",
-"Game Edit works",
-"Developer/Publisher relationships work",
-"Provided by Developer relationship works",
-"Invalid Provided relationship is blocked with styled dialog",
-"TEST CONTENT control works"
-],
-"Recovery / Resilience":[
-"Generate fresh recovery files from Admin",
-"Manual SUPABASE mode works",
-"Manual JSON recovery mode works",
-"Developer attribution survives generated JSON recovery",
-"Forced Supabase failure automatically falls back to JSON",
-"Return to normal Supabase after fallback test"
-],
-"TEST CONTENT":[
-"TEST CONTENT OFF hides TEST records",
-"TEST CONTENT ON shows only intended TEST records",
-"TEST VIDEO works",
-"TEST PLAYLIST works",
-"Normal production records unaffected"
-],
-"Mobile Portrait":[
-"Main Guides list/grid",
-"Filters/search",
-"Video modal",
-"Playlist modal",
-"Recent Uploads",
-"Developer area",
-"Suggest a Game"
-],
-"Mobile Landscape":[
-"Main Guides list/grid",
-"Filters/search",
-"Video modal",
-"Playlist modal",
-"Recent Uploads",
-"Developer area",
-"Suggest a Game — success X accessible"
-]
-};
-let custom=JSON.parse(localStorage.getItem("mlqa-custom")||"{}");
-let checked=JSON.parse(localStorage.getItem("mlqa-checked")||"{}");
-function allData(){let d=JSON.parse(JSON.stringify(defaults));for(const s in custom){d[s]??=[];d[s].push(...custom[s])}return d}
-function key(s,t){return s+"|||"+t}
+const defaults={"Public Site — Core": ["Site loads normally with Supabase", "Main Guides loads and game count looks correct", "Search works", "Sort options work", "Clear Filters works", "List view works", "Grid view works", "Normal single-video guide opens/closes correctly", "Normal playlist guide opens/closes correctly"], "Filters / Features": ["All Features dropdown works", "Developer Provided filter works", "Provided by [Company] attribution is correct", "Text Guide filter works", "Difficulty filter works", "Genre filter works", "Other existing filters still work together"], "Recent Uploads — DO NOT MODIFY": ["Recent Uploads loads correctly", "Recent normal video opens correctly", "Recent playlist opens correctly", "Recent metadata/badges look correct", "TEST VIDEO / TEST PLAYLIST behavior is correct when enabled"], "Developer Area": ["Developer area opens correctly", "Developer/company entries display correctly", "Provided games appear under correct company", "Developer video opens correctly", "Closing Developer content behaves as expected", "Send Message works"], "Suggest a Game": ["Suggest a Game opens", "Form submits", "After submission, confirmation/thank-you screen appears correctly", "Close X remains accessible", "Notification/backend workflow behaves correctly"], "Admin": ["Admin loads/authenticates", "Game Add works", "Game Edit works", "Developer/Publisher relationships work", "Provided by Developer relationship works", "Invalid Provided relationship is blocked with styled dialog", "TEST CONTENT control works", "Game Delete works", "Add New Developer/Publisher works", "Manage Developer/Publisher works", "Public Developer Profiles works", "Developer Submissions button and area works", "Game Suggestions button and area works", "Check YouTube Copyright Claims button works", "Open TEST/Main Site button works", "Test HTTP Redirect button works", "Test Copyright Redirect button works", "Refresh Recent Uploads Now button works", "Traffic Analytics doesn't look dead"], "Recovery / Resilience": ["Generate fresh recovery files from Admin", "Manual SUPABASE mode works", "Manual JSON recovery mode works", "Developer attribution survives generated JSON recovery"], "TEST CONTENT": ["TEST CONTENT OFF hides TEST records", "TEST CONTENT ON shows only intended TEST records", "TEST VIDEO works", "TEST PLAYLIST works", "Normal production records unaffected"]};
+let run=localStorage.getItem("mlqa-run")||"desktop";
+let custom=JSON.parse(localStorage.getItem("mlqa-custom-v2")||"{}");
+let checked=JSON.parse(localStorage.getItem("mlqa-checked-v2")||"{}");
+
+function visibleData(){
+  const d=JSON.parse(JSON.stringify(defaults));
+  // Mobile repeats the same public-site QA as desktop, but Admin is intentionally excluded.
+  if(run!=="desktop") delete d["Admin"];
+  for(const s in custom){
+    if(run!=="desktop" && s==="Admin") continue;
+    d[s]??=[];
+    d[s].push(...custom[s]);
+  }
+  return d;
+}
+function key(s,t){return run+"|||"+s+"|||"+t}
+function setRun(r){run=r;localStorage.setItem("mlqa-run",r);render()}
 function render(){
- const root=document.getElementById("sections"); root.innerHTML="";
- const data=allData();
- const sel=document.getElementById("newSection"); sel.innerHTML="";
+ document.querySelectorAll(".runbtn").forEach(b=>b.classList.toggle("active",b.dataset.run===run));
+ document.getElementById("runNote").textContent =
+   run==="desktop"
+   ? "Desktop: full checklist including Admin."
+   : (run==="mobile1" ? "Mobile #1: same public-site tests as Desktop. Admin is excluded." : "Mobile #2: same public-site tests as Desktop. Admin is excluded.");
+ const root=document.getElementById("sections");root.innerHTML="";
+ const data=visibleData();
+ const sel=document.getElementById("newSection");sel.innerHTML="";
  Object.entries(data).forEach(([s,items])=>{
    sel.add(new Option(s,s));
-   const sec=document.createElement("section"); sec.innerHTML=`<h2>${s}</h2>`;
-   items.forEach((t,i)=>{
-     const k=key(s,t), row=document.createElement("div"); row.className="item"+(checked[k]?" done":"");
+   const sec=document.createElement("section");sec.innerHTML=`<h2>${s}</h2>`;
+   items.forEach(t=>{
+     const k=key(s,t),row=document.createElement("div");row.className="item"+(checked[k]?" done":"");
      const isCustom=(custom[s]||[]).includes(t);
      row.innerHTML=`<input type="checkbox" ${checked[k]?"checked":""}><label></label>${isCustom?'<button class="delete">×</button>':""}`;
      row.querySelector("label").textContent=t;
      row.querySelector("input").onchange=e=>{checked[k]=e.target.checked;save();render()};
      if(isCustom) row.querySelector(".delete").onclick=()=>{custom[s]=custom[s].filter(x=>x!==t);delete checked[k];save();render()};
      sec.appendChild(row);
-   }); root.appendChild(sec);
+   });
+   root.appendChild(sec);
  });
  updateStats();
 }
-function save(){localStorage.setItem("mlqa-custom",JSON.stringify(custom));localStorage.setItem("mlqa-checked",JSON.stringify(checked))}
+function save(){localStorage.setItem("mlqa-custom-v2",JSON.stringify(custom));localStorage.setItem("mlqa-checked-v2",JSON.stringify(checked))}
 function updateStats(){
- const data=allData(), keys=[]; Object.entries(data).forEach(([s,a])=>a.forEach(t=>keys.push(key(s,t))));
- const n=keys.filter(k=>checked[k]).length, total=keys.length, pct=total?Math.round(n/total*100):0;
+ const data=visibleData(),keys=[];Object.entries(data).forEach(([s,a])=>a.forEach(t=>keys.push(key(s,t))));
+ const n=keys.filter(k=>checked[k]).length,total=keys.length,pct=total?Math.round(n/total*100):0;
  document.getElementById("stats").textContent=`${n} / ${total} checks complete (${pct}%)`;
  document.getElementById("bar").style.width=pct+"%";
 }
 function addItem(){
- const t=document.getElementById("newText").value.trim(), s=document.getElementById("newSection").value;if(!t)return;
+ const t=document.getElementById("newText").value.trim(),s=document.getElementById("newSection").value;if(!t)return;
  (custom[s]??=[]).push(t);document.getElementById("newText").value="";save();render();
 }
-function resetChecks(){if(confirm("Reset every checkbox?")){checked={};save();render()}}
+function resetChecks(){
+ if(!confirm("Reset every checkbox for the current QA run only?"))return;
+ Object.keys(checked).forEach(k=>{if(k.startsWith(run+"|||"))delete checked[k]});
+ save();render();
+}
 function exportList(){
- const data=allData(), out=["MARK LYNX FULL QA RESULTS",""];
+ const data=visibleData(),label=run==="desktop"?"DESKTOP":run==="mobile1"?"MOBILE #1":"MOBILE #2";
+ const out=[`MARK LYNX FULL QA RESULTS — ${label}`,""];
  Object.entries(data).forEach(([s,a])=>{out.push("["+s+"]");a.forEach(t=>out.push((checked[key(s,t)]?"[PASS] ":"[ ] ")+t));out.push("")});
  const blob=new Blob([out.join("\n")],{type:"text/plain"}),a=document.createElement("a");
- a.href=URL.createObjectURL(blob);a.download="Mark-Lynx-QA-Results.txt";a.click();URL.revokeObjectURL(a.href);
+ a.href=URL.createObjectURL(blob);a.download=`Mark-Lynx-QA-Results-${label.replaceAll(" ","-").replace("#","")}.txt`;a.click();URL.revokeObjectURL(a.href);
 }
 render();
 </script>
