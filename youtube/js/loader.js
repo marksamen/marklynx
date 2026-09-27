@@ -192,24 +192,42 @@
 
       console.info(`[PRODUCTION] ${activeDataSource.toUpperCase()} loaded: ${window.RAW.length} games`);
 
-      // Public Developer Showcase: sanitized, public-only database feed.
-      // Failure here must never take down the website; developer.js retains the
-      // existing hard-coded cards as a fallback if this optional feed is unavailable.
+      // Public developer data: use sanitized Supabase views normally, with one
+      // static recovery file for a Supabase outage. Private Admin data is never exposed.
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
+      window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
       try {
-        const showcaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/public_developer_showcase?select=company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const showcaseApiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
-        const showcaseResponse = await fetch(showcaseUrl, {
-          headers: { apikey: showcaseApiKey },
-          cache: 'no-store'
-        });
+        const publicDeveloperBaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1';
+        const publicDeveloperApiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
+        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
+        const [showcaseResponse, providedResponse] = await Promise.all([
+          fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+        ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
+        if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
         const showcaseRows = await showcaseResponse.json();
-        if (!Array.isArray(showcaseRows)) throw new Error('public_developer_showcase: invalid response');
+        const providedRows = await providedResponse.json();
+        if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
-        console.info(`[PRODUCTION] Public Developer Showcase loaded: ${showcaseRows.length} games`);
-      } catch (showcaseError) {
-        console.warn('[PRODUCTION] Public Developer Showcase unavailable; keeping existing fallback cards:', showcaseError);
+        window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = providedRows.map(row => Number(row.game_id)).filter(Number.isInteger);
+        console.info(`[PRODUCTION] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
+      } catch (publicDeveloperError) {
+        console.warn('[PRODUCTION] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
+        try {
+          const recoveryResponse = await fetch('data/public-developer-data.json', { cache: 'no-store' });
+          if (!recoveryResponse.ok) throw new Error(`public-developer-data.json: HTTP ${recoveryResponse.status}`);
+          const recoveryData = await recoveryResponse.json();
+          if (!recoveryData || !Array.isArray(recoveryData.showcase) || !Array.isArray(recoveryData.providedGameIds)) {
+            throw new Error('public-developer-data.json: invalid recovery data');
+          }
+          window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
+          window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = recoveryData.providedGameIds.map(Number).filter(Number.isInteger);
+          console.info(`[PRODUCTION] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
+        } catch (recoveryError) {
+          console.warn('[PRODUCTION] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
+        }
       }
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
