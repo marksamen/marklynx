@@ -12,6 +12,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// REV15: expose the current Firebase ID token to the CVC archive layer.
+window.getCvcIdToken = async function () {
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error("CVC authentication is not ready.");
+  }
+  return user.getIdToken();
+};
 const login = document.getElementById("login");
 const cvcApp = document.getElementById("cvcApp");
 const form = document.getElementById("loginForm");
