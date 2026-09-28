@@ -2880,3 +2880,11 @@ body.suggest-modal-open{overflow:hidden}
   fill:none;
   flex-shrink:0;
 }
+
+/* Developer Provided REV27 — mobile portrait long-name containment only. */
+@media (max-width:900px) and (orientation:portrait){
+  .developer-provided-badge{
+    max-width:190px;
+    white-space:normal;
+  }
+}
