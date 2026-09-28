@@ -2888,3 +2888,11 @@ body.suggest-modal-open{overflow:hidden}
     white-space:normal;
   }
 }
+
+/* Developer Provided REV28 — mobile portrait GRID long-name containment only.
+   Keep REV27 portrait List behavior; constrain Grid badge to its card width. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card .developer-provided-badge{
+    max-width:100%;
+  }
+}
