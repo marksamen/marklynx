@@ -6,46 +6,66 @@
     <title>Game Allocation Generator</title>
     <style>
         :root {
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --accent-color: #4a90e2;
-            --border-color: #dddddd;
-            --row-even: #f8fafc;
-            --row-odd: #ffffff;
+            --bg-color: #07111f;
+            --card-bg: #0e1c2d;
+            --panel-bg: #13263b;
+            --panel-bg-2: #0b1828;
+            --text-color: #edf5ff;
+            --muted-color: #9db2c9;
+            --accent-color: #2f8cff;
+            --accent-hover: #55a2ff;
+            --border-color: #29445f;
+            --row-even: #12253a;
+            --row-odd: #0d1d2e;
+            --danger: #b93636;
+            --success: #237a57;
+            --warning: #b87518;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            background:
+                radial-gradient(circle at top, rgba(47,140,255,.16), transparent 34rem),
+                linear-gradient(180deg, #07111f 0%, #050b13 100%);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 22px;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1180px;
             margin: 0 auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: rgba(14,28,45,.96);
+            padding: 28px;
+            border: 1px solid #203c58;
+            border-radius: 12px;
+            box-shadow: 0 18px 55px rgba(0,0,0,.38);
         }
 
         h1 {
             margin-top: 0;
-            font-size: 24px;
-            color: #2c3e50;
+            font-size: 27px;
+            color: #ffffff;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
+            padding-bottom: 11px;
+            letter-spacing: .2px;
         }
 
-        .input-section {
-            background: #eef2f7;
+        h2, h3 { color: #ffffff; }
+
+        .input-section, .player-manager {
+            background: linear-gradient(180deg, var(--panel-bg), var(--panel-bg-2));
             padding: 20px;
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
             margin-bottom: 25px;
+            box-shadow: inset 0 1px rgba(255,255,255,.025);
         }
+
+        .input-section h3 { margin-top: 0; }
 
         .input-row {
             display: flex;
@@ -64,36 +84,52 @@
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 14px;
+            color: #dce9f7;
         }
 
-        input, button {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+        input, button, textarea {
             font-size: 15px;
         }
 
-        input:focus {
+        input, textarea {
+            background: #081421;
+            color: #f4f8fc;
+            border: 1px solid #35536f;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 10px;
+        }
+
+        input::placeholder, textarea::placeholder { color: #71879c; }
+
+        input:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(47,140,255,.16);
         }
 
         button {
-            background-color: var(--accent-color);
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 5px;
+            background: linear-gradient(180deg, #348fff, #1768c5);
             color: white;
-            border: none;
             cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
+            font-weight: 700;
+            transition: filter .15s, transform .15s, border-color .15s;
+            box-shadow: 0 3px 9px rgba(0,0,0,.22);
         }
 
         button:hover {
-            background-color: #357abd;
+            filter: brightness(1.12);
+            border-color: rgba(255,255,255,.22);
         }
 
-        .btn-add {
-            padding: 10px 25px;
-        }
+        button:active { transform: translateY(1px); }
+
+        .btn-add { padding: 10px 25px; }
 
         .bulk-section {
             margin-top: 15px;
@@ -106,9 +142,6 @@
             width: 100%;
             height: 80px;
             padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-sizing: border-box;
             resize: vertical;
             font-family: monospace;
         }
@@ -116,6 +149,8 @@
         .table-container {
             overflow-x: auto;
             margin-top: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
         }
 
         table {
@@ -126,69 +161,66 @@
 
         th, td {
             padding: 12px 15px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #213b54;
         }
 
         th {
-            background-color: #2c3e50;
+            background: #173d68;
             color: white;
-            font-weight: 600;
+            font-weight: 700;
+            border-right: 1px solid #31577d;
         }
 
-        tr:nth-child(even) {
-            background-color: var(--row-even);
-        }
+        th:last-child { border-right: 0; }
 
-        tr:nth-child(odd) {
-            background-color: var(--row-odd);
+        tr:nth-child(even) { background-color: var(--row-even); }
+        tr:nth-child(odd) { background-color: var(--row-odd); }
+        tbody tr:hover { background-color: #19324b; }
+
+        td input {
+            background: #071421;
+            border-color: #35536f;
         }
 
         .output-cell {
             font-family: monospace;
             font-size: 13px;
             white-space: nowrap;
+            color: #dcecff;
         }
 
-        .bold-txt {
-            font-weight: bold;
-        }
+        .bold-txt { font-weight: bold; color: #ffffff; }
 
         .action-btn {
-            background: #e74c3c;
+            background: linear-gradient(180deg, #c84b4b, #8f2929);
             padding: 5px 10px;
             font-size: 12px;
         }
 
-        .action-btn:hover {
-            background: #c0392b;
-        }
-
         .btn-copy-all {
-            background-color: #2ecc71;
+            background: linear-gradient(180deg, #2d936a, #1d684a);
             margin-bottom: 15px;
-        }
-
-        .btn-copy-all:hover {
-            background-color: #27ae60;
         }
 
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
         .sort-info {
-            color: #666;
+            color: var(--muted-color);
             font-size: 13px;
             margin-top: 5px;
         }
 
-        .player-manager {
-            background: #eef2f7;
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 25px;
+        .sort-info strong { color: #ffffff; }
+
+        .player-manager summary {
+            cursor: pointer;
+            color: #ffffff;
+            user-select: none;
         }
 
         .player-manager-actions {
@@ -208,9 +240,9 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            background: #fff;
+            background: #0a1725;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 5px;
             padding: 6px 8px;
         }
 
@@ -219,7 +251,26 @@
             font-size: 11px;
         }
 
+        #cvcHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 4px;
+        }
+
+        #cvcHeader h1 { flex: 1; }
+
+        #logout {
+            width: auto;
+            min-width: 110px;
+            background: linear-gradient(180deg, #25384b, #162536);
+        }
+
         @media (max-width: 700px) {
+            body { padding: 10px; }
+            .container { padding: 16px; }
+
             .input-row {
                 flex-direction: column;
                 align-items: stretch;
@@ -234,6 +285,7 @@
             .controls > div {
                 display: flex;
                 gap: 10px;
+                flex-wrap: wrap;
             }
         }
 
@@ -241,21 +293,25 @@
         #login {
             width: min(92vw, 420px);
             margin: 10vh auto 0;
-            background: var(--card-bg);
+            background: rgba(14,28,45,.97);
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #29445f;
+            border-radius: 12px;
+            box-shadow: 0 18px 55px rgba(0,0,0,.42);
         }
 
         #login h1 { margin-bottom: 8px; }
-        #login p { margin-top: 0; color: #666; }
+        #login p {
+            margin-top: 0;
+            color: var(--muted-color);
+            font-weight: 700;
+            letter-spacing: .8px;
+            font-size: 12px;
+        }
         #loginForm { display: flex; flex-direction: column; gap: 12px; }
-        #loginForm input { box-sizing: border-box; width: 100%; }
-        #error { min-height: 1.2em; margin-top: .8rem; color: #c62828; }
+        #loginForm input { width: 100%; }
+        #error { min-height: 1.2em; margin-top: .8rem; color: #ff8b8b; }
         #cvcApp { display: none; }
-        #cvcHeader { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-        #logout { width: auto; min-width: 110px; background: #18181a; }
-        #logout:hover { background: #211313; }
     </style>
 </head>
 
@@ -276,7 +332,7 @@
 <div class="container">
 
     <div id="cvcHeader">
-        <h1>Game Allocation String Generator</h1>
+        <h1>Mark Lynx CVC — Game Allocation</h1>
         <button id="logout" type="button">Sign Out</button>
     </div>
 
