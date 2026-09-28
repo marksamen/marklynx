@@ -438,9 +438,15 @@
         manager.innerHTML = '';
 
         savedPlayers.forEach((name, index) => {
-            const option = document.createElement('option');
-            option.value = name;
-            datalist.appendChild(option);
+            const alreadyAdded = players.some(
+                player => player.username.toLowerCase() === name.toLowerCase()
+            );
+
+            if (!alreadyAdded) {
+                const option = document.createElement('option');
+                option.value = name;
+                datalist.appendChild(option);
+            }
 
             const chip = document.createElement('div');
             chip.className = 'player-chip';
@@ -692,6 +698,19 @@
         document.getElementById('rosterCount').textContent = `${players.length} / 30 players`;
         document.getElementById('gamesTotal').textContent = `${totalGames} / 180 games assigned`;
 
+        const datalist = document.getElementById('savedPlayersList');
+        datalist.innerHTML = '';
+        savedPlayers.forEach(name => {
+            const alreadyAdded = players.some(
+                player => player.username.toLowerCase() === name.toLowerCase()
+            );
+            if (!alreadyAdded) {
+                const option = document.createElement('option');
+                option.value = name;
+                datalist.appendChild(option);
+            }
+        });
+
     }
 
 
@@ -729,6 +748,11 @@
 
             return;
 
+        }
+
+        if (players.some(player => player.username.toLowerCase() === username.toLowerCase())) {
+            alert('That player has already been added to this CVC list.');
+            return;
         }
 
         if (players.length >= 30) {
@@ -787,12 +811,20 @@
                 const bonus = tokens[1];
 
                 if (username && bonus) {
-                    incoming.push({
-                        id: generateId(),
-                        username: username,
-                        bonus: bonus,
-                        games: 0
-                    });
+                    const duplicate = players.some(
+                        player => player.username.toLowerCase() === username.toLowerCase()
+                    ) || incoming.some(
+                        player => player.username.toLowerCase() === username.toLowerCase()
+                    );
+
+                    if (!duplicate) {
+                        incoming.push({
+                            id: generateId(),
+                            username: username,
+                            bonus: bonus,
+                            games: 0
+                        });
+                    }
                 }
             }
         });
