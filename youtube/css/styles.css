@@ -2736,3 +2736,29 @@ body.suggest-modal-open{overflow:hidden}
   fill:none;
   flex-shrink:0;
 }
+
+/* Developer Provided REV27 — mobile portrait long-name containment only. */
+@media (max-width:900px) and (orientation:portrait){
+  .developer-provided-badge{
+    max-width:190px;
+    white-space:normal;
+  }
+}
+
+/* Developer Provided REV28 — mobile portrait GRID long-name containment only.
+   Keep REV27 portrait List behavior; constrain Grid badge to its card width. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card .developer-provided-badge{
+    max-width:100%;
+  }
+}
+
+/* Developer Provided REV29 — mobile portrait GRID text wrapping only.
+   Override the older .card-meta span nowrap rule for Developer Provided badges. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card-meta .developer-provided-badge{
+    white-space:normal;
+    min-width:0;
+    overflow-wrap:break-word;
+  }
+}
