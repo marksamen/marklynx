@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd } from "./admin-game-management.js?v=provided-developer-PROD01";
+import { initGameManagement, loadGamesProd, loadQualityBadges } from "./admin-game-management.js?v=PROD-quality-badges-REV19";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
 
@@ -38,6 +38,16 @@ initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyProdDatabaseIdentity});
 initRecentRefresh({auth});
 initDeveloperPublisherSearch();
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin) return;
+  if(event.data?.type!=="quality-badges-updated") return;
+  loadQualityBadges().catch(error=>console.error("Quality badge refresh failed:",error));
+});
+
+window.addEventListener("quality-badges-modal-closed",()=>{
+  loadQualityBadges().catch(error=>console.error("Quality badge close refresh failed:",error));
+});
 
 
 await setPersistence(auth,browserLocalPersistence);

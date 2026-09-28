@@ -19,10 +19,14 @@ export function initAdminPageModal(){
     adminPageModal.setAttribute("aria-hidden","true");
     document.body.classList.remove("admin-modal-open");
     adminPageModalFrame.src="about:blank";
+    const closingAdminModalUrl=activeAdminModalUrl;
     activeAdminModalUrl="";
+    if(closingAdminModalUrl.startsWith("quality-badges/")){
+      window.dispatchEvent(new CustomEvent("quality-badges-modal-closed"));
+    }
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);
-  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/"))closeAdminPageModal();});
+  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("quality-badges/"))closeAdminPageModal();});
   document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/"))closeAdminPageModal();});
 }
