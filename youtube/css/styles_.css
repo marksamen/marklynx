@@ -2896,3 +2896,13 @@ body.suggest-modal-open{overflow:hidden}
     max-width:100%;
   }
 }
+
+/* Developer Provided REV29 — mobile portrait GRID text wrapping only.
+   Override the older .card-meta span nowrap rule for Developer Provided badges. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card-meta .developer-provided-badge{
+    white-space:normal;
+    min-width:0;
+    overflow-wrap:break-word;
+  }
+}
