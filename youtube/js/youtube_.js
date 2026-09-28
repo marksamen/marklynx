@@ -294,13 +294,8 @@ function loadYouTubeIframeAPI(){
 // already works on every second/subsequent mobile open.
 let mobilePlayerPrimePromise = null;
 
-function isMobileYouTubePrimeTarget(){
-  return window.matchMedia('(max-width:720px)').matches ||
-    window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
-}
-
 function primeMobileYouTubePlayer(){
-  if(!isMobileYouTubePrimeTarget()) return Promise.resolve();
+  if(!window.matchMedia('(max-width:720px)').matches) return Promise.resolve();
   if(mobilePlayerPrimePromise) return mobilePlayerPrimePromise;
 
   mobilePlayerPrimePromise = loadYouTubeIframeAPI().then(()=>new Promise(resolve=>{
@@ -319,7 +314,7 @@ function primeMobileYouTubePlayer(){
 primeMobileYouTubePlayer().catch(()=>{});
 
 function waitForMobilePlayerPrime(){
-  return isMobileYouTubePrimeTarget()
+  return window.matchMedia('(max-width:720px)').matches
     ? primeMobileYouTubePlayer()
     : Promise.resolve();
 }
