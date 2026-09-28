@@ -2762,3 +2762,72 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:break-word;
   }
 }
+
+
+/* ---------- DEVELOPER REV04 PROD: managed Quality image on card thumbnail ---------- */
+/* Developer-only. Keep the three proven responsive GRID contexts isolated.
+   Do not reuse Main/Recent selectors; only the Developer thumbnail receives these rules. */
+.developer-card-thumb{position:relative;}
+
+/* DESKTOP Developer GRID */
+@media (min-width:901px){
+  .developer-card-thumb .developer-card-quality{
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    z-index:4;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    line-height:0;
+  }
+  .developer-card-thumb .developer-card-quality img.quality-badge{
+    display:block;
+    width:58px;
+    height:auto;
+    max-width:none;
+    object-fit:contain;
+  }
+}
+
+/* MOBILE PORTRAIT Developer GRID */
+@media (max-width:900px) and (orientation:portrait){
+  .developer-card-thumb .developer-card-quality{
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    z-index:4;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    line-height:0;
+  }
+  .developer-card-thumb .developer-card-quality img.quality-badge{
+    display:block;
+    width:66px;
+    height:auto;
+    max-width:none;
+    object-fit:contain;
+  }
+}
+
+/* MOBILE LANDSCAPE Developer GRID */
+@media (orientation:landscape) and (max-height:900px){
+  .developer-card-thumb .developer-card-quality{
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    z-index:4;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    line-height:0;
+  }
+  .developer-card-thumb .developer-card-quality img.quality-badge{
+    display:block;
+    width:66px;
+    height:auto;
+    max-width:none;
+    object-fit:contain;
+  }
+}
