@@ -320,15 +320,19 @@
       if (legacyQuality) {
         legacyQuality.remove();
         if (managedQuality?.imageUrl) {
-          const qualitySpan = document.createElement('span');
-          const qualityImg = document.createElement('img');
-          const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
-          qualityImg.className = 'quality-badge';
-          qualityImg.src = managedQuality.imageUrl;
-          qualityImg.alt = String(qualityLabel || '');
-          qualityImg.title = String(qualityLabel || '');
-          qualitySpan.appendChild(qualityImg);
-          meta.appendChild(qualitySpan);
+          const thumbWrap = card.querySelector('.developer-card-thumb');
+          if (thumbWrap) {
+            const qualitySpan = document.createElement('span');
+            qualitySpan.className = 'developer-card-quality';
+            const qualityImg = document.createElement('img');
+            const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
+            qualityImg.className = 'quality-badge';
+            qualityImg.src = managedQuality.imageUrl;
+            qualityImg.alt = String(qualityLabel || '');
+            qualityImg.title = String(qualityLabel || '');
+            qualitySpan.appendChild(qualityImg);
+            thumbWrap.appendChild(qualitySpan);
+          }
         }
       }
     }
