@@ -1344,6 +1344,10 @@
     }
 
     async function getCvcAuthToken() {
+        const timeoutAt = Date.now() + 10000;
+        while (typeof window.getCvcIdToken !== 'function' && Date.now() < timeoutAt) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
         if (typeof window.getCvcIdToken !== 'function') {
             throw new Error('CVC authentication is not ready.');
         }
@@ -1473,6 +1477,6 @@
 </script>
 
 </main>
-<script type="module" src="auth.js?v=CVC-REV13"></script>
+<script type="module" src="auth.js?v=CVC-REV14"></script>
 </body>
 </html>
