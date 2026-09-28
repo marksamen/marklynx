@@ -291,8 +291,12 @@
                 <input
                     type="text"
                     id="username"
+                    name="cvc-player-name"
                     list="savedPlayersList"
                     placeholder="Select or type player"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
                 >
                 <datalist id="savedPlayersList"></datalist>
             </div>
@@ -335,17 +339,17 @@
 
     </div>
 
-    <div class="player-manager">
-        <h3>Manage Saved Players</h3>
-        <div class="player-manager-actions">
-            <input type="text" id="savedPlayerName" placeholder="Player name">
+    <details class="player-manager">
+        <summary><strong>Manage Saved Players</strong> <span id="savedPlayersSummaryCount"></span></summary>
+        <div class="player-manager-actions" style="margin-top: 16px;">
+            <input type="text" id="savedPlayerName" name="cvc-saved-player-name" placeholder="Player name" autocomplete="off" autocapitalize="off" spellcheck="false">
             <button type="button" onclick="addSavedPlayer()">Add Player</button>
             <button type="button" onclick="exportPlayersJson()">Export players.json</button>
         </div>
         <div class="sort-info">Add, rename, or delete saved players here. Export players.json when you want to make the changes permanent on GitHub.</div>
         <div id="savedPlayersStatus" class="sort-info"></div>
         <div id="savedPlayersManagerList" class="player-manager-list"></div>
-    </div>
+    </details>
 
     <div class="controls">
 
@@ -453,6 +457,7 @@
 
         document.getElementById('savedPlayersStatus').textContent =
             `${savedPlayers.length} saved player${savedPlayers.length === 1 ? '' : 's'}.`;
+        document.getElementById('savedPlayersSummaryCount').textContent = `(${savedPlayers.length})`;
     }
 
     function addSavedPlayer() {
