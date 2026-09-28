@@ -377,3 +377,53 @@ listBtn.addEventListener('click', ()=>{
 });
 
 render();
+
+// Quality Badge Management REV23: upgrade Recent Uploads after its untouched
+// legacy renderer has finished. recent_.js remains byte-for-byte unchanged.
+function upgradeRecentManagedQualityBadges(){
+  const recentSection = document.getElementById('recentUploadsSection');
+  if(!recentSection || !window.QUALITY_BADGES) return;
+
+  recentSection.querySelectorAll('.recent-upload-card').forEach(card=>{
+    const qualityMeta = card.querySelector('.recent-upload-meta.quality');
+    if(!qualityMeta) return;
+
+    const existingImg = qualityMeta.querySelector('img.quality-badge');
+    const rawQuality = existingImg ? (existingImg.alt || '') : (qualityMeta.textContent || '').trim();
+    const managedBadge = window.QUALITY_BADGES[String(rawQuality).trim().toLowerCase()];
+    if(!managedBadge?.imageUrl) return;
+
+    const makeBadge = ()=>{
+      const img = document.createElement('img');
+      const label = managedBadge.displayName || managedBadge.code || rawQuality;
+      img.className = 'quality-badge';
+      img.src = managedBadge.imageUrl;
+      img.alt = label;
+      img.title = label;
+      return img;
+    };
+
+    // Recent list metadata: replace literal managed-quality text with its image.
+    if(!existingImg){
+      qualityMeta.textContent = '';
+      qualityMeta.appendChild(makeBadge());
+    }
+
+    // Recent grid: legacy recent_.js only creates this thumbnail badge for
+    // 4K/1080p. Add the same wrapper for Admin-managed qualities such as 720p.
+    const thumb = card.querySelector('.recent-upload-thumb');
+    if(thumb && !thumb.querySelector('.recent-grid-quality')){
+      const wrap = document.createElement('span');
+      wrap.className = 'recent-grid-quality';
+      wrap.appendChild(makeBadge());
+      thumb.appendChild(wrap);
+    }
+  });
+}
+
+const recentManagedQualityRoot = document.getElementById('recentUploadsSection');
+if(recentManagedQualityRoot){
+  const recentManagedQualityObserver = new MutationObserver(upgradeRecentManagedQualityBadges);
+  recentManagedQualityObserver.observe(recentManagedQualityRoot, { childList:true, subtree:true });
+  upgradeRecentManagedQualityBadges();
+}
