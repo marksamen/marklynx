@@ -237,6 +237,40 @@
         }
       }
 
+      // Quality Badge Management REV20: load the small TEST badge definition map once.
+      // This is independent of the game data source and does not touch Recent Uploads.
+      window.QUALITY_BADGES = {};
+      try {
+        const qualityBaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co';
+        const qualityApiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+        const qualityParams = new URLSearchParams({
+          select: 'code,display_name,storage_path',
+          order: 'sort_order.asc'
+        });
+        const qualityResponse = await fetch(`${qualityBaseUrl}/rest/v1/quality_badges?${qualityParams}`, {
+          headers: { apikey: qualityApiKey },
+          cache: 'no-store'
+        });
+        if (!qualityResponse.ok) throw new Error(`Supabase quality_badges: HTTP ${qualityResponse.status}`);
+        const qualityRows = await qualityResponse.json();
+        if (!Array.isArray(qualityRows)) throw new Error('Supabase quality_badges: invalid response');
+
+        for (const badge of qualityRows) {
+          const code = String(badge?.code || '').trim();
+          const storagePath = String(badge?.storage_path || '').trim();
+          if (!code || !storagePath) continue;
+          const encodedPath = storagePath.split('/').map(encodeURIComponent).join('/');
+          window.QUALITY_BADGES[code.toLowerCase()] = {
+            code,
+            displayName: String(badge?.display_name || code),
+            imageUrl: `${qualityBaseUrl}/storage/v1/object/public/quality-badges/${encodedPath}`
+          };
+        }
+        console.info(`[GAMEDEV] Quality badges loaded: ${Object.keys(window.QUALITY_BADGES).length}`);
+      } catch (qualityError) {
+        console.warn('[GAMEDEV] Quality badge definitions unavailable; using built-in badge fallback:', qualityError);
+      }
+
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
       const statsResponse = await fetch('data/stats.json?v=20260921-prod-promotion-01', { cache: 'no-store' });
       if (!statsResponse.ok) throw new Error(`stats.json: HTTP ${statsResponse.status}`);
@@ -246,7 +280,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-PROD01');
-      await loadScript('js/site.js?v=provided-developer-PROD01');
+      await loadScript('js/site.js?v=PROD-quality-badges-REV23');
       await loadScript('js/developer.js?v=20260926-db-showcase-REV48');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=REV03-suggest-authoritative-submission');
