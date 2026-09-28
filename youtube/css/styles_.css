@@ -945,7 +945,7 @@ body.guide-filter-active .recent-uploads{
 .subscribe-strip-inner{gap:10px;align-items:center;flex-wrap:wrap;}
 .developer-showcase-btn{
   display:inline-flex;align-items:center;gap:8px;background:#251313;border:1px solid #8f2924;color:#fff;
-  padding:9px 14px;border-radius:3px;font-size:13px;font-weight:800;font-family:var(--sans);cursor:pointer;
+  padding:9px 14px;border-radius:3px;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer;
   white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);transition:background .15s,border-color .15s,transform .15s;
 }
 .developer-showcase-btn:hover{background:#3a1715;border-color:var(--red-bright);transform:translateY(-1px);}
@@ -1320,6 +1320,18 @@ body.suggest-modal-open{overflow:hidden}
   position:fixed;
   right:auto;
   z-index:10052;
+}
+
+
+/* REV34 TEST: Desktop Suggest close stays attached to the Suggest panel.
+   Mobile keeps the existing fixed/visualViewport behavior unchanged. */
+@media (min-width:701px){
+  .suggest-close{
+    position:absolute !important;
+    top:16px !important;
+    right:16px !important;
+    left:auto !important;
+  }
 }
 
 
@@ -2220,24 +2232,651 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV31: MOBILE LANDSCAPE Normal Videos LIST — Console/Platform only.
-   Copy the approved Desktop Videos LIST platform treatment exactly.
-   REV30 and all prior passes remain untouched. */
+/* REV34: MOBILE LANDSCAPE Normal Videos GRID — Console polish only. */
 @media (orientation: landscape) and (max-height: 900px) {
-  #resultsList .list-row .list-sub {
-    display:inline-flex;
-    align-items:center;
-    width:max-content;
-    max-width:100%;
-    margin-top:5px;
-    padding:3px 7px;
-    border:1px solid #343434;
-    border-radius:5px;
-    background:rgba(255,255,255,.025);
-    color:#bdbdbd;
-    font-size:11px;
-    font-weight:700;
-    line-height:1.2;
-    letter-spacing:.01em;
+  #resultsGrid .card .grid-list-sub {
+    font-size: 11px !important;
+    color: #8f8f8f !important;
   }
+}
+
+
+/* REV35: MOBILE PORTRAIT Normal Videos GRID — Console/Platform.
+   Match approved landscape REV34: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  #resultsGrid .card .grid-list-sub {
+    display: block !important;
+    margin-top: 2px;
+    font-size: 11px !important;
+    line-height: 1.25;
+    color: #8f8f8f !important;
+    overflow-wrap: anywhere;
+  }
+}
+
+
+/* REV36: MOBILE PORTRAIT Recent Uploads GRID — metadata cleanup only.
+   Hide Genre + Time + Difficulty.
+   Preserve thumbnails, title, platform, 4K, columns, gaps and sizing. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+}
+
+
+/* REV37: MOBILE PORTRAIT Recent Uploads GRID — restore video TITLE only.
+   REV36 metadata cleanup stays frozen.
+   Keep existing two-column layout, thumbnails, platform and 4K untouched. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-title {
+    display: block !important;
+    font-size: 18px !important;
+    line-height: 1.18 !important;
+  }
+}
+
+
+/* REV38: MOBILE PORTRAIT Recent Uploads GRID — Console polish only.
+   Match approved mobile console treatment: 11px + muted grey. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    color: #8f8f8f !important;
+  }
+}
+
+
+/* REV39: MOBILE PORTRAIT Recent Uploads GRID — 4K overlay only.
+   Reuse the proven dedicated .recent-grid-quality overlay.
+   Put 4K at the usual bottom-right of the thumbnail; hide old metadata copy. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality {
+    display: block !important;
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    z-index: 3 !important;
+    line-height: 0 !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 66px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+  }
+
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality {
+    display: none !important;
+  }
+}
+
+
+/* REV40: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep REV39 placement; reduce badge for the smaller Recent thumbnails. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 50px !important;
+  }
+}
+
+
+/* REV41: MOBILE PORTRAIT Recent Uploads GRID — 4K sizing only.
+   Keep approved REV39 placement; reduce badge from 50px to 40px. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+  }
+}
+
+
+/* REV42: MOBILE LANDSCAPE Recent Uploads GRID — 4K sizing only.
+   Match approved portrait REV41 size: 40px. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+    height: auto !important;
+    max-width: none !important;
+  }
+}
+
+
+/* REV43: Recent Uploads GRID alignment only.
+   Remove the TEST-only metadata spacer from GRID flow.
+   LIST, titles, platform, metadata styling, 4K, thumbnails and geometry untouched. */
+.recent-uploads-grid.grid-mode .recent-grid-meta-break {
+  display: none !important;
+}
+
+
+/* REV44: MOBILE Recent Uploads GRID — card alignment only.
+   Keep each card at the top of its grid cell.
+   Desktop and all approved content styling remain untouched. */
+@media (max-width: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
+  }
+}
+
+
+/* REV45: MOBILE LANDSCAPE Recent Uploads GRID — card alignment only.
+   Apply the same approved REV44 top alignment using the established
+   landscape-phone scope. Desktop and portrait remain untouched. */
+@media (orientation: landscape) and (max-height: 900px) {
+  .recent-uploads-grid.grid-mode {
+    align-items: start;
+  }
+}
+
+/* Mobile landscape forms: prevent browser focus-zoom on Developer and Suggest fields.
+   Both changes were independently tested and approved in TEST. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-contact-form input,
+  .developer-contact-form textarea,
+  .suggest-game-form input[type=text],
+  .suggest-game-form input[type=email],
+  .suggest-game-form textarea {
+    font-size: 16px;
+  }
+}
+
+/* Developer Landscape Video Rail REV01: use the approved portrait mobile carousel
+   and persistent custom scroll indicator on landscape phones. Developer only. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-cards {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: -18px;
+    margin-right: -18px;
+    padding: 0 18px 8px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 18px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .developer-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .developer-card {
+    flex: 0 0 86%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .developer-section-head::after {
+    content: none;
+  }
+
+  .developer-scroll-indicator {
+    display: block;
+    position: relative;
+    height: 8px;
+    margin: 0 0 10px;
+    overflow: hidden;
+    background: #2b2b2b;
+    border: 1px solid #444;
+    border-radius: 999px;
+  }
+
+  .developer-scroll-indicator-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25%;
+    background: #c72b25;
+    border-radius: 999px;
+    transform: translateX(0);
+    will-change: transform;
+  }
+}
+
+/* PROD: Developer landscape card sizing — exact passed TEST selector */
+@media (orientation: landscape) and (max-height: 500px) {
+  .developer-card {
+    flex: 0 0 42%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+}
+
+
+/* PROD REV12: TEST-approved Game Guides header shared by LIST and GRID.
+   Recent Uploads remains untouched. */
+.game-guides-section{
+  max-width:1400px;
+  margin:12px auto 0;
+  padding:0 28px;
+}
+.game-guides-section .game-guides-head{
+  margin:0 0 12px;
+}
+.game-guides-section .game-guides-head h2{
+  margin:0;
+  font-size:22px;
+  line-height:1.2;
+  color:var(--text);
+  font-family:inherit;
+  font-weight:700;
+  text-transform:none;
+  letter-spacing:normal;
+}
+.game-guides-section .game-guides-count{
+  max-width:none;
+  margin:0 0 12px;
+  padding:0;
+}
+.game-guides-section + .container{
+  padding-top:0;
+}
+
+/* TOP ACTIONS REV01 CLEAN: approved geometry/color; no Recent Uploads changes. */
+.subscribe-strip-inner{
+  gap:10px;
+  align-items:center;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn,
+.subscribe-strip-inner > #suggestGameBtn,
+.subscribe-strip-inner > .developer-showcase-btn{
+  box-sizing:border-box;
+  padding:9px 14px;
+  font-size:13px;
+  margin:0;
+}
+.subscribe-strip-inner > .youtube-subscribe-btn svg,
+.subscribe-strip-inner > #suggestGameBtn svg,
+.subscribe-strip-inner > .developer-showcase-btn svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+.subscribe-strip-inner > #suggestGameBtn{
+  background:#681b1b;
+  border:1px solid #9a3030;
+  color:#fff;
+}
+@media (hover:hover) and (pointer:fine){
+  .subscribe-strip-inner > #suggestGameBtn:hover{
+    background:#7b2222;
+    border-color:#b33a3a;
+  }
+}
+
+/* TOP ACTIONS REV02 CLEAN: mobile-only centered three-button row. */
+@media (max-width:700px){
+  .subscribe-strip-inner{
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    flex:0 1 auto;
+    min-width:0;
+    padding:8px 8px;
+    font-size:12px;
+    justify-content:center;
+  }
+  .subscribe-strip-inner > .youtube-subscribe-btn svg,
+  .subscribe-strip-inner > #suggestGameBtn svg,
+  .subscribe-strip-inner > .developer-showcase-btn svg{
+    width:16px;
+    height:16px;
+  }
+}
+
+/* TOP ACTIONS REV03 CLEAN: iOS/mobile landscape safe-area centering only. */
+@media (orientation:landscape) and (max-height:500px){
+  .subscribe-strip{
+    padding-left:max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+  }
+  .subscribe-strip-inner{
+    width:100%;
+    max-width:none;
+    justify-content:center;
+    padding-left:0;
+    padding-right:0;
+  }
+}
+
+
+
+
+
+
+/* Mobile Landscape Normal Videos Quality REV03
+   Copy desktop's normal grid-flow relationship for the right-side pair:
+   Gamerscore and Quality remain adjacent auto columns with the desktop 16px gap. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row{
+    grid-template-columns:88px minmax(0,1fr) auto auto;
+    gap:16px;
+  }
+
+  #resultsList .list-col.gs,
+  #resultsList .list-col.quality{
+    position:static;
+    transform:none;
+    margin:0;
+  }
+}
+
+
+/* Mobile Landscape Normal Videos LIST Title REV01
+   Copy desktop's proven left-side LIST geometry so the title/content begins
+   cleanly after the thumbnail. Keep the approved Gamerscore + Quality columns. */
+@media (orientation: landscape) and (max-height: 900px) {
+  #resultsList .list-row{
+    grid-template-columns:120px minmax(0,1fr) auto auto;
+  }
+
+  #resultsList .list-thumb{
+    width:110px;
+  }
+}
+
+
+/* Mobile Portrait Top Actions REV01
+   Slightly reduce text and icon size on all three top action buttons only. */
+@media (orientation:portrait) and (max-width:700px){
+  .subscribe-strip-inner > .youtube-subscribe-btn,
+  .subscribe-strip-inner > #suggestGameBtn,
+  .subscribe-strip-inner > .developer-showcase-btn{
+    font-size:11px;
+  }
+
+  .subscribe-strip-inner > .youtube-subscribe-btn svg,
+  .subscribe-strip-inner > #suggestGameBtn svg,
+  .subscribe-strip-inner > .developer-showcase-btn svg{
+    width:14px;
+    height:14px;
+  }
+}
+
+
+/* PLAY BUTTON REV01 — thumbnail overlay only.
+   Normal GRID reuses the existing play SVG and makes it permanently visible.
+   Normal LIST and Recent use CSS-only overlays so no Recent JS/HTML/data is touched. */
+
+/* Normal Game Guides GRID — existing proven play badge, now always visible. */
+.card .play-badge svg{
+  opacity:1;
+}
+
+/* Normal Game Guides LIST — sized for the 110px thumbnail. */
+#resultsList .list-thumb::after{
+  content:"▶";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:24px;
+  border-radius:6px;
+  background:#e0392f;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  line-height:1;
+  padding-left:2px;
+  box-sizing:border-box;
+  box-shadow:0 2px 6px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+
+/* Recent Uploads — same design, deliberately smaller for its smaller thumbnail. */
+.recent-upload-thumb::after{
+  content:"▶";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:20px;
+  border-radius:5px;
+  background:#e0392f;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  line-height:1;
+  padding-left:2px;
+  box-sizing:border-box;
+  box-shadow:0 2px 5px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+
+
+/* PLAY BUTTON REV03 — DESKTOP GRID sizing only.
+   LIST remains exactly as REV01. Mobile remains unchanged. */
+@media (min-width:901px){
+  /* Recent GRID: slightly larger than REV02. */
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    width:42px;
+    height:30px;
+    border-radius:7px;
+    font-size:17px;
+  }
+}
+
+
+/* PLAY BUTTON REV04 — Normal GRID only.
+   Copy the PASSED Normal LIST CSS-overlay method; slightly enlarged for GRID.
+   Passed Recent REV03 rules remain untouched. */
+@media (min-width:901px){
+  #resultsGrid .card-thumb::after{
+    content:"▶";
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:30px;
+    border-radius:7px;
+    background:#e0392f;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    font-size:17px;
+    line-height:1;
+    padding-left:2px;
+    box-sizing:border-box;
+    box-shadow:0 2px 6px rgba(0,0,0,.6);
+    pointer-events:none;
+  }
+}
+
+
+/* PLAY BUTTON REV06 — MOBILE PORTRAIT Normal LIST only.
+   Copy desktop LIST's clean single-overlay treatment by suppressing the
+   legacy play-badge layer in this context. Size/position remain unchanged. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsList .list-thumb .play-badge{
+    display:none !important;
+  }
+}
+
+
+/* PLAY BUTTON REV07 — MOBILE PORTRAIT Recent GRID only.
+   Copy the working Normal portrait GRID play-button treatment.
+   No Recent LIST, Normal LIST, desktop, or landscape changes. */
+@media (max-width:900px) and (orientation:portrait){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    width:42px;
+    height:30px;
+    border-radius:7px;
+    background:#e0392f;
+    color:#fff;
+    font-family:Arial,sans-serif;
+    font-size:17px;
+    line-height:1;
+    padding-left:2px;
+    box-sizing:border-box;
+    box-shadow:0 2px 6px rgba(0,0,0,.6);
+  }
+}
+
+
+/* PLAY BUTTON REV08 — MOBILE PORTRAIT Recent GRID only.
+   Use the exact SVG artwork from the working Normal card play-badge.
+   This removes the CSS Unicode triangle that was rendering grey/two-tone. */
+@media (max-width:900px) and (orientation:portrait){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    content:"";
+    width:44px;
+    height:31px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+}
+
+
+/* PLAY BUTTON REV09 — MOBILE PORTRAIT Normal GRID sizing only.
+   Slightly enlarge the already-passed existing SVG. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card .play-badge svg{
+    width:52px;
+    height:37px;
+  }
+}
+
+
+/* PLAY BUTTON REV10 — MOBILE PORTRAIT LIST only.
+   Copy the proven real-SVG treatment from passed Portrait GRID.
+   Preserve LIST sizing: Normal 34x24; Recent 28x20. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsList .list-thumb::after{
+    content:"";
+    width:34px;
+    height:24px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-thumb::after{
+    content:"";
+    width:28px;
+    height:20px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+}
+
+
+/* PLAY BUTTON REV11 — MOBILE LANDSCAPE Recent GRID only.
+   Copy proven real-SVG treatment. Preserve existing 42x30 sizing.
+   Normal GRID, both LIST modes, portrait and desktop untouched. */
+@media (orientation:landscape) and (max-height:900px){
+  .recent-uploads-grid.grid-mode .recent-upload-thumb::after{
+    content:"";
+    width:42px;
+    height:30px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+}
+
+
+/* PLAY BUTTON REV12 — MOBILE LANDSCAPE LIST only.
+   Apply the now-proven real YouTube SVG treatment to BOTH LIST sections.
+   Preserve existing LIST sizing. Desktop, Portrait and Landscape GRID untouched. */
+@media (orientation:landscape) and (max-height:900px){
+  #resultsList .list-thumb::after{
+    content:"";
+    width:34px;
+    height:24px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+
+  .recent-uploads-grid.list-mode .recent-upload-thumb::after{
+    content:"";
+    width:28px;
+    height:20px;
+    border-radius:0;
+    padding:0;
+    background:transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2068%2048%22%3E%3Cpath%20d%3D%22M66.5%2C7.7c-0.8-2.9-2.5-5.2-5.4-6C55.8%2C0.1%2C34%2C0%2C34%2C0S12.2%2C0.1%2C6.9%2C1.7c-2.9%2C0.8-4.6%2C3.1-5.4%2C6C0%2C13.1%2C0%2C24%2C0%2C24s0%2C10.9%2C1.5%2C16.3c0.8%2C2.9%2C2.5%2C5.1%2C5.4%2C5.9C12.2%2C47.9%2C34%2C48%2C34%2C48s21.8-0.1%2C27.1-1.7c2.9-0.8%2C4.6-3%2C5.4-5.9C68%2C34.9%2C68%2C24%2C68%2C24S68%2C13.1%2C66.5%2C7.7z%22%20fill%3D%22%23e0392f%22%2F%3E%3Cpolygon%20points%3D%2227%2C34%2045%2C24%2027%2C14%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+    box-shadow:none;
+  }
+}
+
+
+/* SEARCH ZOOM REV01 — mobile main Search only.
+   Match the proven Developer/Suggest anti-focus-zoom treatment. */
+@media (max-width:900px){
+  #searchInput{
+    font-size:16px;
+  }
+}
+
+
+/* LANDSCAPE SEARCH REV26 — clean candidate.
+   Prevent iOS/WebKit focus auto-zoom by keeping Search at 16px in phone landscape. */
+@media (orientation: landscape) and (max-height: 500px) {
+  #searchInput {
+    font-size: 16px;
+  }
+}
+
+
+/* ---------- Developer Provided REV01: Main Guides marker only ---------- */
+.developer-provided-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  width:max-content;
+  max-width:100%;
+  min-height:25px;
+  padding:3px 9px;
+  border:1px solid #6b5730;
+  border-radius:6px;
+  background:linear-gradient(180deg,rgba(181,139,54,.16),rgba(181,139,54,.055));
+  color:#e7d39f;
+  font-size:11px;
+  font-weight:600;
+  line-height:1.15;
+  white-space:nowrap;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.developer-provided-badge svg{
+  width:12px;
+  height:12px;
+  stroke:#d8ad55;
+  fill:none;
+  flex-shrink:0;
 }
