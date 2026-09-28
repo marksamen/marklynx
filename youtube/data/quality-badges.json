@@ -1,0 +1,20 @@
+[
+  {
+    "code": "4K",
+    "display_name": "4K",
+    "image_path": "quality-4k-60fps.png",
+    "sort_order": 10
+  },
+  {
+    "code": "1080p",
+    "display_name": "1080p",
+    "image_path": "quality-1080p.png",
+    "sort_order": 20
+  },
+  {
+    "code": "720p",
+    "display_name": "720p",
+    "image_path": "quality-720p.png",
+    "sort_order": 40
+  }
+]
