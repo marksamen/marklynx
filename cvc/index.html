@@ -1009,22 +1009,51 @@
         );
     }
 
-    function wrapCanvasText(ctx, text, maxWidth) {
+    function isBoldAllocationToken(token) {
+        return /^all$/i.test(token) || /^\d+$/.test(token) || /^#\d+$/.test(token);
+    }
+
+    function measureAllocationLine(ctx, tokens) {
+        let width = 0;
+        tokens.forEach((token, index) => {
+            ctx.font = isBoldAllocationToken(token) ? 'bold 26px Arial, sans-serif' : '26px Arial, sans-serif';
+            if (index > 0) {
+                width += ctx.measureText(' ').width;
+            }
+            width += ctx.measureText(token).width;
+        });
+        return width;
+    }
+
+    function wrapCanvasAllocation(ctx, text, maxWidth) {
         const words = String(text || '').split(/\s+/).filter(Boolean);
-        if (!words.length) return [''];
+        if (!words.length) return [[]];
         const lines = [];
-        let line = words[0];
+        let line = [words[0]];
         for (let i = 1; i < words.length; i++) {
-            const test = line + ' ' + words[i];
-            if (ctx.measureText(test).width <= maxWidth) {
+            const test = [...line, words[i]];
+            if (measureAllocationLine(ctx, test) <= maxWidth) {
                 line = test;
             } else {
                 lines.push(line);
-                line = words[i];
+                line = [words[i]];
             }
         }
         lines.push(line);
         return lines;
+    }
+
+    function drawAllocationLine(ctx, tokens, x, y) {
+        let cursorX = x;
+        tokens.forEach((token, index) => {
+            ctx.font = isBoldAllocationToken(token) ? 'bold 26px Arial, sans-serif' : '26px Arial, sans-serif';
+            if (index > 0) {
+                const spaceWidth = ctx.measureText(' ').width;
+                cursorX += spaceWidth;
+            }
+            ctx.fillText(token, cursorX, y);
+            cursorX += ctx.measureText(token).width;
+        });
     }
 
     function exportCvcJpg() {
@@ -1046,7 +1075,7 @@
         measure.font = '26px Arial, sans-serif';
 
         const prepared = rows.map(row => {
-            const whereLines = wrapCanvasText(measure, row.where, columns[3] - padX * 2);
+            const whereLines = wrapCanvasAllocation(measure, row.where, columns[3] - padX * 2);
             const height = Math.max(minRowHeight, whereLines.length * lineHeight + padY * 2);
             return { ...row, whereLines, height };
         });
@@ -1113,7 +1142,7 @@
             ctx.font = '26px Arial, sans-serif';
             const firstLineY = y + row.height / 2 - ((row.whereLines.length - 1) * lineHeight) / 2;
             row.whereLines.forEach((line, lineIndex) => {
-                ctx.fillText(line, cellX + padX, firstLineY + lineIndex * lineHeight);
+                drawAllocationLine(ctx, line, cellX + padX, firstLineY + lineIndex * lineHeight);
             });
 
             y += row.height;
