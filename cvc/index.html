@@ -496,7 +496,7 @@
                         value="${player.games || ''}"
                         aria-label="Games for ${escapeHtml(player.username)}"
                         style="width:72px; box-sizing:border-box;"
-                        oninput="updatePlayerGames('${player.id}', this.value)"
+                        onchange="updatePlayerGames('${player.id}', this.value)"
                     >
                 </td>
 
