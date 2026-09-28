@@ -8,6 +8,31 @@ const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
 let providedDeveloperByGame=new Map();
+let qualityBadges=[];
+
+export async function loadQualityBadges(){
+  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,sort_order&order=sort_order.asc`,{
+    headers:{"apikey":SUPABASE_TEST_PUBLISHABLE_KEY},
+    cache:"no-store"
+  });
+  if(!response.ok) throw new Error(`Quality badges: Supabase TEST returned HTTP ${response.status}.`);
+  const rows=await response.json();
+  if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid quality badge payload.");
+  qualityBadges=rows;
+  const select=document.getElementById("gdQuality");
+  const current=select.value;
+  select.innerHTML='<option value="">Select quality…</option>';
+  for(const badge of qualityBadges){
+    const code=String(badge.code||"").trim();
+    if(!code) continue;
+    const option=document.createElement("option");
+    option.value=code;
+    option.textContent=String(badge.display_name||code).trim()||code;
+    select.appendChild(option);
+  }
+  if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+}
+
 
 async function callGamesAdmin(action,payload={}){
   const user=auth?.currentUser;
@@ -243,6 +268,7 @@ export async function loadGamesTest(){
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     await loadProvidedDeveloperAdminData();
+    await loadQualityBadges();
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase TEST games.";
@@ -298,8 +324,8 @@ function validateGamerscore(format=false){const el=document.getElementById("gdGa
 function setCompletionTime(value){const m=String(value||"").trim().match(/^(.+?)\s+(Minutes|Hours)$/i);document.getElementById("gdTime").value=m?m[1]:String(value||"").trim();document.getElementById("gdTimeUnit").value=m&&/^hours$/i.test(m[2])?"Hours":"Minutes";}
 function completionTimeValue(){const amount=document.getElementById("gdTime").value.trim();return amount?`${amount} ${document.getElementById("gdTimeUnit").value}`:"";}
 function validateCompletionTime(addMode=false){const el=document.getElementById("gdTime"),v=el.value.trim(),unit=document.getElementById("gdTimeUnit").value,err=document.getElementById("gdTimeError");if(!v){err.textContent="";return true;}if(addMode){const m=v.match(/^(\d+(?:\.\d+)?)(?:-(\d+(?:\.\d+)?))?$/);if(!m){err.textContent="Enter one number or a range such as 6-7, then choose Minutes or Hours.";return false;}const first=Number(m[1]),second=m[2]===undefined?null:Number(m[2]);if(!Number.isFinite(first)||first<=0||(second!==null&&(!Number.isFinite(second)||second<=0))){err.textContent="Completion time must be greater than 0.";return false;}if(second!==null&&second<=first){err.textContent="The end of the range must be greater than the start.";return false;}if(unit==="Minutes"&&(!Number.isInteger(first)||first<1||first>59||(second!==null&&(!Number.isInteger(second)||second<1||second>59)))){err.textContent="Minutes must be whole numbers from 1 to 59. Use Hours for 60 minutes or more.";return false;}}err.textContent="";return true;}
-function setQualityValue(value){const sel=document.getElementById("gdQuality"),other=document.getElementById("gdQualityOther"),v=String(value||"").trim();if(!v||v==="4K"||v==="1080p"){sel.value=v;other.value="";other.style.display="none";}else{sel.value="__other__";other.value=v;other.style.display="block";}}
-function qualityValue(){const sel=document.getElementById("gdQuality");return sel.value==="__other__"?document.getElementById("gdQualityOther").value.trim():sel.value;}
+function setQualityValue(value){const sel=document.getElementById("gdQuality"),v=String(value||"").trim();sel.value=[...sel.options].some(option=>option.value===v)?v:"";}
+function qualityValue(){return document.getElementById("gdQuality").value;}
 function setTextGuideValue(value){const sel=document.getElementById("gdTextGuide"),v=String(value||"No");let opt=[...sel.options].find(o=>o.value===v);if(!opt&&v){opt=new Option(v,v);opt.dataset.legacy="1";sel.add(opt);}sel.value=v||"No";}
 function parseYoutubeLink(raw){
   const value=String(raw||"").trim().replace(/\s+/g,""); if(!value)return null;
@@ -329,7 +355,6 @@ document.getElementById("gdGamerscore").addEventListener("input",()=>document.ge
 document.getElementById("gdTime").addEventListener("input",()=>document.getElementById("gdTimeError").textContent="");
 document.getElementById("gdTime").addEventListener("input",()=>validateCompletionTime(true));
 document.getElementById("gdTimeUnit").addEventListener("change",()=>validateCompletionTime(true));
-document.getElementById("gdQuality").addEventListener("change",()=>{document.getElementById("gdQualityOther").style.display=document.getElementById("gdQuality").value==="__other__"?"block":"none";if(document.getElementById("gdQuality").value==="__other__")document.getElementById("gdQualityOther").focus();});
 buildChoices("gdTypeChoices",GD_GENRES);buildChoices("gdPlatformChoices",GD_PLATFORMS);
 
 document.addEventListener("click",e=>{
