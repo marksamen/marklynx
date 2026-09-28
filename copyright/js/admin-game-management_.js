@@ -765,6 +765,26 @@ function cleanGameForJson(game){
   return clean;
 }
 
+async function fetchQualityBadgeRecoveryData(){
+  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/quality_badges?select=code,display_name,asset_key,sort_order&order=sort_order.asc`,{
+    headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},
+    cache:"no-store"
+  });
+  if(!response.ok)throw new Error(`Quality Badge recovery read failed (${response.status}).`);
+  const rows=await response.json();
+  if(!Array.isArray(rows))throw new Error("Quality Badge recovery data returned an invalid response.");
+  return rows.map(row=>{
+    const code=String(row?.code||"").trim();
+    const assetKey=String(row?.asset_key||"").trim();
+    return {
+      code,
+      display_name:String(row?.display_name||code).trim()||code,
+      image_path:assetKey?`${assetKey}_.png`:"",
+      sort_order:row?.sort_order??null
+    };
+  }).filter(row=>row.code&&row.image_path);
+}
+
 async function fetchPublicDeveloperRecoveryData(){
   const headers={apikey:SUPABASE_TEST_PUBLISHABLE_KEY};
   const showcaseSelect="company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
@@ -805,16 +825,18 @@ async function downloadRecoveryJson(){
   writeStatus.style.color="#ffd36d";
   writeStatus.textContent="Reading Supabase TEST and generating recovery files…";
   try{
-    const [games,publicDeveloperData]=await Promise.all([
+    const [games,publicDeveloperData,qualityBadgeData]=await Promise.all([
       fetchAllSupabaseTestGames(),
-      fetchPublicDeveloperRecoveryData()
+      fetchPublicDeveloperRecoveryData(),
+      fetchQualityBadgeRecoveryData()
     ]);
     if(!games.length)throw new Error("Supabase TEST returned zero games.");
     const cleanGames=games.map(cleanGameForJson);
     downloadJsonFile("games_.json",cleanGames);
     downloadJsonFile("public-developer-data_.json",publicDeveloperData);
+    downloadJsonFile("quality-badges_.json",qualityBadgeData);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games_.json (${cleanGames.length} games) + public-developer-data_.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGames.length} provided games).`;
+    writeStatus.textContent=`GENERATED — games_.json (${cleanGames.length} games) + public-developer-data_.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGames.length} provided games) + quality-badges_.json (${qualityBadgeData.length} badges).`;
   }catch(e){
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="EXPORT FAILED — recovery files were not generated.";
