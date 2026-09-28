@@ -804,11 +804,11 @@
         const incoming = [];
 
         lines.forEach(line => {
-            const tokens = line.trim().split(/\s+/);
+            const columns = line.split('\t');
 
-            if (tokens.length >= 2) {
-                const username = tokens[0];
-                const bonus = tokens[1];
+            if (columns.length >= 2) {
+                const username = columns[0].trim();
+                const bonus = columns[1].trim();
 
                 if (username && bonus) {
                     const duplicate = players.some(
