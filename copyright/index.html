@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
 <title>Mark Lynx Admin</title>
-<link rel="stylesheet" href="css/admin-core.css?v=recent-refresh-prod-rev01">
+<link rel="stylesheet" href="css/admin-core.css?v=REV30-video-count-refresh">
 <link rel="stylesheet" href="css/auth.css">
 <link rel="stylesheet" href="css/games.css?v=REV65-provided-relationship-dialog">
 <link rel="stylesheet" href="css/traffic-analytics.css">
@@ -141,9 +141,15 @@
 <p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
 <div id="devPubSearchResults" aria-live="polite"></div>
 </section>
+<div id="manualRefreshControls">
 <div id="recentRefreshControl">
 <button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
 <p id="recentRefreshStatus" aria-live="polite"></p>
+</div>
+<div id="videoCountRefreshControl">
+<button id="videoCountRefresh" class="admin-link" type="button">Refresh Video Count Now</button>
+<p id="videoCountRefreshStatus" aria-live="polite"></p>
+</div>
 </div>
 <section id="trafficPanel" aria-label="Traffic Analytics">
 <h2>Traffic Analytics</h2>
@@ -201,7 +207,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core.js?v=PROD-quality-badges-REV19"></script>
+<script type="module" src="js/admin-core.js?v=REV30-video-count-refresh"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
