@@ -78,21 +78,7 @@
   };
 
   const createQualityBadge = value => {
-    const rawQuality = String(value || '').trim();
-    const quality = rawQuality.toLowerCase();
-    const managedBadge = window.QUALITY_BADGES && window.QUALITY_BADGES[quality];
-
-    if (managedBadge && managedBadge.imageUrl) {
-      const img = document.createElement('img');
-      const label = managedBadge.displayName || managedBadge.code || rawQuality;
-      img.className = 'quality-badge';
-      img.src = managedBadge.imageUrl;
-      img.alt = label;
-      img.title = label;
-      return img;
-    }
-
-    // Preserve the existing permanent GitHub fallback for the two original badges.
+    const quality = String(value || '').trim().toLowerCase();
     if (quality !== '4k' && quality !== '1080p') return null;
 
     const img = document.createElement('img');
