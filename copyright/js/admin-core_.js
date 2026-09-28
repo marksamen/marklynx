@@ -7,6 +7,7 @@ import { initAdminPageModal } from "./admin-page-modal_.js?v=game-suggestions-x-
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=RECOVERY-quality-badges-REV19";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
+import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
 
 const firebaseConfig = {
@@ -37,6 +38,7 @@ const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiH
 initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyTestDatabaseIdentity});
 initRecentRefresh({auth});
+initVideoCountRefresh({auth});
 initDeveloperPublisherSearch();
 
 window.addEventListener("message",event=>{
