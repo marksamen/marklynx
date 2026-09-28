@@ -268,7 +268,27 @@
         }
         console.info(`[GAMEDEV] Quality badges loaded: ${Object.keys(window.QUALITY_BADGES).length}`);
       } catch (qualityError) {
-        console.warn('[GAMEDEV] Quality badge definitions unavailable; using built-in badge fallback:', qualityError);
+        console.warn('[GAMEDEV] Supabase quality badge definitions unavailable; trying quality-badges.json recovery:', qualityError);
+        try {
+          const recoveryResponse = await fetch('data/quality-badges.json', { cache: 'no-store' });
+          if (!recoveryResponse.ok) throw new Error(`quality-badges.json: HTTP ${recoveryResponse.status}`);
+          const recoveryRows = await recoveryResponse.json();
+          if (!Array.isArray(recoveryRows)) throw new Error('quality-badges.json: invalid recovery data');
+
+          for (const badge of recoveryRows) {
+            const code = String(badge?.code || '').trim();
+            const imagePath = String(badge?.image_path || '').trim();
+            if (!code || !imagePath) continue;
+            window.QUALITY_BADGES[code.toLowerCase()] = {
+              code,
+              displayName: String(badge?.display_name || code),
+              imageUrl: imagePath
+            };
+          }
+          console.info(`[PRODUCTION] Quality badges loaded from static recovery: ${Object.keys(window.QUALITY_BADGES).length}`);
+        } catch (recoveryError) {
+          console.warn('[GAMEDEV] Quality badge recovery unavailable; using built-in badge fallback:', recoveryError);
+        }
       }
 
       // Read the precomputed total instead of scanning YouTube in the visitor's browser.
