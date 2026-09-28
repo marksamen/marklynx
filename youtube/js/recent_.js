@@ -49,18 +49,11 @@
       .toLowerCase()
       .replace(/\s+/g, ' ');
 
-  const gameByVideoId = new Map();
-  rawGames
-    .filter(game => game && game.v)
-    .forEach(game => {
-      const key = String(game.v);
-      const existing = gameByVideoId.get(key);
-      // If duplicate rows reference the permanent TEST video while TEST content is
-      // visible, keep the authoritative testContent=true row for Recent metadata.
-      if (!existing || (game.testContent === true && existing.testContent !== true)) {
-        gameByVideoId.set(key, game);
-      }
-    });
+  const gameByVideoId = new Map(
+    rawGames
+      .filter(game => game && game.v)
+      .map(game => [String(game.v), game])
+  );
 
   const gameByName = new Map();
   rawGames.forEach(game => {
@@ -85,7 +78,21 @@
   };
 
   const createQualityBadge = value => {
-    const quality = String(value || '').trim().toLowerCase();
+    const rawQuality = String(value || '').trim();
+    const quality = rawQuality.toLowerCase();
+    const managedBadge = window.QUALITY_BADGES?.[quality];
+
+    if (managedBadge?.imageUrl) {
+      const img = document.createElement('img');
+      const label = managedBadge.displayName || managedBadge.code || rawQuality;
+      img.className = 'quality-badge';
+      img.src = managedBadge.imageUrl;
+      img.alt = label;
+      img.title = label;
+      return img;
+    }
+
+    // Permanent GitHub fallback for the two original badges.
     if (quality !== '4k' && quality !== '1080p') return null;
 
     const img = document.createElement('img');
@@ -152,7 +159,7 @@
     applyView(listBtn?.classList.contains('active') ? 'list' : 'grid');
   };
 
-  fetch('data/recent.json', { cache: 'no-store' })
+  fetch('data/recent_.json', { cache: 'no-store' })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();

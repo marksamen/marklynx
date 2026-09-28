@@ -10,94 +10,9 @@
   const successPanel = document.getElementById('developerSuccessPanel');
   if (!openBtn || !overlay || !closeBtn) return;
 
-  const developerCards = overlay.querySelector('.developer-cards');
-
-  // REV46 TEST: replace the four legacy hard-coded public cards with the sanitized
-  // database showcase feed. Preserve any TEST-only injected card already in the rail.
-  const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
-    ? window.PUBLIC_DEVELOPER_SHOWCASE.slice()
-    : null;
-
-  if (developerCards && showcaseRows) {
-    const testCards = [...developerCards.querySelectorAll('.developer-card')]
-      .filter(card => card.dataset.videoTitle === 'TEST DEVELOPER VIDEO');
-
-    const companyOrder = row => Number.isFinite(Number(row.public_display_order))
-      ? Number(row.public_display_order)
-      : Number.MAX_SAFE_INTEGER;
-
-    showcaseRows.sort((a, b) => {
-      const companyDiff = companyOrder(a) - companyOrder(b);
-      if (companyDiff) return companyDiff;
-      const companyIdDiff = Number(a.company_id) - Number(b.company_id);
-      if (companyIdDiff) return companyIdDiff;
-      const mode = String(a.public_games_sort || 'RECENT').toUpperCase();
-      if (mode === 'ALPHABETICAL') {
-        return String(a.game_name || '').localeCompare(String(b.game_name || ''), undefined, { sensitivity: 'base' });
-      }
-      return Number(b.game_id) - Number(a.game_id);
-    });
-
-    const fragment = document.createDocumentFragment();
-    for (const row of showcaseRows) {
-      const videoId = String(row.video_id || '').trim();
-      const playlistId = String(row.playlist_id || '').trim();
-      if (!videoId && !playlistId) continue;
-
-      const title = String(row.game_name || '').trim();
-      const company = String(row.public_display_name || '').trim();
-      const href = String(row.youtube_url || '').trim()
-        || (playlistId
-          ? `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`
-          : `https://youtu.be/${encodeURIComponent(videoId)}`);
-
-      const card = document.createElement('a');
-      card.className = 'developer-card';
-      card.href = href;
-      if (playlistId) {
-        card.dataset.playlistId = playlistId;
-        card.dataset.playlistTitle = title;
-      } else {
-        card.dataset.videoId = videoId;
-        card.dataset.videoTitle = title;
-      }
-
-      const thumbWrap = document.createElement('div');
-      thumbWrap.className = 'developer-card-thumb';
-      const img = document.createElement('img');
-      if (videoId) img.src = `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`;
-      img.alt = `${title} walkthrough thumbnail`;
-      thumbWrap.appendChild(img);
-
-      const top = document.createElement('div');
-      top.className = 'developer-card-top';
-      const strong = document.createElement('strong');
-      strong.textContent = title;
-      const studio = document.createElement('span');
-      studio.textContent = company;
-      top.append(strong, studio);
-
-      const meta = document.createElement('div');
-      meta.className = 'developer-card-meta';
-      for (const value of [row.gamerscore, row.completion_time, row.quality]) {
-        const span = document.createElement('span');
-        span.textContent = String(value || '');
-        meta.appendChild(span);
-      }
-
-      const link = document.createElement('div');
-      link.className = 'developer-card-link';
-      link.textContent = 'Watch walkthrough →';
-
-      card.append(thumbWrap, top, meta, link);
-      fragment.appendChild(card);
-    }
-
-    developerCards.replaceChildren(...testCards, fragment);
-  }
-
   // TEST REV23: permanent mobile Developer Showcase indicator ABOVE the card rail.
   // Recalculate when the hidden Developer overlay becomes visible so the bar exists before the first swipe.
+  const developerCards = overlay.querySelector('.developer-cards');
   if (developerCards) {
     const indicator = document.createElement('div');
     indicator.className = 'developer-scroll-indicator';
@@ -135,6 +50,17 @@
   let lastFocus = null;
   let submissionSucceeded = false;
   let developerMediaSuspended = false;
+
+  // Quality Badge Management REV21: keep the existing Developer Showcase card layout,
+  // but source each card's quality value from the matching game record when available.
+  overlay.querySelectorAll('.developer-card[data-video-id]').forEach(card => {
+    const videoId = String(card.dataset.videoId || '');
+    const game = Array.isArray(window.RAW)
+      ? window.RAW.find(item => item && String(item.v || '') === videoId)
+      : null;
+    const qualityCell = card.querySelector('.developer-card-meta span:nth-child(3)');
+    if (game && qualityCell && game.q) qualityCell.textContent = String(game.q);
+  });
 
   const setStatus = (message, type = '') => {
     if (!status) return;
@@ -264,15 +190,6 @@
   // immediate path; this observer is the device-independent safety net.
   const sharedMediaOverlay = document.getElementById('videoModalOverlay');
   if (sharedMediaOverlay) {
-    // TEST REV01: while Developer media is open on a phone in landscape,
-    // backdrop taps must not close the shared player. The X remains the close control.
-    sharedMediaOverlay.addEventListener('click', event => {
-      const landscapePhone = window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
-      if (developerMediaSuspended && landscapePhone && event.target === sharedMediaOverlay) {
-        event.stopImmediatePropagation();
-      }
-    }, true);
-
     new MutationObserver(() => {
       if (developerMediaSuspended && !sharedMediaOverlay.classList.contains('open')) {
         restoreAfterMedia();
