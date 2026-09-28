@@ -199,6 +199,36 @@
     const titleNode = card.querySelector('.developer-card-top strong');
     if (game?.n && titleNode) titleNode.textContent = game.n;
 
+    // Quality Badge Management REV24: Developer cards use the same managed
+    // quality definition map as Main Guides. Leave Recent completely untouched.
+    const meta = card.querySelector('.developer-card-meta');
+    const qualityNode = meta?.lastElementChild || null;
+    if (qualityNode) {
+      const rawQuality = String(game?.q || qualityNode.textContent || '').trim();
+      const quality = rawQuality.toLowerCase();
+      const managedBadge = window.QUALITY_BADGES?.[quality];
+      let imageUrl = managedBadge?.imageUrl || '';
+      let label = managedBadge?.displayName || managedBadge?.code || rawQuality;
+
+      // Permanent GitHub fallback for the two original quality badges.
+      if (!imageUrl && quality === '4k') {
+        imageUrl = 'quality-4k-60fps_.png';
+        label = '4K · 60 FPS';
+      } else if (!imageUrl && quality === '1080p') {
+        imageUrl = 'quality-1080p_.png';
+        label = 'Full HD · 1080p';
+      }
+
+      if (imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'quality-badge';
+        img.src = imageUrl;
+        img.alt = label;
+        img.title = label;
+        qualityNode.replaceWith(img);
+      }
+    }
+
     card.addEventListener('click', event => {
       const playlistId = card.dataset.playlistId || '';
       const videoId = card.dataset.videoId || '';
