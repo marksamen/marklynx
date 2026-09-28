@@ -1148,6 +1148,18 @@
             y += row.height;
         });
 
+        // CVC REV11 — subtle spreadsheet-style vertical separators in JPG only.
+        ctx.strokeStyle = '#b7c7d8';
+        ctx.lineWidth = 2;
+        let separatorX = 0;
+        for (let i = 0; i < columns.length - 1; i++) {
+            separatorX += columns[i];
+            ctx.beginPath();
+            ctx.moveTo(separatorX, 0);
+            ctx.lineTo(separatorX, height);
+            ctx.stroke();
+        }
+
         canvas.toBlob(blob => {
             if (!blob) {
                 alert('Could not create JPG export.');
