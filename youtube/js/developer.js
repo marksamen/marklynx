@@ -310,6 +310,34 @@
     const titleNode = card.querySelector('.developer-card-top strong');
     if (game?.n && titleNode) titleNode.textContent = game.n;
 
+    // Developer REV05 PROD recovery: the permanent TEST Developer card is
+    // injected before database showcase rendering. Replace its legacy hard-coded
+    // quality text with the Admin/database-managed quality from the matching game.
+    if (card.dataset.videoTitle === 'TEST DEVELOPER VIDEO') {
+      const meta = card.querySelector('.developer-card-meta');
+      const legacyQuality = meta?.lastElementChild;
+      const qualityCode = String(game?.q || '').trim().toLowerCase();
+      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
+      if (legacyQuality) {
+        legacyQuality.remove();
+        if (managedQuality?.imageUrl) {
+          const thumbWrap = card.querySelector('.developer-card-thumb');
+          if (thumbWrap) {
+            const qualitySpan = document.createElement('span');
+            qualitySpan.className = 'developer-card-quality';
+            const qualityImg = document.createElement('img');
+            const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
+            qualityImg.className = 'quality-badge';
+            qualityImg.src = managedQuality.imageUrl;
+            qualityImg.alt = String(qualityLabel || '');
+            qualityImg.title = String(qualityLabel || '');
+            qualitySpan.appendChild(qualityImg);
+            thumbWrap.appendChild(qualitySpan);
+          }
+        }
+      }
+    }
+
     card.addEventListener('click', event => {
       const playlistId = card.dataset.playlistId || '';
       const videoId = card.dataset.videoId || '';
