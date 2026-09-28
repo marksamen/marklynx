@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,14 +201,49 @@
                 gap: 10px;
             }
         }
+
+        /* CVC REV01 — login protection */
+        #login {
+            width: min(92vw, 420px);
+            margin: 10vh auto 0;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        #login h1 { margin-bottom: 8px; }
+        #login p { margin-top: 0; color: #666; }
+        #loginForm { display: flex; flex-direction: column; gap: 12px; }
+        #loginForm input { box-sizing: border-box; width: 100%; }
+        #error { min-height: 1.2em; margin-top: .8rem; color: #c62828; }
+        #cvcApp { display: none; }
+        #cvcHeader { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+        #logout { width: auto; min-width: 110px; background: #18181a; }
+        #logout:hover { background: #211313; }
     </style>
 </head>
 
 <body>
 
+<main id="login">
+    <h1>Mark Lynx CVC</h1>
+    <p>AUTHORIZED ACCESS ONLY</p>
+    <form id="loginForm">
+        <input id="email" type="email" autocomplete="username" placeholder="Email" required>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+        <button type="submit">Sign In</button>
+    </form>
+    <div id="error" role="alert" aria-live="polite"></div>
+</main>
+
+<main id="cvcApp">
 <div class="container">
 
-    <h1>Game Allocation String Generator</h1>
+    <div id="cvcHeader">
+        <h1>Game Allocation String Generator</h1>
+        <button id="logout" type="button">Sign Out</button>
+    </div>
 
     <div class="input-section">
 
@@ -768,10 +802,7 @@
 
 </script>
 
+</main>
+<script type="module" src="auth.js?v=CVC-REV01"></script>
 </body>
 </html>
-```
-
-This version also fixes a subtle issue with the **Remove** button: because players are sorted automatically, using the row number as the removal index could remove the wrong player. Each player now gets a unique ID, so removal remains reliable after sorting.
-
-If you paste this over your existing `.html` file, it should work as-is.
