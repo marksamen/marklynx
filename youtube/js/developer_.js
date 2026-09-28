@@ -79,10 +79,25 @@
 
       const meta = document.createElement('div');
       meta.className = 'developer-card-meta';
-      for (const value of [row.gamerscore, row.completion_time, row.quality]) {
+      for (const value of [row.gamerscore, row.completion_time]) {
         const span = document.createElement('span');
         span.textContent = String(value || '');
         meta.appendChild(span);
+      }
+
+      // Developer REV01: quality is managed by Admin/quality_badges, not hard-coded here.
+      const qualityCode = String(row.quality || '').trim().toLowerCase();
+      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
+      if (managedQuality?.imageUrl) {
+        const qualitySpan = document.createElement('span');
+        const qualityImg = document.createElement('img');
+        const qualityLabel = managedQuality.displayName || managedQuality.code || row.quality;
+        qualityImg.className = 'quality-badge';
+        qualityImg.src = managedQuality.imageUrl;
+        qualityImg.alt = String(qualityLabel || '');
+        qualityImg.title = String(qualityLabel || '');
+        qualitySpan.appendChild(qualityImg);
+        meta.appendChild(qualitySpan);
       }
 
       const link = document.createElement('div');
@@ -292,6 +307,29 @@
     const game = findDeveloperGame(card);
     const titleNode = card.querySelector('.developer-card-top strong');
     if (game?.n && titleNode) titleNode.textContent = game.n;
+
+    // The permanent TEST Developer card is injected before database showcase rendering.
+    // Replace its legacy hard-coded quality text from the matching game record as well.
+    if (card.dataset.videoTitle === 'TEST DEVELOPER VIDEO') {
+      const meta = card.querySelector('.developer-card-meta');
+      const legacyQuality = meta?.lastElementChild;
+      const qualityCode = String(game?.q || '').trim().toLowerCase();
+      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
+      if (legacyQuality) {
+        legacyQuality.remove();
+        if (managedQuality?.imageUrl) {
+          const qualitySpan = document.createElement('span');
+          const qualityImg = document.createElement('img');
+          const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
+          qualityImg.className = 'quality-badge';
+          qualityImg.src = managedQuality.imageUrl;
+          qualityImg.alt = String(qualityLabel || '');
+          qualityImg.title = String(qualityLabel || '');
+          qualitySpan.appendChild(qualityImg);
+          meta.appendChild(qualitySpan);
+        }
+      }
+    }
 
     card.addEventListener('click', event => {
       const playlistId = card.dataset.playlistId || '';

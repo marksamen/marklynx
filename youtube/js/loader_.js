@@ -284,7 +284,7 @@
 
       await loadScript('js/youtube_.js?v=20260927-mobile-landscape-prime-rev01');
       await loadScript('js/site_.js?v=RECOVERY-quality-badges-REV23');
-      await loadScript('js/developer_.js?v=20260926-db-showcase-REV46');
+      await loadScript('js/developer_.js?v=developer-managed-quality-REV01');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
     } catch (error) {
