@@ -1436,6 +1436,18 @@
 
     async function openCvcHistoryFile(id, name, download) {
         const status = document.getElementById('cvcArchiveStatus');
+        let viewWindow = null;
+
+        // Open the View tab immediately from the user's click so modern
+        // browsers do not block it after the asynchronous file request.
+        if (!download) {
+            viewWindow = window.open('', '_blank');
+            if (viewWindow) {
+                viewWindow.document.title = name;
+                viewWindow.document.body.textContent = `Opening ${name}...`;
+            }
+        }
+
         status.textContent = `${download ? 'Downloading' : 'Opening'} ${name}...`;
         try {
             const token = await getCvcAuthToken();
@@ -1443,16 +1455,24 @@
             const response = await fetch(CVC_HISTORY_ENDPOINT, { method: 'POST', body });
             const result = await response.json();
             if (!result.success) throw new Error(result.error || 'Could not retrieve file.');
-            const blob = base64ToBlob(result.data, result.mimeType || 'image/jpeg');
+
+            // Current Apps Script returns the JPG as "image". Keep "data"
+            // as a compatibility fallback for any older deployment response.
+            const imageData = result.image || result.data;
+            if (!imageData) throw new Error('No JPG image data received.');
+
+            const blob = base64ToBlob(imageData, result.mimeType || 'image/jpeg');
             if (download) {
                 downloadBlob(blob, result.name || name);
             } else {
                 const objectUrl = URL.createObjectURL(blob);
-                window.open(objectUrl, '_blank', 'noopener');
+                if (!viewWindow) throw new Error('The browser blocked the View window.');
+                viewWindow.location.replace(objectUrl);
                 setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
             }
             status.textContent = '';
         } catch (error) {
+            if (viewWindow && !viewWindow.closed) viewWindow.close();
             status.textContent = `History file failed: ${error.message}`;
         }
     }
