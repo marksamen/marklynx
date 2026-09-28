@@ -366,6 +366,14 @@
                 Copy Column D For Excel
             </button>
 
+            <button type="button" onclick="exportCvcCsv()">
+                Export CSV
+            </button>
+
+            <button type="button" onclick="exportCvcJpg()">
+                Export JPG
+            </button>
+
             <button class="action-btn" onclick="clearAll()">
                 Clear All
             </button>
@@ -917,6 +925,175 @@
 
         });
 
+    }
+
+
+    /*
+     * CVC REV07 — export the finished on-screen allocation as four columns.
+     */
+    function getExportRows() {
+        return Array.from(document.querySelectorAll('#playerTableBody tr')).map(row => {
+            const cells = row.querySelectorAll('td');
+            const gamesInput = cells[2] ? cells[2].querySelector('input') : null;
+            return {
+                name: cells[0] ? cells[0].textContent.trim() : '',
+                bonus: cells[1] ? cells[1].textContent.trim() : '',
+                games: gamesInput ? gamesInput.value.trim() : '',
+                where: cells[3] ? cells[3].textContent.replace(/\s+/g, ' ').trim() : ''
+            };
+        });
+    }
+
+    function csvCell(value) {
+        return '"' + String(value ?? '').replace(/"/g, '""') + '"';
+    }
+
+    function downloadBlob(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function exportCvcCsv() {
+        const rows = getExportRows();
+        if (!rows.length) {
+            alert('No CVC data available to export.');
+            return;
+        }
+
+        const lines = [
+            ['Name', 'Bonus', '# of games to play', 'Where to play'].map(csvCell).join(','),
+            ...rows.map(row => [row.name, row.bonus, row.games, row.where].map(csvCell).join(','))
+        ];
+
+        downloadBlob(
+            new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }),
+            'CVC Allocation.csv'
+        );
+    }
+
+    function wrapCanvasText(ctx, text, maxWidth) {
+        const words = String(text || '').split(/\s+/).filter(Boolean);
+        if (!words.length) return [''];
+        const lines = [];
+        let line = words[0];
+        for (let i = 1; i < words.length; i++) {
+            const test = line + ' ' + words[i];
+            if (ctx.measureText(test).width <= maxWidth) {
+                line = test;
+            } else {
+                lines.push(line);
+                line = words[i];
+            }
+        }
+        lines.push(line);
+        return lines;
+    }
+
+    function exportCvcJpg() {
+        const rows = getExportRows();
+        if (!rows.length) {
+            alert('No CVC data available to export.');
+            return;
+        }
+
+        const width = 1800;
+        const columns = [430, 220, 300, 850];
+        const headerHeight = 72;
+        const minRowHeight = 58;
+        const lineHeight = 30;
+        const padX = 22;
+        const padY = 14;
+
+        const measure = document.createElement('canvas').getContext('2d');
+        measure.font = '26px Arial, sans-serif';
+
+        const prepared = rows.map(row => {
+            const whereLines = wrapCanvasText(measure, row.where, columns[3] - padX * 2);
+            const height = Math.max(minRowHeight, whereLines.length * lineHeight + padY * 2);
+            return { ...row, whereLines, height };
+        });
+
+        const height = headerHeight + prepared.reduce((sum, row) => sum + row.height, 0);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#17365d';
+        ctx.fillRect(0, 0, width, headerHeight);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 27px Arial, sans-serif';
+        ctx.textBaseline = 'middle';
+
+        const headers = ['Name', 'Bonus', '# of games to play', 'Where to play'];
+        let x = 0;
+        headers.forEach((header, i) => {
+            const colWidth = columns[i];
+            if (i === 0 || i === 3) {
+                ctx.textAlign = 'left';
+                ctx.fillText(header, x + padX, headerHeight / 2);
+            } else {
+                ctx.textAlign = 'center';
+                ctx.fillText(header, x + colWidth / 2, headerHeight / 2);
+            }
+            x += colWidth;
+        });
+
+        let y = headerHeight;
+        prepared.forEach((row, rowIndex) => {
+            ctx.fillStyle = rowIndex % 2 === 0 ? '#d9e5f3' : '#eef3f8';
+            ctx.fillRect(0, y, width, row.height);
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, y + row.height);
+            ctx.lineTo(width, y + row.height);
+            ctx.stroke();
+
+            ctx.fillStyle = '#111111';
+            ctx.font = '26px Arial, sans-serif';
+            ctx.textBaseline = 'middle';
+
+            let cellX = 0;
+            ctx.textAlign = 'left';
+            ctx.fillText(row.name, cellX + padX, y + row.height / 2);
+            cellX += columns[0];
+
+            ctx.textAlign = 'center';
+            ctx.fillText(row.bonus, cellX + columns[1] / 2, y + row.height / 2);
+            cellX += columns[1];
+
+            ctx.font = 'bold 26px Arial, sans-serif';
+            ctx.fillText(row.games, cellX + columns[2] / 2, y + row.height / 2);
+            cellX += columns[2];
+
+            ctx.textAlign = 'left';
+            ctx.font = '26px Arial, sans-serif';
+            const firstLineY = y + row.height / 2 - ((row.whereLines.length - 1) * lineHeight) / 2;
+            row.whereLines.forEach((line, lineIndex) => {
+                ctx.fillText(line, cellX + padX, firstLineY + lineIndex * lineHeight);
+            });
+
+            y += row.height;
+        });
+
+        canvas.toBlob(blob => {
+            if (!blob) {
+                alert('Could not create JPG export.');
+                return;
+            }
+            downloadBlob(blob, 'CVC Allocation.jpg');
+        }, 'image/jpeg', 0.94);
     }
 
 
