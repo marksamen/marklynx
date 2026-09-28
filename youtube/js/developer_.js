@@ -220,12 +220,19 @@
       }
 
       if (imageUrl) {
-        const img = document.createElement('img');
-        img.className = 'quality-badge';
-        img.src = imageUrl;
-        img.alt = label;
-        img.title = label;
-        qualityNode.replaceWith(img);
+        const thumb = card.querySelector('.developer-card-thumb');
+        if (thumb) {
+          const overlay = document.createElement('span');
+          overlay.className = 'developer-quality-overlay';
+          const img = document.createElement('img');
+          img.className = 'quality-badge';
+          img.src = imageUrl;
+          img.alt = label;
+          img.title = label;
+          overlay.appendChild(img);
+          thumb.appendChild(overlay);
+          qualityNode.remove();
+        }
       }
     }
 
