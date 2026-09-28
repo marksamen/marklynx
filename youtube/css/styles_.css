@@ -2906,3 +2906,27 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:break-word;
   }
 }
+
+
+/* ---------- DEVELOPER REV02: managed Quality image on card thumbnail ---------- */
+/* Developer-only. Mirrors the proven GRID bottom-right quality treatment without
+   reusing Main/Recent selectors or changing Developer card structure. */
+.developer-card-thumb{position:relative;}
+.developer-card-thumb .developer-card-quality{
+  position:absolute;
+  right:8px;
+  bottom:8px;
+  z-index:4;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height:0;
+}
+/* Override the legacy `.developer-card-thumb img` thumbnail rule for this badge. */
+.developer-card-thumb .developer-card-quality img.quality-badge{
+  display:block;
+  width:auto;
+  height:42px;
+  max-width:89px;
+  object-fit:contain;
+}
