@@ -217,6 +217,42 @@
 
         .sort-info strong { color: #ffffff; }
 
+        .cvc-archive-controls {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .cvc-archive-controls .input-group {
+            flex: 0 1 220px;
+        }
+
+        .cvc-history {
+            margin-top: 25px;
+            background: linear-gradient(180deg, var(--panel-bg), var(--panel-bg-2));
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+        }
+
+        .cvc-history h3 { margin: 0 0 8px; }
+        .cvc-history-list { display: grid; gap: 8px; margin-top: 12px; }
+        .cvc-history-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #0a1725;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .cvc-history-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .cvc-history-actions button { padding: 7px 10px; font-size: 13px; }
+        #cvcArchiveStatus { min-height: 1.2em; }
+
         .player-manager summary {
             cursor: pointer;
             color: #ffffff;
@@ -433,6 +469,16 @@
             <button class="action-btn" onclick="clearAll()">
                 Clear All
             </button>
+
+            <div class="cvc-archive-controls">
+                <div class="input-group">
+                    <label for="cvcEventDate">CVC Event Date</label>
+                    <input type="date" id="cvcEventDate">
+                </div>
+                <button type="button" onclick="uploadCvcHistory()">Upload JPG to History</button>
+            </div>
+            <div class="sort-info"><strong>Archive filename:</strong> <span id="cvcArchiveFilename">YYYY-MM-DD CVC List.jpg</span></div>
+            <div id="cvcArchiveStatus" class="sort-info"></div>
         </div>
 
     </div>
@@ -458,6 +504,13 @@
         </table>
 
     </div>
+
+    <section class="cvc-history">
+        <h3>CVC Weekly History</h3>
+        <div class="sort-info">Private weekly JPG archive. Select View or Download when you need an old event.</div>
+        <button type="button" onclick="loadCvcHistory()" style="margin-top: 12px;">Refresh History</button>
+        <div id="cvcHistoryList" class="cvc-history-list"></div>
+    </section>
 
 </div>
 
@@ -1112,118 +1165,297 @@
         });
     }
 
-    function exportCvcJpg() {
-        const rows = getExportRows();
-        if (!rows.length) {
-            alert('No CVC data available to export.');
+    const CVC_HISTORY_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzKOuIlY9UljwO1bNuQ0XcroXaTkV6N8oLlhl_QX5eCjmNyonlLkmZG38NZT34kGzwU/exec';
+
+    function getCvcEventDate() {
+        return document.getElementById('cvcEventDate').value;
+    }
+
+    function getCvcArchiveFilename() {
+        const date = getCvcEventDate();
+        return date ? `${date} CVC List.jpg` : '';
+    }
+
+    function updateCvcArchiveFilename() {
+        document.getElementById('cvcArchiveFilename').textContent = getCvcArchiveFilename() || 'YYYY-MM-DD CVC List.jpg';
+    }
+
+    function formatCvcEventDate(dateValue) {
+        const [year, month, day] = dateValue.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function requireCvcEventDate() {
+        const date = getCvcEventDate();
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+            alert('Select the CVC Event Date first.');
+            return '';
+        }
+        return date;
+    }
+
+    function createCvcJpgBlob() {
+        return new Promise(resolve => {
+            const rows = getExportRows();
+            const eventDate = requireCvcEventDate();
+            if (!rows.length) {
+                alert('No CVC data available to export.');
+                resolve(null);
+                return;
+            }
+            if (!eventDate) {
+                resolve(null);
+                return;
+            }
+
+            const width = 1800;
+            const columns = [430, 220, 300, 850];
+            const titleHeight = 76;
+            const headerHeight = 72;
+            const minRowHeight = 58;
+            const lineHeight = 30;
+            const padX = 22;
+            const padY = 14;
+
+            const measure = document.createElement('canvas').getContext('2d');
+            measure.font = '26px Arial, sans-serif';
+
+            const prepared = rows.map(row => {
+                const whereLines = wrapCanvasAllocation(measure, row.where, columns[3] - padX * 2);
+                const height = Math.max(minRowHeight, whereLines.length * lineHeight + padY * 2);
+                return { ...row, whereLines, height };
+            });
+
+            const height = titleHeight + headerHeight + prepared.reduce((sum, row) => sum + row.height, 0);
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#0b2038';
+            ctx.fillRect(0, 0, width, titleHeight);
+            ctx.fillStyle = '#ffffff';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'left';
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.fillText('Mark Lynx CVC — Game Allocation', padX, titleHeight / 2);
+            ctx.textAlign = 'right';
+            ctx.font = 'bold 28px Arial, sans-serif';
+            ctx.fillText(formatCvcEventDate(eventDate), width - padX, titleHeight / 2);
+
+            ctx.fillStyle = '#17365d';
+            ctx.fillRect(0, titleHeight, width, headerHeight);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 27px Arial, sans-serif';
+            ctx.textBaseline = 'middle';
+
+            const headers = ['Name', 'Bonus', '# of games to play', 'Where to play'];
+            let x = 0;
+            headers.forEach((header, i) => {
+                const colWidth = columns[i];
+                if (i === 0 || i === 3) {
+                    ctx.textAlign = 'left';
+                    ctx.fillText(header, x + padX, titleHeight + headerHeight / 2);
+                } else {
+                    ctx.textAlign = 'center';
+                    ctx.fillText(header, x + colWidth / 2, titleHeight + headerHeight / 2);
+                }
+                x += colWidth;
+            });
+
+            let y = titleHeight + headerHeight;
+            prepared.forEach((row, rowIndex) => {
+                ctx.fillStyle = rowIndex % 2 === 0 ? '#d9e5f3' : '#eef3f8';
+                ctx.fillRect(0, y, width, row.height);
+
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, y + row.height);
+                ctx.lineTo(width, y + row.height);
+                ctx.stroke();
+
+                ctx.fillStyle = '#111111';
+                ctx.font = '26px Arial, sans-serif';
+                ctx.textBaseline = 'middle';
+
+                let cellX = 0;
+                ctx.textAlign = 'left';
+                ctx.fillText(row.name, cellX + padX, y + row.height / 2);
+                cellX += columns[0];
+
+                ctx.textAlign = 'center';
+                ctx.fillText(row.bonus, cellX + columns[1] / 2, y + row.height / 2);
+                cellX += columns[1];
+
+                ctx.font = 'bold 26px Arial, sans-serif';
+                ctx.fillText(row.games, cellX + columns[2] / 2, y + row.height / 2);
+                cellX += columns[2];
+
+                ctx.textAlign = 'left';
+                ctx.font = '26px Arial, sans-serif';
+                const firstLineY = y + row.height / 2 - ((row.whereLines.length - 1) * lineHeight) / 2;
+                row.whereLines.forEach((line, lineIndex) => {
+                    drawAllocationLine(ctx, line, cellX + padX, firstLineY + lineIndex * lineHeight);
+                });
+
+                y += row.height;
+            });
+
+            ctx.strokeStyle = '#b7c7d8';
+            ctx.lineWidth = 2;
+            let separatorX = 0;
+            for (let i = 0; i < columns.length - 1; i++) {
+                separatorX += columns[i];
+                ctx.beginPath();
+                ctx.moveTo(separatorX, titleHeight);
+                ctx.lineTo(separatorX, height);
+                ctx.stroke();
+            }
+
+            canvas.toBlob(blob => {
+                if (!blob) {
+                    alert('Could not create JPG export.');
+                    resolve(null);
+                    return;
+                }
+                resolve(blob);
+            }, 'image/jpeg', 0.94);
+        });
+    }
+
+    async function exportCvcJpg() {
+        const blob = await createCvcJpgBlob();
+        if (!blob) return;
+        downloadBlob(blob, getCvcArchiveFilename());
+    }
+
+    function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+
+    async function getCvcAuthToken() {
+        if (typeof window.getCvcIdToken !== 'function') {
+            throw new Error('CVC authentication is not ready.');
+        }
+        return window.getCvcIdToken();
+    }
+
+    async function uploadCvcHistory() {
+        const filename = getCvcArchiveFilename();
+        if (!filename) {
+            alert('Select the CVC Event Date first.');
             return;
         }
 
-        const width = 1800;
-        const columns = [430, 220, 300, 850];
-        const headerHeight = 72;
-        const minRowHeight = 58;
-        const lineHeight = 30;
-        const padX = 22;
-        const padY = 14;
+        const status = document.getElementById('cvcArchiveStatus');
+        status.textContent = 'Creating JPG...';
 
-        const measure = document.createElement('canvas').getContext('2d');
-        measure.font = '26px Arial, sans-serif';
-
-        const prepared = rows.map(row => {
-            const whereLines = wrapCanvasAllocation(measure, row.where, columns[3] - padX * 2);
-            const height = Math.max(minRowHeight, whereLines.length * lineHeight + padY * 2);
-            return { ...row, whereLines, height };
-        });
-
-        const height = headerHeight + prepared.reduce((sum, row) => sum + row.height, 0);
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = '#17365d';
-        ctx.fillRect(0, 0, width, headerHeight);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 27px Arial, sans-serif';
-        ctx.textBaseline = 'middle';
-
-        const headers = ['Name', 'Bonus', '# of games to play', 'Where to play'];
-        let x = 0;
-        headers.forEach((header, i) => {
-            const colWidth = columns[i];
-            if (i === 0 || i === 3) {
-                ctx.textAlign = 'left';
-                ctx.fillText(header, x + padX, headerHeight / 2);
-            } else {
-                ctx.textAlign = 'center';
-                ctx.fillText(header, x + colWidth / 2, headerHeight / 2);
-            }
-            x += colWidth;
-        });
-
-        let y = headerHeight;
-        prepared.forEach((row, rowIndex) => {
-            ctx.fillStyle = rowIndex % 2 === 0 ? '#d9e5f3' : '#eef3f8';
-            ctx.fillRect(0, y, width, row.height);
-
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, y + row.height);
-            ctx.lineTo(width, y + row.height);
-            ctx.stroke();
-
-            ctx.fillStyle = '#111111';
-            ctx.font = '26px Arial, sans-serif';
-            ctx.textBaseline = 'middle';
-
-            let cellX = 0;
-            ctx.textAlign = 'left';
-            ctx.fillText(row.name, cellX + padX, y + row.height / 2);
-            cellX += columns[0];
-
-            ctx.textAlign = 'center';
-            ctx.fillText(row.bonus, cellX + columns[1] / 2, y + row.height / 2);
-            cellX += columns[1];
-
-            ctx.font = 'bold 26px Arial, sans-serif';
-            ctx.fillText(row.games, cellX + columns[2] / 2, y + row.height / 2);
-            cellX += columns[2];
-
-            ctx.textAlign = 'left';
-            ctx.font = '26px Arial, sans-serif';
-            const firstLineY = y + row.height / 2 - ((row.whereLines.length - 1) * lineHeight) / 2;
-            row.whereLines.forEach((line, lineIndex) => {
-                drawAllocationLine(ctx, line, cellX + padX, firstLineY + lineIndex * lineHeight);
-            });
-
-            y += row.height;
-        });
-
-        // CVC REV11 — subtle spreadsheet-style vertical separators in JPG only.
-        ctx.strokeStyle = '#b7c7d8';
-        ctx.lineWidth = 2;
-        let separatorX = 0;
-        for (let i = 0; i < columns.length - 1; i++) {
-            separatorX += columns[i];
-            ctx.beginPath();
-            ctx.moveTo(separatorX, 0);
-            ctx.lineTo(separatorX, height);
-            ctx.stroke();
-        }
-
-        canvas.toBlob(blob => {
+        try {
+            const blob = await createCvcJpgBlob();
             if (!blob) {
-                alert('Could not create JPG export.');
+                status.textContent = '';
                 return;
             }
-            downloadBlob(blob, 'CVC Allocation.jpg');
-        }, 'image/jpeg', 0.94);
+            const token = await getCvcAuthToken();
+            const image = await blobToBase64(blob);
+            const body = new URLSearchParams({ action: 'upload', filename, image, token });
+            status.textContent = 'Uploading to CVC Weekly History...';
+
+            const response = await fetch(CVC_HISTORY_ENDPOINT, { method: 'POST', body });
+            const result = await response.json();
+            if (!result.success) throw new Error(result.error || 'Upload failed.');
+
+            status.textContent = `${result.name} uploaded successfully.`;
+            await loadCvcHistory();
+        } catch (error) {
+            status.textContent = `Upload failed: ${error.message}`;
+        }
     }
+
+    async function loadCvcHistory() {
+        const list = document.getElementById('cvcHistoryList');
+        list.innerHTML = '<div class="sort-info">Loading history...</div>';
+        try {
+            const token = await getCvcAuthToken();
+            const body = new URLSearchParams({ action: 'list', token });
+            const response = await fetch(CVC_HISTORY_ENDPOINT, { method: 'POST', body });
+            const result = await response.json();
+            if (!result.success) throw new Error(result.error || 'Could not load history.');
+            if (!result.files.length) {
+                list.innerHTML = '<div class="sort-info">No archived CVC JPGs yet.</div>';
+                return;
+            }
+            list.innerHTML = '';
+            result.files.forEach(file => {
+                const row = document.createElement('div');
+                row.className = 'cvc-history-row';
+                const name = document.createElement('strong');
+                name.textContent = file.name;
+                const actions = document.createElement('div');
+                actions.className = 'cvc-history-actions';
+
+                const view = document.createElement('button');
+                view.type = 'button';
+                view.textContent = 'View';
+                view.onclick = () => openCvcHistoryFile(file.id, file.name, false);
+
+                const download = document.createElement('button');
+                download.type = 'button';
+                download.textContent = 'Download';
+                download.onclick = () => openCvcHistoryFile(file.id, file.name, true);
+
+                actions.append(view, download);
+                row.append(name, actions);
+                list.appendChild(row);
+            });
+        } catch (error) {
+            list.innerHTML = `<div class="sort-info">History unavailable: ${escapeHtml(error.message)}</div>`;
+        }
+    }
+
+    function base64ToBlob(base64, mimeType) {
+        const bytes = atob(base64);
+        const array = new Uint8Array(bytes.length);
+        for (let i = 0; i < bytes.length; i++) array[i] = bytes.charCodeAt(i);
+        return new Blob([array], { type: mimeType });
+    }
+
+    async function openCvcHistoryFile(id, name, download) {
+        const status = document.getElementById('cvcArchiveStatus');
+        status.textContent = `${download ? 'Downloading' : 'Opening'} ${name}...`;
+        try {
+            const token = await getCvcAuthToken();
+            const body = new URLSearchParams({ action: 'file', id, token });
+            const response = await fetch(CVC_HISTORY_ENDPOINT, { method: 'POST', body });
+            const result = await response.json();
+            if (!result.success) throw new Error(result.error || 'Could not retrieve file.');
+            const blob = base64ToBlob(result.data, result.mimeType || 'image/jpeg');
+            if (download) {
+                downloadBlob(blob, result.name || name);
+            } else {
+                const objectUrl = URL.createObjectURL(blob);
+                window.open(objectUrl, '_blank', 'noopener');
+                setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+            }
+            status.textContent = '';
+        } catch (error) {
+            status.textContent = `History file failed: ${error.message}`;
+        }
+    }
+
+    document.getElementById('cvcEventDate').addEventListener('change', updateCvcArchiveFilename);
+    updateCvcArchiveFilename();
+
 
 
     /*
@@ -1241,6 +1473,6 @@
 </script>
 
 </main>
-<script type="module" src="auth.js?v=CVC-REV02"></script>
+<script type="module" src="auth.js?v=CVC-REV13"></script>
 </body>
 </html>
