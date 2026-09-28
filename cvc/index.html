@@ -184,6 +184,41 @@
             margin-top: 5px;
         }
 
+        .player-manager {
+            background: #eef2f7;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .player-manager-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .player-manager-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .player-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 8px;
+        }
+
+        .player-chip button {
+            padding: 4px 7px;
+            font-size: 11px;
+        }
+
         @media (max-width: 700px) {
             .input-row {
                 flex-direction: column;
@@ -256,8 +291,10 @@
                 <input
                     type="text"
                     id="username"
-                    placeholder="e.g., Player1"
+                    list="savedPlayersList"
+                    placeholder="Select or type player"
                 >
+                <datalist id="savedPlayersList"></datalist>
             </div>
 
             <div class="input-group">
@@ -296,6 +333,18 @@
 
         </div>
 
+    </div>
+
+    <div class="player-manager">
+        <h3>Manage Saved Players</h3>
+        <div class="player-manager-actions">
+            <input type="text" id="savedPlayerName" placeholder="Player name">
+            <button type="button" onclick="addSavedPlayer()">Add Player</button>
+            <button type="button" onclick="exportPlayersJson()">Export players.json</button>
+        </div>
+        <div class="sort-info">Add, rename, or delete saved players here. Export players.json when you want to make the changes permanent on GitHub.</div>
+        <div id="savedPlayersStatus" class="sort-info"></div>
+        <div id="savedPlayersManagerList" class="player-manager-list"></div>
     </div>
 
     <div class="controls">
@@ -347,9 +396,116 @@
 <script>
 
     let players = [];
+    let savedPlayers = [];
 
     const MAX_GAMES_PER_HASHTAG = 6;
 
+
+    async function loadSavedPlayers() {
+        const status = document.getElementById('savedPlayersStatus');
+        try {
+            const response = await fetch('data/players.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            savedPlayers = Array.isArray(data) ? data
+                .map(item => typeof item === 'string' ? item : item && item.name)
+                .filter(name => typeof name === 'string' && name.trim())
+                .map(name => name.trim()) : [];
+            status.textContent = `${savedPlayers.length} saved player${savedPlayers.length === 1 ? '' : 's'} loaded.`;
+        } catch (error) {
+            savedPlayers = [];
+            status.textContent = 'Could not load players.json. You can still add players here and export a new file.';
+        }
+        renderSavedPlayers();
+    }
+
+    function renderSavedPlayers() {
+        const datalist = document.getElementById('savedPlayersList');
+        const manager = document.getElementById('savedPlayersManagerList');
+        datalist.innerHTML = '';
+        manager.innerHTML = '';
+
+        savedPlayers.forEach((name, index) => {
+            const option = document.createElement('option');
+            option.value = name;
+            datalist.appendChild(option);
+
+            const chip = document.createElement('div');
+            chip.className = 'player-chip';
+
+            const label = document.createElement('span');
+            label.textContent = name;
+
+            const edit = document.createElement('button');
+            edit.type = 'button';
+            edit.textContent = 'Edit';
+            edit.onclick = () => editSavedPlayer(index);
+
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'action-btn';
+            remove.textContent = 'Delete';
+            remove.onclick = () => deleteSavedPlayer(index);
+
+            chip.append(label, edit, remove);
+            manager.appendChild(chip);
+        });
+
+        document.getElementById('savedPlayersStatus').textContent =
+            `${savedPlayers.length} saved player${savedPlayers.length === 1 ? '' : 's'}.`;
+    }
+
+    function addSavedPlayer() {
+        const input = document.getElementById('savedPlayerName');
+        const name = input.value.trim();
+        if (!name) return;
+
+        if (savedPlayers.some(existing => existing.toLowerCase() === name.toLowerCase())) {
+            alert('That player is already in the saved roster.');
+            return;
+        }
+
+        savedPlayers.push(name);
+        input.value = '';
+        renderSavedPlayers();
+    }
+
+    function editSavedPlayer(index) {
+        const current = savedPlayers[index];
+        const updated = prompt('Edit player name:', current);
+        if (updated === null) return;
+
+        const name = updated.trim();
+        if (!name) return;
+
+        if (savedPlayers.some((existing, i) => i !== index && existing.toLowerCase() === name.toLowerCase())) {
+            alert('That player is already in the saved roster.');
+            return;
+        }
+
+        savedPlayers[index] = name;
+        renderSavedPlayers();
+    }
+
+    function deleteSavedPlayer(index) {
+        savedPlayers.splice(index, 1);
+        renderSavedPlayers();
+    }
+
+    function exportPlayersJson() {
+        const data = savedPlayers.map(name => ({ name }));
+        const blob = new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'players.json';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    loadSavedPlayers();
 
     /*
      * Get the numeric value of a bonus.
