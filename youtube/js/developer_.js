@@ -85,11 +85,13 @@
         meta.appendChild(span);
       }
 
-      // Developer REV01: quality is managed by Admin/quality_badges, not hard-coded here.
+      // Developer REV02: keep Admin-managed quality, but render it as the
+      // dedicated bottom-right thumbnail overlay used by GRID cards elsewhere.
       const qualityCode = String(row.quality || '').trim().toLowerCase();
       const managedQuality = window.QUALITY_BADGES?.[qualityCode];
       if (managedQuality?.imageUrl) {
         const qualitySpan = document.createElement('span');
+        qualitySpan.className = 'developer-card-quality';
         const qualityImg = document.createElement('img');
         const qualityLabel = managedQuality.displayName || managedQuality.code || row.quality;
         qualityImg.className = 'quality-badge';
@@ -97,7 +99,7 @@
         qualityImg.alt = String(qualityLabel || '');
         qualityImg.title = String(qualityLabel || '');
         qualitySpan.appendChild(qualityImg);
-        meta.appendChild(qualitySpan);
+        thumbWrap.appendChild(qualitySpan);
       }
 
       const link = document.createElement('div');
