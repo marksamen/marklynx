@@ -79,10 +79,27 @@
 
       const meta = document.createElement('div');
       meta.className = 'developer-card-meta';
-      for (const value of [row.gamerscore, row.completion_time, row.quality]) {
+      for (const value of [row.gamerscore, row.completion_time]) {
         const span = document.createElement('span');
         span.textContent = String(value || '');
         meta.appendChild(span);
+      }
+
+      // Developer REV04 PROD: render the Admin-managed quality badge as the
+      // dedicated bottom-right thumbnail overlay used by Developer cards.
+      const qualityCode = String(row.quality || '').trim().toLowerCase();
+      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
+      if (managedQuality?.imageUrl) {
+        const qualitySpan = document.createElement('span');
+        qualitySpan.className = 'developer-card-quality';
+        const qualityImg = document.createElement('img');
+        const qualityLabel = managedQuality.displayName || managedQuality.code || row.quality;
+        qualityImg.className = 'quality-badge';
+        qualityImg.src = managedQuality.imageUrl;
+        qualityImg.alt = String(qualityLabel || '');
+        qualityImg.title = String(qualityLabel || '');
+        qualitySpan.appendChild(qualityImg);
+        thumbWrap.appendChild(qualitySpan);
       }
 
       const link = document.createElement('div');
