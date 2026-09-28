@@ -51,17 +51,6 @@
   let submissionSucceeded = false;
   let developerMediaSuspended = false;
 
-  // Quality Badge Management REV21: keep the existing Developer Showcase card layout,
-  // but source each card's quality value from the matching game record when available.
-  overlay.querySelectorAll('.developer-card[data-video-id]').forEach(card => {
-    const videoId = String(card.dataset.videoId || '');
-    const game = Array.isArray(window.RAW)
-      ? window.RAW.find(item => item && String(item.v || '') === videoId)
-      : null;
-    const qualityCell = card.querySelector('.developer-card-meta span:nth-child(3)');
-    if (game && qualityCell && game.q) qualityCell.textContent = String(game.q);
-  });
-
   const setStatus = (message, type = '') => {
     if (!status) return;
     status.textContent = message;
