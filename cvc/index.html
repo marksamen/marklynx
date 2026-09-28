@@ -269,16 +269,6 @@
                 >
             </div>
 
-            <div class="input-group">
-                <label for="games">Games to Play</label>
-                <input
-                    type="number"
-                    id="games"
-                    placeholder="e.g., 13"
-                    min="1"
-                >
-            </div>
-
             <button class="btn-add" onclick="addPlayer()">
                 Add Player
             </button>
@@ -289,12 +279,12 @@
 
             <label for="bulkInput">
                 <strong>Bulk Import From Spreadsheet:</strong>
-                (Paste columns: Name, Bonus%, Total Games separated by tabs/spaces)
+                (Paste columns: Name, Bonus% separated by tabs/spaces)
             </label>
 
             <textarea
                 id="bulkInput"
-                placeholder="Kilo1984   361%   13&#10;Kellogs    310%   13"
+                placeholder="Kilo1984   361%&#10;Kellogs    310%"
             ></textarea>
 
             <button
@@ -313,7 +303,8 @@
         <div>
             <h2>Allocation Sheet Table</h2>
             <div class="sort-info">
-                Players are automatically sorted by highest Bonus % first.
+                Players are automatically sorted by highest Bonus % first. Enter Games directly in the table.
+                <strong id="rosterCount">0 / 30 players</strong> &nbsp;|&nbsp; <strong id="gamesTotal">0 / 180 games assigned</strong>
             </div>
         </div>
 
@@ -497,7 +488,17 @@
 
                 <td>${escapeHtml(player.bonus)}</td>
 
-                <td>${player.games}</td>
+                <td>
+                    <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        value="${player.games || ''}"
+                        aria-label="Games for ${escapeHtml(player.username)}"
+                        style="width:72px; box-sizing:border-box;"
+                        oninput="updatePlayerGames('${player.id}', this.value)"
+                    >
+                </td>
 
                 <td class="output-cell">
                     ${outputHtml}
@@ -517,6 +518,10 @@
             tbody.appendChild(tr);
 
         });
+
+        const totalGames = players.reduce((sum, player) => sum + (parseInt(player.games, 10) || 0), 0);
+        document.getElementById('rosterCount').textContent = `${players.length} / 30 players`;
+        document.getElementById('gamesTotal').textContent = `${totalGames} / 180 games assigned`;
 
     }
 
@@ -547,18 +552,19 @@
         const bonus =
             document.getElementById('bonus').value.trim();
 
-        const games =
-            document.getElementById('games').value.trim();
-
-
-        if (!username || !games) {
+        if (!username || !bonus) {
 
             alert(
-                'Please fill out Username and Games count.'
+                'Please fill out Username and Bonus %.'
             );
 
             return;
 
+        }
+
+        if (players.length >= 30) {
+            alert('The CVC roster is already full at 30 players.');
+            return;
         }
 
 
@@ -570,7 +576,7 @@
 
             bonus: bonus,
 
-            games: parseInt(games)
+            games: 0
 
         });
 
@@ -585,101 +591,66 @@
 
         document.getElementById('bonus').value = '';
 
-        document.getElementById('games').value = '';
-
     }
 
 
     /*
      * Process bulk spreadsheet paste.
+     * Expected columns: Username + Bonus %.
      */
     function processBulk() {
 
         const rawText =
             document.getElementById('bulkInput').value.trim();
 
-
         if (!rawText) {
             return;
         }
 
-
-        const lines =
-            rawText.split(/\r?\n/);
-
+        const lines = rawText.split(/\r?\n/);
+        const incoming = [];
 
         lines.forEach(line => {
-
-            const tokens =
-                line.trim().split(/\s+/);
-
+            const tokens = line.trim().split(/\s+/);
 
             if (tokens.length >= 2) {
+                const username = tokens[0];
+                const bonus = tokens[1];
 
-                let username = tokens[0];
-
-                let bonus = "";
-
-                let games = 0;
-
-
-                /*
-                 * Two columns:
-                 * Username + Games
-                 */
-                if (tokens.length === 2) {
-
-                    games =
-                        parseInt(tokens[1]) || 0;
-
-                }
-
-
-                /*
-                 * Three or more columns:
-                 * Username + Bonus + Games
-                 */
-                else {
-
-                    bonus = tokens[1];
-
-                    games =
-                        parseInt(tokens[2]) || 0;
-
-                }
-
-
-                if (
-                    username &&
-                    games > 0
-                ) {
-
-                    players.push({
-
+                if (username && bonus) {
+                    incoming.push({
                         id: generateId(),
-
                         username: username,
-
                         bonus: bonus,
-
-                        games: games
-
+                        games: 0
                     });
-
                 }
-
             }
-
         });
 
+        if (players.length + incoming.length > 30) {
+            alert(`That would create ${players.length + incoming.length} players. The CVC roster is limited to 30.`);
+            return;
+        }
 
+        players.push(...incoming);
         renderTable();
-
-
         document.getElementById('bulkInput').value = '';
-
     }
 
+
+    /*
+     * Update a player's manually assigned game count, then regenerate
+     * every match assignment using the existing allocation algorithm.
+     */
+    function updatePlayerGames(id, value) {
+        const player = players.find(player => player.id === id);
+        if (!player) return;
+
+        const parsed = parseInt(value, 10);
+        player.games = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+        renderTable();
+    }
 
     /*
      * Remove a player using their unique ID.
@@ -803,6 +774,6 @@
 </script>
 
 </main>
-<script type="module" src="auth.js?v=CVC-REV01"></script>
+<script type="module" src="auth.js?v=CVC-REV02"></script>
 </body>
 </html>
