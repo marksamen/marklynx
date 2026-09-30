@@ -855,25 +855,38 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
-function refreshSelectedGameProvidedDeveloper(){
-  const currentGame=selectedGame();
-  if(currentGame) setProvidedDeveloperForGame(currentGame.id);
-}
-
-window.addEventListener("message",async event=>{
+window.addEventListener("message",event=>{
   if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
-  try{
-    await loadProvidedDeveloperAdminData();
-    refreshSelectedGameProvidedDeveloper();
-  }catch(error){
-    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  const companyId=Number(event.data?.company_id);
+  const gameIds=Array.isArray(event.data?.game_ids)
+    ? event.data.game_ids.map(Number).filter(Number.isInteger)
+    : null;
+
+  // REV06: set-provided-games already succeeded before this message is sent.
+  // Reconcile this company's mappings directly from that authoritative saved set
+  // instead of immediately re-reading the relationship table.
+  if(Number.isInteger(companyId) && gameIds){
+    for(const [gameId,mappedCompanyId] of [...providedDeveloperByGame.entries()]){
+      if(Number(mappedCompanyId)===companyId) providedDeveloperByGame.delete(gameId);
+    }
+    for(const gameId of gameIds) providedDeveloperByGame.set(gameId,companyId);
+    const currentGame=selectedGame();
+    if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+    return;
   }
+
+  // Compatibility fallback for any older sender that does not include the saved set.
+  loadProvidedDeveloperAdminData().then(()=>{
+    const currentGame=selectedGame();
+    if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+  }).catch(error=>{
+    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  });
 });
 
 window.addEventListener("developer-publishers-modal-closed",async()=>{
   try{
     await loadProvidedDeveloperAdminData();
-    refreshSelectedGameProvidedDeveloper();
   }catch(error){
     console.error("Developer / Publisher Admin data refresh failed:",error);
   }
