@@ -855,6 +855,15 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+window.addEventListener("message",async event=>{
+  if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
+  try{
+    await loadProvidedDeveloperAdminData();
+  }catch(error){
+    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  }
+});
+
 window.addEventListener("developer-publishers-modal-closed",async()=>{
   try{
     await loadProvidedDeveloperAdminData();
