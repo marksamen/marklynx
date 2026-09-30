@@ -855,28 +855,16 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+function refreshSelectedGameProvidedDeveloper(){
+  const currentGame=selectedGame();
+  if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+}
+
 window.addEventListener("message",async event=>{
   if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
   try{
     await loadProvidedDeveloperAdminData();
-
-    // REV04: the successful company-side save is authoritative for this company's
-    // Developer Provided relationships. Re-apply that exact result after the
-    // refresh so a removed relationship cannot survive in the parent form.
-    const companyId=Number(event.data.company_id);
-    const gameIds=Array.isArray(event.data.game_ids)
-      ? event.data.game_ids.map(Number).filter(Number.isInteger)
-      : null;
-    if(Number.isInteger(companyId) && gameIds){
-      for(const [gameId,providerId] of [...providedDeveloperByGame.entries()]){
-        if(providerId===companyId) providedDeveloperByGame.delete(gameId);
-      }
-      if(providedDeveloperCompanies.some(company=>Number(company.id)===companyId)){
-        for(const gameId of gameIds) providedDeveloperByGame.set(gameId,companyId);
-      }
-      const currentGame=selectedGame();
-      if(currentGame) setProvidedDeveloperForGame(currentGame.id);
-    }
+    refreshSelectedGameProvidedDeveloper();
   }catch(error){
     console.error("Developer / Publisher Admin live data refresh failed:",error);
   }
@@ -885,6 +873,7 @@ window.addEventListener("message",async event=>{
 window.addEventListener("developer-publishers-modal-closed",async()=>{
   try{
     await loadProvidedDeveloperAdminData();
+    refreshSelectedGameProvidedDeveloper();
   }catch(error){
     console.error("Developer / Publisher Admin data refresh failed:",error);
   }
