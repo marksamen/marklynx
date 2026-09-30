@@ -8,8 +8,9 @@
   const STORAGE_KEY = 'marklynxTestContent_TEST';
   const testContentIsHidden = () => (localStorage.getItem(STORAGE_KEY) || 'Y').toUpperCase() === 'Y';
 
-  // Hidden means do not alter the normal site at all.
-  if (testContentIsHidden()) return;
+  // Install the Recent adapter regardless of the current TEST CONTENT state.
+  // Visibility is evaluated when Recent is requested so source/toggle changes
+  // cannot leave the adapter stuck in the state that existed at page bootstrap.
 
   const normalizeName = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
 
@@ -36,6 +37,12 @@
     if (!response.ok) return response;
 
     if (isPath(url, 'data/recent.json')) {
+      // TEST CONTENT OFF: preserve the normal Recent feed byte-for-byte.
+      // TEST CONTENT ON: derive pinned TEST Recent entries from the same
+      // normalized window.RAW used by Main Guides, independent of whether
+      // RAW came from Supabase or Recovery JSON.
+      if (testContentIsHidden()) return response;
+
       const data = await response.clone().json();
       if (data && Array.isArray(data.videos)) {
         const pinnedGames = getAlwaysShowRecentGames();
