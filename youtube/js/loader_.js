@@ -57,7 +57,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main_.html?v=provided-developer-REV02', 'mainModuleMount');
+      await loadHtml('sections/main_.html?v=quality-filter-REV01', 'mainModuleMount');
       await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -303,7 +303,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=20260927-mobile-landscape-prime-rev01');
-      await loadScript('js/site_.js?v=RECOVERY-quality-badges-REV23');
+      await loadScript('js/site_.js?v=quality-filter-REV01');
       await loadScript('js/developer_.js?v=developer-quality-thumbnail-REV04');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
