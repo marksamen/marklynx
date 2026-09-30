@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-29T08:33:29.895654+00:00",
+  "updated": "2026-09-30T08:34:28.141137+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "vwu8IHTfgr0",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | No Star Coins | Normal Ex",
+      "published": "2026-09-29T15:42:28+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/vwu8IHTfgr0/hqdefault.jpg"
+    },
     {
       "id": "9Wb_WMcF1X4",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | All Star Coins | Secret E",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Flight of the Pera Beetles | All Star Coins | Normal",
       "published": "2026-09-24T13:31:06+00:00",
       "thumbnail": "https://i.ytimg.com/vi/spinN90aqtU/hqdefault.jpg"
-    },
-    {
-      "id": "a0i1PPh5Clo",
-      "title": "Ammo Pigs: Cocked and Loaded | Easy 100% Completion | 1000 Gamerscore | 6-7 Minute Completion | 4K",
-      "published": "2026-09-23T16:21:54+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/a0i1PPh5Clo/hqdefault.jpg"
     }
   ]
 }
