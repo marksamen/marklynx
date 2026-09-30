@@ -101,6 +101,7 @@
 <label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
 <label>Kinect Required<select id="gdKinect"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes only when Kinect hardware is required to play/complete the game. Otherwise leave No.</span></label>
 <label>Test Content<select id="gdTest"><option value="false">No — normal record</option><option value="true">Yes — TEST only</option></select><span class="field-help">New games default to No. Choose Yes only for deliberate QA/test records.</span></label>
+<label>Always Show in Recent<select id="gdAlwaysRecent"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = this game can be forced into Recent Uploads. TEST CONTENT remains the master visibility gate for TEST-only records.</span></label>
 <div class="wide gd-collapsible-row">
 <details class="gd-collapsible gd-developers">
 <summary>Developers — Expand</summary>
@@ -206,7 +207,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=QUALITY-NORMALIZATION-REV01"></script>
+<script type="module" src="js/admin-core_.js?v=ALWAYS-RECENT-REV01"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
