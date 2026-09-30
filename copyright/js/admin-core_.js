@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=QUALITY-NORMALIZATION-REV01";
+import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=ALWAYS-RECENT-REV01";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
