@@ -11,17 +11,6 @@
   // Hidden means do not alter the normal site at all.
   if (testContentIsHidden()) return;
 
-  const TEST_GAMES = [
-    {
-      n: 'TEST VIDEO', p: 'TEST', g: 'TEST', t: 'TEST', ty: 'TEST', tx: 'No', q: '4K', df: 'Easy',
-      u: 'https://youtu.be/HRtSmycjwN8', v: 'HRtSmycjwN8', testContent: 'Y'
-    },
-    {
-      n: 'TEST PLAYLIST', p: 'TEST', g: 'TEST', t: 'TEST', ty: 'TEST', tx: 'No', q: '4K', df: 'Easy',
-      u: 'https://www.youtube.com/playlist?list=PLW8_g7jLVHB0', v: '', pl: 'PLW8_g7jLVHB0', testContent: 'Y'
-    }
-  ];
-
   const TEST_RECENT = [
     {
       id: 'HRtSmycjwN8', title: 'TEST VIDEO',
@@ -51,16 +40,6 @@
     const url = requestUrl(input);
     const response = await nativeFetch(input, init);
     if (!response.ok) return response;
-
-    if (isPath(url, 'data/games.json')) {
-      const data = await response.clone().json();
-      if (Array.isArray(data)) {
-        for (const testGame of TEST_GAMES) {
-          if (!data.some(game => game && game.n === testGame.n)) data.push(testGame);
-        }
-      }
-      return jsonResponse(data, response);
-    }
 
     if (isPath(url, 'data/recent.json')) {
       const data = await response.clone().json();
