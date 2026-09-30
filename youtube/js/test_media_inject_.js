@@ -11,17 +11,11 @@
   // Hidden means do not alter the normal site at all.
   if (testContentIsHidden()) return;
 
-  const TEST_RECENT = [
-    {
-      id: 'HRtSmycjwN8', title: 'TEST VIDEO',
-      thumbnail: 'https://i.ytimg.com/vi/HRtSmycjwN8/hqdefault.jpg'
-    },
-    {
-      id: 'HRtSmycjwN8', title: 'TEST PLAYLIST',
-      thumbnail: null,
-      testPlaylistId: 'PLW8_g7jLVHB0'
-    }
-  ];
+  const normalizeName = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+  const getAlwaysShowRecentGames = () =>
+    (Array.isArray(window.RAW) ? window.RAW : []).filter(game => game && game.always_show_recent === true);
+
 
   const nativeFetch = window.fetch.bind(window);
   const requestUrl = input => typeof input === 'string' ? input : (input && typeof input.url === 'string' ? input.url : '');
@@ -44,21 +38,42 @@
     if (isPath(url, 'data/recent.json')) {
       const data = await response.clone().json();
       if (data && Array.isArray(data.videos)) {
-        const production = data.videos.filter(video => video && video.title !== 'TEST VIDEO' && video.title !== 'TEST PLAYLIST');
-        const testRecent = TEST_RECENT.map(video => ({...video}));
-        const testPlaylist = testRecent.find(video => video.testPlaylistId);
-        if (testPlaylist) {
-          const playlistUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(testPlaylist.testPlaylistId)}`;
-          const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(playlistUrl)}&format=json`;
-          try {
-            const oembedResponse = await nativeFetch(oembedUrl);
-            if (oembedResponse.ok) {
-              const oembed = await oembedResponse.json();
-              if (oembed && oembed.thumbnail_url) testPlaylist.thumbnail = oembed.thumbnail_url;
-            }
-          } catch (_) {}
-        }
-        data.videos = [...testRecent, ...production];
+        const pinnedGames = getAlwaysShowRecentGames();
+        const pinnedNames = new Set(pinnedGames.map(game => normalizeName(game.n)).filter(Boolean));
+        const pinnedVideoIds = new Set(pinnedGames.map(game => String(game.v || '')).filter(Boolean));
+
+        const production = data.videos.filter(video => {
+          if (!video) return false;
+          if (pinnedVideoIds.has(String(video.id || ''))) return false;
+          return !pinnedNames.has(normalizeName(video.title));
+        });
+
+        const pinnedRecent = await Promise.all(pinnedGames.map(async game => {
+          const videoId = String(game.v || '').trim();
+          const playlistId = String(game.pl || '').trim();
+          const recent = {
+            id: videoId || playlistId,
+            title: String(game.n || '').trim(),
+            thumbnail: videoId ? `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg` : null
+          };
+
+          if (playlistId) {
+            recent.testPlaylistId = playlistId;
+            const playlistUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`;
+            const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(playlistUrl)}&format=json`;
+            try {
+              const oembedResponse = await nativeFetch(oembedUrl);
+              if (oembedResponse.ok) {
+                const oembed = await oembedResponse.json();
+                if (oembed && oembed.thumbnail_url) recent.thumbnail = oembed.thumbnail_url;
+              }
+            } catch (_) {}
+          }
+
+          return recent;
+        }));
+
+        data.videos = [...pinnedRecent.filter(video => video.id && video.title), ...production];
       }
       return jsonResponse(data, response);
     }
