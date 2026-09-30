@@ -94,10 +94,14 @@ if(RAW.some(r=>r.kinect)) platformNames.set('kinect','Kinect');
     const o=document.createElement('option'); o.value=key; o.textContent=label; platformFilter.appendChild(o);
   });
 
-// Quality options come from the managed quality-badge definitions loaded by loader_.js.
+// Quality options come from managed quality-badge definitions, but only
+// expose qualities used by at least one game in the currently visible RAW dataset.
+const visibleQualityCodes = new Set(
+  RAW.map(r => String(r?.q || '').trim().toLowerCase()).filter(Boolean)
+);
 Object.values(window.QUALITY_BADGES || {}).forEach(badge=>{
   const code = String(badge?.code || '').trim();
-  if(!code) return;
+  if(!code || !visibleQualityCodes.has(code.toLowerCase())) return;
   const o=document.createElement('option');
   o.value=code.toLowerCase();
   o.textContent=String(badge?.displayName || code);
