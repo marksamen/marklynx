@@ -37,6 +37,7 @@ const searchInput = document.getElementById('searchInput');
 const typeFilter = document.getElementById('typeFilter');
 const diffFilter = document.getElementById('diffFilter');
 const platformFilter = document.getElementById('platformFilter');
+const qualityFilter = document.getElementById('qualityFilter');
 const featuresFilter = document.getElementById('featuresFilter');
 const sortSelect = document.getElementById('sortSelect');
 const gridBtn = document.getElementById('gridBtn');
@@ -93,6 +94,20 @@ if(RAW.some(r=>r.kinect)) platformNames.set('kinect','Kinect');
     const o=document.createElement('option'); o.value=key; o.textContent=label; platformFilter.appendChild(o);
   });
 
+// Quality options come from managed quality-badge definitions, but only
+// expose qualities used by at least one game in the currently visible RAW dataset.
+const visibleQualityCodes = new Set(
+  RAW.map(r => String(r?.q || '').trim().toLowerCase()).filter(Boolean)
+);
+Object.values(window.QUALITY_BADGES || {}).forEach(badge=>{
+  const code = String(badge?.code || '').trim();
+  if(!code || !visibleQualityCodes.has(code.toLowerCase())) return;
+  const o=document.createElement('option');
+  o.value=code.toLowerCase();
+  o.textContent=String(badge?.displayName || code);
+  qualityFilter.appendChild(o);
+});
+
 function gsNumber(g){
   if(!g) return 0;
   const m = g.replace(/,/g,'').match(/\d+/);
@@ -109,11 +124,13 @@ function getFiltered(){
   const ty = typeFilter.value;
   const df = diffFilter.value;
   const platform = platformFilter.value;
+  const quality = qualityFilter.value;
   const feature = featuresFilter.value;
   let out = RAW.filter(r=>{
     const searchable = normalizeSearch(`${r.n || ''} ${r.kinect ? 'Kinect Kinect Required' : ''}`);
     if(q && !searchable.includes(q)) return false;
     if(ty && r.ty !== ty) return false;
+    if(quality && String(r.q || '').trim().toLowerCase() !== quality) return false;
     if(platform){
       if(platform === 'kinect'){
         if(!r.kinect) return false;
@@ -292,6 +309,7 @@ function render(){
     typeFilter.value !== '' ||
     diffFilter.value !== '' ||
     platformFilter.value !== '' ||
+    qualityFilter.value !== '' ||
     featuresFilter.value !== '' ||
     sortSelect.value !== 'az';
   clearFiltersBtn.classList.toggle('visible', hasActiveFilters);
@@ -373,6 +391,7 @@ clearFiltersBtn.addEventListener('click', ()=>{
   typeFilter.value='';
   diffFilter.value='';
   platformFilter.value='';
+  qualityFilter.value='';
   featuresFilter.value='';
   sortSelect.value='az';
   resetAndRender();
@@ -382,6 +401,7 @@ searchInput.addEventListener('input', resetAndRender);
 typeFilter.addEventListener('change', resetAndRender);
 diffFilter.addEventListener('change', resetAndRender);
 platformFilter.addEventListener('change', resetAndRender);
+qualityFilter.addEventListener('change', resetAndRender);
 featuresFilter.addEventListener('change', resetAndRender);
 sortSelect.addEventListener('change', resetAndRender);
 loadMoreBtn.addEventListener('click', ()=>{ shown += PAGE_SIZE; render(); });

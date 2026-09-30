@@ -17,21 +17,22 @@
   });
 
   const syncRecentUploadsVisibility = () => {
-    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','featuresFilter','sortSelect'];
+    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','qualityFilter','featuresFilter','sortSelect'];
     const values = ids.map(id => document.getElementById(id));
-    const [search, type, diff, platform, features, sort] = values;
+    const [search, type, diff, platform, quality, features, sort] = values;
     const active =
       (search && search.value.trim() !== '') ||
       (type && type.value !== '') ||
       (diff && diff.value !== '') ||
       (platform && platform.value !== '') ||
+      (quality && quality.value !== '') ||
       (features && features.value !== '') ||
       (sort && sort.value !== 'az');
     document.body.classList.toggle('guide-filter-active', !!active);
   };
 
   const installVisibilitySync = () => {
-    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','featuresFilter','sortSelect'];
+    const ids = ['searchInput','typeFilter','diffFilter','platformFilter','qualityFilter','featuresFilter','sortSelect'];
     document.addEventListener('input', event => {
       if (event.target && ids.includes(event.target.id)) queueMicrotask(syncRecentUploadsVisibility);
     });
@@ -57,7 +58,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=provided-developer-PROD01', 'mainModuleMount');
+      await loadHtml('sections/main.html?v=quality-filter-PROD01', 'mainModuleMount');
       await loadHtml('sections/developer.html?v=20260921-prod-promotion-01', 'developerModuleMount');
       await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
@@ -300,7 +301,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-PROD01');
-      await loadScript('js/site.js?v=PROD-quality-badges-REV23');
+      await loadScript('js/site.js?v=quality-filter-PROD01');
       await loadScript('js/developer.js?v=developer-quality-thumbnail-PROD-REV05');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=REV03-suggest-authoritative-submission');
