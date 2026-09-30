@@ -864,16 +864,40 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
-window.addEventListener("message",async event=>{
+let skipNextDeveloperPublishersCloseRefresh=false;
+
+window.addEventListener("message",event=>{
   if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
-  try{
-    await loadProvidedDeveloperAdminData();
-  }catch(error){
-    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  const companyId=Number(event.data?.company_id);
+  const gameIds=Array.isArray(event.data?.game_ids)
+    ? event.data.game_ids.map(Number).filter(Number.isInteger)
+    : null;
+
+  // REV08: set-provided-games has already completed successfully before this message.
+  // Its returned/saved checkbox set is authoritative for this company. Apply it
+  // immediately and do not let the modal-close reread overwrite it with an older view.
+  if(Number.isInteger(companyId) && gameIds!==null){
+    for(const [gameId,mappedCompanyId] of [...providedDeveloperByGame.entries()]){
+      if(Number(mappedCompanyId)===companyId) providedDeveloperByGame.delete(gameId);
+    }
+    for(const gameId of gameIds) providedDeveloperByGame.set(gameId,companyId);
+    skipNextDeveloperPublishersCloseRefresh=true;
+    const currentGame=selectedGame();
+    if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+    return;
   }
+
+  // Compatibility fallback only for an older sender without the saved relationship set.
+  loadProvidedDeveloperAdminData().catch(error=>{
+    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  });
 });
 
 window.addEventListener("developer-publishers-modal-closed",async()=>{
+  if(skipNextDeveloperPublishersCloseRefresh){
+    skipNextDeveloperPublishersCloseRefresh=false;
+    return;
+  }
   try{
     await loadProvidedDeveloperAdminData();
   }catch(error){
