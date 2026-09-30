@@ -12,16 +12,12 @@
 
   const developerCards = overlay.querySelector('.developer-cards');
 
-  // REV46 TEST: replace the four legacy hard-coded public cards with the sanitized
-  // database showcase feed. Preserve any TEST-only injected card already in the rail.
+  // Replace the legacy hard-coded public cards with the sanitized database showcase feed.
   const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
     ? window.PUBLIC_DEVELOPER_SHOWCASE.slice()
     : null;
 
   if (developerCards && showcaseRows) {
-    const testCards = [...developerCards.querySelectorAll('.developer-card')]
-      .filter(card => card.dataset.videoTitle === 'TEST DEVELOPER VIDEO');
-
     const companyOrder = row => Number.isFinite(Number(row.public_display_order))
       ? Number(row.public_display_order)
       : Number.MAX_SAFE_INTEGER;
@@ -110,7 +106,7 @@
       fragment.appendChild(card);
     }
 
-    developerCards.replaceChildren(...testCards, fragment);
+    developerCards.replaceChildren(fragment);
   }
 
   // TEST REV23: permanent mobile Developer Showcase indicator ABOVE the card rail.
@@ -310,32 +306,6 @@
     const titleNode = card.querySelector('.developer-card-top strong');
     if (game?.n && titleNode) titleNode.textContent = game.n;
 
-    // The permanent TEST Developer card is injected before database showcase rendering.
-    // Replace its legacy hard-coded quality text from the matching game record as well.
-    if (card.dataset.videoTitle === 'TEST DEVELOPER VIDEO') {
-      const meta = card.querySelector('.developer-card-meta');
-      const legacyQuality = meta?.lastElementChild;
-      const qualityCode = String(game?.q || '').trim().toLowerCase();
-      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
-      if (legacyQuality) {
-        legacyQuality.remove();
-        if (managedQuality?.imageUrl) {
-          const thumbWrap = card.querySelector('.developer-card-thumb');
-          if (thumbWrap) {
-            const qualitySpan = document.createElement('span');
-            qualitySpan.className = 'developer-card-quality';
-            const qualityImg = document.createElement('img');
-            const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
-            qualityImg.className = 'quality-badge';
-            qualityImg.src = managedQuality.imageUrl;
-            qualityImg.alt = String(qualityLabel || '');
-            qualityImg.title = String(qualityLabel || '');
-            qualitySpan.appendChild(qualityImg);
-            thumbWrap.appendChild(qualitySpan);
-          }
-        }
-      }
-    }
 
     card.addEventListener('click', event => {
       const playlistId = card.dataset.playlistId || '';
