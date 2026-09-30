@@ -79,25 +79,6 @@
     }
 
 
-    if (isPath(url, 'sections/developer_.html')) {
-      let html = await response.clone().text();
-      const marker = '<div class="developer-cards">';
-      if (html.includes(marker) && !html.includes('data-video-title="TEST DEVELOPER VIDEO"')) {
-        const testCard = `
-      <a class="developer-card" href="https://youtu.be/HRtSmycjwN8" data-video-id="HRtSmycjwN8" data-video-title="TEST DEVELOPER VIDEO">
-        <div class="developer-card-thumb"><img src="https://i.ytimg.com/vi/HRtSmycjwN8/hqdefault.jpg" alt="TEST Developer walkthrough thumbnail"></div>
-        <div class="developer-card-top"><strong>TEST DEVELOPER VIDEO</strong><span>TEST CONTENT</span></div>
-        <div class="developer-card-meta"><span>TEST</span><span>TEST</span><span>4K</span></div>
-        <div class="developer-card-link">Watch walkthrough →</div>
-      </a>`;
-        html = html.replace(marker, marker + testCard);
-      }
-      const headers = new Headers(response.headers);
-      headers.set('content-type', 'text/html; charset=utf-8');
-      headers.delete('content-length');
-      return new Response(html, {status: response.status, statusText: response.statusText, headers});
-    }
-
     return response;
   };
 })();
