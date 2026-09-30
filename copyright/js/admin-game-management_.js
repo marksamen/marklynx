@@ -3,7 +3,7 @@ let verifyTestDatabaseIdentity = null;
 
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
-const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
@@ -241,7 +241,6 @@ export async function loadGamesTest(){
       id:String(Number(row.id)).padStart(4,"0"),
       order:Number(row.id),
       testContent:row.testContent===true || row.testContent==="true",
-      always_show_recent:row.always_show_recent===true || row.always_show_recent==="true",
       adult:row.adult===true || row.adult==="true",
       kinect:row.kinect===true || row.kinect==="true"
     }));
@@ -418,7 +417,6 @@ function drawSelectedGame(){
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");
   document.getElementById("gdTest").value=g.testContent===true?"true":"false";
-  document.getElementById("gdAlwaysRecent").value=g.always_show_recent===true?"true":"false";
   setProvidedDeveloperForGame(g.id);
   setDeveloperPublisherFields(g);
   const mediaUrl=g.pl ? `https://www.youtube.com/playlist?list=${g.pl}` : (g.v ? `https://www.youtube.com/watch?v=${g.v}` : (g.u||""));
@@ -515,7 +513,6 @@ function beginAddGame(){
   document.getElementById("gdYoutubeLinkError").textContent="";
   setChoices("gdPlatformChoices","");
   document.getElementById("gdTest").value="false";
-  document.getElementById("gdAlwaysRecent").value="false";
   document.getElementById("gdProvidedByDeveloper").value="";
   setDeveloperPublisherFields({});
   document.getElementById("gdRaw").value="NEW games_TEST record";
@@ -558,8 +555,7 @@ async function createGameDev(){
     ty:getChoices("gdTypeChoices"),
     tx:document.getElementById("gdTextGuide").value,
     df:document.getElementById("gdDifficulty").value.trim(),
-    testContent:document.getElementById("gdTest").value==="true",
-    always_show_recent:document.getElementById("gdAlwaysRecent").value==="true"
+    testContent:document.getElementById("gdTest").value==="true"
   };
   const gs=gamerscoreValue(); if(gs) record.g=gs;
   const ct=completionTimeValue(); if(ct) record.t=ct;
@@ -591,7 +587,6 @@ async function createGameDev(){
       kinect:record.kinect===true ? "true" : null,
       adult:record.adult===true ? "true" : null,
       testContent:record.testContent===true ? "true" : "false",
-      always_show_recent:record.always_show_recent===true,
       provided_company_id:providedDeveloperCompanyId(),
       ...getDeveloperPublisherFields()
     };
@@ -702,7 +697,6 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     adult:document.getElementById("gdAdult").value==="true",
     kinect:document.getElementById("gdKinect").value==="true",
     testContent:document.getElementById("gdTest").value==="true" ? "true" : "false",
-    always_show_recent:document.getElementById("gdAlwaysRecent").value==="true",
     provided_company_id:providedDeveloperCompanyId(),
     ...getDeveloperPublisherFields()
   };
@@ -861,6 +855,13 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+window.addEventListener("developer-publishers-modal-closed",async()=>{
+  try{
+    await loadProvidedDeveloperAdminData();
+  }catch(error){
+    console.error("Developer / Publisher Admin data refresh failed:",error);
+  }
+});
 
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",wireProvidedDeveloperRolePrompt,{once:true});
