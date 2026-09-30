@@ -59,7 +59,7 @@
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
       await loadHtml('sections/main_.html?v=quality-filter-REV04', 'mainModuleMount');
-      await loadHtml('sections/developer_.html?v=20260921-prod-promotion-01', 'developerModuleMount');
+      await loadHtml('sections/developer_.html?v=developer-provided-REV12', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
 

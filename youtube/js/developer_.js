@@ -13,36 +13,33 @@
   const developerCards = overlay.querySelector('.developer-cards');
 
   // Replace the legacy hard-coded public cards with the sanitized database showcase feed.
-  const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
-    ? window.PUBLIC_DEVELOPER_SHOWCASE.slice()
-    : null;
+  // Developer Provided REV12: the Admin "Provided by Developer" relationship is
+  // the single source of truth for this rail. Join those relationships to the
+  // already-loaded game records; no game/company IDs are hard-coded here.
+  const providedRows = Array.isArray(window.PUBLIC_DEVELOPER_PROVIDED_GAMES)
+    ? window.PUBLIC_DEVELOPER_PROVIDED_GAMES.slice()
+    : [];
+  const gamesById = new Map(
+    (Array.isArray(window.RAW) ? window.RAW : [])
+      .map(game => [Number(game?.id), game])
+      .filter(([id]) => Number.isInteger(id))
+  );
 
-  if (developerCards && showcaseRows) {
-    const companyOrder = row => Number.isFinite(Number(row.public_display_order))
-      ? Number(row.public_display_order)
-      : Number.MAX_SAFE_INTEGER;
-
-    showcaseRows.sort((a, b) => {
-      const companyDiff = companyOrder(a) - companyOrder(b);
-      if (companyDiff) return companyDiff;
-      const companyIdDiff = Number(a.company_id) - Number(b.company_id);
-      if (companyIdDiff) return companyIdDiff;
-      const mode = String(a.public_games_sort || 'RECENT').toUpperCase();
-      if (mode === 'ALPHABETICAL') {
-        return String(a.game_name || '').localeCompare(String(b.game_name || ''), undefined, { sensitivity: 'base' });
-      }
-      return Number(b.game_id) - Number(a.game_id);
-    });
+  if (developerCards) {
+    const rows = providedRows
+      .map(relation => ({ relation, game: gamesById.get(Number(relation?.game_id)) }))
+      .filter(({ relation, game }) => game && String(relation?.provided_by || '').trim())
+      .sort((a, b) => Number(b.relation.game_id) - Number(a.relation.game_id));
 
     const fragment = document.createDocumentFragment();
-    for (const row of showcaseRows) {
-      const videoId = String(row.video_id || '').trim();
-      const playlistId = String(row.playlist_id || '').trim();
+    for (const { relation, game } of rows) {
+      const videoId = String(game.v || '').trim();
+      const playlistId = String(game.pl || '').trim();
       if (!videoId && !playlistId) continue;
 
-      const title = String(row.game_name || '').trim();
-      const company = String(row.public_display_name || '').trim();
-      const href = String(row.youtube_url || '').trim()
+      const title = String(game.n || '').trim();
+      const company = String(relation.provided_by || '').trim();
+      const href = String(game.u || '').trim()
         || (playlistId
           ? `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`
           : `https://youtu.be/${encodeURIComponent(videoId)}`);
@@ -75,21 +72,19 @@
 
       const meta = document.createElement('div');
       meta.className = 'developer-card-meta';
-      for (const value of [row.gamerscore, row.completion_time]) {
+      for (const value of [game.g, game.t]) {
         const span = document.createElement('span');
         span.textContent = String(value || '');
         meta.appendChild(span);
       }
 
-      // Developer REV02: keep Admin-managed quality, but render it as the
-      // dedicated bottom-right thumbnail overlay used by GRID cards elsewhere.
-      const qualityCode = String(row.quality || '').trim().toLowerCase();
+      const qualityCode = String(game.q || '').trim().toLowerCase();
       const managedQuality = window.QUALITY_BADGES?.[qualityCode];
       if (managedQuality?.imageUrl) {
         const qualitySpan = document.createElement('span');
         qualitySpan.className = 'developer-card-quality';
         const qualityImg = document.createElement('img');
-        const qualityLabel = managedQuality.displayName || managedQuality.code || row.quality;
+        const qualityLabel = managedQuality.displayName || managedQuality.code || game.q;
         qualityImg.className = 'quality-badge';
         qualityImg.src = managedQuality.imageUrl;
         qualityImg.alt = String(qualityLabel || '');
