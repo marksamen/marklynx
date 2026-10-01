@@ -12,34 +12,41 @@
 
   const developerCards = overlay.querySelector('.developer-cards');
 
-  // Replace the legacy hard-coded public cards with the sanitized database showcase feed.
-  // Developer Provided REV12: the Admin "Provided by Developer" relationship is
-  // the single source of truth for this rail. Join those relationships to the
-  // already-loaded game records; no game/company IDs are hard-coded here.
-  const providedRows = Array.isArray(window.PUBLIC_DEVELOPER_PROVIDED_GAMES)
-    ? window.PUBLIC_DEVELOPER_PROVIDED_GAMES.slice()
-    : [];
-  const gamesById = new Map(
-    (Array.isArray(window.RAW) ? window.RAW : [])
-      .map(game => [Number(game?.id), game])
-      .filter(([id]) => Number.isInteger(id))
-  );
+  // REV48 PROD: replace the four legacy hard-coded public cards with the sanitized
+  // database showcase feed. Preserve any TEST-only injected card already in the rail.
+  const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
+    ? window.PUBLIC_DEVELOPER_SHOWCASE.slice()
+    : null;
 
-  if (developerCards) {
-    const rows = providedRows
-      .map(relation => ({ relation, game: gamesById.get(Number(relation?.game_id)) }))
-      .filter(({ relation, game }) => game && String(relation?.provided_by || '').trim())
-      .sort((a, b) => Number(b.relation.game_id) - Number(a.relation.game_id));
+  if (developerCards && showcaseRows) {
+    const testCards = [...developerCards.querySelectorAll('.developer-card')]
+      .filter(card => card.dataset.videoTitle === 'TEST DEVELOPER VIDEO');
+
+    const companyOrder = row => Number.isFinite(Number(row.public_display_order))
+      ? Number(row.public_display_order)
+      : Number.MAX_SAFE_INTEGER;
+
+    showcaseRows.sort((a, b) => {
+      const companyDiff = companyOrder(a) - companyOrder(b);
+      if (companyDiff) return companyDiff;
+      const companyIdDiff = Number(a.company_id) - Number(b.company_id);
+      if (companyIdDiff) return companyIdDiff;
+      const mode = String(a.public_games_sort || 'RECENT').toUpperCase();
+      if (mode === 'ALPHABETICAL') {
+        return String(a.game_name || '').localeCompare(String(b.game_name || ''), undefined, { sensitivity: 'base' });
+      }
+      return Number(b.game_id) - Number(a.game_id);
+    });
 
     const fragment = document.createDocumentFragment();
-    for (const { relation, game } of rows) {
-      const videoId = String(game.v || '').trim();
-      const playlistId = String(game.pl || '').trim();
+    for (const row of showcaseRows) {
+      const videoId = String(row.video_id || '').trim();
+      const playlistId = String(row.playlist_id || '').trim();
       if (!videoId && !playlistId) continue;
 
-      const title = String(game.n || '').trim();
-      const company = String(relation.provided_by || '').trim();
-      const href = String(game.u || '').trim()
+      const title = String(row.game_name || '').trim();
+      const company = String(row.public_display_name || '').trim();
+      const href = String(row.youtube_url || '').trim()
         || (playlistId
           ? `https://www.youtube.com/playlist?list=${encodeURIComponent(playlistId)}`
           : `https://youtu.be/${encodeURIComponent(videoId)}`);
@@ -72,19 +79,21 @@
 
       const meta = document.createElement('div');
       meta.className = 'developer-card-meta';
-      for (const value of [game.g, game.t]) {
+      for (const value of [row.gamerscore, row.completion_time]) {
         const span = document.createElement('span');
         span.textContent = String(value || '');
         meta.appendChild(span);
       }
 
-      const qualityCode = String(game.q || '').trim().toLowerCase();
+      // Developer REV04 PROD: render the Admin-managed quality badge as the
+      // dedicated bottom-right thumbnail overlay used by Developer cards.
+      const qualityCode = String(row.quality || '').trim().toLowerCase();
       const managedQuality = window.QUALITY_BADGES?.[qualityCode];
       if (managedQuality?.imageUrl) {
         const qualitySpan = document.createElement('span');
         qualitySpan.className = 'developer-card-quality';
         const qualityImg = document.createElement('img');
-        const qualityLabel = managedQuality.displayName || managedQuality.code || game.q;
+        const qualityLabel = managedQuality.displayName || managedQuality.code || row.quality;
         qualityImg.className = 'quality-badge';
         qualityImg.src = managedQuality.imageUrl;
         qualityImg.alt = String(qualityLabel || '');
@@ -101,7 +110,7 @@
       fragment.appendChild(card);
     }
 
-    developerCards.replaceChildren(fragment);
+    developerCards.replaceChildren(...testCards, fragment);
   }
 
   // TEST REV23: permanent mobile Developer Showcase indicator ABOVE the card rail.
@@ -301,6 +310,33 @@
     const titleNode = card.querySelector('.developer-card-top strong');
     if (game?.n && titleNode) titleNode.textContent = game.n;
 
+    // Developer REV05 PROD recovery: the permanent TEST Developer card is
+    // injected before database showcase rendering. Replace its legacy hard-coded
+    // quality text with the Admin/database-managed quality from the matching game.
+    if (card.dataset.videoTitle === 'TEST DEVELOPER VIDEO') {
+      const meta = card.querySelector('.developer-card-meta');
+      const legacyQuality = meta?.lastElementChild;
+      const qualityCode = String(game?.q || '').trim().toLowerCase();
+      const managedQuality = window.QUALITY_BADGES?.[qualityCode];
+      if (legacyQuality) {
+        legacyQuality.remove();
+        if (managedQuality?.imageUrl) {
+          const thumbWrap = card.querySelector('.developer-card-thumb');
+          if (thumbWrap) {
+            const qualitySpan = document.createElement('span');
+            qualitySpan.className = 'developer-card-quality';
+            const qualityImg = document.createElement('img');
+            const qualityLabel = managedQuality.displayName || managedQuality.code || game?.q;
+            qualityImg.className = 'quality-badge';
+            qualityImg.src = managedQuality.imageUrl;
+            qualityImg.alt = String(qualityLabel || '');
+            qualityImg.title = String(qualityLabel || '');
+            qualitySpan.appendChild(qualityImg);
+            thumbWrap.appendChild(qualitySpan);
+          }
+        }
+      }
+    }
 
     card.addEventListener('click', event => {
       const playlistId = card.dataset.playlistId || '';
