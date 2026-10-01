@@ -1,7 +1,13 @@
 {
-  "updated": "2026-09-30T08:34:28.141137+00:00",
+  "updated": "2026-10-01T08:34:52.998999+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "dRXExs592wg",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 3 | Waddlewing's Nest | All Star Coins | Normal Ex",
+      "published": "2026-09-30T14:35:58+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/dRXExs592wg/hqdefault.jpg"
+    },
     {
       "id": "vwu8IHTfgr0",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | No Star Coins | Normal Ex",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Iggy's Volcanic Castle | All Star Coins | Normal Exit",
       "published": "2026-09-25T14:21:27+00:00",
       "thumbnail": "https://i.ytimg.com/vi/BiEiJN0ROWY/hqdefault.jpg"
-    },
-    {
-      "id": "spinN90aqtU",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Flight of the Pera Beetles | All Star Coins | Normal",
-      "published": "2026-09-24T13:31:06+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/spinN90aqtU/hqdefault.jpg"
     }
   ]
 }
