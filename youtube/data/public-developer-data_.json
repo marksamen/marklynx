@@ -5,7 +5,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 100,
       "game_name": "Find The Cats",
       "gamerscore": "2,000G",
@@ -20,7 +19,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 102,
       "game_name": "Find The Cats 2",
       "gamerscore": "2,000G",
@@ -35,7 +33,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 104,
       "game_name": "Panda: Shards of Aurora",
       "gamerscore": "2,000G",
@@ -50,7 +47,6 @@
       "public_display_name": "Paulo Pinheiro Game Dev",
       "public_description": null,
       "public_display_order": 2,
-      "public_games_sort": "RECENT",
       "game_id": 169,
       "game_name": "Moves: Perfect Pair",
       "gamerscore": "1,000G",
@@ -61,11 +57,17 @@
       "playlist_id": null
     }
   ],
+  "railSettings": {
+    "sort": "DEVELOPER",
+    "limit": 10
+  },
   "providedGameIds": [
     100,
     102,
     104,
-    169
+    169,
+    321,
+    329
   ],
   "providedGames": [
     {
@@ -83,6 +85,14 @@
     {
       "game_id": 169,
       "provided_by": "Paulo Pinheiro Game Dev"
+    },
+    {
+      "game_id": 321,
+      "provided_by": "TEST DEV"
+    },
+    {
+      "game_id": 329,
+      "provided_by": "TEST DEV"
     }
   ]
 }
