@@ -15,7 +15,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cross Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 2,
@@ -33,7 +41,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Xeneder Team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xeneder Team",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 3,
@@ -51,7 +67,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Super PowerUp Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Super PowerUp Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 4,
@@ -69,7 +93,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Devcats",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Silesia Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 5,
@@ -87,7 +119,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "9Ratones",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 6,
@@ -105,7 +145,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "9Ratones",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 7,
@@ -123,7 +171,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Zazenfly Development",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Zazenfly Development",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 8,
@@ -141,7 +197,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ebi-hime",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sometimes You",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 9,
@@ -159,7 +223,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Well Andrade",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Well Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 10,
@@ -177,7 +249,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Well Andrade",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Well Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 11,
@@ -195,7 +275,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 12,
@@ -213,7 +301,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gossiam Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Yume Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 13,
@@ -231,7 +327,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SoftColors",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 14,
@@ -249,7 +353,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 15,
@@ -267,7 +379,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Apple Cider",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 16,
@@ -285,7 +405,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "THQ Studio Australia",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "THQ",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 17,
@@ -303,7 +431,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Viktor Yurchuk",
+    "developer_2": "Ratalaika Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 18,
@@ -321,7 +457,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 19,
@@ -339,7 +483,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 20,
@@ -357,7 +509,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 21,
@@ -375,7 +535,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 22,
@@ -393,7 +561,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 23,
@@ -411,7 +587,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cool-Two Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 24,
@@ -429,7 +613,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Yume Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Yume Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 25,
@@ -447,7 +639,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Yume Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Yume Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 26,
@@ -465,7 +665,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 27,
@@ -483,7 +691,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 28,
@@ -501,7 +717,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 29,
@@ -519,7 +743,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 30,
@@ -537,7 +769,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ebi-hime",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 31,
@@ -555,7 +795,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Light Ape Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 32,
@@ -573,7 +821,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Man-Eater Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 33,
@@ -591,7 +847,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "COWCAT",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "COWCAT",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 34,
@@ -609,7 +873,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Webnetic",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Webnetic",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 35,
@@ -627,7 +899,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "VICTORIA Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 36,
@@ -645,7 +925,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 37,
@@ -663,7 +951,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 38,
@@ -681,7 +977,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Alexandr Bondarenko",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 39,
@@ -699,7 +1003,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Maria",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 40,
@@ -717,7 +1029,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Maria",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 41,
@@ -735,7 +1055,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "LeJunesArt",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 42,
@@ -753,7 +1081,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Grin robot",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 43,
@@ -771,7 +1107,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Noobzilla",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Silesia Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 44,
@@ -789,7 +1133,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "Vergiu Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 45,
@@ -807,7 +1159,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Panda Indie Studio",
+    "developer_2": "eastasiasoft",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 46,
@@ -825,7 +1185,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 47,
@@ -843,7 +1211,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 48,
@@ -861,7 +1237,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Alawar Entertainment",
+    "developer_2": "Adept Studios",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 49,
@@ -879,7 +1263,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "MadDevStudios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "RainForest Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 50,
@@ -897,7 +1289,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Double Mizzlee",
+    "developer_2": "eastasiasoft",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 51,
@@ -915,7 +1315,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gagonfe",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 52,
@@ -933,7 +1341,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gagonfe",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Acyntha",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 53,
@@ -951,7 +1367,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gagonfe",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Acyntha",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 54,
@@ -969,7 +1393,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gagonfe",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Acyntha",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 55,
@@ -987,7 +1419,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 56,
@@ -1005,7 +1445,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 57,
@@ -1023,7 +1471,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 58,
@@ -1041,7 +1497,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "2dragontails",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2dragontails",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 59,
@@ -1059,7 +1523,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Half-Cat Team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xeneder Team",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 60,
@@ -1077,7 +1549,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Half-Cat Team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xeneder Team",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 61,
@@ -1095,7 +1575,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Crime Opera Studios",
+    "developer_2": "Ratalaika Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 62,
@@ -1113,7 +1601,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "Crime Opera Studios",
+    "developer_3": "Ratalaika Games",
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 63,
@@ -1131,7 +1627,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Xitilon",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xitilon",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 64,
@@ -1149,7 +1653,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Xitilon",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xitilon",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 65,
@@ -1167,7 +1679,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Colossus Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Colossus Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 66,
@@ -1185,7 +1705,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Colossus Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Colossus Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 67,
@@ -1203,7 +1731,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Colossus Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Colossus Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 68,
@@ -1221,7 +1757,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 69,
@@ -1239,7 +1783,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 70,
@@ -1257,7 +1809,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 71,
@@ -1275,7 +1835,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 72,
@@ -1293,7 +1861,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 73,
@@ -1311,7 +1887,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 74,
@@ -1329,7 +1913,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 75,
@@ -1347,7 +1939,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Xeneder Team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xeneder Team",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 76,
@@ -1365,7 +1965,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 77,
@@ -1383,7 +1991,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gibier Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "PLAYISM",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 78,
@@ -1401,7 +2017,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ChiliDog Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 79,
@@ -1419,7 +2043,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gametry",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gametry",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 80,
@@ -1437,7 +2069,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gametry",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gametry",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 81,
@@ -1455,7 +2095,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "FlutterBeam",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 82,
@@ -1473,7 +2121,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "Mojiken",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 83,
@@ -1491,7 +2147,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Apple Cider",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 84,
@@ -1509,7 +2173,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "Tonguç Bodur",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 85,
@@ -1527,7 +2199,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "DEKLAZON",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 86,
@@ -1545,7 +2225,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "DEKLAZON",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 87,
@@ -1563,7 +2251,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 88,
@@ -1581,7 +2277,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Pequi Estúdio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 89,
@@ -1599,7 +2303,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "7 Raven Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Totalconsole",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 90,
@@ -1617,7 +2329,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cyberpanda",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 91,
@@ -1635,7 +2355,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 92,
@@ -1653,7 +2381,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 93,
@@ -1671,7 +2407,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 94,
@@ -1689,7 +2433,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 95,
@@ -1707,7 +2459,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sid Fish Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xitilon",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 96,
@@ -1725,7 +2485,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 97,
@@ -1743,7 +2511,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 98,
@@ -1761,7 +2537,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 99,
@@ -1779,25 +2563,41 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Electronic Arts",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Electronic Arts",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 100,
-    "n": "Find The Cats",
+    "n": "Moves: Perfect Pair",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
-    "g": "2,000G",
-    "t": "8 Minutes",
+    "g": "1,000G",
+    "t": "10 Minutes",
     "ty": "Puzzle",
-    "tx": "Yes (All Cats Circled)",
+    "tx": "Yes",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/X8_tsmwOQJU",
-    "v": "X8_tsmwOQJU",
+    "u": "https://www.youtube.com/watch?v=NB387jqcoxA",
+    "v": "NB387jqcoxA",
     "pl": null,
     "kinect": null,
     "adult": null,
-    "testContent": null,
-    "always_show_recent": false
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Paulo Pinheiro Game Dev",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Paulo Pinheiro Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 101,
@@ -1815,25 +2615,41 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 102,
-    "n": "Find The Cats 2",
+    "n": "Find The Cats",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G",
-    "t": "8-9 Minutes",
+    "t": "7-8 Minutes",
     "ty": "Puzzle",
     "tx": "Yes (All Cats Circled)",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/KYtTBdoxy9s",
-    "v": "KYtTBdoxy9s",
+    "u": "https://www.youtube.com/watch?v=X8_tsmwOQJU",
+    "v": "X8_tsmwOQJU",
     "pl": null,
     "kinect": null,
     "adult": null,
-    "testContent": null,
-    "always_show_recent": false
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 103,
@@ -1851,25 +2667,41 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 104,
-    "n": "Panda: Shards of Aurora",
+    "n": "Find The Cats 2",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
     "g": "2,000G",
-    "t": "5 Minutes",
-    "ty": "Platformer",
+    "t": "8 Minutes",
+    "ty": "Puzzle",
     "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://youtu.be/bO21TsR5Xg0",
-    "v": "bO21TsR5Xg0",
+    "u": "https://www.youtube.com/watch?v=KYtTBdoxy9s",
+    "v": "KYtTBdoxy9s",
     "pl": null,
     "kinect": null,
     "adult": null,
-    "testContent": null,
-    "always_show_recent": false
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 105,
@@ -1887,7 +2719,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 106,
@@ -1905,7 +2745,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Infinite Zone",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Infinite Zone",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 107,
@@ -1923,7 +2771,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gametry",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gametry",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 108,
@@ -1941,7 +2797,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 109,
@@ -1959,7 +2823,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "EpiXR Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "EpiXR Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 110,
@@ -1977,7 +2849,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Fabrizio Q. Abreu",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Fa Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 111,
@@ -1995,7 +2875,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 112,
@@ -2013,7 +2901,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 113,
@@ -2031,7 +2927,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 114,
@@ -2049,7 +2953,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Rafael Valim Fernandes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "My Night Sun Games",
+    "publisher_2": "Rafael Valim Fernandes",
+    "publisher_3": null
   },
   {
     "id": 115,
@@ -2067,7 +2979,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Rafael Valim Fernandes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "My Night Sun Games",
+    "publisher_2": "Rafael Valim Fernandes",
+    "publisher_3": null
   },
   {
     "id": 116,
@@ -2085,7 +3005,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Alexandr Bondarenko",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 117,
@@ -2103,7 +3031,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Alexandr Bondarenko",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 118,
@@ -2121,7 +3057,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Balio Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Microids",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 119,
@@ -2139,7 +3083,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 120,
@@ -2157,7 +3109,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 121,
@@ -2175,7 +3135,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "eastasiasoft",
+    "developer_2": "DERIK D.F",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "eastasiasoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 122,
@@ -2193,7 +3161,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Everynot Games Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Everynot Games Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 123,
@@ -2211,7 +3187,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 124,
@@ -2229,7 +3213,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 125,
@@ -2247,7 +3239,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 126,
@@ -2265,7 +3265,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 127,
@@ -2283,7 +3291,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gray Boss",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 128,
@@ -2301,7 +3317,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gray Boss",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 129,
@@ -2319,7 +3343,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 130,
@@ -2337,7 +3369,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Fabrizio Q. Abreu",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Fa Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 131,
@@ -2355,7 +3395,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Fabrizio Q. Abreu",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Fa Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 132,
@@ -2373,7 +3421,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Pinel Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Silesia Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 133,
@@ -2391,7 +3447,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Everynot Games Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Everynot Games Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 134,
@@ -2409,7 +3473,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Caio Flavio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 135,
@@ -2427,7 +3499,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Rohan Narang",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 136,
@@ -2445,7 +3525,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 137,
@@ -2463,7 +3551,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Maria",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 138,
@@ -2481,7 +3577,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Maria",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 139,
@@ -2499,7 +3603,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 140,
@@ -2517,7 +3629,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 141,
@@ -2535,7 +3655,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 142,
@@ -2553,7 +3681,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ebi-hime",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 143,
@@ -2571,7 +3707,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Renan Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 144,
@@ -2589,7 +3733,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 145,
@@ -2607,7 +3759,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 146,
@@ -2625,7 +3785,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "GameDi Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "GameDi Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 147,
@@ -2643,7 +3811,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 148,
@@ -2661,7 +3837,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Yustas Games Studio",
+    "developer_2": "Alawar Entertainment",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 149,
@@ -2679,7 +3863,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 150,
@@ -2697,7 +3889,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 151,
@@ -2715,7 +3915,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 152,
@@ -2733,7 +3941,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Synnergy Circle Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Synnergy Circle Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 153,
@@ -2751,7 +3967,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 154,
@@ -2769,7 +3993,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 155,
@@ -2787,7 +4019,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 156,
@@ -2805,7 +4045,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 157,
@@ -2823,7 +4071,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 158,
@@ -2841,7 +4097,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 159,
@@ -2859,7 +4123,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 160,
@@ -2877,7 +4149,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 161,
@@ -2895,7 +4175,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 162,
@@ -2913,7 +4201,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 163,
@@ -2931,7 +4227,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 164,
@@ -2949,7 +4253,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 165,
@@ -2967,7 +4279,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 166,
@@ -2985,7 +4305,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Urântia Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 167,
@@ -3003,7 +4331,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Wise Box Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 168,
@@ -3021,25 +4357,41 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Everynot Games Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Everynot Games Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 169,
-    "n": "Moves: Perfect Pair",
+    "n": "Panda: Shards of Aurora",
     "p": "XBOX ONE | XBOX Series S/X | Windows",
-    "g": "1,000G",
-    "t": "10 Minutes",
-    "ty": "Puzzle",
-    "tx": "Yes",
+    "g": "2,000G",
+    "t": "5 Minutes",
+    "ty": "Platformer",
+    "tx": "No",
     "q": "4K",
     "df": "Quick & Easy",
-    "u": "https://www.youtube.com/watch?v=NB387jqcoxA",
-    "v": "NB387jqcoxA",
+    "u": "https://www.youtube.com/watch?v=bO21TsR5Xg0",
+    "v": "bO21TsR5Xg0",
     "pl": null,
-    "kinect": "false",
-    "adult": "false",
+    "kinect": null,
+    "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ember Box Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ember Box Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 170,
@@ -3057,7 +4409,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Paulo Pinheiro Game Dev",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Paulo Pinheiro Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 171,
@@ -3075,7 +4435,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "VICTORIA Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 172,
@@ -3093,7 +4461,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Kitnet Hostage",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2dragontails",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 173,
@@ -3111,7 +4487,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 174,
@@ -3129,7 +4513,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "1564 Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Rainy Frog",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 175,
@@ -3147,7 +4539,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Urântia Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Phoenix Reborn Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 176,
@@ -3165,7 +4565,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Forever Entertainment",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Forever Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 177,
@@ -3183,7 +4591,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gearhead Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ternox",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 178,
@@ -3201,7 +4617,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Revulo Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Revulo Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 179,
@@ -3219,7 +4643,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ABA Games",
+    "developer_2": "m1s3ry",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xitilon",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 180,
@@ -3237,7 +4669,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ABA Games",
+    "developer_2": "m1s3ry",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Xitilon",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 181,
@@ -3255,7 +4695,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Petrodiy-Games",
+    "developer_2": "ChiliDog Interactive",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 182,
@@ -3273,7 +4721,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "indie.io",
+    "developer_2": "Aurorian Studios",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "indie.io",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 183,
@@ -3291,7 +4747,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hugo",
+    "developer_2": "Lupphin",
+    "developer_3": "Dekkin",
+    "developer_4": "Krug",
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 184,
@@ -3309,7 +4773,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 185,
@@ -3327,7 +4799,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 186,
@@ -3345,7 +4825,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 187,
@@ -3363,7 +4851,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Entity3",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Entity3",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 188,
@@ -3381,7 +4877,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Petoons Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Outright Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 189,
@@ -3399,7 +4903,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 190,
@@ -3417,7 +4929,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 191,
@@ -3435,7 +4955,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 192,
@@ -3453,7 +4981,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 193,
@@ -3471,7 +5007,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 194,
@@ -3489,7 +5033,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 195,
@@ -3507,7 +5059,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 196,
@@ -3525,7 +5085,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Joffre Macedo Neto",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "JM Neto Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 197,
@@ -3543,7 +5111,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Naoka Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 198,
@@ -3561,7 +5137,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Mob Entertainment",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Mob Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 199,
@@ -3579,7 +5163,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 200,
@@ -3597,7 +5189,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 201,
@@ -3615,7 +5215,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 202,
@@ -3633,7 +5241,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Tribus Games Indie",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 203,
@@ -3651,7 +5267,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 204,
@@ -3669,7 +5293,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "id Software",
+    "developer_2": "MachineGames",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Bethesda Softworks",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 205,
@@ -3687,7 +5319,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "id Software",
+    "developer_2": "MachineGames",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Bethesda Softworks",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 206,
@@ -3705,7 +5345,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "id Software",
+    "developer_2": "Nightdive Studios",
+    "developer_3": "MachineGames",
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Bethesda Softworks",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 207,
@@ -3723,7 +5371,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "The Pigeon",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 208,
@@ -3741,7 +5397,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Rafael Valim Fernandes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "My Night Sun Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 209,
@@ -3759,7 +5423,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Slay Buherman",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 210,
@@ -3777,7 +5449,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 211,
@@ -3795,7 +5475,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 212,
@@ -3813,7 +5501,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Magnific Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Magnific Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 213,
@@ -3831,7 +5527,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Synnergy Circle Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Synnergy Circle Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 214,
@@ -3849,7 +5553,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Wild Monkey",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 215,
@@ -3867,7 +5579,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 216,
@@ -3885,7 +5605,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 217,
@@ -3903,7 +5631,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Fabrizio Q. Abreu",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Fa Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 218,
@@ -3921,7 +5657,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Fabrizio Q. Abreu",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Fa Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 219,
@@ -3939,7 +5683,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 220,
@@ -3957,7 +5709,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 221,
@@ -3975,7 +5735,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Colossus Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Colossus Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 222,
@@ -3993,7 +5761,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Colossus Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Colossus Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 223,
@@ -4011,7 +5787,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 224,
@@ -4029,7 +5813,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "COMMANDO PANDA",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "COMMANDO PANDA",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 225,
@@ -4047,7 +5839,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 226,
@@ -4065,7 +5865,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "RainForest Game Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "RainForest Game Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 227,
@@ -4083,7 +5891,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Anti-Pattern Studio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 228,
@@ -4101,7 +5917,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ELIXOR",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 229,
@@ -4119,7 +5943,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Synnergy Circle Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Synnergy Circle Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 230,
@@ -4137,7 +5969,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Old School Vibes",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Old School Vibes",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 231,
@@ -4155,7 +5995,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 232,
@@ -4173,7 +6021,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Sweet Bread Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sweet Bread Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 233,
@@ -4191,7 +6047,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "ChiliDog Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "HugePixel",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 234,
@@ -4209,7 +6073,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 235,
@@ -4227,7 +6099,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "SilenGames",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "SilenGames",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 236,
@@ -4245,7 +6125,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "DERIK D.F",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "DERIK D.F",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 237,
@@ -4263,7 +6151,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Grin robot",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Grin robot",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 238,
@@ -4281,7 +6177,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Grin robot",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Grin robot",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 239,
@@ -4299,7 +6203,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "2dragontails",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2dragontails",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 240,
@@ -4317,7 +6229,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "NomnomNami",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 241,
@@ -4335,7 +6255,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Veslo Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 242,
@@ -4353,7 +6281,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Flying Islands Team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Flying Islands Team",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 243,
@@ -4371,7 +6307,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Gradual Games",
+    "developer_2": "The 6502 Collective",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "8 Bit Legit",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 244,
@@ -4389,7 +6333,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Salmon Snake",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Top Hat Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 245,
@@ -4407,7 +6359,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Borealis",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 246,
@@ -4425,7 +6385,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 247,
@@ -4443,7 +6411,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "NAISU",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "NAISU",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 248,
@@ -4461,7 +6437,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "909games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Weakfish Studio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 249,
@@ -4479,7 +6463,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "TechnoCat Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Sometimes You",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 250,
@@ -4497,7 +6489,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 251,
@@ -4515,7 +6515,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 252,
@@ -4533,7 +6541,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "L³",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ratalaika Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 253,
@@ -4551,7 +6567,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Paulo Pinheiro Game Dev",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Paulo Pinheiro Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 254,
@@ -4569,7 +6593,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Paulo Pinheiro Game Dev",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Paulo Pinheiro Game Dev",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 255,
@@ -4587,7 +6619,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 256,
@@ -4605,7 +6645,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 257,
@@ -4623,7 +6671,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 258,
@@ -4641,7 +6697,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "iNK Stories",
+    "developer_2": "Stage Clear Studios",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Digerati",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 259,
@@ -4659,7 +6723,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Artax Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Outright Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 260,
@@ -4677,7 +6749,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Polygoat",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Forever Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 261,
@@ -4695,7 +6775,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ludus Future",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ESDigital Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 262,
@@ -4713,7 +6801,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "CrazyBunch",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Assemble Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 263,
@@ -4731,7 +6827,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "CrazyBunch",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Assemble Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 264,
@@ -4749,7 +6853,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "LucasArts",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Disney Interactive Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 265,
@@ -4767,7 +6879,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "LucasArts",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Disney Interactive Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 266,
@@ -4785,7 +6905,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Terrible Toybox",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Devolver Digital",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 267,
@@ -4803,7 +6931,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Terrible Toybox",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Devolver Digital",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 268,
@@ -4821,7 +6957,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Spiders",
+    "developer_2": "Frogwares",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Focus Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 269,
@@ -4839,7 +6983,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "3DClouds",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Outright Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 270,
@@ -4857,7 +7009,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": "Spiders",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Atlus",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 271,
@@ -4875,7 +7035,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jo-Mei GmbH",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Electronic Arts",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 272,
@@ -4893,7 +7061,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 273,
@@ -4911,7 +7087,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 274,
@@ -4929,7 +7113,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 275,
@@ -4947,7 +7139,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 276,
@@ -4965,7 +7165,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 277,
@@ -4983,7 +7191,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Deck Nine Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Square Enix",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 278,
@@ -5001,7 +7217,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Visceral Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Electronic Arts",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 279,
@@ -5019,7 +7243,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Deck Nine Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Square Enix",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 280,
@@ -5037,7 +7269,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Frogwares",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 281,
@@ -5055,7 +7295,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Ubisoft Montreal",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Ubisoft",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 282,
@@ -5073,7 +7321,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Frogwares",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 283,
@@ -5091,7 +7347,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Frogwares",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 284,
@@ -5109,7 +7373,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Frogwares",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 285,
@@ -5127,7 +7399,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Frogwares",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Frogwares",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 286,
@@ -5145,7 +7425,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "PopCap Games",
+    "developer_2": "The Lost Pixels",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Electronic Arts",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 287,
@@ -5163,7 +7451,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Blind Squirrel Games",
+    "developer_2": "Irrational Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 288,
@@ -5181,7 +7477,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 289,
@@ -5199,7 +7503,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 290,
@@ -5217,7 +7529,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 291,
@@ -5235,7 +7555,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 292,
@@ -5253,7 +7581,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 293,
@@ -5271,7 +7607,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Supergiant Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Supergiant Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 294,
@@ -5289,7 +7633,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Twisted Pixel Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Microsoft Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 295,
@@ -5307,7 +7659,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Team Bondi",
+    "developer_2": "Rockstar Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Rockstar Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 296,
@@ -5325,7 +7685,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Team Bondi",
+    "developer_2": "Rockstar Games",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Rockstar Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 297,
@@ -5343,7 +7711,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Beenox",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Activision",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 298,
@@ -5361,7 +7737,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "BamTang Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "GameMill Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 299,
@@ -5379,7 +7763,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "BamTang Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "GameMill Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 300,
@@ -5397,7 +7789,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "BamTang Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "GameMill Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 301,
@@ -5415,7 +7815,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Casual Brothers",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Outright Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 302,
@@ -5433,7 +7841,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Freedom Factory Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Freedom Factory Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 303,
@@ -5451,7 +7867,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 304,
@@ -5469,7 +7893,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 305,
@@ -5487,7 +7919,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 306,
@@ -5505,7 +7945,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 307,
@@ -5523,7 +7971,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cave",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Cave",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 308,
@@ -5541,7 +7997,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 309,
@@ -5559,7 +8023,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Hangar 13",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "2K",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 310,
@@ -5577,7 +8049,15 @@
     "kinect": "true",
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Grande Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Grande Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 311,
@@ -5595,7 +8075,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Team17",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Codemasters",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 312,
@@ -5613,7 +8101,15 @@
     "kinect": null,
     "adult": "true",
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Team17",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Codemasters",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 313,
@@ -5631,7 +8127,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Codemasters",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Codemasters",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 314,
@@ -5649,7 +8153,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Nintendo",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Nintendo",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 315,
@@ -5667,7 +8179,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 316,
@@ -5685,7 +8205,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Bandai Namco Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Bandai Namco Entertainment",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 317,
@@ -5703,7 +8231,15 @@
     "kinect": "true",
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Through Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Through Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 318,
@@ -5721,7 +8257,15 @@
     "kinect": "true",
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Konami",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Konami",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 319,
@@ -5739,7 +8283,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 320,
@@ -5757,7 +8309,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Afil Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Afil Games",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 321,
@@ -5775,7 +8335,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "true",
-    "always_show_recent": true
+    "always_show_recent": true,
+    "developer_1": null,
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": null,
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 322,
@@ -5793,7 +8361,15 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "true",
-    "always_show_recent": true
+    "always_show_recent": true,
+    "developer_1": null,
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": null,
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 323,
@@ -5811,7 +8387,15 @@
     "kinect": null,
     "adult": null,
     "testContent": null,
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cloud5 Studios",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Cloud5 Studios",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 324,
@@ -5829,7 +8413,15 @@
     "kinect": null,
     "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "CrystallPunk",
+    "developer_2": "ChiliDog Interactive",
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 325,
@@ -5847,7 +8439,15 @@
     "kinect": null,
     "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Antena",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 326,
@@ -5865,7 +8465,15 @@
     "kinect": null,
     "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Cascadia Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 327,
@@ -5883,7 +8491,15 @@
     "kinect": null,
     "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "Duck team",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "ChiliDog Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 328,
@@ -5901,7 +8517,15 @@
     "kinect": null,
     "adult": null,
     "testContent": "false",
-    "always_show_recent": false
+    "always_show_recent": false,
+    "developer_1": "PedroFStudio",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "PedroFStudio",
+    "publisher_2": null,
+    "publisher_3": null
   },
   {
     "id": 329,
@@ -5919,6 +8543,14 @@
     "kinect": "false",
     "adult": "false",
     "testContent": "true",
-    "always_show_recent": true
+    "always_show_recent": true,
+    "developer_1": "TEST DEV",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "TEST DEV",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
