@@ -56,8 +56,8 @@
         if (companyDiff) return companyDiff;
         return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
       }
-      const aDate = Date.parse(String(a.relation.youtube_published_at || ''));
-      const bDate = Date.parse(String(b.relation.youtube_published_at || ''));
+      const aDate = Date.parse(String(a.relation.provided_at || ''));
+      const bDate = Date.parse(String(b.relation.provided_at || ''));
       const aTime = Number.isFinite(aDate) ? aDate : -Infinity;
       const bTime = Number.isFinite(bDate) ? bDate : -Infinity;
       if (bTime !== aTime) return bTime - aTime;

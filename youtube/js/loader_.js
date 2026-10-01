@@ -207,25 +207,25 @@
         const publicDeveloperApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
         const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const [showcaseResponse, providedResponse, railSettingsResponse, publishDatesResponse] = await Promise.all([
+        const [showcaseResponse, providedResponse, railSettingsResponse, providedRecencyResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
           fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
           fetch(`${publicDeveloperBaseUrl}/developer_public_settings?id=eq.1&select=video_limit,video_sort`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/developer_game_publish_dates?select=game_id,youtube_published_at`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_recency?select=game_id,provided_at`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
-        if (!publishDatesResponse.ok) throw new Error(`developer_game_publish_dates: HTTP ${publishDatesResponse.status}`);
+        if (!providedRecencyResponse.ok) throw new Error(`public_developer_provided_recency: HTTP ${providedRecencyResponse.status}`);
         if (!railSettingsResponse.ok) throw new Error(`developer rail settings: HTTP ${railSettingsResponse.status}`);
         const showcaseRows = await showcaseResponse.json();
         const providedRows = await providedResponse.json();
-        const publishDateRows = await publishDatesResponse.json();
-        const publishDateByGame = new Map((Array.isArray(publishDateRows) ? publishDateRows : []).map(row => [Number(row.game_id), String(row.youtube_published_at || '')]));
+        const providedRecencyRows = await providedRecencyResponse.json();
+        const providedAtByGame = new Map((Array.isArray(providedRecencyRows) ? providedRecencyRows : []).map(row => [Number(row.game_id), String(row.provided_at || '')]));
         const railSettingRows = await railSettingsResponse.json();
         if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
         window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
-          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim(), youtube_published_at: publishDateByGame.get(Number(row.game_id)) || '' }))
+          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim(), provided_at: providedAtByGame.get(Number(row.game_id)) || '' }))
           .filter(row => Number.isInteger(row.game_id) && row.provided_by);
         window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
         const railSetting = Array.isArray(railSettingRows) && railSettingRows.length ? railSettingRows[0] : {};
@@ -246,7 +246,7 @@
           }
           window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
           window.PUBLIC_DEVELOPER_PROVIDED_GAMES = recoveryData.providedGames
-            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim(), youtube_published_at: String(row?.youtube_published_at || '') }))
+            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim(), provided_at: String(row?.provided_at || '') }))
             .filter(row => Number.isInteger(row.game_id) && row.provided_by);
           window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
           const recoveryRail = recoveryData.railSettings || {};
@@ -322,7 +322,7 @@
 
       await loadScript('js/youtube_.js?v=20260927-mobile-landscape-prime-rev01');
       await loadScript('js/site_.js?v=quality-filter-REV05');
-      await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV36');
+      await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
     } catch (error) {
