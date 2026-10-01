@@ -56,7 +56,12 @@
         if (companyDiff) return companyDiff;
         return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
       }
-      return Number(b.relation.game_id) - Number(a.relation.game_id);
+      const aDate = Date.parse(String(a.relation.youtube_published_at || ''));
+      const bDate = Date.parse(String(b.relation.youtube_published_at || ''));
+      const aTime = Number.isFinite(aDate) ? aDate : -Infinity;
+      const bTime = Number.isFinite(bDate) ? bDate : -Infinity;
+      if (bTime !== aTime) return bTime - aTime;
+      return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
     });
 
     const limit = Number(settings.limit);
