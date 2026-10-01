@@ -527,7 +527,7 @@ function beginAddGame(){
   document.getElementById("gdAlwaysRecent").value="false";
   document.getElementById("gdProvidedByDeveloper").value="";
   setDeveloperPublisherFields({});
-  document.getElementById("gdRaw").value="NEW games_TEST record";
+  document.getElementById("gdRaw").value="NEW games record";
   document.getElementById("gameDevSave").style.display="none";
   document.getElementById("gameDevDelete").style.display="none";
   document.getElementById("gameDevReload").style.display="none";
@@ -802,21 +802,31 @@ async function fetchQualityBadgeRecoveryData(){
 
 async function fetchPublicDeveloperRecoveryData(){
   const headers={apikey:SUPABASE_PROD_PUBLISHABLE_KEY};
-  const showcaseSelect="company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
-  const [showcaseResponse,providedResponse]=await Promise.all([
+  const showcaseSelect="company_id,public_display_name,public_description,public_display_order,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
+  const [showcaseResponse,providedResponse,railSettingsResponse,providedRecencyResponse]=await Promise.all([
     fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_showcase?select=${showcaseSelect}`,{headers,cache:"no-store"}),
-    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`,{headers,cache:"no-store"})
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`,{headers,cache:"no-store"}),
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/developer_public_settings?id=eq.1&select=video_limit,video_sort`,{headers,cache:"no-store"}),
+    fetch(`${SUPABASE_PROD_URL}/rest/v1/public_developer_provided_recency?select=game_id,provided_at`,{headers,cache:"no-store"})
   ]);
   if(!showcaseResponse.ok)throw new Error(`Public Developer Showcase read failed (${showcaseResponse.status}).`);
   if(!providedResponse.ok)throw new Error(`Developer Provided read failed (${providedResponse.status}).`);
+  if(!railSettingsResponse.ok)throw new Error(`Developer rail settings read failed (${railSettingsResponse.status}).`);
+  if(!providedRecencyResponse.ok)throw new Error(`Developer provided recency read failed (${providedRecencyResponse.status}).`);
   const showcase=await showcaseResponse.json();
   const providedRows=await providedResponse.json();
+  const railSettingRows=await railSettingsResponse.json();
+  const providedRecencyRows=await providedRecencyResponse.json();
+  const providedAtByGame=new Map((Array.isArray(providedRecencyRows)?providedRecencyRows:[]).map(row=>[Number(row.game_id),String(row.provided_at||"")]));
   if(!Array.isArray(showcase)||!Array.isArray(providedRows))throw new Error("Public developer recovery data returned an invalid response.");
+  const railSetting=Array.isArray(railSettingRows)&&railSettingRows.length?railSettingRows[0]:{};
+  const railLimit=Number(railSetting.video_limit);
   return {
     showcase,
+    railSettings:{sort:["RECENT","GAME_NAME","DEVELOPER"].includes(String(railSetting.video_sort||"").toUpperCase())?String(railSetting.video_sort).toUpperCase():"RECENT",limit:Number.isInteger(railLimit)&&railLimit>0?railLimit:null},
     providedGameIds:providedRows.map(row=>Number(row.game_id)).filter(Number.isInteger),
     providedGames:providedRows
-      .map(row=>({game_id:Number(row.game_id),provided_by:String(row.provided_by||"").trim()}))
+      .map(row=>({game_id:Number(row.game_id),provided_by:String(row.provided_by||"").trim(),provided_at:providedAtByGame.get(Number(row.game_id))||""}))
       .filter(row=>Number.isInteger(row.game_id)&&row.provided_by)
   };
 }
