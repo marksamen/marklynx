@@ -3,12 +3,11 @@ let verifyProdDatabaseIdentity = null;
 
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent"];
 
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
 let providedDeveloperByGame=new Map();
-let providedDeveloperRefreshGeneration=0;
 let qualityBadges=[];
 
 export async function loadQualityBadges(){
@@ -50,25 +49,20 @@ async function callGamesAdmin(action,payload={}){
 }
 
 async function loadProvidedDeveloperAdminData(){
-  // REV07: multiple Admin refresh triggers can overlap (save notification + modal close).
-  // Build each refresh in local state and only let the newest refresh commit its result.
-  const refreshGeneration=++providedDeveloperRefreshGeneration;
+  // REV37 deliberately uses the already-established company/provided-game
+  // backend actions instead of the new REV36 combined read action.
   const companyResult=await callGamesAdmin("list-companies");
-  const nextCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
+  providedDeveloperCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
     .filter(company=>["ACTIVE_RELATIONSHIP","DO_NOT_CONTACT"].includes(String(company.relationship_status)))
     .sort((a,b)=>String(a.official_name||"").localeCompare(String(b.official_name||""),undefined,{sensitivity:"base"}));
 
-  const nextByGame=new Map();
-  for(const company of nextCompanies){
+  providedDeveloperByGame=new Map();
+  for(const company of providedDeveloperCompanies){
     const providedResult=await callGamesAdmin("list-provided-games",{id:Number(company.id)});
     for(const game of (Array.isArray(providedResult.games)?providedResult.games:[])){
-      nextByGame.set(Number(game.id),Number(company.id));
+      providedDeveloperByGame.set(Number(game.id),Number(company.id));
     }
   }
-
-  if(refreshGeneration!==providedDeveloperRefreshGeneration) return false;
-  providedDeveloperCompanies=nextCompanies;
-  providedDeveloperByGame=nextByGame;
 
   const select=document.getElementById("gdProvidedByDeveloper");
   const current=select.value;
@@ -80,9 +74,6 @@ async function loadProvidedDeveloperAdminData(){
     select.appendChild(option);
   }
   if(current && [...select.options].some(option=>option.value===current)) select.value=current;
-  const currentGame=selectedGame();
-  if(currentGame) setProvidedDeveloperForGame(currentGame.id);
-  return true;
 }
 function setProvidedDeveloperForGame(gameId){
   const companyId=providedDeveloperByGame.get(Number(gameId));
@@ -407,14 +398,6 @@ function validateProvidedDeveloperRelationship(){
   };
 }
 
-function friendlyDeveloperPublisherError(error){
-  const message=error?.message||String(error);
-  const prefix="Unknown developer/publisher:";
-  if(!message.startsWith(prefix)) return null;
-  const name=message.slice(prefix.length).trim();
-  return `Cannot find “${name}” in the Developer / Publisher list. Check the spelling, or add the company first. Supabase TEST was not changed.`;
-}
-
 function drawSelectedGame(){
   const g=selectedGame(); if(!g)return;
   document.getElementById("gdId").value=g.id||"";
@@ -629,11 +612,7 @@ async function createGameDev(){
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
     showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    const friendlyError=friendlyDeveloperPublisherError(e);
-    writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent=friendlyError?`CREATE FAILED — ${friendlyError}`:`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
-    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});
-    console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
 }
 
@@ -749,11 +728,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
     showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    const friendlyError=friendlyDeveloperPublisherError(e);
-    writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent=friendlyError?`SAVE FAILED — ${friendlyError}`:`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
-    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});
-    console.error(e);
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
   }
 });
 
@@ -875,47 +850,6 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
-
-let skipNextDeveloperPublishersCloseRefresh=false;
-
-window.addEventListener("message",event=>{
-  if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
-  const companyId=Number(event.data?.company_id);
-  const gameIds=Array.isArray(event.data?.game_ids)
-    ? event.data.game_ids.map(Number).filter(Number.isInteger)
-    : null;
-
-  // REV08: set-provided-games has already completed successfully before this message.
-  // Its returned/saved checkbox set is authoritative for this company. Apply it
-  // immediately and do not let the modal-close reread overwrite it with an older view.
-  if(Number.isInteger(companyId) && gameIds!==null){
-    for(const [gameId,mappedCompanyId] of [...providedDeveloperByGame.entries()]){
-      if(Number(mappedCompanyId)===companyId) providedDeveloperByGame.delete(gameId);
-    }
-    for(const gameId of gameIds) providedDeveloperByGame.set(gameId,companyId);
-    skipNextDeveloperPublishersCloseRefresh=true;
-    const currentGame=selectedGame();
-    if(currentGame) setProvidedDeveloperForGame(currentGame.id);
-    return;
-  }
-
-  // Compatibility fallback only for an older sender without the saved relationship set.
-  loadProvidedDeveloperAdminData().catch(error=>{
-    console.error("Developer / Publisher Admin live data refresh failed:",error);
-  });
-});
-
-window.addEventListener("developer-publishers-modal-closed",async()=>{
-  if(skipNextDeveloperPublishersCloseRefresh){
-    skipNextDeveloperPublishersCloseRefresh=false;
-    return;
-  }
-  try{
-    await loadProvidedDeveloperAdminData();
-  }catch(error){
-    console.error("Developer / Publisher Admin data refresh failed:",error);
-  }
-});
 
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",wireProvidedDeveloperRolePrompt,{once:true});

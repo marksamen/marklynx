@@ -24,9 +24,6 @@ export function initAdminPageModal(){
     if(closingAdminModalUrl.startsWith("quality-badges/")){
       window.dispatchEvent(new CustomEvent("quality-badges-modal-closed"));
     }
-    if(closingAdminModalUrl.startsWith("developer-publishers/")){
-      window.dispatchEvent(new CustomEvent("developer-publishers-modal-closed"));
-    }
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);

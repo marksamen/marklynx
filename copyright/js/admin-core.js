@@ -3,9 +3,9 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
-import { initAdminPageModal } from "./admin-page-modal.js?v=DEVELOPER-PROVIDED-PROD-REV24";
+import { initAdminPageModal } from "./admin-page-modal.js?v=game-suggestions-x-only-rev01";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd, loadQualityBadges } from "./admin-game-management.js?v=DEVELOPER-PROVIDED-PROD-REV24";
+import { initGameManagement, loadGamesProd, loadQualityBadges } from "./admin-game-management.js?v=ALWAYS-RECENT-PROD-REV01";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
