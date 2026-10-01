@@ -92,16 +92,26 @@ def main():
 
     raw = json.loads(GAMES.read_text(encoding="utf-8"))
 
+    # The public video counter must never include TEST CONTENT. games.json stores
+    # this field as the strings "true" / "false", while other data sources may
+    # use real booleans, so handle both representations explicitly.
+    def is_test_content(row):
+        value = row.get("testContent")
+        return value is True or (isinstance(value, str) and value.strip().lower() == "true")
+
+    public_rows = [
+        row for row in raw
+        if isinstance(row, dict) and not is_test_content(row)
+    ]
+
     direct_ids = {
         row.get("v").strip()
-        for row in raw
-        if isinstance(row, dict) and isinstance(row.get("v"), str) and row.get("v").strip()
+        for row in public_rows
+        if isinstance(row.get("v"), str) and row.get("v").strip()
     }
 
     playlist_ids = set()
-    for row in raw:
-        if not isinstance(row, dict):
-            continue
+    for row in public_rows:
         # games.json uses "pl" for the YouTube playlist ID.
         # "p" is the platform field and must never be treated as a playlist.
         pid = playlist_id(row.get("pl"))
