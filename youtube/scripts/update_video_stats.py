@@ -44,15 +44,18 @@ def api_get(params):
 
     # Retry temporary transport/server failures without weakening any count
     # safety checks. Genuine API/client errors still fail immediately.
-    max_attempts = 3
+    max_attempts = 5
     for attempt in range(1, max_attempts + 1):
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         try:
             with urllib.request.urlopen(req, timeout=30) as response:
                 return json.load(response)
         except urllib.error.HTTPError as exc:
-            # Retry only transient server/rate-limit responses.
-            if exc.code not in (429, 500, 502, 503, 504) or attempt == max_attempts:
+            # YouTube can transiently return playlistNotFound (404) for a public
+            # playlist that succeeds on another run. Retry 404 as well; a truly
+            # missing playlist still fails after all attempts and the safety stop
+            # continues to protect stats.json.
+            if exc.code not in (404, 429, 500, 502, 503, 504) or attempt == max_attempts:
                 raise
         except (urllib.error.URLError, ConnectionResetError, TimeoutError):
             if attempt == max_attempts:
