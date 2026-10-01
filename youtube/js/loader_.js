@@ -206,11 +206,11 @@
         const publicDeveloperBaseUrl = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1';
         const publicDeveloperApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
-        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
+        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
         const [showcaseResponse, providedResponse, railSettingsResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
           fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/site_control?id=in.(developer_video_limit,developer_video_sort)&select=id,value`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/developer_public_settings?id=eq.1&select=video_limit,video_sort`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
@@ -224,10 +224,10 @@
           .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
           .filter(row => Number.isInteger(row.game_id) && row.provided_by);
         window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
-        const railSettingMap = Object.fromEntries((Array.isArray(railSettingRows) ? railSettingRows : []).map(row => [String(row.id), row.value]));
-        const railLimit = Number(railSettingMap.developer_video_limit);
+        const railSetting = Array.isArray(railSettingRows) && railSettingRows.length ? railSettingRows[0] : {};
+        const railLimit = Number(railSetting.video_limit);
         window.PUBLIC_DEVELOPER_RAIL_SETTINGS = {
-          sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(railSettingMap.developer_video_sort || '').toUpperCase()) ? String(railSettingMap.developer_video_sort).toUpperCase() : 'RECENT',
+          sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(railSetting.video_sort || '').toUpperCase()) ? String(railSetting.video_sort).toUpperCase() : 'RECENT',
           limit: Number.isInteger(railLimit) && railLimit > 0 ? railLimit : null
         };
         console.info(`[TEST] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
