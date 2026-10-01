@@ -214,6 +214,12 @@ saveButton.addEventListener("click",async()=>{
       throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
     }
 
+    // REV40: tell the parent Admin immediately that the Developer / Publisher
+    // data set changed. The parent already owns the proven live-refresh path;
+    // this prevents a newly added company from requiring F5 before Game Edit
+    // can resolve/display it. No relationship/backend behavior is changed here.
+    window.parent.postMessage({type:"developer-publishers-data-changed"},window.location.origin);
+
     saveStatus.textContent=`SAVED — ${result.company.official_name} added to Supabase TEST.`;
     showCompanySaved(result.company.official_name);
   }catch(error){
