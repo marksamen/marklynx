@@ -198,6 +198,7 @@
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
       window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
       window.PUBLIC_DEVELOPER_PROVIDED_GAMES = [];
+      window.PUBLIC_DEVELOPER_RAIL_SETTINGS = { sort: 'RECENT', limit: null };
       try {
         if (dataSourceConfig.testForceSupabaseFailure === true) {
           throw new Error('Public developer Supabase failure forced by TEST config');
@@ -206,20 +207,29 @@
         const publicDeveloperApiKey = 'sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
         const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
         const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const [showcaseResponse, providedResponse] = await Promise.all([
+        const [showcaseResponse, providedResponse, railSettingsResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
+          fetch(`${publicDeveloperBaseUrl}/site_control?id=in.(developer_video_limit,developer_video_sort)&select=id,value`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
+        if (!railSettingsResponse.ok) throw new Error(`developer rail settings: HTTP ${railSettingsResponse.status}`);
         const showcaseRows = await showcaseResponse.json();
         const providedRows = await providedResponse.json();
+        const railSettingRows = await railSettingsResponse.json();
         if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
         window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
           .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
           .filter(row => Number.isInteger(row.game_id) && row.provided_by);
         window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
+        const railSettingMap = Object.fromEntries((Array.isArray(railSettingRows) ? railSettingRows : []).map(row => [String(row.id), row.value]));
+        const railLimit = Number(railSettingMap.developer_video_limit);
+        window.PUBLIC_DEVELOPER_RAIL_SETTINGS = {
+          sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(railSettingMap.developer_video_sort || '').toUpperCase()) ? String(railSettingMap.developer_video_sort).toUpperCase() : 'RECENT',
+          limit: Number.isInteger(railLimit) && railLimit > 0 ? railLimit : null
+        };
         console.info(`[TEST] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
       } catch (publicDeveloperError) {
         console.warn('[TEST] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
@@ -235,6 +245,9 @@
             .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim() }))
             .filter(row => Number.isInteger(row.game_id) && row.provided_by);
           window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
+          const recoveryRail = recoveryData.railSettings || {};
+          const recoveryLimit = Number(recoveryRail.limit);
+          window.PUBLIC_DEVELOPER_RAIL_SETTINGS = { sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(recoveryRail.sort || '').toUpperCase()) ? String(recoveryRail.sort).toUpperCase() : 'RECENT', limit: Number.isInteger(recoveryLimit) && recoveryLimit > 0 ? recoveryLimit : null };
           console.info(`[TEST] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
         } catch (recoveryError) {
           console.warn('[TEST] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
