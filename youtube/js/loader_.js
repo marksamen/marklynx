@@ -305,7 +305,7 @@
 
       await loadScript('js/youtube_.js?v=20260927-mobile-landscape-prime-rev01');
       await loadScript('js/site_.js?v=quality-filter-REV05');
-      await loadScript('js/developer_.js?v=DEVELOPER-PROVIDED-PUBLIC-REV13');
+      await loadScript('js/developer_.js?v=DEVELOPER-PROVIDED-ORDER-REV18');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
     } catch (error) {
