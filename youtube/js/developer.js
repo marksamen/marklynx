@@ -26,11 +26,46 @@
   );
 
   if (developerCards) {
-    const rows = providedRows
+    const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE) ? window.PUBLIC_DEVELOPER_SHOWCASE : [];
+    const profileByCompany = new Map();
+    for (const row of showcaseRows) {
+      const name = String(row?.public_display_name || '').trim().toLowerCase();
+      if (name && !profileByCompany.has(name)) profileByCompany.set(name, row);
+    }
+    const companyOrder = company => {
+      const profile = profileByCompany.get(String(company || '').trim().toLowerCase());
+      const value = Number(profile?.public_display_order);
+      return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
+    };
+    const settings = window.PUBLIC_DEVELOPER_RAIL_SETTINGS || { sort: 'RECENT', limit: null };
+    const mode = String(settings.sort || 'RECENT').toUpperCase();
+    let rows = providedRows
       .map(relation => ({ relation, game: gamesById.get(Number(relation?.game_id)) }))
-      .filter(({ relation, game }) => game && String(relation?.provided_by || '').trim())
-      .sort((a, b) => Number(b.relation.game_id) - Number(a.relation.game_id));
+      .filter(({ relation, game }) => game && String(relation?.provided_by || '').trim());
 
+    rows.sort((a, b) => {
+      const aCompany = String(a.relation.provided_by || '').trim();
+      const bCompany = String(b.relation.provided_by || '').trim();
+      if (mode === 'GAME_NAME') {
+        return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
+      }
+      if (mode === 'DEVELOPER') {
+        const orderDiff = companyOrder(aCompany) - companyOrder(bCompany);
+        if (orderDiff) return orderDiff;
+        const companyDiff = aCompany.localeCompare(bCompany, undefined, { sensitivity: 'base' });
+        if (companyDiff) return companyDiff;
+        return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
+      }
+      const aDate = Date.parse(String(a.relation.provided_at || ''));
+      const bDate = Date.parse(String(b.relation.provided_at || ''));
+      const aTime = Number.isFinite(aDate) ? aDate : -Infinity;
+      const bTime = Number.isFinite(bDate) ? bDate : -Infinity;
+      if (bTime !== aTime) return bTime - aTime;
+      return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
+    });
+
+    const limit = Number(settings.limit);
+    if (Number.isInteger(limit) && limit > 0) rows = rows.slice(0, limit);
     const fragment = document.createDocumentFragment();
     for (const { relation, game } of rows) {
       const videoId = String(game.v || '').trim();

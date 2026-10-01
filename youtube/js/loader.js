@@ -58,8 +58,8 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=quality-filter-PROD01', 'mainModuleMount');
-      await loadHtml('sections/developer.html?v=DEVELOPER-PROVIDED-PROD-REV27', 'developerModuleMount');
+      await loadHtml('sections/main.html?v=quality-filter-REV04', 'mainModuleMount');
+      await loadHtml('sections/developer.html?v=developer-provided-REV12', 'developerModuleMount');
       await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
 
@@ -126,7 +126,7 @@
         return rows.map(normalizeGame);
       };
 
-      // Manual PROD override lives in Supabase site_control. If that control
+      // Manual TEST override lives in Supabase PROD site_control. If that control
       // cannot be reached, keep using the existing static data-source.json config.
       // This control lookup is optional: automatic JSON recovery must not depend on it.
       const loadManualDataSourceOverride = async () => {
@@ -157,9 +157,6 @@
 
       if (selectedDataSource === 'supabase') {
         try {
-          if (dataSourceConfig.testForceSupabaseFailure === true) {
-            throw new Error('Supabase failure forced by PROD config');
-          }
           window.RAW = await loadGamesFromSupabase();
         } catch (supabaseError) {
           console.warn('[PRODUCTION] Supabase unavailable; falling back to games.json:', supabaseError);
@@ -198,25 +195,39 @@
       window.PUBLIC_DEVELOPER_SHOWCASE = null;
       window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = [];
       window.PUBLIC_DEVELOPER_PROVIDED_GAMES = [];
+      window.PUBLIC_DEVELOPER_RAIL_SETTINGS = { sort: 'RECENT', limit: null };
       try {
         const publicDeveloperBaseUrl = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1';
         const publicDeveloperApiKey = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
         const publicDeveloperHeaders = { apikey: publicDeveloperApiKey };
-        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
-        const [showcaseResponse, providedResponse] = await Promise.all([
+        const showcaseSelect = 'company_id,public_display_name,public_description,public_display_order,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id';
+        const [showcaseResponse, providedResponse, railSettingsResponse, providedRecencyResponse] = await Promise.all([
           fetch(`${publicDeveloperBaseUrl}/public_developer_showcase?select=${showcaseSelect}`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
-          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' })
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
+          fetch(`${publicDeveloperBaseUrl}/developer_public_settings?id=eq.1&select=video_limit,video_sort`, { headers: publicDeveloperHeaders, cache: 'no-store' }),
+          fetch(`${publicDeveloperBaseUrl}/public_developer_provided_recency?select=game_id,provided_at`, { headers: publicDeveloperHeaders, cache: 'no-store' })
         ]);
         if (!showcaseResponse.ok) throw new Error(`public_developer_showcase: HTTP ${showcaseResponse.status}`);
         if (!providedResponse.ok) throw new Error(`public_developer_provided_games: HTTP ${providedResponse.status}`);
+        if (!providedRecencyResponse.ok) throw new Error(`public_developer_provided_recency: HTTP ${providedRecencyResponse.status}`);
+        if (!railSettingsResponse.ok) throw new Error(`developer rail settings: HTTP ${railSettingsResponse.status}`);
         const showcaseRows = await showcaseResponse.json();
         const providedRows = await providedResponse.json();
+        const providedRecencyRows = await providedRecencyResponse.json();
+        const providedAtByGame = new Map((Array.isArray(providedRecencyRows) ? providedRecencyRows : []).map(row => [Number(row.game_id), String(row.provided_at || '')]));
+        const railSettingRows = await railSettingsResponse.json();
         if (!Array.isArray(showcaseRows) || !Array.isArray(providedRows)) throw new Error('public developer data: invalid response');
         window.PUBLIC_DEVELOPER_SHOWCASE = showcaseRows;
         window.PUBLIC_DEVELOPER_PROVIDED_GAMES = providedRows
-          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim() }))
+          .map(row => ({ game_id: Number(row.game_id), provided_by: String(row.provided_by || '').trim(), provided_at: providedAtByGame.get(Number(row.game_id)) || '' }))
           .filter(row => Number.isInteger(row.game_id) && row.provided_by);
         window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
+        const railSetting = Array.isArray(railSettingRows) && railSettingRows.length ? railSettingRows[0] : {};
+        const railLimit = Number(railSetting.video_limit);
+        window.PUBLIC_DEVELOPER_RAIL_SETTINGS = {
+          sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(railSetting.video_sort || '').toUpperCase()) ? String(railSetting.video_sort).toUpperCase() : 'RECENT',
+          limit: Number.isInteger(railLimit) && railLimit > 0 ? railLimit : null
+        };
         console.info(`[PRODUCTION] Public developer data loaded from Supabase: ${showcaseRows.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
       } catch (publicDeveloperError) {
         console.warn('[PRODUCTION] Public developer Supabase data unavailable; trying static recovery file:', publicDeveloperError);
@@ -229,9 +240,12 @@
           }
           window.PUBLIC_DEVELOPER_SHOWCASE = recoveryData.showcase;
           window.PUBLIC_DEVELOPER_PROVIDED_GAMES = recoveryData.providedGames
-            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim() }))
+            .map(row => ({ game_id: Number(row?.game_id), provided_by: String(row?.provided_by || '').trim(), provided_at: String(row?.provided_at || '') }))
             .filter(row => Number.isInteger(row.game_id) && row.provided_by);
           window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS = window.PUBLIC_DEVELOPER_PROVIDED_GAMES.map(row => row.game_id);
+          const recoveryRail = recoveryData.railSettings || {};
+          const recoveryLimit = Number(recoveryRail.limit);
+          window.PUBLIC_DEVELOPER_RAIL_SETTINGS = { sort: ['RECENT','GAME_NAME','DEVELOPER'].includes(String(recoveryRail.sort || '').toUpperCase()) ? String(recoveryRail.sort).toUpperCase() : 'RECENT', limit: Number.isInteger(recoveryLimit) && recoveryLimit > 0 ? recoveryLimit : null };
           console.info(`[PRODUCTION] Public developer data loaded from static recovery: ${recoveryData.showcase.length} showcase rows / ${window.PUBLIC_DEVELOPER_PROVIDED_GAME_IDS.length} provided games`);
         } catch (recoveryError) {
           console.warn('[PRODUCTION] Public developer recovery unavailable; keeping existing hard-coded Developer cards:', recoveryError);
@@ -300,9 +314,9 @@
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-PROD01');
-      await loadScript('js/site.js?v=quality-filter-PROD01');
-      await loadScript('js/developer.js?v=DEVELOPER-PROVIDED-PROD-REV27');
+      await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-rev01');
+      await loadScript('js/site.js?v=quality-filter-REV05');
+      await loadScript('js/developer.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=REV03-suggest-authoritative-submission');
     } catch (error) {
