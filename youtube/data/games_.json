@@ -8335,7 +8335,7 @@
     "kinect": "true",
     "adult": "false",
     "testContent": "true",
-    "always_show_recent": true,
+    "always_show_recent": false,
     "developer_1": "TEST DEV",
     "developer_2": null,
     "developer_3": null,
