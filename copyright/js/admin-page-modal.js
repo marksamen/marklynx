@@ -1,4 +1,4 @@
-// PROD Admin submissions/suggestions modal
+// PROD Admin submissions/suggestions modal — Developer/Publisher close synchronization
 export function initAdminPageModal(){
   const adminPageModal=document.getElementById("adminPageModal");
   const adminPageModalFrame=document.getElementById("adminPageModalFrame");
@@ -23,6 +23,9 @@ export function initAdminPageModal(){
     activeAdminModalUrl="";
     if(closingAdminModalUrl.startsWith("quality-badges/")){
       window.dispatchEvent(new CustomEvent("quality-badges-modal-closed"));
+    }
+    if(closingAdminModalUrl.startsWith("developer-publishers/")){
+      window.dispatchEvent(new CustomEvent("developer-publishers-modal-closed"));
     }
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
