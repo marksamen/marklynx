@@ -3,7 +3,7 @@ let verifyProdDatabaseIdentity = null;
 
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
@@ -407,6 +407,14 @@ function validateProvidedDeveloperRelationship(){
   };
 }
 
+function friendlyDeveloperPublisherError(error){
+  const message=error?.message||String(error);
+  const prefix="Unknown developer/publisher:";
+  if(!message.startsWith(prefix)) return null;
+  const name=message.slice(prefix.length).trim();
+  return `Cannot find “${name}” in the Developer / Publisher list. Check the spelling, or add the company first. Supabase TEST was not changed.`;
+}
+
 function drawSelectedGame(){
   const g=selectedGame(); if(!g)return;
   document.getElementById("gdId").value=g.id||"";
@@ -621,7 +629,11 @@ async function createGameDev(){
     writeStatus.textContent=`✓ CREATED — ${id} ${name} added to Supabase PROD. List refreshed automatically.`;
     showGameDevResult({title:"Game Added Successfully",message:`${id} — ${name} was added to Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    const friendlyError=friendlyDeveloperPublisherError(e);
+    writeStatus.style.color="#ff6d6d";
+    writeStatus.textContent=friendlyError?`CREATE FAILED — ${friendlyError}`:`CREATE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
+    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Create failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});
+    console.error(e);
   }
 }
 
@@ -737,7 +749,11 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     writeStatus.textContent=`SAVED — ${g.id} updated in Supabase PROD. List refreshed automatically.`;
     showGameDevResult({title:"Game Updated Successfully",message:`${g.id} — ${patch.n} was updated in Supabase PROD.`,question:"Download updated recovery files now?",offerRecovery:true,onYes:downloadRecoveryJson});
   }catch(e){
-    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;showGameDevResult({title:"GAME NOT SAVED",message:`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});console.error(e);
+    const friendlyError=friendlyDeveloperPublisherError(e);
+    writeStatus.style.color="#ff6d6d";
+    writeStatus.textContent=friendlyError?`SAVE FAILED — ${friendlyError}`:`SAVE FAILED — Supabase PROD was not changed. ${e?.message||e}`;
+    showGameDevResult({title:"GAME NOT SAVED",message:friendlyError||`Update failed. Supabase PROD was not changed. ${e?.message||e}`,kind:"failure"});
+    console.error(e);
   }
 });
 
