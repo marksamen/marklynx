@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-01T08:34:52.998999+00:00",
+  "updated": "2026-10-01T18:08:03.325952+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "dn8BEZ6ef70",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 4 | Light Blocks, Dark Tower | All Star Coins",
+      "published": "2026-10-01T14:26:57+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/dn8BEZ6ef70/hqdefault.jpg"
+    },
     {
       "id": "dRXExs592wg",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 3 | Waddlewing's Nest | All Star Coins | Normal Ex",
@@ -43,12 +49,6 @@
       "title": "Alexio | Easy 100% Completion | 1000 Gamerscore | 7-8 Minute Completion | 4K",
       "published": "2026-09-25T17:03:55+00:00",
       "thumbnail": "https://i.ytimg.com/vi/wFkTJMbEHEE/hqdefault.jpg"
-    },
-    {
-      "id": "BiEiJN0ROWY",
-      "title": "New Super Mario Bros. U Deluxe | Soda Jungle | Iggy's Volcanic Castle | All Star Coins | Normal Exit",
-      "published": "2026-09-25T14:21:27+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/BiEiJN0ROWY/hqdefault.jpg"
     }
   ]
 }
