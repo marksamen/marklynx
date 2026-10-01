@@ -40,7 +40,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <body>
 <main>
 <h1>Add New Developer / Publisher</h1>
-<p class="subtitle">Create a new company record. Database saving is connected to the Admin backend.</p>
+<p class="subtitle">Create a new company record. Create a new company record. Database saving is connected to the Admin backend.</p>
 
 <form id="devPubCompanyForm">
 <label class="wide">Official Name
@@ -213,6 +213,12 @@ saveButton.addEventListener("click",async()=>{
     if(!response.ok){
       throw new Error(result.error || `Supabase PROD returned HTTP ${response.status}.`);
     }
+
+    // REV40: tell the parent Admin immediately that the Developer / Publisher
+    // data set changed. The parent already owns the proven live-refresh path;
+    // this prevents a newly added company from requiring F5 before Game Edit
+    // can resolve/display it. No relationship/backend behavior is changed here.
+    window.parent.postMessage({type:"developer-publishers-data-changed"},window.location.origin);
 
     saveStatus.textContent=`SAVED — ${result.company.official_name} added to Supabase PROD.`;
     showCompanySaved(result.company.official_name);
