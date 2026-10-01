@@ -8,6 +8,7 @@ const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
 let providedDeveloperByGame=new Map();
+let providedDeveloperRefreshGeneration=0;
 let qualityBadges=[];
 
 export async function loadQualityBadges(){
@@ -49,20 +50,25 @@ async function callGamesAdmin(action,payload={}){
 }
 
 async function loadProvidedDeveloperAdminData(){
-  // REV37 deliberately uses the already-established company/provided-game
-  // backend actions instead of the new REV36 combined read action.
+  // REV07: multiple Admin refresh triggers can overlap (save notification + modal close).
+  // Build each refresh in local state and only let the newest refresh commit its result.
+  const refreshGeneration=++providedDeveloperRefreshGeneration;
   const companyResult=await callGamesAdmin("list-companies");
-  providedDeveloperCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
+  const nextCompanies=(Array.isArray(companyResult.companies)?companyResult.companies:[])
     .filter(company=>["ACTIVE_RELATIONSHIP","DO_NOT_CONTACT"].includes(String(company.relationship_status)))
     .sort((a,b)=>String(a.official_name||"").localeCompare(String(b.official_name||""),undefined,{sensitivity:"base"}));
 
-  providedDeveloperByGame=new Map();
-  for(const company of providedDeveloperCompanies){
+  const nextByGame=new Map();
+  for(const company of nextCompanies){
     const providedResult=await callGamesAdmin("list-provided-games",{id:Number(company.id)});
     for(const game of (Array.isArray(providedResult.games)?providedResult.games:[])){
-      providedDeveloperByGame.set(Number(game.id),Number(company.id));
+      nextByGame.set(Number(game.id),Number(company.id));
     }
   }
+
+  if(refreshGeneration!==providedDeveloperRefreshGeneration) return false;
+  providedDeveloperCompanies=nextCompanies;
+  providedDeveloperByGame=nextByGame;
 
   const select=document.getElementById("gdProvidedByDeveloper");
   const current=select.value;
@@ -74,6 +80,9 @@ async function loadProvidedDeveloperAdminData(){
     select.appendChild(option);
   }
   if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+  const currentGame=selectedGame();
+  if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+  return true;
 }
 function setProvidedDeveloperForGame(gameId){
   const companyId=providedDeveloperByGame.get(Number(gameId));
@@ -850,6 +859,47 @@ document.getElementById("gameDevResultYes").addEventListener("click",async()=>{
 document.getElementById("gameDevResultNo").addEventListener("click",closeGameDevResult);
 document.getElementById("gameDevResultOk").addEventListener("click",closeGameDevResult);
 
+
+let skipNextDeveloperPublishersCloseRefresh=false;
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin || event.data?.type!=="developer-publishers-data-changed") return;
+  const companyId=Number(event.data?.company_id);
+  const gameIds=Array.isArray(event.data?.game_ids)
+    ? event.data.game_ids.map(Number).filter(Number.isInteger)
+    : null;
+
+  // REV08: set-provided-games has already completed successfully before this message.
+  // Its returned/saved checkbox set is authoritative for this company. Apply it
+  // immediately and do not let the modal-close reread overwrite it with an older view.
+  if(Number.isInteger(companyId) && gameIds!==null){
+    for(const [gameId,mappedCompanyId] of [...providedDeveloperByGame.entries()]){
+      if(Number(mappedCompanyId)===companyId) providedDeveloperByGame.delete(gameId);
+    }
+    for(const gameId of gameIds) providedDeveloperByGame.set(gameId,companyId);
+    skipNextDeveloperPublishersCloseRefresh=true;
+    const currentGame=selectedGame();
+    if(currentGame) setProvidedDeveloperForGame(currentGame.id);
+    return;
+  }
+
+  // Compatibility fallback only for an older sender without the saved relationship set.
+  loadProvidedDeveloperAdminData().catch(error=>{
+    console.error("Developer / Publisher Admin live data refresh failed:",error);
+  });
+});
+
+window.addEventListener("developer-publishers-modal-closed",async()=>{
+  if(skipNextDeveloperPublishersCloseRefresh){
+    skipNextDeveloperPublishersCloseRefresh=false;
+    return;
+  }
+  try{
+    await loadProvidedDeveloperAdminData();
+  }catch(error){
+    console.error("Developer / Publisher Admin data refresh failed:",error);
+  }
+});
 
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",wireProvidedDeveloperRolePrompt,{once:true});
