@@ -26,38 +26,10 @@
   );
 
   if (developerCards) {
-    // Public Profiles controls presentation only. "Provided by Developer" remains
-    // the sole inclusion source for this rail.
-    const showcaseRows = Array.isArray(window.PUBLIC_DEVELOPER_SHOWCASE)
-      ? window.PUBLIC_DEVELOPER_SHOWCASE
-      : [];
-    const profileByCompany = new Map();
-    for (const row of showcaseRows) {
-      const company = String(row?.public_display_name || '').trim();
-      if (company && !profileByCompany.has(company)) profileByCompany.set(company, row);
-    }
-    const companyOrder = company => {
-      const value = Number(profileByCompany.get(company)?.public_display_order);
-      return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
-    };
-    const gameSortMode = company =>
-      String(profileByCompany.get(company)?.public_games_sort || 'RECENT').toUpperCase();
-
     const rows = providedRows
       .map(relation => ({ relation, game: gamesById.get(Number(relation?.game_id)) }))
       .filter(({ relation, game }) => game && String(relation?.provided_by || '').trim())
-      .sort((a, b) => {
-        const companyA = String(a.relation.provided_by || '').trim();
-        const companyB = String(b.relation.provided_by || '').trim();
-        const orderDiff = companyOrder(companyA) - companyOrder(companyB);
-        if (orderDiff) return orderDiff;
-        const companyDiff = companyA.localeCompare(companyB, undefined, { sensitivity: 'base' });
-        if (companyDiff) return companyDiff;
-        if (gameSortMode(companyA) === 'ALPHABETICAL') {
-          return String(a.game.n || '').localeCompare(String(b.game.n || ''), undefined, { sensitivity: 'base' });
-        }
-        return Number(b.relation.game_id) - Number(a.relation.game_id);
-      });
+      .sort((a, b) => Number(b.relation.game_id) - Number(a.relation.game_id));
 
     const fragment = document.createDocumentFragment();
     for (const { relation, game } of rows) {
