@@ -802,11 +802,11 @@ async function fetchQualityBadgeRecoveryData(){
 
 async function fetchPublicDeveloperRecoveryData(){
   const headers={apikey:SUPABASE_TEST_PUBLISHABLE_KEY};
-  const showcaseSelect="company_id,public_display_name,public_description,public_display_order,public_games_sort,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
+  const showcaseSelect="company_id,public_display_name,public_description,public_display_order,game_id,game_name,gamerscore,completion_time,quality,youtube_url,video_id,playlist_id";
   const [showcaseResponse,providedResponse,railSettingsResponse]=await Promise.all([
     fetch(`${SUPABASE_TEST_URL}/rest/v1/public_developer_showcase?select=${showcaseSelect}`,{headers,cache:"no-store"}),
     fetch(`${SUPABASE_TEST_URL}/rest/v1/public_developer_provided_games?select=game_id,provided_by&order=game_id.asc`,{headers,cache:"no-store"}),
-    fetch(`${SUPABASE_TEST_URL}/rest/v1/site_control?id=in.(developer_video_limit,developer_video_sort)&select=id,value`,{headers,cache:"no-store"})
+    fetch(`${SUPABASE_TEST_URL}/rest/v1/developer_public_settings?id=eq.1&select=video_limit,video_sort`,{headers,cache:"no-store"})
   ]);
   if(!showcaseResponse.ok)throw new Error(`Public Developer Showcase read failed (${showcaseResponse.status}).`);
   if(!providedResponse.ok)throw new Error(`Developer Provided read failed (${providedResponse.status}).`);
@@ -815,11 +815,11 @@ async function fetchPublicDeveloperRecoveryData(){
   const providedRows=await providedResponse.json();
   const railSettingRows=await railSettingsResponse.json();
   if(!Array.isArray(showcase)||!Array.isArray(providedRows))throw new Error("Public developer recovery data returned an invalid response.");
-  const railSettingMap=Object.fromEntries((Array.isArray(railSettingRows)?railSettingRows:[]).map(row=>[String(row.id),row.value]));
-  const railLimit=Number(railSettingMap.developer_video_limit);
+  const railSetting=Array.isArray(railSettingRows)&&railSettingRows.length?railSettingRows[0]:{};
+  const railLimit=Number(railSetting.video_limit);
   return {
     showcase,
-    railSettings:{sort:["RECENT","GAME_NAME","DEVELOPER"].includes(String(railSettingMap.developer_video_sort||"").toUpperCase())?String(railSettingMap.developer_video_sort).toUpperCase():"RECENT",limit:Number.isInteger(railLimit)&&railLimit>0?railLimit:null},
+    railSettings:{sort:["RECENT","GAME_NAME","DEVELOPER"].includes(String(railSetting.video_sort||"").toUpperCase())?String(railSetting.video_sort).toUpperCase():"RECENT",limit:Number.isInteger(railLimit)&&railLimit>0?railLimit:null},
     providedGameIds:providedRows.map(row=>Number(row.game_id)).filter(Number.isInteger),
     providedGames:providedRows
       .map(row=>({game_id:Number(row.game_id),provided_by:String(row.provided_by||"").trim()}))
