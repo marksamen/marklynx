@@ -304,3 +304,67 @@ html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
   border-color:#85857f !important;
   color:#3f3f3b !important;
 }
+
+/* REV06 — approved Bright/Silver visual direction + Bright banner.
+   Paint only. Existing dark banner remains the underlying HTML source and is
+   used whenever data-theme is not bright. */
+html[data-theme="bright"] {
+  --bg:#dededb;
+  --bg-raised:#dededb;
+  --bg-card:#dededb;
+  --line:#b8b8b3;
+  --silver:#4f4f4b;
+  --text:#20201e;
+  --text-dim:#4f4f4b;
+}
+html[data-theme="bright"] body { background:#dededb; }
+html[data-theme="bright"] .banner-wrap,
+html[data-theme="bright"] .banner-wrap::before { background:#dededb; }
+html[data-theme="bright"] .banner-wrap img { content:url("../banner-bright_.png"); }
+html[data-theme="bright"] .toolbar { background:rgba(222,222,219,.97); }
+html[data-theme="bright"] .view-toggle button:not(.active) { background:#ececea; color:#4b4b47; }
+html[data-theme="bright"] .view-toggle button:not(.active):hover,
+html[data-theme="bright"] .clear-filters-btn:hover { background:#d2d2ce; color:#20201e; }
+
+/* Live guide/Recent surfaces continue the silver page rather than white cards. */
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {
+  background:#dededb !important;
+}
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] #resultsGrid .card:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#d4cbc9 !important;
+}
+html[data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-theme="bright"] #resultsList.list {
+  background:#b8b8b3;
+  border-color:#b8b8b3;
+}
+
+/* Controls and metadata sit one silver step above the page. */
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.type,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.time,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs {
+  background:#c9c9c5 !important;
+  border-color:#666660 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] #resultsGrid .grid-list-sub,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
+  background:#d2d2ce !important;
+  border-color:#777771 !important;
+  color:#343431 !important;
+}
+html[data-theme="bright"] .thumb,
+html[data-theme="bright"] .list-thumb,
+html[data-theme="bright"] .recent-upload-thumb { background:#cfcfcb; }
