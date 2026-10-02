@@ -450,3 +450,30 @@ html[data-theme="bright"] .toolbar .search-box input:focus,
 html[data-theme="bright"] .toolbar select:focus {
   border-color:#a82c25;
 }
+
+/* REV13 — Bright-only control/badge contrast corrections.
+   Paint only: no geometry, layout, responsive, renderer, or Recent changes. */
+html[data-theme="bright"] .view-toggle button:not(.active) {
+  background:#cec7c5 !important;
+  border-color:#96908d !important;
+  color:#4b4744 !important;
+}
+html[data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#c5bcba !important;
+  border-color:#a82c25 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge,
+html[data-theme="bright"] #resultsGrid .text-guide-badge,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge {
+  border-color:#47758a !important;
+  background:#c8dce5 !important;
+  color:#183f52 !important;
+  box-shadow:none !important;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge svg,
+html[data-theme="bright"] #resultsGrid .text-guide-badge svg,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
+  color:#245f78 !important;
+  stroke:#245f78 !important;
+}

@@ -68,3 +68,16 @@ html[data-theme="bright"] .theme-toggle-btn:hover {
     font-size:12px;
   }
 }
+
+/* REV13 — Bright utility control is intentionally quieter than Dark. */
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#aaa9a4;
+  background:#e8e8e4;
+  color:#3f3f3b;
+  font-weight:500;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#8e8d88;
+  background:#ddddda;
+  color:#292927;
+}
