@@ -221,3 +221,44 @@ html[data-theme="bright"] #resultsList .list-row:hover,
 html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
   background:#eee5e3;
 }
+
+
+/* REV04 — Bright surface + metadata visibility correction.
+   Paint only. Also paired with a REV04 cache-buster in index_.html so these
+   Bright overrides cannot be masked by an older cached theme stylesheet. */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card {
+  background:#f4f4f2;
+}
+
+/* All right-side metadata: readable border, label and value on Bright. */
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] .recent-upload-meta.type,
+html[data-theme="bright"] .recent-upload-meta.time,
+html[data-theme="bright"] .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-upload-meta.gs,
+html[data-theme="bright"] .card-meta .game-meta-pill {
+  background:#e5e5e1;
+  border-color:#686862;
+  color:#20201e;
+}
+html[data-theme="bright"] .game-meta-label,
+html[data-theme="bright"] .recent-meta-label,
+html[data-theme="bright"] #resultsList .list-col.type .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.time .game-meta-label,
+html[data-theme="bright"] .recent-uploads-grid .recent-meta-label {
+  color:#8b211c;
+}
+
+/* Secondary/platform text remains secondary, but must be plainly readable. */
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-platform,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-platform {
+  background:#e5e5e1;
+  border-color:#74746e;
+  color:#343431;
+}
