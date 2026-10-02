@@ -427,3 +427,26 @@ html[data-theme="bright"] footer .footer-stats strong {
   color:#8f211b;
   font-weight:800;
 }
+
+
+/* REV12 — Bright toolbar control depth only.
+   Paint/contrast only; no toolbar geometry or responsive behavior changes. */
+html[data-theme="bright"] .toolbar .search-box input,
+html[data-theme="bright"] .toolbar select {
+  background:#cec7c5;
+  border-color:#96908d;
+  color:#20201e;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 1px 2px rgba(0,0,0,.08);
+}
+html[data-theme="bright"] .toolbar .search-box svg {
+  stroke:#7f2a25;
+}
+html[data-theme="bright"] .toolbar .search-box input::placeholder {
+  color:#5b5754;
+}
+html[data-theme="bright"] .toolbar .search-box input:hover,
+html[data-theme="bright"] .toolbar select:hover,
+html[data-theme="bright"] .toolbar .search-box input:focus,
+html[data-theme="bright"] .toolbar select:focus {
+  border-color:#a82c25;
+}
