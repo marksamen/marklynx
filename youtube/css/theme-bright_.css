@@ -369,3 +369,27 @@ html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
 html[data-theme="bright"] .thumb,
 html[data-theme="bright"] .list-thumb,
 html[data-theme="bright"] .recent-upload-thumb { background:#cfcfcb; }
+
+/* REV09 — Bright polish: separator + secondary text/button contrast only. */
+html[data-theme="bright"] .banner-wrap::after {
+  border-bottom-color:#b8b8b3;
+}
+html[data-theme="bright"] .game-guides-section .game-guides-count,
+html[data-theme="bright"] .count-line {
+  color:#3b3b38;
+}
+html[data-theme="bright"] .game-guides-section .game-guides-count strong,
+html[data-theme="bright"] .count-line strong {
+  color:#a82c25;
+}
+html[data-theme="bright"] .load-more {
+  border-color:#a82c25;
+  color:#a82c25;
+}
+html[data-theme="bright"] footer {
+  color:#3b3b38;
+}
+html[data-theme="bright"] footer span,
+html[data-theme="bright"] .footer-stats strong {
+  color:#a82c25;
+}
