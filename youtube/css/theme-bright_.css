@@ -393,3 +393,37 @@ html[data-theme="bright"] footer span,
 html[data-theme="bright"] .footer-stats strong {
   color:#a82c25;
 }
+
+/* REV10 — Bright contrast polish only.
+   Paint/contrast only: preserve all existing Developer Provided responsive
+   containment, Load More geometry, guide-count layout, and footer layout. */
+html[data-theme="bright"] .developer-provided-badge {
+  border-color:#806225;
+  background:linear-gradient(180deg,rgba(181,139,54,.24),rgba(181,139,54,.10));
+  color:#5b4518;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+html[data-theme="bright"] .developer-provided-badge svg {
+  stroke:#76581b;
+}
+
+html[data-theme="bright"] .load-more:hover {
+  background:#a82c25;
+  border-color:#a82c25;
+  color:#fff;
+}
+
+html[data-theme="bright"] .game-guides-section .game-guides-count strong,
+html[data-theme="bright"] .count-line strong {
+  color:#8f211b;
+  font-weight:700;
+}
+
+/* Keep footer labels secondary; make the actual statistics the focal values. */
+html[data-theme="bright"] footer .footer-stats span {
+  color:#3b3b38;
+}
+html[data-theme="bright"] footer .footer-stats strong {
+  color:#8f211b;
+  font-weight:800;
+}
