@@ -1,0 +1,143 @@
+/* Dark / Bright Theme — REV02 TEST
+   Bright-only paint layer. No geometry, sizing, positioning, or playback rules.
+   Existing dark styles remain untouched and authoritative when data-theme != bright. */
+
+html[data-theme="bright"] {
+  --bg: #f4f4f2;
+  --bg-raised: #ffffff;
+  --bg-card: #ffffff;
+  --line: #d2d2cf;
+  --silver: #555555;
+  --text: #1d1d1b;
+  --text-dim: #666662;
+}
+
+html[data-theme="bright"] body { background:var(--bg); color:var(--text); }
+html[data-theme="bright"] .banner-wrap,
+html[data-theme="bright"] .banner-wrap::before { background:#000; }
+
+/* Sticky controls / search */
+html[data-theme="bright"] .toolbar { background:rgba(244,244,242,.97); }
+html[data-theme="bright"] .view-toggle button:not(.active) { background:#fff; color:#666662; }
+html[data-theme="bright"] .view-toggle button:not(.active):hover,
+html[data-theme="bright"] .clear-filters-btn:hover { background:#ececea; color:#1d1d1b; }
+
+/* Main guide cards and list */
+html[data-theme="bright"] .card { box-shadow:0 1px 3px rgba(0,0,0,.08); }
+html[data-theme="bright"] .card:hover { box-shadow:0 3px 10px rgba(0,0,0,.13); }
+html[data-theme="bright"] .thumb,
+html[data-theme="bright"] .list-thumb { background:#e8e8e5; }
+html[data-theme="bright"] .list-row:hover { background:#f8eceb; }
+html[data-theme="bright"] .text-guide-badge { color:#244b61; background:#e7f3f8; border-color:#8db3c5; }
+html[data-theme="bright"] .kinect-badge { color:#4b4b48; background:#f1f1ef; border-color:#bdbdb9; }
+
+/* Keep thumbnail overlays intentionally dark for image contrast. */
+html[data-theme="bright"] .playlist-pill,
+html[data-theme="bright"] .adult-pill,
+html[data-theme="bright"] .play-badge { color:inherit; }
+
+/* Shared video modal shell */
+html[data-theme="bright"] .video-modal-overlay { background:rgba(20,20,20,.72); }
+html[data-theme="bright"] .video-modal { background:#fff; box-shadow:0 20px 60px rgba(0,0,0,.28); }
+html[data-theme="bright"] .video-modal-player { background:#000; }
+html[data-theme="bright"] .video-modal-close { background:rgba(255,255,255,.94); color:#222; border-color:rgba(0,0,0,.30); }
+html[data-theme="bright"] .video-modal-close:hover { background:#fff; }
+html[data-theme="bright"] .video-modal-sidebar { background:#f7f7f5; border-left-color:#d9b8b5; scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .video-modal-sidebar-head { background:#f2f2ef; color:#555552; border-bottom-color:#d9b8b5; }
+html[data-theme="bright"] .playlist-item { background:#fff; border-bottom-color:#dededb; }
+html[data-theme="bright"] .playlist-item:hover { background:#faefee; }
+html[data-theme="bright"] .playlist-item.active { background:#f8e3e1; }
+html[data-theme="bright"] .playlist-item-number { color:#686864; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-track { background:#ececea; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-thumb { background:#a63a34; border-color:#ececea; }
+
+/* Developer showcase */
+html[data-theme="bright"] .developer-overlay { background:rgba(20,20,20,.58); }
+html[data-theme="bright"] .developer-panel { background:#fbfbf9; border-color:#d4d4d0; box-shadow:0 24px 80px rgba(0,0,0,.25); scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .developer-close { background:#fff; color:#333; border-color:#c9c9c5; }
+html[data-theme="bright"] .developer-intro { color:#555552; }
+html[data-theme="bright"] .developer-proof span,
+html[data-theme="bright"] .developer-card-meta span { background:#f0f0ed; border-color:#d2d2ce; color:#444441; }
+html[data-theme="bright"] .developer-section-head { color:#252523; }
+html[data-theme="bright"] .developer-card { background:#fff; border-color:#d4d4d0; box-shadow:0 1px 3px rgba(0,0,0,.07); }
+html[data-theme="bright"] .developer-card:hover { background:#fff9f8; border-color:#c99996; }
+html[data-theme="bright"] .developer-card-thumb { background:#e8e8e5; border-bottom-color:#d4d4d0; }
+html[data-theme="bright"] .developer-card-top strong,
+html[data-theme="bright"] .developer-cta strong,
+html[data-theme="bright"] .developer-contact-head strong { color:#222; }
+html[data-theme="bright"] .developer-card-top>span,
+html[data-theme="bright"] .developer-cta span,
+html[data-theme="bright"] .developer-contact-head span { color:#666662; }
+html[data-theme="bright"] .developer-cta,
+html[data-theme="bright"] .developer-contact { background:#fff6f5; border-color:#dfc1be; }
+html[data-theme="bright"] .developer-youtube-btn,
+html[data-theme="bright"] .developer-contact-head .developer-youtube-btn { background:#e9e9e6; border-color:#c3c3bf; color:#252523; }
+html[data-theme="bright"] .developer-youtube-btn:hover,
+html[data-theme="bright"] .developer-contact-head .developer-youtube-btn:hover { background:#dededb; border-color:#aaa; }
+html[data-theme="bright"] .developer-contact-form label>span { color:#454542; }
+html[data-theme="bright"] .developer-contact-form input,
+html[data-theme="bright"] .developer-contact-form textarea { background:#fff; color:#222; border-color:#bdbdb9; }
+html[data-theme="bright"] .developer-contact-form input::placeholder,
+html[data-theme="bright"] .developer-contact-form textarea::placeholder { color:#858581; }
+html[data-theme="bright"] .developer-contact-form input:focus,
+html[data-theme="bright"] .developer-contact-form textarea:focus { background:#fffafa; }
+html[data-theme="bright"] .developer-form-status.sending,
+html[data-theme="bright"] .developer-email-fallback { color:#666662; }
+html[data-theme="bright"] .developer-email-fallback a { color:#333; }
+html[data-theme="bright"] .developer-success-panel { background:#edf8ef; border-color:#8fbd96; }
+html[data-theme="bright"] .developer-success-panel strong { color:#276332; }
+html[data-theme="bright"] .developer-success-panel p { color:#405044; }
+html[data-theme="bright"] .developer-success-panel b { color:#203c25; }
+html[data-theme="bright"] .developer-panel::-webkit-scrollbar-track,
+html[data-theme="bright"] .developer-cards::-webkit-scrollbar-track { background:#ececea; border-color:#d6d6d2; }
+html[data-theme="bright"] .developer-panel::-webkit-scrollbar-thumb,
+html[data-theme="bright"] .developer-cards::-webkit-scrollbar-thumb { background:#a63a34; border-color:#ececea; }
+
+/* Suggest-a-game */
+html[data-theme="bright"] .suggest-overlay { background:rgba(20,20,20,.58); }
+html[data-theme="bright"] .suggest-panel { background:#fbfbf9; border-color:#d4d4d0; box-shadow:0 24px 70px rgba(0,0,0,.25); scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .suggest-close { background:#fff; color:#444; border-color:#c9c9c5; }
+html[data-theme="bright"] .suggest-intro { color:#555552; }
+html[data-theme="bright"] .suggest-game-form { background:#fff6f5; border-color:#dfc1be; }
+html[data-theme="bright"] .suggest-game-form label>span,
+html[data-theme="bright"] .suggest-platforms legend { color:#454542; }
+html[data-theme="bright"] .suggest-game-form input[type=text],
+html[data-theme="bright"] .suggest-game-form input[type=email],
+html[data-theme="bright"] .suggest-game-form textarea { background:#fff; color:#222; border-color:#bdbdb9; }
+html[data-theme="bright"] .suggest-game-form input:focus,
+html[data-theme="bright"] .suggest-game-form textarea:focus { background:#fffafa; }
+html[data-theme="bright"] .suggest-platform-grid label { background:#fff; border-color:#d0d0cc; }
+html[data-theme="bright"] .suggest-platform-grid label:hover { background:#fff7f6; border-color:#c99996; }
+html[data-theme="bright"] .suggest-platform-grid label>span { color:#3e3e3b; }
+html[data-theme="bright"] .suggest-form-status { color:#666662; }
+html[data-theme="bright"] .suggest-form-status.sending { color:#555552; }
+html[data-theme="bright"] .suggest-success-panel { background:#edf8ef; border-color:#8fbd96; }
+html[data-theme="bright"] .suggest-success-panel strong { color:#276332; }
+html[data-theme="bright"] .suggest-success-panel p { color:#405044; }
+
+/* Recent / Developer rail presentation: paint only, no layout rules. */
+html[data-theme="bright"] .recent-card,
+html[data-theme="bright"] .developer-video-card,
+html[data-theme="bright"] .developer-item,
+html[data-theme="bright"] .recent-item { background:#fff; border-color:#d2d2cf; color:#222; }
+html[data-theme="bright"] .recent-card:hover,
+html[data-theme="bright"] .developer-video-card:hover,
+html[data-theme="bright"] .developer-item:hover,
+html[data-theme="bright"] .recent-item:hover { background:#fff8f7; }
+
+/* Later card/badge rules in the existing stylesheet use hard-coded dark gradients.
+   Override their paint without changing any dimensions. */
+html[data-theme="bright"] .recent-uploads [class*="card"],
+html[data-theme="bright"] #developerModuleMount [class*="card"] { color:var(--text); }
+html[data-theme="bright"] .recent-uploads [class*="meta"],
+html[data-theme="bright"] #developerModuleMount [class*="meta"] { color:var(--text-dim); }
+
+/* Footer */
+html[data-theme="bright"] footer { border-top-color:var(--line); }
+
+/* Native form controls should render as light controls while Bright is active. */
+html[data-theme="bright"] { color-scheme:light; }
+
+/* Exact Recent list paint override (the base rule is hard-coded dark). */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover { background:#fff1ef; }
+html[data-theme="bright"] .recent-upload-thumb { background:#e8e8e5; }
