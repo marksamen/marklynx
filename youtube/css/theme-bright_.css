@@ -320,7 +320,8 @@ html[data-theme="bright"] {
 html[data-theme="bright"] body { background:#dededb; }
 html[data-theme="bright"] .banner-wrap,
 html[data-theme="bright"] .banner-wrap::before { background:#dededb; }
-html[data-theme="bright"] .banner-wrap img { content:url("../banner-bright_.png"); }
+/* Bright banner image — REV08 */
+html[data-theme="bright"] .banner-wrap img { content:url("../banner-bright_.png?v=REV08"); }
 html[data-theme="bright"] .toolbar { background:rgba(222,222,219,.97); }
 html[data-theme="bright"] .view-toggle button:not(.active) { background:#ececea; color:#4b4b47; }
 html[data-theme="bright"] .view-toggle button:not(.active):hover,
