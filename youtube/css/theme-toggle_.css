@@ -1,0 +1,70 @@
+/* Dark / Bright public toggle — REV11
+   Self-contained utility strip above the existing banner.
+   No persistence in this stage. */
+.site-preferences {
+  width:100%;
+  background:#080808;
+  border-bottom:1px solid #1f1f1f;
+}
+.site-preferences-inner {
+  width:100%;
+  max-width:1707px;
+  min-height:34px;
+  margin:0 auto;
+  padding:4px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  box-sizing:border-box;
+}
+.theme-toggle-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:26px;
+  padding:4px 9px;
+  border:1px solid #4b4b4b;
+  border-radius:3px;
+  background:#151515;
+  color:#d6d6d6;
+  font:600 12px/1.2 var(--sans, Arial, sans-serif);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.theme-toggle-btn:hover {
+  border-color:#777;
+  background:#202020;
+  color:#fff;
+}
+.theme-toggle-btn:focus-visible {
+  outline:2px solid var(--red, #b72b25);
+  outline-offset:2px;
+}
+.theme-toggle-icon { font-size:13px; line-height:1; }
+
+html[data-theme="bright"] .site-preferences {
+  background:#dededb;
+  border-bottom-color:#b8b8b3;
+}
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#777771;
+  background:#c9c9c5;
+  color:#343431;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#5f5f5a;
+  background:#d2d2ce;
+  color:#20201e;
+}
+
+@media (max-width:600px) {
+  .site-preferences-inner {
+    min-height:30px;
+    padding:3px 10px;
+  }
+  .theme-toggle-btn {
+    min-height:24px;
+    padding:3px 8px;
+    font-size:11px;
+  }
+}
