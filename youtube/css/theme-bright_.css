@@ -262,3 +262,45 @@ html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-platform
   border-color:#74746e;
   color:#343431;
 }
+
+/* REV05 — dynamic-render paint authority.
+   loader/site/recent create the live rows after initial page paint. The frozen
+   base stylesheet contains later/high-specificity and !important dark paint
+   rules for those live elements. Bright must win paint only; no geometry. */
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {
+  background:#f4f4f2 !important;
+  color:#1d1d1b !important;
+}
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] #resultsGrid .card:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#eee5e3 !important;
+}
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.type,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.time,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs {
+  background:#e5e5e1 !important;
+  border-color:#686862 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .game-meta-label,
+html[data-theme="bright"] #resultsGrid .game-meta-label,
+html[data-theme="bright"] .recent-uploads-grid .recent-meta-label {
+  color:#8b211c !important;
+}
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] #resultsGrid .grid-list-sub,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
+  background:#ecece9 !important;
+  border-color:#85857f !important;
+  color:#3f3f3b !important;
+}
