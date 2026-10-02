@@ -81,3 +81,29 @@ html[data-theme="bright"] .theme-toggle-btn:hover {
   background:#ddddda;
   color:#292927;
 }
+
+/* REV14 — toggle appearance correction only.
+   Dark: reduce the heavy/bubbly treatment.
+   Bright: restore clear button definition without making it dominant. */
+html[data-theme="dark"] .theme-toggle-btn {
+  border-color:#555;
+  background:#151515;
+  color:#e6e6e6;
+  font-weight:500;
+}
+html[data-theme="dark"] .theme-toggle-btn:hover {
+  border-color:#6a6a6a;
+  background:#1b1b1b;
+  color:#fff;
+}
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#8d8c87;
+  background:#f2f2ef;
+  color:#30302d;
+  font-weight:500;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#74736e;
+  background:#e5e5e1;
+  color:#20201e;
+}
