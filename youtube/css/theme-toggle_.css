@@ -107,3 +107,13 @@ html[data-theme="bright"] .theme-toggle-btn:hover {
   background:#e5e5e1;
   color:#20201e;
 }
+
+
+/* REV15 — Bright toggle surface only.
+   Match the established Bright inactive control surface; no geometry/behavior changes. */
+html[data-theme="bright"] .theme-toggle-btn {
+  background:#cec7c5;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  background:#c5bcba;
+}
