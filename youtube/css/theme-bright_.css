@@ -141,3 +141,83 @@ html[data-theme="bright"] { color-scheme:light; }
 /* Exact Recent list paint override (the base rule is hard-coded dark). */
 html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover { background:#fff1ef; }
 html[data-theme="bright"] .recent-upload-thumb { background:#e8e8e5; }
+
+/* REV03 — Bright contrast correction.
+   Paint only: unify guide/Recent surfaces with page background and restore readable metadata. */
+html[data-theme="bright"] {
+  --bg-raised:#f4f4f2;
+  --bg-card:#f4f4f2;
+  --line:#c7c7c3;
+  --text-dim:#555551;
+}
+
+/* Recent + normal guide rows should belong to the page, not sit on white sheets. */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card {
+  background:var(--bg);
+}
+html[data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-theme="bright"] #resultsList.list {
+  background:var(--line);
+  border-color:var(--line);
+}
+
+/* Modern metadata pills: stronger contrast on a light surface. */
+html[data-theme="bright"] .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] .recent-upload-meta.type,
+html[data-theme="bright"] .recent-upload-meta.time,
+html[data-theme="bright"] .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-upload-meta.gs {
+  border-color:#8e8e88;
+  background:#efefec;
+  color:#2f2f2c;
+  box-shadow:none;
+}
+html[data-theme="bright"] .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.type .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.time .game-meta-label,
+html[data-theme="bright"] .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.type .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.time .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-meta-label {
+  color:#8b2f2a;
+}
+
+/* Platform labels under titles. */
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-platform,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-platform {
+  border-color:#9c9c96;
+  background:#ecece9;
+  color:#4b4b47;
+}
+
+/* Feature badges need to remain legible rather than pastel-on-white. */
+html[data-theme="bright"] #resultsList .text-guide-badge,
+html[data-theme="bright"] #resultsGrid .text-guide-badge,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge {
+  border-color:#52798b;
+  background:#e2eef3;
+  color:#244b5c;
+  box-shadow:none;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge svg,
+html[data-theme="bright"] #resultsGrid .text-guide-badge svg,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
+  color:#2f718d;
+}
+html[data-theme="bright"] .kinect-badge {
+  border-color:#66859d;
+  background:#e6eef4;
+  color:#294a61;
+}
+
+/* Keep hover feedback visible without creating white cards. */
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#eee5e3;
+}
