@@ -1,0 +1,527 @@
+/* Dark / Bright Theme — REV02 TEST
+   Bright-only paint layer. No geometry, sizing, positioning, or playback rules.
+   Existing dark styles remain untouched and authoritative when data-theme != bright. */
+
+html[data-theme="bright"] {
+  --bg: #f4f4f2;
+  --bg-raised: #ffffff;
+  --bg-card: #ffffff;
+  --line: #d2d2cf;
+  --silver: #555555;
+  --text: #1d1d1b;
+  --text-dim: #666662;
+}
+
+html[data-theme="bright"] body { background:var(--bg); color:var(--text); }
+html[data-theme="bright"] .banner-wrap,
+html[data-theme="bright"] .banner-wrap::before { background:#000; }
+
+/* Sticky controls / search */
+html[data-theme="bright"] .toolbar { background:rgba(244,244,242,.97); }
+html[data-theme="bright"] .view-toggle button:not(.active) { background:#fff; color:#666662; }
+html[data-theme="bright"] .view-toggle button:not(.active):hover,
+html[data-theme="bright"] .clear-filters-btn:hover { background:#ececea; color:#1d1d1b; }
+
+/* Main guide cards and list */
+html[data-theme="bright"] .card { box-shadow:0 1px 3px rgba(0,0,0,.08); }
+html[data-theme="bright"] .card:hover { box-shadow:0 3px 10px rgba(0,0,0,.13); }
+html[data-theme="bright"] .thumb,
+html[data-theme="bright"] .list-thumb { background:#e8e8e5; }
+html[data-theme="bright"] .list-row:hover { background:#f8eceb; }
+html[data-theme="bright"] .text-guide-badge { color:#244b61; background:#e7f3f8; border-color:#8db3c5; }
+html[data-theme="bright"] .kinect-badge { color:#4b4b48; background:#f1f1ef; border-color:#bdbdb9; }
+
+/* Keep thumbnail overlays intentionally dark for image contrast. */
+html[data-theme="bright"] .playlist-pill,
+html[data-theme="bright"] .adult-pill,
+html[data-theme="bright"] .play-badge { color:inherit; }
+
+/* Shared video modal shell */
+html[data-theme="bright"] .video-modal-overlay { background:rgba(20,20,20,.72); }
+html[data-theme="bright"] .video-modal { background:#fff; box-shadow:0 20px 60px rgba(0,0,0,.28); }
+html[data-theme="bright"] .video-modal-player { background:#000; }
+html[data-theme="bright"] .video-modal-close { background:rgba(255,255,255,.94); color:#222; border-color:rgba(0,0,0,.30); }
+html[data-theme="bright"] .video-modal-close:hover { background:#fff; }
+html[data-theme="bright"] .video-modal-sidebar { background:#f7f7f5; border-left-color:#d9b8b5; scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .video-modal-sidebar-head { background:#f2f2ef; color:#555552; border-bottom-color:#d9b8b5; }
+html[data-theme="bright"] .playlist-item { background:#fff; border-bottom-color:#dededb; }
+html[data-theme="bright"] .playlist-item:hover { background:#faefee; }
+html[data-theme="bright"] .playlist-item.active { background:#f8e3e1; }
+html[data-theme="bright"] .playlist-item-number { color:#686864; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-track { background:#ececea; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-thumb { background:#a63a34; border-color:#ececea; }
+
+/* Developer showcase */
+html[data-theme="bright"] .developer-overlay { background:rgba(20,20,20,.58); }
+html[data-theme="bright"] .developer-panel { background:#fbfbf9; border-color:#d4d4d0; box-shadow:0 24px 80px rgba(0,0,0,.25); scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .developer-close { background:#fff; color:#333; border-color:#c9c9c5; }
+html[data-theme="bright"] .developer-intro { color:#555552; }
+html[data-theme="bright"] .developer-proof span,
+html[data-theme="bright"] .developer-card-meta span { background:#f0f0ed; border-color:#d2d2ce; color:#444441; }
+html[data-theme="bright"] .developer-section-head { color:#252523; }
+html[data-theme="bright"] .developer-card { background:#fff; border-color:#d4d4d0; box-shadow:0 1px 3px rgba(0,0,0,.07); }
+html[data-theme="bright"] .developer-card:hover { background:#fff9f8; border-color:#c99996; }
+html[data-theme="bright"] .developer-card-thumb { background:#e8e8e5; border-bottom-color:#d4d4d0; }
+html[data-theme="bright"] .developer-card-top strong,
+html[data-theme="bright"] .developer-cta strong,
+html[data-theme="bright"] .developer-contact-head strong { color:#222; }
+html[data-theme="bright"] .developer-card-top>span,
+html[data-theme="bright"] .developer-cta span,
+html[data-theme="bright"] .developer-contact-head span { color:#666662; }
+html[data-theme="bright"] .developer-cta,
+html[data-theme="bright"] .developer-contact { background:#fff6f5; border-color:#dfc1be; }
+html[data-theme="bright"] .developer-youtube-btn,
+html[data-theme="bright"] .developer-contact-head .developer-youtube-btn { background:#e9e9e6; border-color:#c3c3bf; color:#252523; }
+html[data-theme="bright"] .developer-youtube-btn:hover,
+html[data-theme="bright"] .developer-contact-head .developer-youtube-btn:hover { background:#dededb; border-color:#aaa; }
+html[data-theme="bright"] .developer-contact-form label>span { color:#454542; }
+html[data-theme="bright"] .developer-contact-form input,
+html[data-theme="bright"] .developer-contact-form textarea { background:#fff; color:#222; border-color:#bdbdb9; }
+html[data-theme="bright"] .developer-contact-form input::placeholder,
+html[data-theme="bright"] .developer-contact-form textarea::placeholder { color:#858581; }
+html[data-theme="bright"] .developer-contact-form input:focus,
+html[data-theme="bright"] .developer-contact-form textarea:focus { background:#fffafa; }
+html[data-theme="bright"] .developer-form-status.sending,
+html[data-theme="bright"] .developer-email-fallback { color:#666662; }
+html[data-theme="bright"] .developer-email-fallback a { color:#333; }
+html[data-theme="bright"] .developer-success-panel { background:#edf8ef; border-color:#8fbd96; }
+html[data-theme="bright"] .developer-success-panel strong { color:#276332; }
+html[data-theme="bright"] .developer-success-panel p { color:#405044; }
+html[data-theme="bright"] .developer-success-panel b { color:#203c25; }
+html[data-theme="bright"] .developer-panel::-webkit-scrollbar-track,
+html[data-theme="bright"] .developer-cards::-webkit-scrollbar-track { background:#ececea; border-color:#d6d6d2; }
+html[data-theme="bright"] .developer-panel::-webkit-scrollbar-thumb,
+html[data-theme="bright"] .developer-cards::-webkit-scrollbar-thumb { background:#a63a34; border-color:#ececea; }
+
+/* Suggest-a-game */
+html[data-theme="bright"] .suggest-overlay { background:rgba(20,20,20,.58); }
+html[data-theme="bright"] .suggest-panel { background:#fbfbf9; border-color:#d4d4d0; box-shadow:0 24px 70px rgba(0,0,0,.25); scrollbar-color:#a63a34 #ececea; }
+html[data-theme="bright"] .suggest-close { background:#fff; color:#444; border-color:#c9c9c5; }
+html[data-theme="bright"] .suggest-intro { color:#555552; }
+html[data-theme="bright"] .suggest-game-form { background:#fff6f5; border-color:#dfc1be; }
+html[data-theme="bright"] .suggest-game-form label>span,
+html[data-theme="bright"] .suggest-platforms legend { color:#454542; }
+html[data-theme="bright"] .suggest-game-form input[type=text],
+html[data-theme="bright"] .suggest-game-form input[type=email],
+html[data-theme="bright"] .suggest-game-form textarea { background:#fff; color:#222; border-color:#bdbdb9; }
+html[data-theme="bright"] .suggest-game-form input:focus,
+html[data-theme="bright"] .suggest-game-form textarea:focus { background:#fffafa; }
+html[data-theme="bright"] .suggest-platform-grid label { background:#fff; border-color:#d0d0cc; }
+html[data-theme="bright"] .suggest-platform-grid label:hover { background:#fff7f6; border-color:#c99996; }
+html[data-theme="bright"] .suggest-platform-grid label>span { color:#3e3e3b; }
+html[data-theme="bright"] .suggest-form-status { color:#666662; }
+html[data-theme="bright"] .suggest-form-status.sending { color:#555552; }
+html[data-theme="bright"] .suggest-success-panel { background:#edf8ef; border-color:#8fbd96; }
+html[data-theme="bright"] .suggest-success-panel strong { color:#276332; }
+html[data-theme="bright"] .suggest-success-panel p { color:#405044; }
+
+/* Recent / Developer rail presentation: paint only, no layout rules. */
+html[data-theme="bright"] .recent-card,
+html[data-theme="bright"] .developer-video-card,
+html[data-theme="bright"] .developer-item,
+html[data-theme="bright"] .recent-item { background:#fff; border-color:#d2d2cf; color:#222; }
+html[data-theme="bright"] .recent-card:hover,
+html[data-theme="bright"] .developer-video-card:hover,
+html[data-theme="bright"] .developer-item:hover,
+html[data-theme="bright"] .recent-item:hover { background:#fff8f7; }
+
+/* Later card/badge rules in the existing stylesheet use hard-coded dark gradients.
+   Override their paint without changing any dimensions. */
+html[data-theme="bright"] .recent-uploads [class*="card"],
+html[data-theme="bright"] #developerModuleMount [class*="card"] { color:var(--text); }
+html[data-theme="bright"] .recent-uploads [class*="meta"],
+html[data-theme="bright"] #developerModuleMount [class*="meta"] { color:var(--text-dim); }
+
+/* Footer */
+html[data-theme="bright"] footer { border-top-color:var(--line); }
+
+/* Native form controls should render as light controls while Bright is active. */
+html[data-theme="bright"] { color-scheme:light; }
+
+/* Exact Recent list paint override (the base rule is hard-coded dark). */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover { background:#fff1ef; }
+html[data-theme="bright"] .recent-upload-thumb { background:#e8e8e5; }
+
+/* REV03 — Bright contrast correction.
+   Paint only: unify guide/Recent surfaces with page background and restore readable metadata. */
+html[data-theme="bright"] {
+  --bg-raised:#f4f4f2;
+  --bg-card:#f4f4f2;
+  --line:#c7c7c3;
+  --text-dim:#555551;
+}
+
+/* Recent + normal guide rows should belong to the page, not sit on white sheets. */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card {
+  background:var(--bg);
+}
+html[data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-theme="bright"] #resultsList.list {
+  background:var(--line);
+  border-color:var(--line);
+}
+
+/* Modern metadata pills: stronger contrast on a light surface. */
+html[data-theme="bright"] .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] .recent-upload-meta.type,
+html[data-theme="bright"] .recent-upload-meta.time,
+html[data-theme="bright"] .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-upload-meta.gs {
+  border-color:#8e8e88;
+  background:#efefec;
+  color:#2f2f2c;
+  box-shadow:none;
+}
+html[data-theme="bright"] .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.type .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.time .game-meta-label,
+html[data-theme="bright"] .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.type .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.time .recent-meta-label,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-meta-label {
+  color:#8b2f2a;
+}
+
+/* Platform labels under titles. */
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-platform,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-platform {
+  border-color:#9c9c96;
+  background:#ecece9;
+  color:#4b4b47;
+}
+
+/* Feature badges need to remain legible rather than pastel-on-white. */
+html[data-theme="bright"] #resultsList .text-guide-badge,
+html[data-theme="bright"] #resultsGrid .text-guide-badge,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge {
+  border-color:#52798b;
+  background:#e2eef3;
+  color:#244b5c;
+  box-shadow:none;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge svg,
+html[data-theme="bright"] #resultsGrid .text-guide-badge svg,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
+  color:#2f718d;
+}
+html[data-theme="bright"] .kinect-badge {
+  border-color:#66859d;
+  background:#e6eef4;
+  color:#294a61;
+}
+
+/* Keep hover feedback visible without creating white cards. */
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#eee5e3;
+}
+
+
+/* REV04 — Bright surface + metadata visibility correction.
+   Paint only. Also paired with a REV04 cache-buster in index.html so these
+   Bright overrides cannot be masked by an older cached theme stylesheet. */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card {
+  background:#f4f4f2;
+}
+
+/* All right-side metadata: readable border, label and value on Bright. */
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] .recent-upload-meta.type,
+html[data-theme="bright"] .recent-upload-meta.time,
+html[data-theme="bright"] .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-upload-meta.gs,
+html[data-theme="bright"] .card-meta .game-meta-pill {
+  background:#e5e5e1;
+  border-color:#686862;
+  color:#20201e;
+}
+html[data-theme="bright"] .game-meta-label,
+html[data-theme="bright"] .recent-meta-label,
+html[data-theme="bright"] #resultsList .list-col.type .game-meta-label,
+html[data-theme="bright"] #resultsList .list-col.time .game-meta-label,
+html[data-theme="bright"] .recent-uploads-grid .recent-meta-label {
+  color:#8b211c;
+}
+
+/* Secondary/platform text remains secondary, but must be plainly readable. */
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-platform,
+html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-platform {
+  background:#e5e5e1;
+  border-color:#74746e;
+  color:#343431;
+}
+
+/* REV05 — dynamic-render paint authority.
+   loader/site/recent create the live rows after initial page paint. The frozen
+   base stylesheet contains later/high-specificity and !important dark paint
+   rules for those live elements. Bright must win paint only; no geometry. */
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {
+  background:#f4f4f2 !important;
+  color:#1d1d1b !important;
+}
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] #resultsGrid .card:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#eee5e3 !important;
+}
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.type,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.time,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs {
+  background:#e5e5e1 !important;
+  border-color:#686862 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .game-meta-label,
+html[data-theme="bright"] #resultsGrid .game-meta-label,
+html[data-theme="bright"] .recent-uploads-grid .recent-meta-label {
+  color:#8b211c !important;
+}
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] #resultsGrid .grid-list-sub,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
+  background:#ecece9 !important;
+  border-color:#85857f !important;
+  color:#3f3f3b !important;
+}
+
+/* REV06 — approved Bright/Silver visual direction + Bright banner.
+   Paint only. Existing dark banner remains the underlying HTML source and is
+   used whenever data-theme is not bright. */
+html[data-theme="bright"] {
+  --bg:#dededb;
+  --bg-raised:#dededb;
+  --bg-card:#dededb;
+  --line:#b8b8b3;
+  --silver:#4f4f4b;
+  --text:#20201e;
+  --text-dim:#4f4f4b;
+}
+html[data-theme="bright"] body { background:#dededb; }
+html[data-theme="bright"] .banner-wrap,
+html[data-theme="bright"] .banner-wrap::before { background:#dededb; }
+/* Bright banner image — REV08 */
+html[data-theme="bright"] .banner-wrap img { content:url("../banner-bright.png?v=REV08"); }
+html[data-theme="bright"] .toolbar { background:rgba(222,222,219,.97); }
+html[data-theme="bright"] .view-toggle button:not(.active) { background:#ececea; color:#4b4b47; }
+html[data-theme="bright"] .view-toggle button:not(.active):hover,
+html[data-theme="bright"] .clear-filters-btn:hover { background:#d2d2ce; color:#20201e; }
+
+/* Live guide/Recent surfaces continue the silver page rather than white cards. */
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {
+  background:#dededb !important;
+}
+html[data-theme="bright"] #resultsList .list-row:hover,
+html[data-theme="bright"] #resultsGrid .card:hover,
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#d4cbc9 !important;
+}
+html[data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-theme="bright"] #resultsList.list {
+  background:#b8b8b3;
+  border-color:#b8b8b3;
+}
+
+/* Controls and metadata sit one silver step above the page. */
+html[data-theme="bright"] #resultsList .list-col.type,
+html[data-theme="bright"] #resultsList .list-col.time,
+html[data-theme="bright"] #resultsList .list-col.diff,
+html[data-theme="bright"] #resultsList .list-col.gs,
+html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill,
+html[data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.type,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.time,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.diff,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs {
+  background:#c9c9c5 !important;
+  border-color:#666660 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-theme="bright"] #resultsGrid .grid-list-sub,
+html[data-theme="bright"] .recent-uploads-grid .recent-upload-platform {
+  background:#d2d2ce !important;
+  border-color:#777771 !important;
+  color:#343431 !important;
+}
+html[data-theme="bright"] .thumb,
+html[data-theme="bright"] .list-thumb,
+html[data-theme="bright"] .recent-upload-thumb { background:#cfcfcb; }
+
+/* REV09 — Bright polish: separator + secondary text/button contrast only. */
+html[data-theme="bright"] .banner-wrap::after {
+  border-bottom-color:#b8b8b3;
+}
+html[data-theme="bright"] .game-guides-section .game-guides-count,
+html[data-theme="bright"] .count-line {
+  color:#3b3b38;
+}
+html[data-theme="bright"] .game-guides-section .game-guides-count strong,
+html[data-theme="bright"] .count-line strong {
+  color:#a82c25;
+}
+html[data-theme="bright"] .load-more {
+  border-color:#a82c25;
+  color:#a82c25;
+}
+html[data-theme="bright"] footer {
+  color:#3b3b38;
+}
+html[data-theme="bright"] footer span,
+html[data-theme="bright"] .footer-stats strong {
+  color:#a82c25;
+}
+
+/* REV10 — Bright contrast polish only.
+   Paint/contrast only: preserve all existing Developer Provided responsive
+   containment, Load More geometry, guide-count layout, and footer layout. */
+html[data-theme="bright"] .developer-provided-badge {
+  border-color:#806225;
+  background:linear-gradient(180deg,rgba(181,139,54,.24),rgba(181,139,54,.10));
+  color:#5b4518;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+html[data-theme="bright"] .developer-provided-badge svg {
+  stroke:#76581b;
+}
+
+html[data-theme="bright"] .load-more:hover {
+  background:#a82c25;
+  border-color:#a82c25;
+  color:#fff;
+}
+
+html[data-theme="bright"] .game-guides-section .game-guides-count strong,
+html[data-theme="bright"] .count-line strong {
+  color:#8f211b;
+  font-weight:700;
+}
+
+/* Keep footer labels secondary; make the actual statistics the focal values. */
+html[data-theme="bright"] footer .footer-stats span {
+  color:#3b3b38;
+}
+html[data-theme="bright"] footer .footer-stats strong {
+  color:#8f211b;
+  font-weight:800;
+}
+
+
+/* REV12 — Bright toolbar control depth only.
+   Paint/contrast only; no toolbar geometry or responsive behavior changes. */
+html[data-theme="bright"] .toolbar .search-box input,
+html[data-theme="bright"] .toolbar select {
+  background:#cec7c5;
+  border-color:#96908d;
+  color:#20201e;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 1px 2px rgba(0,0,0,.08);
+}
+html[data-theme="bright"] .toolbar .search-box svg {
+  stroke:#7f2a25;
+}
+html[data-theme="bright"] .toolbar .search-box input::placeholder {
+  color:#5b5754;
+}
+html[data-theme="bright"] .toolbar .search-box input:hover,
+html[data-theme="bright"] .toolbar select:hover,
+html[data-theme="bright"] .toolbar .search-box input:focus,
+html[data-theme="bright"] .toolbar select:focus {
+  border-color:#a82c25;
+}
+
+/* REV13 — Bright-only control/badge contrast corrections.
+   Paint only: no geometry, layout, responsive, renderer, or Recent changes. */
+html[data-theme="bright"] .view-toggle button:not(.active) {
+  background:#cec7c5 !important;
+  border-color:#96908d !important;
+  color:#4b4744 !important;
+}
+html[data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#c5bcba !important;
+  border-color:#a82c25 !important;
+  color:#20201e !important;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge,
+html[data-theme="bright"] #resultsGrid .text-guide-badge,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge {
+  border-color:#47758a !important;
+  background:#c8dce5 !important;
+  color:#183f52 !important;
+  box-shadow:none !important;
+}
+html[data-theme="bright"] #resultsList .text-guide-badge svg,
+html[data-theme="bright"] #resultsGrid .text-guide-badge svg,
+html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
+  color:#245f78 !important;
+  stroke:#245f78 !important;
+}
+
+/* REV22 — Bright section surface color only.
+   Keep the approved #f4f4f2 page canvas; move Recent and Game Guide
+   rows/cards farther into the silver range (#dededc) so the large
+   surfaces read as intentional insets rather than near-white panels.
+   No geometry, border, hover, or Dark-theme changes. */
+html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-theme="bright"] #resultsList .list-row,
+html[data-theme="bright"] #resultsGrid .card {
+  background:#dededc !important;
+}
+
+/* REV25 — matched banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
+html[data-theme="bright"] .banner-wrap img {
+  content:url("../banner-bright.png");
+}
+
+/* REV30 — modern section-heading treatment.
+   Paint only: Recent Uploads and Game Guides keep their existing geometry,
+   responsive positioning, markup, and renderer behavior. */
+html[data-theme="bright"] .recent-uploads-head h2 {
+  position:relative;
+  color:#20201e;
+  font-weight:800;
+  letter-spacing:-0.025em;
+  text-shadow:0 1px 0 rgba(255,255,255,.45);
+}
+html[data-theme="bright"] .recent-uploads-head h2::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:44px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#a82c25 0%,#7f211c 72%,rgba(127,33,28,0) 100%);
+  pointer-events:none;
+}
+
+/* REV31 — mobile portrait Game Guides alignment correction only.
+   Match the established 14px portrait content inset used by Recent Uploads.
+   Recent, desktop, and landscape remain untouched. */
+@media (orientation:portrait) and (max-width:700px) {
+  html[data-theme="bright"] .game-guides-section {
+    padding-left:14px;
+    padding-right:14px;
+  }
+}

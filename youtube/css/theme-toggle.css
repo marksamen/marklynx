@@ -1,0 +1,140 @@
+/* Dark / Bright public toggle — REV12
+   Self-contained utility strip above the existing banner.
+   No persistence in this stage. */
+.site-preferences {
+  width:100%;
+  background:#080808;
+  border-bottom:1px solid #1f1f1f;
+}
+.site-preferences-inner {
+  width:100%;
+  max-width:1400px;
+  min-height:42px;
+  margin:0 auto;
+  padding:5px 0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  box-sizing:border-box;
+}
+.theme-toggle-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:32px;
+  padding:5px 12px;
+  border:1px solid #777;
+  border-radius:3px;
+  background:#1d1d1d;
+  color:#fff;
+  font:700 13px/1.2 var(--sans, Arial, sans-serif);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.theme-toggle-btn:hover {
+  border-color:#777;
+  background:#202020;
+  color:#fff;
+}
+.theme-toggle-btn:focus-visible {
+  outline:2px solid var(--red, #b72b25);
+  outline-offset:2px;
+}
+.theme-toggle-icon { font-size:13px; line-height:1; }
+
+html[data-theme="bright"] .site-preferences {
+  background:#dededb;
+  border-bottom-color:#b8b8b3;
+}
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#777771;
+  background:#f0f0ed;
+  color:#20201e;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#5f5f5a;
+  background:#d2d2ce;
+  color:#20201e;
+}
+
+@media (max-width:600px) {
+  .site-preferences-inner {
+    min-height:36px;
+    padding:4px 10px;
+  }
+  .theme-toggle-btn {
+    min-height:28px;
+    padding:4px 10px;
+    font-size:12px;
+  }
+}
+
+/* REV13 — Bright utility control is intentionally quieter than Dark. */
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#aaa9a4;
+  background:#e8e8e4;
+  color:#3f3f3b;
+  font-weight:500;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#8e8d88;
+  background:#ddddda;
+  color:#292927;
+}
+
+/* REV14 — toggle appearance correction only.
+   Dark: reduce the heavy/bubbly treatment.
+   Bright: restore clear button definition without making it dominant. */
+html[data-theme="dark"] .theme-toggle-btn {
+  border-color:#555;
+  background:#151515;
+  color:#e6e6e6;
+  font-weight:500;
+}
+html[data-theme="dark"] .theme-toggle-btn:hover {
+  border-color:#6a6a6a;
+  background:#1b1b1b;
+  color:#fff;
+}
+html[data-theme="bright"] .theme-toggle-btn {
+  border-color:#8d8c87;
+  background:#f2f2ef;
+  color:#30302d;
+  font-weight:500;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  border-color:#74736e;
+  background:#e5e5e1;
+  color:#20201e;
+}
+
+
+/* REV15 — Bright toggle surface only.
+   Match the established Bright inactive control surface; no geometry/behavior changes. */
+html[data-theme="bright"] .theme-toggle-btn {
+  background:#cec7c5;
+}
+html[data-theme="bright"] .theme-toggle-btn:hover {
+  background:#c5bcba;
+}
+
+/* REV24 — top utility divider width correction only.
+   Paint only: no size, position, responsive, banner, or page geometry changes. */
+.site-preferences {
+  border-bottom:0;
+}
+.site-preferences-inner {
+  border-bottom:1px solid #1f1f1f;
+}
+html[data-theme="bright"] .site-preferences-inner {
+  border-bottom-color:#b8b8b3;
+}
+
+/* REV28 — Mobile landscape theme-toggle alignment only.
+   Match the existing landscape toolbar/content inset. Portrait and desktop untouched. */
+@media (orientation:landscape) and (max-height:500px) {
+  .site-preferences-inner {
+    padding-left:28px;
+    padding-right:28px;
+  }
+}
