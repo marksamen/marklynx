@@ -34,5 +34,5 @@ html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover
 
 /* REV25 — matched banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
 html[data-theme="dark"] .banner-wrap img {
-  content:url("../banner-dark-rev25_.png?v=REV25");
+  content:url("../banner-dark_.png");
 }
