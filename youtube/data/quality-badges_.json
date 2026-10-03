@@ -16,11 +16,5 @@
     "display_name": "720p",
     "image_path": "quality-720p_.png",
     "sort_order": 40
-  },
-  {
-    "code": "TEST",
-    "display_name": "TEST",
-    "image_path": "quality-test_.png",
-    "sort_order": 50
   }
 ]

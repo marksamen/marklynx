@@ -71,23 +71,28 @@
   "providedGames": [
     {
       "game_id": 100,
-      "provided_by": "Paulo Pinheiro Game Dev"
+      "provided_by": "Paulo Pinheiro Game Dev",
+      "provided_at": "2026-10-01T17:30:01.08814+00:00"
     },
     {
       "game_id": 102,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T17:32:39.772432+00:00"
     },
     {
       "game_id": 104,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T17:40:41.3655+00:00"
     },
     {
       "game_id": 169,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T17:42:10.373938+00:00"
     },
     {
       "game_id": 321,
-      "provided_by": "TEST DEV"
+      "provided_by": "TEST DEV",
+      "provided_at": "2026-10-01T17:45:42.004514+00:00"
     }
   ]
 }
