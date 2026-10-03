@@ -493,3 +493,25 @@ html[data-theme="bright"] #resultsGrid .card {
 html[data-theme="bright"] .banner-wrap img {
   content:url("../banner-bright_.png");
 }
+
+/* REV30 — modern section-heading treatment.
+   Paint only: Recent Uploads and Game Guides keep their existing geometry,
+   responsive positioning, markup, and renderer behavior. */
+html[data-theme="bright"] .recent-uploads-head h2 {
+  position:relative;
+  color:#20201e;
+  font-weight:800;
+  letter-spacing:-0.025em;
+  text-shadow:0 1px 0 rgba(255,255,255,.45);
+}
+html[data-theme="bright"] .recent-uploads-head h2::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:44px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#a82c25 0%,#7f211c 72%,rgba(127,33,28,0) 100%);
+  pointer-events:none;
+}
