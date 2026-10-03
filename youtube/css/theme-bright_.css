@@ -478,13 +478,13 @@ html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
   stroke:#245f78 !important;
 }
 
-/* REV21 — Bright section surface color only.
+/* REV22 — Bright section surface color only.
    Keep the approved #f4f4f2 page canvas; move Recent and Game Guide
-   rows/cards farther into the silver range (#eaeae8) so the large
+   rows/cards farther into the silver range (#dededc) so the large
    surfaces read as intentional insets rather than near-white panels.
    No geometry, border, hover, or Dark-theme changes. */
 html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
 html[data-theme="bright"] #resultsList .list-row,
 html[data-theme="bright"] #resultsGrid .card {
-  background:#eaeae8 !important;
+  background:#dededc !important;
 }
