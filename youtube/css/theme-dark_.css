@@ -1,0 +1,33 @@
+/* Dark visual facelift — REV16 TEST
+   Dark-only paint layer. No geometry, sizing, positioning, markup, or renderer rules.
+   Banner intentionally remains unchanged for the separate banner stage. */
+
+html[data-theme="dark"] body {
+  background:#080808;
+}
+
+/* Site chrome follows the deeper charcoal canvas without changing layout. */
+html[data-theme="dark"] .subscribe-strip {
+  background:#080808;
+}
+html[data-theme="dark"] .toolbar {
+  background:rgba(8,8,8,.96);
+}
+
+/* Main guide surfaces: retain separation without the large gray-slab effect. */
+html[data-theme="dark"] .list-row,
+html[data-theme="dark"] .card {
+  background:#111111;
+}
+html[data-theme="dark"] .list-row:hover,
+html[data-theme="dark"] .card:hover {
+  background:#181212;
+}
+
+/* Recent uses the same restrained charcoal hierarchy as Game Guides. */
+html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card {
+  background:#111111;
+}
+html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
+  background:#181212;
+}
