@@ -69,3 +69,13 @@ html[data-theme="dark"] .recent-uploads-head h2::after {
   background:linear-gradient(90deg,#c72b25 0%,#7f1b17 72%,rgba(127,27,23,0) 100%);
   pointer-events:none;
 }
+
+/* REV31 — mobile portrait Game Guides alignment correction only.
+   Match the established 14px portrait content inset used by Recent Uploads.
+   Recent, desktop, and landscape remain untouched. */
+@media (orientation:portrait) and (max-width:700px) {
+  html[data-theme="dark"] .game-guides-section {
+    padding-left:14px;
+    padding-right:14px;
+  }
+}
