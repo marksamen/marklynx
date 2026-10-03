@@ -32,7 +32,7 @@ html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover
   background:#181212;
 }
 
-/* REV23 — banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
+/* REV24 — banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
 html[data-theme="dark"] .banner-wrap img {
-  content:url("../banner-dark-rev23_.png?v=REV23");
+  content:url("../banner-dark-rev24_.png?v=REV24");
 }

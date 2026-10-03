@@ -489,7 +489,7 @@ html[data-theme="bright"] #resultsGrid .card {
   background:#dededc !important;
 }
 
-/* REV23 — banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
+/* REV24 — banner artwork TEST only. Visual source swap only; no layout/geometry changes. */
 html[data-theme="bright"] .banner-wrap img {
-  content:url("../banner-bright-rev23_.png?v=REV23");
+  content:url("../banner-bright-rev24_.png?v=REV24");
 }

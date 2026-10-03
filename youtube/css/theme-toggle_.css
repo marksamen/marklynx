@@ -117,3 +117,15 @@ html[data-theme="bright"] .theme-toggle-btn {
 html[data-theme="bright"] .theme-toggle-btn:hover {
   background:#c5bcba;
 }
+
+/* REV24 — top utility divider width correction only.
+   Paint only: no size, position, responsive, banner, or page geometry changes. */
+.site-preferences {
+  border-bottom:0;
+}
+.site-preferences-inner {
+  border-bottom:1px solid #1f1f1f;
+}
+html[data-theme="bright"] .site-preferences-inner {
+  border-bottom-color:#b8b8b3;
+}
