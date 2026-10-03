@@ -2996,3 +2996,21 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
+
+/* MOBILE PORTRAIT REV35: keep descriptive Text Guide badges inside the content column.
+   Parenthetical detail moves to line two; plain Text Guide Included remains one line. */
+@media (orientation:portrait) and (max-width:700px){
+  #resultsGrid .card .text-guide-badge,
+  #resultsList .text-guide-badge{
+    max-width:100%;
+    white-space:normal;
+  }
+  #resultsGrid .card .text-guide-label,
+  #resultsList .text-guide-label{
+    min-width:0;
+  }
+  #resultsGrid .card .text-guide-detail,
+  #resultsList .text-guide-detail{
+    display:block;
+  }
+}
