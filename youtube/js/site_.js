@@ -175,7 +175,11 @@ function textGuideBadge(r){
     'text guide included': 'Text Guide Included'
   };
   const label = textGuideLabels[rawLabel.toLowerCase()] || rawLabel;
-  return `<span class="text-guide-badge" title="${escapeHtml(r.tx)}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>${escapeHtml(label)}</span>`;
+  const detailMatch = label.match(/^(Text Guide Included)( \(.+\))$/);
+  const displayLabel = detailMatch
+    ? `<span class="text-guide-label">${escapeHtml(detailMatch[1])}<span class="text-guide-detail">${escapeHtml(detailMatch[2])}</span></span>`
+    : `<span class="text-guide-label">${escapeHtml(label)}</span>`;
+  return `<span class="text-guide-badge" title="${escapeHtml(r.tx)}"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>${displayLabel}</span>`;
 }
 
 function developerProvidedBadge(r){
