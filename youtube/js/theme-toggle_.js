@@ -1,9 +1,30 @@
-/* Dark / Bright public toggle — REV11
-   Stage 3 only: switch the current page theme. Persistence comes later. */
+/* Dark / Bright public toggle — REV29
+   Stage 4: persist the visitor's explicit theme choice in this browser. */
 (function () {
   'use strict';
 
   var root = document.documentElement;
+  var storageKey = 'marklynx-theme';
+
+  function readSavedTheme() {
+    try {
+      var saved = localStorage.getItem(storageKey);
+      return saved === 'dark' || saved === 'bright' ? saved : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveTheme(theme) {
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch (e) {
+      // If browser storage is unavailable, the toggle still works for this page.
+    }
+  }
+
+  var savedTheme = readSavedTheme();
+  if (savedTheme) root.setAttribute('data-theme', savedTheme);
 
   function syncButton() {
     var button = document.getElementById('themeToggleBtn');
@@ -23,6 +44,7 @@
       button.addEventListener('click', function () {
         var next = root.getAttribute('data-theme') === 'bright' ? 'dark' : 'bright';
         root.setAttribute('data-theme', next);
+        saveTheme(next);
         syncButton();
       });
     }
