@@ -2984,3 +2984,15 @@ body.suggest-modal-open{overflow:hidden}
     margin-left:auto;
   }
 }
+/* MOBILE PORTRAIT REV34: match Kinect Required badge sizing to Text Guide Included. */
+@media (orientation:portrait) and (max-width:700px){
+  #resultsGrid .card .kinect-badge,
+  #resultsList .kinect-badge{
+    gap:6px;
+    min-height:25px;
+    padding:3px 9px;
+    border-radius:6px;
+    font-size:11px;
+  }
+}
+
