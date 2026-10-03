@@ -5,7 +5,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 102,
       "game_name": "Find The Cats",
       "gamerscore": "2,000G",
@@ -20,7 +19,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 104,
       "game_name": "Find The Cats 2",
       "gamerscore": "2,000G",
@@ -35,7 +33,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "public_games_sort": "RECENT",
       "game_id": 169,
       "game_name": "Panda: Shards of Aurora",
       "gamerscore": "2,000G",
@@ -50,7 +47,6 @@
       "public_display_name": "Paulo Pinheiro Game Dev",
       "public_description": null,
       "public_display_order": 2,
-      "public_games_sort": "RECENT",
       "game_id": 100,
       "game_name": "Moves: Perfect Pair",
       "gamerscore": "1,000G",
@@ -61,6 +57,10 @@
       "playlist_id": null
     }
   ],
+  "railSettings": {
+    "sort": "RECENT",
+    "limit": 10
+  },
   "providedGameIds": [
     100,
     102,
@@ -71,23 +71,28 @@
   "providedGames": [
     {
       "game_id": 100,
-      "provided_by": "Paulo Pinheiro Game Dev"
+      "provided_by": "Paulo Pinheiro Game Dev",
+      "provided_at": "2026-10-01T19:57:43.404974+00:00"
     },
     {
       "game_id": 102,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T19:59:00.406424+00:00"
     },
     {
       "game_id": 104,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T19:59:54.446003+00:00"
     },
     {
       "game_id": 169,
-      "provided_by": "Ember Box Studio"
+      "provided_by": "Ember Box Studio",
+      "provided_at": "2026-10-01T20:00:53.450139+00:00"
     },
     {
       "game_id": 329,
-      "provided_by": "TEST DEV"
+      "provided_by": "TEST DEV",
+      "provided_at": "2026-10-03T21:39:36.654516+00:00"
     }
   ]
 }
