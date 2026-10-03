@@ -36,3 +36,14 @@ html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover
 html[data-theme="dark"] .banner-wrap img {
   content:url("../banner-dark_.png");
 }
+
+/* REV27 — Dark banner integration corrections only.
+   Paint only: match the banner field to the Dark page and replace the
+   banner's red lower separator with the established Dark gray divider. */
+html[data-theme="dark"] .banner-wrap,
+html[data-theme="dark"] .banner-wrap::before {
+  background:#080808;
+}
+html[data-theme="dark"] .banner-wrap::after {
+  border-bottom-color:#1f1f1f;
+}
