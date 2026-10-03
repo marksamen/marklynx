@@ -129,3 +129,12 @@ html[data-theme="bright"] .theme-toggle-btn:hover {
 html[data-theme="bright"] .site-preferences-inner {
   border-bottom-color:#b8b8b3;
 }
+
+/* REV28 — Mobile landscape theme-toggle alignment only.
+   Match the existing landscape toolbar/content inset. Portrait and desktop untouched. */
+@media (orientation:landscape) and (max-height:500px) {
+  .site-preferences-inner {
+    padding-left:28px;
+    padding-right:28px;
+  }
+}

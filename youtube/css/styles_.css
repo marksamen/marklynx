@@ -2975,3 +2975,12 @@ body.suggest-modal-open{overflow:hidden}
     object-fit:contain;
   }
 }
+
+/* REV28 — Mobile landscape Grid/List alignment only.
+   Keep the existing toolbar flow; anchor the view control to the right edge of its row.
+   Portrait, desktop, Recent and responsive sizing rules untouched. */
+@media (orientation:landscape) and (max-height:500px) {
+  .toolbar-inner > .view-toggle {
+    margin-left:auto;
+  }
+}
