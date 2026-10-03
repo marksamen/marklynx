@@ -480,10 +480,10 @@ html[data-theme="bright"] .recent-uploads-grid .text-guide-badge svg {
 
 /* REV19 — Bright section surface separation only.
    Keep the approved #f4f4f2 page canvas; give Recent and Game Guide
-   rows/cards a six-step darker silver (#eeeeec), mirroring the subtle
+   rows/cards a six-step darker silver (#f1f1ef), mirroring the subtle
    tonal separation approved for Dark. No geometry or border changes. */
 html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
 html[data-theme="bright"] #resultsList .list-row,
 html[data-theme="bright"] #resultsGrid .card {
-  background:#eeeeec !important;
+  background:#f1f1ef !important;
 }

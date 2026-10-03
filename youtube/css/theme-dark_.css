@@ -17,7 +17,7 @@ html[data-theme="dark"] .toolbar {
 /* Main guide surfaces: retain separation without the large gray-slab effect. */
 html[data-theme="dark"] .list-row,
 html[data-theme="dark"] .card {
-  background:#0e0e0e;
+  background:#0b0b0b;
 }
 html[data-theme="dark"] .list-row:hover,
 html[data-theme="dark"] .card:hover {
@@ -26,7 +26,7 @@ html[data-theme="dark"] .card:hover {
 
 /* Recent uses the same restrained charcoal hierarchy as Game Guides. */
 html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card {
-  background:#0e0e0e;
+  background:#0b0b0b;
 }
 html[data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover {
   background:#181212;
