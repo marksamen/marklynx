@@ -8578,5 +8578,31 @@
     "publisher_1": null,
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 331,
+    "n": "Bullet Trail",
+    "p": "XBOX ONE | XBOX Series S/X",
+    "g": "1,000G",
+    "t": "3 Minutes",
+    "ty": "Action",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=nUnKOcTK4Vg",
+    "v": "nUnKOcTK4Vg",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Gametry",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gametry",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
