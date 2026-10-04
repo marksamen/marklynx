@@ -19,20 +19,6 @@
       "public_display_name": "Ember Box Studio",
       "public_description": "https://emberboxstudio.com/",
       "public_display_order": 1,
-      "game_id": 104,
-      "game_name": "Find The Cats 2",
-      "gamerscore": "2,000G",
-      "completion_time": "8 Minutes",
-      "quality": "4K",
-      "youtube_url": "https://www.youtube.com/watch?v=KYtTBdoxy9s",
-      "video_id": "KYtTBdoxy9s",
-      "playlist_id": null
-    },
-    {
-      "company_id": 63,
-      "public_display_name": "Ember Box Studio",
-      "public_description": "https://emberboxstudio.com/",
-      "public_display_order": 1,
       "game_id": 169,
       "game_name": "Panda: Shards of Aurora",
       "gamerscore": "2,000G",
@@ -40,6 +26,20 @@
       "quality": "4K",
       "youtube_url": "https://www.youtube.com/watch?v=bO21TsR5Xg0",
       "video_id": "bO21TsR5Xg0",
+      "playlist_id": null
+    },
+    {
+      "company_id": 63,
+      "public_display_name": "Ember Box Studio",
+      "public_description": "https://emberboxstudio.com/",
+      "public_display_order": 1,
+      "game_id": 104,
+      "game_name": "Find The Cats 2",
+      "gamerscore": "2,000G",
+      "completion_time": "8 Minutes",
+      "quality": "4K",
+      "youtube_url": "https://www.youtube.com/watch?v=KYtTBdoxy9s",
+      "video_id": "KYtTBdoxy9s",
       "playlist_id": null
     },
     {
@@ -82,7 +82,7 @@
     {
       "game_id": 104,
       "provided_by": "Ember Box Studio",
-      "provided_at": "2026-10-01T19:59:54.446003+00:00"
+      "provided_at": "2026-10-04T16:21:13.168946+00:00"
     },
     {
       "game_id": 169,
