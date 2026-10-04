@@ -19,6 +19,14 @@
 #devPubAddCompany,#devPubManageCompanies{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
 #devPubPublicProfiles{width:auto;display:inline-block;flex:0 0 auto;background:#5b347e;border-color:#7a4ca3;color:#fff;cursor:pointer}
 @media(max-width:600px){#devPubSearchHeader{align-items:flex-start;flex-direction:column}}
+
+/* TEST CONTENT quick control — checkpoint cycle REV01. Layout/cosmetic only; existing IDs and JS are unchanged. */
+#testContentHeaderControls{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+#testContentHeaderControls #testStatus{margin:0;padding:7px 10px;border:1px solid #3a3a3f;border-radius:6px;background:#151517;font-size:.78rem;font-weight:800;letter-spacing:.04em;line-height:1.1;white-space:nowrap}
+#testContentHeaderControls #testStatus.on{color:#6dff8b;border-color:rgba(109,255,139,.38)}
+#testContentHeaderControls #testStatus.off{color:#ff6d6d;border-color:rgba(255,109,109,.38)}
+#testContentHeaderControls #testToggle,#testContentHeaderControls #logout{width:auto;margin:0;white-space:nowrap}
+@media(max-width:700px){#adminHeader{flex-wrap:wrap}#testContentHeaderControls{width:100%;justify-content:flex-start}}
 </style>
 </head>
 <body>
@@ -34,7 +42,11 @@
 <main id="admin">
 <div id="adminHeader">
   <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV19</p></div>
-  <button id="logout" type="button">Sign Out</button>
+  <div id="testContentHeaderControls" aria-label="Test content control">
+    <div id="testStatus"></div>
+    <button id="testToggle" type="button"></button>
+    <button id="logout" type="button">Sign Out</button>
+  </div>
 </div>
 <div id="adminWorkspace"><div id="adminControls">
 <button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/index_.html" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
@@ -42,9 +54,7 @@
 <button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/index_.html?v=TEXT-GUIDE-MANAGEMENT-REV02" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
 <button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/index_.html?v=QUALITY-BADGE-ADD-FIX-REV02" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
 <a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
-<section id="testPanel" aria-label="Test content control">
-<p id="testStatus"></p>
-<button id="testToggle" type="button"></button>
+<section id="testPanel" aria-label="Site testing tools">
 <div id="siteLinks" aria-label="YouTube site launch and redirect checks">
 <a class="admin-link primary" href="https://marklynx.com/youtube/index_.html" target="_blank" rel="noopener noreferrer">Open TEST Site</a>
 <a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
