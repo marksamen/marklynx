@@ -3,6 +3,26 @@ let verifyProdDatabaseIdentity = null;
 
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
+let textGuideOptions=[];
+
+export async function loadTextGuideOptions(){
+  const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/text_guide_options?select=id,value,sort_order&order=sort_order.asc,value.asc`,{
+    headers:{"apikey":SUPABASE_PROD_PUBLISHABLE_KEY},cache:"no-store"
+  });
+  if(!response.ok) throw new Error(`Text Guides: Supabase PROD returned HTTP ${response.status}.`);
+  const rows=await response.json();
+  if(!Array.isArray(rows)) throw new Error("Supabase PROD returned an invalid Text Guide payload.");
+  textGuideOptions=rows;
+  const select=document.getElementById("gdTextGuide");
+  const current=select.value;
+  select.innerHTML='<option value="">Select Text Guide…</option>';
+  for(const row of textGuideOptions){
+    const value=String(row.value||"").trim(); if(!value) continue;
+    const option=document.createElement("option"); option.value=value; option.textContent=value; select.appendChild(option);
+  }
+  if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+}
+
 const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 
 let resultYesAction=null;
@@ -278,7 +298,7 @@ export async function loadGamesProd(){
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     await loadProvidedDeveloperAdminData();
-    await loadQualityBadges();
+    await Promise.all([loadQualityBadges(),loadTextGuideOptions()]);
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase PROD games.";
@@ -336,7 +356,7 @@ function completionTimeValue(){const amount=document.getElementById("gdTime").va
 function validateCompletionTime(addMode=false){const el=document.getElementById("gdTime"),v=el.value.trim(),unit=document.getElementById("gdTimeUnit").value,err=document.getElementById("gdTimeError");if(!v){err.textContent="";return true;}if(addMode){const m=v.match(/^(\d+(?:\.\d+)?)(?:-(\d+(?:\.\d+)?))?$/);if(!m){err.textContent="Enter one number or a range such as 6-7, then choose Minutes or Hours.";return false;}const first=Number(m[1]),second=m[2]===undefined?null:Number(m[2]);if(!Number.isFinite(first)||first<=0||(second!==null&&(!Number.isFinite(second)||second<=0))){err.textContent="Completion time must be greater than 0.";return false;}if(second!==null&&second<=first){err.textContent="The end of the range must be greater than the start.";return false;}if(unit==="Minutes"&&(!Number.isInteger(first)||first<1||first>59||(second!==null&&(!Number.isInteger(second)||second<1||second>59)))){err.textContent="Minutes must be whole numbers from 1 to 59. Use Hours for 60 minutes or more.";return false;}}err.textContent="";return true;}
 function setQualityValue(value){const sel=document.getElementById("gdQuality"),v=String(value||"").trim(),match=[...sel.options].find(option=>option.value.toLowerCase()===v.toLowerCase());sel.value=match?match.value:"";}
 function qualityValue(){return document.getElementById("gdQuality").value;}
-function setTextGuideValue(value){const sel=document.getElementById("gdTextGuide"),v=String(value||"No");let opt=[...sel.options].find(o=>o.value===v);if(!opt&&v){opt=new Option(v,v);opt.dataset.legacy="1";sel.add(opt);}sel.value=v||"No";}
+function setTextGuideValue(value){const sel=document.getElementById("gdTextGuide"),v=String(value||"").trim();let opt=[...sel.options].find(o=>o.value===v);if(!opt&&v){opt=new Option(v,v);opt.dataset.legacy="1";sel.add(opt);}sel.value=v;}
 function parseYoutubeLink(raw){
   const value=String(raw||"").trim().replace(/\s+/g,""); if(!value)return null;
   let url; try{url=new URL(value);}catch(e){return null;}
@@ -422,7 +442,7 @@ function drawSelectedGame(){
   document.getElementById("gdGamerscore").value=normalizeGamerscore(g.g??"")??"";
   setCompletionTime(g.t??"");
   setQualityValue(g.q??"");
-  setTextGuideValue(g.tx??"No");
+  setTextGuideValue(g.tx??"");
   document.getElementById("gdAdult").value=g.adult===true?"true":"false";
   document.getElementById("gdKinect").value=g.kinect===true?"true":"false";
   setChoices("gdPlatformChoices",g.p??"");

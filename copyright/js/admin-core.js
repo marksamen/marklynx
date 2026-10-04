@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=DEVELOPER-PROVIDED-PROD-REV27";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd, loadQualityBadges } from "./admin-game-management.js?v=REV48-FULL-PARITY";
+import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions } from "./admin-game-management.js?v=TEXT-GUIDE-MANAGEMENT-PROD-REV04";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
@@ -34,6 +34,16 @@ function loggedIn(){login.style.display="none";admin.style.display="block";form.
 // Supabase PROD recovery export — public SELECT only. No database writes.
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin) return;
+  if(event.data?.type!=="text-guides-updated") return;
+  loadGamesProd().catch(error=>console.error("Text Guide game-data refresh failed:",error));
+});
+
+window.addEventListener("text-guides-modal-closed",()=>{
+  loadGamesProd().catch(error=>console.error("Text Guide close game-data refresh failed:",error));
+});
 
 initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
 initGameManagement({auth,verifyProdDatabaseIdentity});
