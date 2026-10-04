@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=DEVELOPER-PROVIDED-ADMIN-REV08";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges } from "./admin-game-management_.js?v=DEVELOPER-PROVIDED-REBUILD-REV15";
+import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions } from "./admin-game-management_.js?v=DEVELOPER-PROVIDED-REBUILD-REV15";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
@@ -49,6 +49,16 @@ window.addEventListener("message",event=>{
 
 window.addEventListener("quality-badges-modal-closed",()=>{
   loadQualityBadges().catch(error=>console.error("Quality badge close refresh failed:",error));
+});
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin) return;
+  if(event.data?.type!=="text-guides-updated") return;
+  loadGamesTest().catch(error=>console.error("Text Guide game-data refresh failed:",error));
+});
+
+window.addEventListener("text-guides-modal-closed",()=>{
+  loadGamesTest().catch(error=>console.error("Text Guide close game-data refresh failed:",error));
 });
 
 
