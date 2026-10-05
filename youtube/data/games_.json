@@ -7958,7 +7958,7 @@
   {
     "id": 307,
     "n": "Instant Brain: Nin²-Jump",
-    "p": "XBOX360",
+    "p": "XBOX 360",
     "g": "200G",
     "t": "2-3 Hours",
     "ty": "Platformer",
@@ -8530,11 +8530,11 @@
   {
     "id": 329,
     "n": "TEST VIDEO 4K",
-    "p": "XBOX Series S/X",
+    "p": "XBOX ONE",
     "g": "3,000G",
     "t": "2 Hours",
     "ty": "Action",
-    "tx": "No",
+    "tx": null,
     "q": "4K",
     "df": "Moderate",
     "u": "https://www.youtube.com/watch?v=jgUcm60etos",
