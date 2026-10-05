@@ -56,13 +56,7 @@ document.getElementById('copyrightYear').textContent = new Date().getFullYear();
 function uniqueSorted(field){
   return [...new Set(RAW.map(r=>r[field]).filter(Boolean))].sort();
 }
-// Genres are multi-value data separated by |, just like Platforms.
-// Build the public filter from the individual genres actually used by visible games.
-const genreNames = new Set();
-RAW.forEach(r=>{
-  String(r.ty || '').split('|').map(v=>v.trim()).filter(Boolean).forEach(v=>genreNames.add(v));
-});
-[...genreNames].sort((a,b)=>a.localeCompare(b)).forEach(v=>{
+uniqueSorted('ty').forEach(v=>{
   const o=document.createElement('option'); o.value=v; o.textContent=v; typeFilter.appendChild(o);
 });
 
@@ -135,10 +129,7 @@ function getFiltered(){
   let out = RAW.filter(r=>{
     const searchable = normalizeSearch(`${r.n || ''} ${r.kinect ? 'Kinect Kinect Required' : ''}`);
     if(q && !searchable.includes(q)) return false;
-    if(ty){
-      const genres = String(r.ty || '').split('|').map(v=>v.trim()).filter(Boolean);
-      if(!genres.includes(ty)) return false;
-    }
+    if(ty && r.ty !== ty) return false;
     if(quality && String(r.q || '').trim().toLowerCase() !== quality) return false;
     if(platform){
       if(platform === 'kinect'){

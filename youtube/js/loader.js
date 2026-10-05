@@ -315,7 +315,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=20260927-mobile-landscape-prime-rev01');
-      await loadScript('js/site.js?v=GENRE-MULTISELECT-PROD-REV06');
+      await loadScript('js/site.js?v=MOBILE-PORTRAIT-CLEANUP-REV36');
       await loadScript('js/developer.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
       await loadScript('js/suggest_game.js?v=REV03-suggest-authoritative-submission');
