@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-04T15:48:11.409948+00:00",
+  "updated": "2026-10-05T08:36:05.457233+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "JSYoz0dweQ4",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 6 | Thrilling Spine Coaster | All Star Coins",
+      "published": "2026-10-05T02:08:31+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/JSYoz0dweQ4/hqdefault.jpg"
+    },
     {
       "id": "nUnKOcTK4Vg",
       "title": "Bullet Trail | Easy 100% Completion | 1000 Gamerscore | 3 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | All Star Coins | Secret E",
       "published": "2026-09-28T15:04:17+00:00",
       "thumbnail": "https://i.ytimg.com/vi/9Wb_WMcF1X4/hqdefault.jpg"
-    },
-    {
-      "id": "0N2mIuV800c",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 2 | Porcupuffer Falls | All Star Coins | Normal Ex",
-      "published": "2026-09-27T18:15:24+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/0N2mIuV800c/hqdefault.jpg"
     }
   ]
 }
