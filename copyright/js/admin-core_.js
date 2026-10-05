@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=DEVELOPER-PROVIDED-ADMIN-REV08";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management_.js?v=GENRE-MANAGEMENT-REV01";
+import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management_.js?v=GENRE-MANAGEMENT-REV02";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
@@ -74,11 +74,11 @@ window.addEventListener("platforms-modal-closed",()=>{
 window.addEventListener("message",event=>{
   if(event.origin!==window.location.origin) return;
   if(event.data?.type!=="genres-updated") return;
-  loadGamesTest().catch(error=>console.error("Genre game-data refresh failed:",error));
+  loadGenreOptions().catch(error=>console.error("Genre option refresh failed:",error));
 });
 
 window.addEventListener("genres-modal-closed",()=>{
-  loadGamesTest().catch(error=>console.error("Genre close game-data refresh failed:",error));
+  loadGenreOptions().catch(error=>console.error("Genre close option refresh failed:",error));
 });
 
 
