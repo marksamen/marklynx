@@ -1,22 +1,237 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Genre Management</title>
-<style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(900px,100%);margin:auto}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin-bottom:18px}h1{margin:0 0 6px}p{color:#aaa}.list{display:grid;gap:10px}.row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px;background:#141416;border:1px solid #303034;border-radius:10px}.name{font-weight:800}.meta{margin-top:5px;color:#aaa;font-size:.86rem}.actions{display:flex;gap:8px}button,input{font:inherit;border-radius:8px}button{border:1px solid #4a4a4f;background:#252529;color:#fff;padding:9px 12px;font-weight:700;cursor:pointer}.danger{background:#3b1717;border-color:#713030}.add{background:#198754;border-color:#2a9d66}.form{display:flex;gap:10px}.form input{flex:1;padding:11px 12px;border:1px solid #4a4a4f;background:#111113;color:#fff}.modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.card{width:min(92vw,540px);padding:22px;border:1px solid #4a4a4f;border-radius:12px;background:#171717}.card.error{border-top:3px solid #b64040}.card input{width:100%;margin-top:12px;padding:11px 12px;background:#111113;color:#fff;border:1px solid #4a4a4f;border-radius:8px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}@media(max-width:650px){body{padding:12px}.row{grid-template-columns:1fr}.actions,.form{flex-wrap:wrap}.form input{min-width:100%}}</style></head><body>
-<div class="wrap"><h1>Genre Management</h1><p>Add, edit, or delete the Genre values available in Game Management.</p>
-<section class="panel"><h2>Current Genres</h2><div id="status" class="meta">Loading from Supabase PROD…</div><div id="list" class="list"></div></section>
-<section class="panel"><h2>Add Genre</h2><div class="form"><input id="newValue" maxlength="160" placeholder="Example: Metroidvania"><button id="add" class="add" type="button">Add Genre</button></div></section></div>
-<div id="modal" class="modal" aria-hidden="true"><div id="card" class="card"><h2 id="title"></h2><p id="message"></p><input id="editValue" maxlength="160" style="display:none"><div class="modal-actions"><button id="cancel" type="button">Cancel</button><button id="ok" type="button">OK</button></div></div></div>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-const firebaseConfig={apiKey:"AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ",authDomain:"mark-lynx-admin.firebaseapp.com",projectId:"mark-lynx-admin",storageBucket:"mark-lynx-admin.firebasestorage.app",messagingSenderId:"749999035332",appId:"1:749999035332:web:52c78e6e358c1fef794a91"};
-const URL="https://igmunmyxaskizltdvvti.supabase.co",KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";const auth=getAuth(initializeApp(firebaseConfig));let user=null,pending=null;
-async function callAdmin(payload){if(!user)throw new Error("Admin authentication is required.");const token=await user.getIdToken();const r=await fetch(`${URL}/functions/v1/games-admin`,{method:"POST",headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},body:JSON.stringify(payload)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||`Supabase PROD returned HTTP ${r.status}.`);return j;}
-async function load(){const [o,g]=await Promise.all([fetch(`${URL}/rest/v1/genre_options?select=id,value,sort_order&order=sort_order.asc,value.asc`,{headers:{apikey:KEY},cache:"no-store"}),fetch(`${URL}/rest/v1/games?select=ty`,{headers:{apikey:KEY},cache:"no-store"})]);if(!o.ok||!g.ok)throw new Error(`Supabase PROD read failed (${o.status}/${g.status}).`);const rows=await o.json(),games=await g.json(),usage=new Map();for(const game of games){for(const v of String(game?.ty||"").split("|").map(x=>x.trim()).filter(Boolean)) usage.set(v,(usage.get(v)||0)+1);}document.getElementById("list").replaceChildren(...rows.map(row=>render(row,usage.get(String(row.value).trim())||0)));document.getElementById("status").textContent=`Loaded ${rows.length} Genre entr${rows.length===1?"y":"ies"} with live game usage.`;}
-function render(row,count){const a=document.createElement("article");a.className="row";const d=document.createElement("div");d.innerHTML=`<div class="name"></div><div class="meta">Usage count: ${count}</div>`;d.querySelector(".name").textContent=row.value;const actions=document.createElement("div");actions.className="actions";const e=document.createElement("button");e.textContent="Edit";e.onclick=()=>openEdit(row,count);const del=document.createElement("button");del.className="danger";del.textContent="Delete";del.onclick=()=>openDelete(row,count);actions.append(e,del);a.append(d,actions);return a;}
-const modal=document.getElementById("modal"),card=document.getElementById("card"),title=document.getElementById("title"),message=document.getElementById("message"),edit=document.getElementById("editValue"),cancel=document.getElementById("cancel"),ok=document.getElementById("ok");
-function show(t,m,error=false){pending=null;title.textContent=t;message.textContent=m;edit.style.display="none";cancel.style.display="none";ok.textContent="OK";card.classList.toggle("error",error);modal.classList.add("open");}
-function openEdit(row,count){pending={type:"edit",row};cancel.style.display="";title.textContent="Edit Genre";message.textContent=`This Genre is assigned to ${count} game${count===1?"":"s"}. Renaming it will update every assigned game.`;edit.value=row.value;edit.style.display="block";ok.textContent="Save Changes";card.classList.remove("error");modal.classList.add("open");edit.focus();}
-function openDelete(row,count){if(count>0){show("Genre In Use",`${row.value} is currently assigned to ${count} game${count===1?"":"s"}. Change those games to another Genre before deleting it.`,true);return;}pending={type:"delete",row};cancel.style.display="";title.textContent="Delete Genre?";message.textContent=`Delete ${row.value}?`;edit.style.display="none";ok.textContent="Delete";card.classList.add("error");modal.classList.add("open");}
-function close(){pending=null;modal.classList.remove("open");edit.style.display="none";cancel.style.display="";ok.textContent="OK";}
-document.getElementById("cancel").onclick=close;ok.onclick=async()=>{if(!pending){close();return;}ok.disabled=true;try{if(pending.type==="edit"){const value=edit.value.trim();if(!value){edit.focus();return;}if(value.includes("|")){show("Genre Change Rejected","Genre names cannot contain | because that character separates multiple Genres.",true);return;}const old=pending.row.value;const r=await callAdmin({action:"rename-genre",id:pending.row.id,new_value:value});close();await load();parent.postMessage({type:"genres-updated"},location.origin);show("Genre Updated",`${old} was renamed to ${r.option.value}. ${r.updated_games} game${r.updated_games===1?"":"s"} updated.`);}else{const old=pending.row.value;await callAdmin({action:"delete-genre",id:pending.row.id});close();await load();parent.postMessage({type:"genres-updated"},location.origin);show("Genre Deleted",`${old} was deleted.`);}}catch(e){close();show("Genre Change Rejected",e.message||String(e),true);}finally{ok.disabled=false;}};
-document.getElementById("add").onclick=async()=>{const input=document.getElementById("newValue"),value=input.value.trim();if(!value){input.focus();return;}if(value.includes("|")){show("Genre Not Added","Genre names cannot contain | because that character separates multiple Genres.",true);return;}try{await callAdmin({action:"add-genre",value});input.value="";await load();parent.postMessage({type:"genres-updated"},location.origin);show("Genre Added",`${value} was added.`);}catch(e){show("Genre Not Added",e.message||String(e),true);}};
-await setPersistence(auth,browserLocalPersistence);onAuthStateChanged(auth,u=>{user=u;if(u)load().catch(e=>show("Genre Load Failed",e.message||String(e),true));else show("Authentication Required","Sign in to the main PROD Admin first, then reopen Genre Management.",true);});
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
+<title>Mark Lynx Admin</title>
+<link rel="stylesheet" href="css/admin-core.css?v=REV30-video-count-refresh">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/games.css?v=REV65-provided-relationship-dialog">
+<link rel="stylesheet" href="css/traffic-analytics.css">
+<link rel="stylesheet" href="css/test-tools.css">
+<link rel="stylesheet" href="css/admin-pages.css">
+<link rel="stylesheet" href="css/admin-devpub-search.css?v=devpub-search-prod-rev01">
+<style>
+#devPubSearchHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+#devPubSearchHeader h2{margin:0;white-space:nowrap;flex:0 0 auto;align-self:flex-end;transform:translateY(-2px)}
+#devPubSearchActions{display:flex;flex-direction:column;align-items:stretch;gap:10px;flex:0 0 auto}
+#devPubAddCompany,#devPubManageCompanies{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
+#devPubPublicProfiles{width:auto;display:inline-block;flex:0 0 auto;background:#5b347e;border-color:#7a4ca3;color:#fff;cursor:pointer}
+@media(max-width:600px){#devPubSearchHeader{align-items:flex-start;flex-direction:column}}
+
+/* TEST CONTENT quick control — checkpoint cycle REV01. Layout/cosmetic only; existing IDs and JS are unchanged. */
+#testContentHeaderControls{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+#testContentHeaderControls #testStatus{margin:0;padding:7px 10px;border:1px solid #3a3a3f;border-radius:6px;background:#151517;font-size:.78rem;font-weight:800;letter-spacing:.04em;line-height:1.1;white-space:nowrap}
+#testContentHeaderControls #testStatus.on{color:#6dff8b;border-color:rgba(109,255,139,.38)}
+#testContentHeaderControls #testStatus.off{color:#ff6d6d;border-color:rgba(255,109,109,.38)}
+#testContentHeaderControls #testToggle,#testContentHeaderControls #logout{width:auto;margin:0;white-space:nowrap}
+@media(max-width:700px){#adminHeader{flex-wrap:wrap}#testContentHeaderControls{width:100%;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<main id="login">
+<h1>Mark Lynx Admin</h1><p>AUTHORIZED ACCESS ONLY</p>
+<form id="loginForm">
+<input id="email" type="email" autocomplete="username" placeholder="Email" required>
+<input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+<button type="submit">Sign In</button>
+</form>
+<div id="error" role="alert" aria-live="polite"></div>
+</main>
+<main id="admin">
+<div id="adminHeader">
+  <div><h1>Mark Lynx Admin</h1><p>PRODUCTION</p></div>
+  <div id="testContentHeaderControls" aria-label="Test content control">
+    <div id="testStatus"></div>
+    <button id="testToggle" type="button"></button>
+    <button id="logout" type="button">Sign Out</button>
+  </div>
+</div>
+<div id="adminWorkspace"><div id="adminControls">
+<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
+<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
+<button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/?v=TEXT-GUIDE-MANAGEMENT-PROD-REV04" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
+<button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index.html?v=PLATFORM-MANAGEMENT-REV04" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
+<button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index.html?v=GENRE-MANAGEMENT-PROD-REV06" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
+<button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/?v=QUALITY-BADGE-ADD-FIX-PROD01" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
+
+<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
+<section id="testPanel" aria-label="Site testing tools">
+<div id="siteLinks" aria-label="YouTube site launch and redirect checks">
+<a class="admin-link primary" href="https://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Open HTTPS Site</a>
+<a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
+<a class="admin-link" href="http://copyright.marklynx.com" target="_blank" rel="noopener noreferrer">Test Copyright Redirect</a>
+</div>
+          <div style="margin-top:12px;">
+            <a href="test/index.html" target="_blank" rel="noopener"
+               style="display:block;text-align:center;text-decoration:none;background:#f2f2f2;color:#111;font-weight:700;border:1px solid #d0d0d0;border-radius:6px;padding:10px 12px;">
+              Open Full QA Checklist
+            </a>
+          </div>
+</section>
+<section id="dataSourceStatusPanel" aria-label="Data Source Status">
+<h2>Data Source Status</h2>
+<p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
+<p id="dataSourceStatusNote">Read-only PROD status from data-source.json.</p>
+<p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
+<p><strong>Database Identity:</strong> <span id="databaseIdentityStatus">WAITING FOR LIVE CHECK…</span></p>
+<p id="databaseIdentityDetails">The database must identify itself before PROD can be marked verified.</p>
+<div id="dataSourceActions">
+<button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
+<button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
+</div>
+<p id="dataSourceControlMessage" aria-live="polite"></p>
+</section>
+</div>
+<div id="adminGameColumn">
+<section id="gameDevPanel" aria-label="Game Management Firestore test">
+<h2>Game Management — games</h2>
+<p id="gameDevStatus">Waiting for authentication…</p>
+<p id="gameDevDetails"></p>
+<p id="gameDevError"></p>
+<div id="gameDevTools">
+<input id="gameDevSearch" type="search" placeholder="Search by name, ID, playlist or video…" autocomplete="off" aria-label="Search games">
+<select id="gameDevList" aria-label="Select game"></select>
+<div class="gd-toolbar">
+  <button id="gameDevAddLauncher" type="button">Add New Game</button>
+  <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
+  <button id="gameDevReloadLauncher" type="button">Reload</button>
+  <button id="gameDevExportSupabase" type="button">Generate Recovery Files</button>
+</div>
+<div id="gameDevEditorHome"><form id="gameDevForm">
+<label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
+<label>Provided by Developer<select id="gdProvidedByDeveloper"><option value="">None</option></select><span class="field-help">Optional. Lists Active Relationship and Do Not Contact companies only.</span></label>
+<input id="gdOrder" type="hidden">
+<label class="wide">Game Name<input id="gdName" placeholder="Example: 7 Days Of Rose"><span class="field-help">The title shown throughout the website.</span></label>
+<label>Difficulty<select id="gdDifficulty"><option value="">Select difficulty…</option><option>Quick & Easy</option><option>Easy</option><option>Moderate</option><option>Hard</option></select><span class="field-help">Existing site values: Quick & Easy | Easy | Moderate | Hard.</span></label>
+<div><strong>Genre / Type</strong><details class="multi-select"><summary id="gdTypeSummary">Select genres…</summary><div id="gdTypeChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every genre/type that applies. Admin builds the stored value automatically.</span></div>
+<label>Completion Time<div class="inline-pair"><input id="gdTime" inputmode="text" placeholder="Example: 3 or 6-7"><select id="gdTimeUnit" aria-label="Completion time unit"><option value="Minutes">Minutes</option><option value="Hours">Hours</option></select></div><span class="field-help">Enter one amount or a range (example: 6-7), then choose Minutes or Hours.</span><span id="gdTimeError" class="field-error"></span></label>
+<label>Gamerscore<input id="gdGamerscore" inputmode="numeric" placeholder="Example: 2000 → 2,000G"><span class="field-help">Optional. Enter numbers only; Admin formats the value automatically. Leave blank for games/platforms without Gamerscore.</span><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="gdGamerscoreUpdate" type="checkbox" style="width:auto"> Update video</label><span class="field-help">Checked = stores the Gamerscore as, for example, 2,000G Update.</span><span id="gdGamerscoreError" class="field-error"></span></label>
+<div><strong>Platform</strong><details class="multi-select"><summary id="gdPlatformSummary">Select platforms…</summary><div id="gdPlatformChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every platform that applies. Multiple selections are supported.</span></div>
+<label>Quality<select id="gdQuality"><option value="">Select quality…</option></select><span class="field-help">Quality options are managed in Quality Badge Management.</span></label>
+<label>Text Guide<select id="gdTextGuide"><option value="">Select Text Guide…</option></select><span class="field-help">Text Guide options are managed in Text Guide Management.</span></label>
+<div class="wide"><label>YouTube Link<input id="gdYoutubeLink" placeholder="Paste a YouTube video or playlist link"><span class="field-help">Paste the normal YouTube link. Admin detects Video vs Playlist and extracts the correct ID automatically.</span><span id="gdYoutubeLinkError" class="field-error"></span></label></div>
+<label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
+<label>Kinect Required<select id="gdKinect"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes only when Kinect hardware is required to play/complete the game. Otherwise leave No.</span></label>
+<label>Test Content<select id="gdTest"><option value="false">No — normal record</option><option value="true">Yes — TEST only</option></select><span class="field-help">New games default to No. Choose Yes only for deliberate QA/test records.</span></label>
+<label>Always Show in Recent<select id="gdAlwaysRecent"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = this game can be forced into Recent Uploads. TEST CONTENT remains the master visibility gate for TEST-only records.</span></label>
+<div class="wide gd-collapsible-row">
+<details class="gd-collapsible gd-developers">
+<summary>Developers — Expand</summary>
+<div class="gd-collapsible-fields">
+<div class="wide"><span class="field-help">Up to 5 developers. Leave unused fields blank.</span></div>
+<label>Developer 1<input id="gdDeveloper1" placeholder="Developer 1"></label>
+<label>Developer 2<input id="gdDeveloper2" placeholder="Developer 2"></label>
+<label>Developer 3<input id="gdDeveloper3" placeholder="Developer 3"></label>
+<label>Developer 4<input id="gdDeveloper4" placeholder="Developer 4"></label>
+<label>Developer 5<input id="gdDeveloper5" placeholder="Developer 5"></label>
+</div>
+</details>
+<details class="gd-collapsible gd-publishers">
+<summary>Publishers — Expand</summary>
+<div class="gd-collapsible-fields">
+<div class="wide"><span class="field-help">Up to 3 publishers. Leave unused fields blank.</span></div>
+<label>Publisher 1<input id="gdPublisher1" placeholder="Publisher 1"></label>
+<label>Publisher 2<input id="gdPublisher2" placeholder="Publisher 2"></label>
+<label>Publisher 3<input id="gdPublisher3" placeholder="Publisher 3"></label>
+</div>
+</details>
+</div>
+<label class="wide">Raw record preview <span class="gd-readonly-label">READ ONLY</span><input id="gdRaw" disabled aria-readonly="true"></label>
+</form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
+</div>
+</section>
+<section id="devPubSearchPanel" aria-label="Developer Publisher Search">
+<div id="devPubSearchHeader">
+<h2>Developer / Publisher Search</h2>
+<div id="devPubSearchActions">
+<button id="devPubPublicProfiles" class="admin-link" type="button" data-admin-modal-url="developer-publishers/public-profiles.html" data-admin-modal-title="Public Developer Profiles">Public Developer Profiles</button>
+<button id="devPubManageCompanies" class="admin-link" type="button" data-admin-modal-url="developer-publishers/manage.html?v=DEVELOPER-PROVIDED-PROD-REV27" data-admin-modal-title="Manage Developer / Publisher">Manage Developer / Publisher</button>
+<button id="devPubAddCompany" class="admin-link" type="button" data-admin-modal-url="developer-publishers/index.html?v=REV48-FULL-PARITY" data-admin-modal-title="Add New Developer / Publisher">Add New Developer / Publisher</button>
+</div>
+</div>
+<input id="devPubSearch" type="search" placeholder="Search company or developer…" autocomplete="off" aria-label="Search developer or publisher">
+<p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
+<div id="devPubSearchResults" aria-live="polite"></div>
+</section>
+<div id="manualRefreshControls">
+<div id="recentRefreshControl">
+<button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
+<p id="recentRefreshStatus" aria-live="polite"></p>
+</div>
+<div id="videoCountRefreshControl">
+<button id="videoCountRefresh" class="admin-link" type="button">Refresh Video Count Now</button>
+<p id="videoCountRefreshStatus" aria-live="polite"></p>
+</div>
+</div>
+<section id="trafficPanel" aria-label="Traffic Analytics">
+<h2>Traffic Analytics</h2>
+<div id="trafficGrid">
+<div class="traffic-card"><strong>Today</strong><div id="trafficToday" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 7 Days</strong><div id="traffic7" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>Last 30 Days</strong><div id="traffic30" class="traffic-values">Loading…</div></div>
+<div class="traffic-card"><strong>All Time</strong><div id="trafficAll" class="traffic-values">Loading…</div></div>
+</div>
+<p id="trafficUpdated"></p>
+<p id="trafficError"></p>
+</section>
+</div></div>
+<div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
+<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
+<div class="gd-modal-head"><h2 id="gameDevEditTitle">Edit Game</h2><button id="gameDevEditClose" type="button" aria-label="Close Edit Game">×</button></div>
+<p class="gd-modal-note" id="gameDevEditNote">Review the selected games record before saving changes.</p>
+<div id="gameDevEditMount"></div>
+</div></div>
+<div id="gameDevDeleteModal" class="gd-modal" aria-hidden="true">
+<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevDeleteTitle">
+<div class="gd-modal-head"><h2 id="gameDevDeleteTitle">Delete Game?</h2><button id="gameDevDeleteClose" type="button" aria-label="Close Delete confirmation">×</button></div>
+<p class="gd-danger-note">This permanently deletes one record from games.</p>
+<div id="gameDevDeleteTarget" class="gd-delete-target"></div>
+<div class="gd-modal-actions"><button id="gameDevDeleteConfirm" type="button">Yes — Delete This Game</button><button id="gameDevDeleteCancel" type="button">Cancel</button></div>
+</div></div>
+<div id="gameDevAddModal" class="gd-modal" aria-hidden="true">
+<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevAddTitle">
+<div class="gd-modal-head"><h2 id="gameDevAddTitle">Add New Game</h2><button id="gameDevAddClose" type="button" aria-label="Close Add New Game">×</button></div>
+<p class="gd-modal-note">Create a new <strong>games</strong> record. Nothing is written until you click Create New Game.</p>
+<div id="gameDevAddMount"></div>
+</div>
+</div>
+</main>
+<div id="gameDevResultModal" class="gd-modal gd-result-modal" aria-hidden="true">
+  <div id="gameDevResultCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
+    <h2 id="gameDevResultTitle"></h2>
+    <p id="gameDevResultMessage"></p>
+    <p id="gameDevResultQuestion"></p>
+    <div id="gameDevResultRecoveryActions" class="gd-result-actions">
+      <button id="gameDevResultYes" type="button">YES</button>
+      <button id="gameDevResultNo" type="button">NO</button>
+    </div>
+    <div id="gameDevResultOkActions" class="gd-result-actions gd-result-actions-single">
+      <button id="gameDevResultOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
+<div id="adminPageModal" aria-hidden="true">
+  <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
+    <div id="adminPageModalHeader">
+      <h2 id="adminPageModalTitle">Admin</h2>
+      <button id="adminPageModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <iframe id="adminPageModalFrame" title="Admin content"></iframe>
+  </div>
+</div>
+<script type="module" src="js/admin-core.js?v=GENRE-MANAGEMENT-PROD-REV07-CACHE"></script>
+<div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
+  <div class="gd-dialog" style="max-width:430px">
+    <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button id="gdProvidedRoleDeveloper" type="button">Developer</button>
+      <button id="gdProvidedRolePublisher" type="button">Publisher</button>
+      <button id="gdProvidedRoleBoth" type="button">Both</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
