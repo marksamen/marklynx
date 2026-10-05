@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=DEVELOPER-PROVIDED-PROD-REV27";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions } from "./admin-game-management.js?v=PLATFORM-MANAGEMENT-REV04";
+import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management.js?v=GENRE-MANAGEMENT-PROD-REV06";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
@@ -51,6 +51,14 @@ window.addEventListener("message",event=>{
 });
 window.addEventListener("platforms-modal-closed",()=>{
   loadGamesProd().catch(error=>console.error("Platform close game-data refresh failed:",error));
+});
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin) return;
+  if(event.data?.type!=="genres-updated") return;
+  loadGamesProd().catch(error=>console.error("Genre game-data refresh failed:",error));
+});
+window.addEventListener("genres-modal-closed",()=>{
+  loadGamesProd().catch(error=>console.error("Genre close game-data refresh failed:",error));
 });
 
 initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
