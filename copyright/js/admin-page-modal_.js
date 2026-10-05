@@ -27,12 +27,15 @@ export function initAdminPageModal(){
     if(closingAdminModalUrl.startsWith("text-guides/")){
       window.dispatchEvent(new CustomEvent("text-guides-modal-closed"));
     }
+    if(closingAdminModalUrl.startsWith("platforms/")){
+      window.dispatchEvent(new CustomEvent("platforms-modal-closed"));
+    }
     if(closingAdminModalUrl.startsWith("developer-publishers/")){
       window.dispatchEvent(new CustomEvent("developer-publishers-modal-closed"));
     }
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);
-  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("quality-badges/")&&!activeAdminModalUrl.startsWith("text-guides/"))closeAdminPageModal();});
+  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("quality-badges/")&&!activeAdminModalUrl.startsWith("text-guides/")&&!activeAdminModalUrl.startsWith("platforms/"))closeAdminPageModal();});
   document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/"))closeAdminPageModal();});
 }

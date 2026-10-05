@@ -11,6 +11,7 @@ let providedDeveloperByGame=new Map();
 let providedDeveloperRefreshGeneration=0;
 let qualityBadges=[];
 let textGuideOptions=[];
+let platformOptions=[];
 
 export async function loadTextGuideOptions(){
   const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/text_guide_options?select=id,value,sort_order&order=sort_order.asc,value.asc`,{
@@ -28,6 +29,20 @@ export async function loadTextGuideOptions(){
     const option=document.createElement("option"); option.value=value; option.textContent=value; select.appendChild(option);
   }
   if(current && [...select.options].some(option=>option.value===current)) select.value=current;
+}
+
+
+export async function loadPlatformOptions(){
+  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/platform_options?select=id,value,sort_order&order=sort_order.asc,value.asc`,{
+    headers:{"apikey":SUPABASE_TEST_PUBLISHABLE_KEY},cache:"no-store"
+  });
+  if(!response.ok) throw new Error(`Platforms: Supabase TEST returned HTTP ${response.status}.`);
+  const rows=await response.json();
+  if(!Array.isArray(rows)) throw new Error("Supabase TEST returned an invalid Platform payload.");
+  platformOptions=rows;
+  const current=getChoices("gdPlatformChoices");
+  buildChoices("gdPlatformChoices",platformOptions.map(row=>String(row.value||"").trim()).filter(Boolean));
+  setChoices("gdPlatformChoices",current);
 }
 
 export async function loadQualityBadges(){
@@ -297,7 +312,7 @@ export async function loadGamesTest(){
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     await loadProvidedDeveloperAdminData();
-    await Promise.all([loadQualityBadges(),loadTextGuideOptions()]);
+    await Promise.all([loadQualityBadges(),loadTextGuideOptions(),loadPlatformOptions()]);
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase TEST games.";
@@ -341,7 +356,6 @@ function selectedGame(){
   return (window.GAMEDEV_RAW||[]).find(g=>g.id===id);
 }
 const GD_GENRES=["Action","Adventure","Beat 'em up","Dancing","First Person Shooter","Management","Open World","Party","Platformer","Point & Click","Puzzle","Racing","Roguelite","Shoot 'em up","Shooter","Simulation","Sports","Strategy","3rd Person Shooter","Visual Novel"];
-const GD_PLATFORMS=["XBOX 360","XBOX ONE","XBOX Series S/X","Windows","Nintendo Switch","Nintendo Switch 2"];
 function splitMulti(v){return String(v||"").split("|").map(x=>x.trim()).filter(Boolean);}
 function updateChoiceSummary(id){const checked=[...document.querySelectorAll(`#${id} input[type=checkbox]:checked`)].map(cb=>cb.value);const summary=document.getElementById(id==="gdTypeChoices"?"gdTypeSummary":"gdPlatformSummary");if(!summary)return;const noun=id==="gdTypeChoices"?"genres":"platforms";summary.textContent=checked.length?`${checked.length} selected`:`Select ${noun}…`;}
 function buildChoices(id,values){const box=document.getElementById(id);box.innerHTML=values.map(v=>`<label><input type="checkbox" value="${v.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}"> ${v}</label>`).join("");box.addEventListener("change",()=>updateChoiceSummary(id));updateChoiceSummary(id);}
@@ -384,7 +398,7 @@ document.getElementById("gdGamerscore").addEventListener("input",()=>document.ge
 document.getElementById("gdTime").addEventListener("input",()=>document.getElementById("gdTimeError").textContent="");
 document.getElementById("gdTime").addEventListener("input",()=>validateCompletionTime(true));
 document.getElementById("gdTimeUnit").addEventListener("change",()=>validateCompletionTime(true));
-buildChoices("gdTypeChoices",GD_GENRES);buildChoices("gdPlatformChoices",GD_PLATFORMS);
+buildChoices("gdTypeChoices",GD_GENRES);
 
 document.addEventListener("click",e=>{
   document.querySelectorAll("details.multi-select[open]").forEach(d=>{
