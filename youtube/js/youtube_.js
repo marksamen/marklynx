@@ -23,6 +23,7 @@ const VIDEO_RESUME_STORAGE_KEY = 'marklynx-video-progress_TEST';
 const VIDEO_RESUME_INTERVAL_MS = 30000;
 let videoResumeTimer = null;
 let videoResumeAppliedId = null;
+let videoResumeActiveId = null;
 
 function readVideoResumeMap(){
   try{
@@ -108,6 +109,7 @@ function handleVideoResumeState(event){
   }
 
   if(state === YT.PlayerState.PLAYING){
+    videoResumeActiveId = currentPlayerVideoId(player) || videoResumeActiveId;
     applySavedVideoResume(player);
     saveSeekCheckpoint(player);
     stopVideoResumeTimer();
@@ -129,7 +131,18 @@ function handleVideoResumeState(event){
   if(state === YT.PlayerState.PAUSED){
     saveCurrentVideoResume(player);
   }else if(state === YT.PlayerState.ENDED){
-    clearCurrentVideoResume(player);
+    // During playlist auto-advance YouTube can switch getVideoData() to the next
+    // item before ENDED is delivered. Clear the video that was actually playing,
+    // not whichever item the player happens to report by the time this event runs.
+    const completedVideoId = videoResumeActiveId;
+    if(completedVideoId){
+      const map = readVideoResumeMap();
+      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
+        delete map[completedVideoId];
+        writeVideoResumeMap(map);
+      }
+    }
+    videoResumeActiveId = null;
     videoResumeAppliedId = null;
   }
 }
@@ -143,6 +156,7 @@ function attachVideoResumeTracking(player){
 function resetVideoResumeSelection(){
   stopVideoResumeTimer();
   videoResumeAppliedId = null;
+  videoResumeActiveId = null;
 }
 
 // ---------- Site-wide video count ----------
