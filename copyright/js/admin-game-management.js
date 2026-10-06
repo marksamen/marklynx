@@ -398,6 +398,17 @@ function parseYoutubeLink(raw){
   if(/^[A-Za-z0-9_-]{11}$/.test(id)) return {type:"video",id,url:`https://www.youtube.com/watch?v=${id}`};
   return null;
 }
+function duplicateYoutubeGame(media,excludeId=null){
+  if(!media)return null;
+  return (window.GAMEDEV_RAW||[]).find(g=>{
+    if(excludeId!==null && Number(g.id)===Number(excludeId))return false;
+    return media.type==="video" ? String(g.v||"")===media.id : String(g.pl||"")===media.id;
+  })||null;
+}
+function duplicateYoutubeMessage(media,game){
+  const kind=media.type==="video"?"video":"playlist";
+  return `This YouTube ${kind} is already assigned to ${game.id} — ${game.n}.`;
+}
 function validateYoutubeLink(addMode=false){
   const el=document.getElementById("gdYoutubeLink"),err=document.getElementById("gdYoutubeLinkError"); if(!el)return true;
   err.textContent=""; if(!addMode)return true;
@@ -622,6 +633,13 @@ async function createGameDev(){
   const qv=qualityValue(); if(qv) record.q=qv;
   const media=parseYoutubeLink(document.getElementById("gdYoutubeLink").value);
   if(!media){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — paste a valid YouTube video or playlist link.";updateCreateButtonState();return;}
+  const duplicateMediaGame=duplicateYoutubeGame(media);
+  if(duplicateMediaGame){
+    const message=duplicateYoutubeMessage(media,duplicateMediaGame);
+    document.getElementById("gdYoutubeLinkError").textContent=message;
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${message}`;
+    return;
+  }
   if(media.type==="playlist")record.pl=media.id;else record.v=media.id;
   record.u=media.url;
   if(document.getElementById("gdAdult").value==="true") record.adult=true;
@@ -767,6 +785,13 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     document.getElementById("gdYoutubeLinkError").textContent="Paste a valid YouTube video or playlist link.";
     writeStatus.style.color="#ff6d6d";
     writeStatus.textContent="SAVE BLOCKED — paste a valid YouTube video or playlist link.";
+    return;
+  }
+  const duplicateMediaGame=duplicateYoutubeGame(media,g.id);
+  if(duplicateMediaGame){
+    const message=duplicateYoutubeMessage(media,duplicateMediaGame);
+    document.getElementById("gdYoutubeLinkError").textContent=message;
+    writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${message}`;
     return;
   }
   patch.u=media.url;
