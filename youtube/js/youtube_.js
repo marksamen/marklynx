@@ -55,6 +55,20 @@ function saveCurrentVideoResume(player){
   }catch(_){}
 }
 
+function saveSeekCheckpoint(player){
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId || !player || !player.getCurrentTime) return;
+  try{
+    const seconds = Number(player.getCurrentTime());
+    if(!Number.isFinite(seconds) || seconds < 30) return;
+    const map = readVideoResumeMap();
+    const saved = Number(map[videoId]);
+    if(Number.isFinite(saved) && Math.abs(seconds - saved) < 5) return;
+    map[videoId] = Math.floor(seconds / 30) * 30;
+    writeVideoResumeMap(map);
+  }catch(_){}
+}
+
 function clearCurrentVideoResume(player){
   const videoId = currentPlayerVideoId(player);
   if(!videoId) return;
@@ -95,6 +109,7 @@ function handleVideoResumeState(event){
 
   if(state === YT.PlayerState.PLAYING){
     applySavedVideoResume(player);
+    saveSeekCheckpoint(player);
     stopVideoResumeTimer();
     videoResumeTimer = setInterval(()=>{
       if(!videoModalOverlay.classList.contains('open')){
