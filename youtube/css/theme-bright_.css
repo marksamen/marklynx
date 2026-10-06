@@ -42,14 +42,18 @@ html[data-theme="bright"] .video-modal { background:#fff; box-shadow:0 20px 60px
 html[data-theme="bright"] .video-modal-player { background:#000; }
 html[data-theme="bright"] .video-modal-close { background:rgba(255,255,255,.94); color:#222; border-color:rgba(0,0,0,.30); }
 html[data-theme="bright"] .video-modal-close:hover { background:#fff; }
-html[data-theme="bright"] .video-modal-sidebar { background:#f7f7f5; border-left-color:#d9b8b5; scrollbar-color:#a63a34 #ececea; }
-html[data-theme="bright"] .video-modal-sidebar-head { background:#f2f2ef; color:#555552; border-bottom-color:#d9b8b5; }
-html[data-theme="bright"] .playlist-item { background:#fff; border-bottom-color:#dededb; }
-html[data-theme="bright"] .playlist-item:hover { background:#faefee; }
-html[data-theme="bright"] .playlist-item.active { background:#f8e3e1; }
-html[data-theme="bright"] .playlist-item-number { color:#686864; }
-html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-track { background:#ececea; }
-html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-thumb { background:#a63a34; border-color:#ececea; }
+/* REV01 TEST: keep the playlist companion panel visually joined to the dark YouTube player,
+   even while the surrounding site is using Bright theme. Geometry and playback are untouched. */
+html[data-theme="bright"] .video-modal-sidebar { background:#080808; border-left-color:#32100e; scrollbar-color:#6f1b17 #0a0a0a; }
+html[data-theme="bright"] .video-modal-sidebar-head { background:#0d0d0d; color:#a8a8a8; border-bottom-color:#32100e; }
+html[data-theme="bright"] .playlist-item { background:#0b0b0b; border-bottom-color:#242424; }
+html[data-theme="bright"] .playlist-item:hover { background:#17100f; }
+html[data-theme="bright"] .playlist-item.active { background:#24100e; border-left-color:var(--red); }
+html[data-theme="bright"] .playlist-item-number { color:#8a8a8a; }
+html[data-theme="bright"] .playlist-item-title { color:#f2f2f2; }
+html[data-theme="bright"] .playlist-loading { color:#a8a8a8; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-track { background:#0a0a0a; }
+html[data-theme="bright"] .video-modal-sidebar::-webkit-scrollbar-thumb { background:#6f1b17; border-color:#0a0a0a; }
 
 /* Developer showcase */
 html[data-theme="bright"] .developer-overlay { background:rgba(20,20,20,.58); }
