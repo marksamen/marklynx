@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-05T08:36:05.457233+00:00",
+  "updated": "2026-10-06T08:33:58.123536+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "Vdyz6u8uTys",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines Tower | Screwtop Tower | All Star Coins",
+      "published": "2026-10-05T13:07:20+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/Vdyz6u8uTys/hqdefault.jpg"
+    },
     {
       "id": "JSYoz0dweQ4",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 6 | Thrilling Spine Coaster | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | No Star Coins | Normal Ex",
       "published": "2026-09-29T15:42:28+00:00",
       "thumbnail": "https://i.ytimg.com/vi/vwu8IHTfgr0/hqdefault.jpg"
-    },
-    {
-      "id": "9Wb_WMcF1X4",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | All Star Coins | Secret E",
-      "published": "2026-09-28T15:04:17+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/9Wb_WMcF1X4/hqdefault.jpg"
     }
   ]
 }
