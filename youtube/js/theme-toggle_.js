@@ -4,7 +4,7 @@
   'use strict';
 
   var root = document.documentElement;
-  var storageKey = 'marklynx-theme';
+  var storageKey = 'marklynx-theme_TEST';
 
   function readSavedTheme() {
     try {
