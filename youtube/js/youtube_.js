@@ -24,6 +24,7 @@ const VIDEO_RESUME_INTERVAL_MS = 30000;
 let videoResumeTimer = null;
 let videoResumeAppliedId = null;
 let videoResumeActiveId = null;
+let videoResumeTransitionFromId = null;
 
 function readVideoResumeMap(){
   try{
@@ -131,7 +132,16 @@ function handleVideoResumeState(event){
   }
 
   if(state === YT.PlayerState.PLAYING){
-    videoResumeActiveId = currentPlayerVideoId(player) || videoResumeActiveId;
+    const playingVideoId = currentPlayerVideoId(player);
+    // YouTube playlist auto-advance can report PLAYING for the next item before
+    // delivering ENDED for the previous one. Preserve the previous identity across
+    // that transition so the later ENDED event clears the video that actually ended.
+    // Manual playlist clicks call resetVideoResumeSelection() first, so they never
+    // populate this auto-advance transition slot and therefore never look completed.
+    if(playingVideoId && videoResumeActiveId && playingVideoId !== videoResumeActiveId){
+      videoResumeTransitionFromId = videoResumeActiveId;
+    }
+    if(playingVideoId) videoResumeActiveId = playingVideoId;
     const resumedFromSavedCheckpoint = applySavedVideoResume(player);
     if(!resumedFromSavedCheckpoint) saveSeekCheckpoint(player);
     stopVideoResumeTimer();
@@ -156,7 +166,7 @@ function handleVideoResumeState(event){
     // During playlist auto-advance YouTube can switch getVideoData() to the next
     // item before ENDED is delivered. Clear the video that was actually playing,
     // not whichever item the player happens to report by the time this event runs.
-    const completedVideoId = videoResumeActiveId;
+    const completedVideoId = videoResumeTransitionFromId || videoResumeActiveId;
     if(completedVideoId){
       const map = readVideoResumeMap();
       if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
@@ -165,6 +175,7 @@ function handleVideoResumeState(event){
       }
     }
     videoResumeActiveId = null;
+    videoResumeTransitionFromId = null;
     videoResumeAppliedId = null;
   }
 }
@@ -179,6 +190,7 @@ function resetVideoResumeSelection(){
   stopVideoResumeTimer();
   videoResumeAppliedId = null;
   videoResumeActiveId = null;
+  videoResumeTransitionFromId = null;
 }
 
 // ---------- Site-wide video count ----------
