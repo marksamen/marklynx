@@ -26,6 +26,39 @@ let videoResumeAppliedId = null;
 let videoResumeActiveId = null;
 let videoResumeTransitionFromId = null;
 
+// REV07 diagnostic instrumentation only. These logs intentionally do not change
+// playback/resume behavior; they expose the exact YouTube state/event ordering and
+// localStorage mutations around playlist auto-advance.
+function videoResumeStateName(state){
+  try{
+    if(state === YT.PlayerState.PLAYING) return 'PLAYING';
+    if(state === YT.PlayerState.PAUSED) return 'PAUSED';
+    if(state === YT.PlayerState.ENDED) return 'ENDED';
+    if(state === YT.PlayerState.BUFFERING) return 'BUFFERING';
+    if(state === YT.PlayerState.CUED) return 'CUED';
+    if(state === YT.PlayerState.UNSTARTED) return 'UNSTARTED';
+  }catch(_){}
+  return String(state);
+}
+
+function videoResumeSnapshot(player){
+  let playlistIndex = null;
+  let playlistIds = [];
+  let videoDataId = '';
+  let resolvedId = '';
+  let currentTime = null;
+  try{ playlistIndex = player && player.getPlaylistIndex ? Number(player.getPlaylistIndex()) : null; }catch(_){}
+  try{ playlistIds = player && player.getPlaylist ? (player.getPlaylist() || []).slice() : []; }catch(_){}
+  try{ const d = player && player.getVideoData ? player.getVideoData() : null; videoDataId = String(d && d.video_id || ''); }catch(_){}
+  try{ resolvedId = currentPlayerVideoId(player); }catch(_){}
+  try{ currentTime = player && player.getCurrentTime ? Number(player.getCurrentTime()) : null; }catch(_){}
+  return { playlistIndex, playlistIds, videoDataId, resolvedId, currentTime, activeId: videoResumeActiveId, transitionFromId: videoResumeTransitionFromId, appliedId: videoResumeAppliedId, storage: readVideoResumeMap() };
+}
+
+function videoResumeLog(label, player, extra){
+  try{ console.log('[RESUME-DIAG REV07]', label, Object.assign(videoResumeSnapshot(player), extra || {})); }catch(_){}
+}
+
 function readVideoResumeMap(){
   try{
     const parsed = JSON.parse(localStorage.getItem(VIDEO_RESUME_STORAGE_KEY) || '{}');
@@ -65,6 +98,7 @@ function saveCurrentVideoResume(player){
     const map = readVideoResumeMap();
     map[videoId] = seconds;
     writeVideoResumeMap(map);
+    videoResumeLog('CHECKPOINT_WRITE', player, { writeVideoId: videoId, writeSeconds: seconds });
   }catch(_){}
 }
 
@@ -77,8 +111,10 @@ function saveSeekCheckpoint(player){
     const map = readVideoResumeMap();
     if(seconds < 30){
       if(Object.prototype.hasOwnProperty.call(map, videoId)){
+        const before = Object.assign({}, map);
         delete map[videoId];
         writeVideoResumeMap(map);
+        videoResumeLog('SEEK_UNDER_30_DELETE', player, { deleteVideoId: videoId, storageBefore: before, storageAfter: readVideoResumeMap() });
       }
       return;
     }
@@ -86,6 +122,7 @@ function saveSeekCheckpoint(player){
     if(Number.isFinite(saved) && Math.abs(seconds - saved) < 5) return;
     map[videoId] = Math.floor(seconds / 30) * 30;
     writeVideoResumeMap(map);
+    videoResumeLog('SEEK_BOUNDARY_WRITE', player, { writeVideoId: videoId, observedSeconds: seconds, writeSeconds: map[videoId] });
   }catch(_){}
 }
 
@@ -123,6 +160,7 @@ function applySavedVideoResume(player){
 function handleVideoResumeState(event){
   const player = event && event.target ? event.target : playlistPlayer;
   const state = event && event.data;
+  videoResumeLog('STATE_' + videoResumeStateName(state), player, { rawState: state });
 
   // closeVideoModal removes .open before stopVideo(), so any state change caused
   // by closing the modal cannot save or clear resume data.
@@ -140,6 +178,7 @@ function handleVideoResumeState(event){
     // populate this auto-advance transition slot and therefore never look completed.
     if(playingVideoId && videoResumeActiveId && playingVideoId !== videoResumeActiveId){
       videoResumeTransitionFromId = videoResumeActiveId;
+      videoResumeLog('AUTO_TRANSITION_CAPTURED', player, { playingVideoId, capturedFromId: videoResumeTransitionFromId });
     }
     if(playingVideoId) videoResumeActiveId = playingVideoId;
     const resumedFromSavedCheckpoint = applySavedVideoResume(player);
@@ -167,12 +206,16 @@ function handleVideoResumeState(event){
     // item before ENDED is delivered. Clear the video that was actually playing,
     // not whichever item the player happens to report by the time this event runs.
     const completedVideoId = videoResumeTransitionFromId || videoResumeActiveId;
+    videoResumeLog('ENDED_DELETE_TARGET', player, { completedVideoId });
     if(completedVideoId){
       const map = readVideoResumeMap();
-      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
+      const before = Object.assign({}, map);
+      const existedBeforeDelete = Object.prototype.hasOwnProperty.call(map, completedVideoId);
+      if(existedBeforeDelete){
         delete map[completedVideoId];
         writeVideoResumeMap(map);
       }
+      videoResumeLog('ENDED_DELETE_RESULT', player, { completedVideoId, existedBeforeDelete, storageBefore: before, storageAfter: readVideoResumeMap() });
     }
     videoResumeActiveId = null;
     videoResumeTransitionFromId = null;
