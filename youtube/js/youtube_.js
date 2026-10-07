@@ -650,6 +650,43 @@ function createPlaylistPlayer(playlistId, token){
 
 let videoModalCloseCallback = null;
 
+// Periodically recycle the shared YouTube iframe so long browsing sessions do not
+// depend forever on one player/event bridge. A close is the lifecycle boundary;
+// seeks, pauses and playlist moves do not count toward the recycle threshold.
+const PLAYER_RECYCLE_CLOSE_THRESHOLD = 5;
+let playerModalCloseCount = 0;
+
+function recycleSharedYouTubePlayerIfDue(){
+  playerModalCloseCount++;
+  if(playerModalCloseCount < PLAYER_RECYCLE_CLOSE_THRESHOLD) return false;
+  playerModalCloseCount = 0;
+
+  if(!playlistPlayer || typeof playlistPlayer.destroy !== 'function') return false;
+
+  resetVideoResumeSelection();
+
+  // YT.Player.destroy() removes the iframe. Preserve its DOM position and restore
+  // the mount div immediately so the next YT.Player constructor has a valid target.
+  let iframe = null, parent = null, next = null;
+  try{
+    iframe = playlistPlayer.getIframe ? playlistPlayer.getIframe() : null;
+    parent = iframe && iframe.parentNode ? iframe.parentNode : null;
+    next = iframe ? iframe.nextSibling : null;
+  }catch(_){}
+
+  try{ playlistPlayer.destroy(); }catch(_){}
+  playlistPlayer = null;
+  mobilePlayerPrimePromise = null;
+
+  if(parent && !document.getElementById('videoModalPlayer')){
+    const mount = document.createElement('div');
+    mount.id = 'videoModalPlayer';
+    if(next && next.parentNode === parent) parent.insertBefore(mount, next);
+    else parent.appendChild(mount);
+  }
+  return true;
+}
+
 function openVideoModal(videoId, title, onClose){
   resetVideoResumeSelection();
   videoModalCloseCallback = typeof onClose === 'function' ? onClose : null;
@@ -716,6 +753,7 @@ function closeVideoModal(){
   if(playlistPlayer && playlistPlayer.stopVideo){
     playlistPlayer.stopVideo();
   }
+  recycleSharedYouTubePlayerIfDue();
   const onClose = videoModalCloseCallback;
   videoModalCloseCallback = null;
   if(onClose) onClose();
