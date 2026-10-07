@@ -20,7 +20,7 @@ let playlistToken = 0;
 // Closing/navigating does not save anything. Playlist position is never stored;
 // playlist videos use the same per-video checkpoint behavior as normal videos.
 const VIDEO_RESUME_STORAGE_KEY = 'marklynx-video-progress_TEST';
-const VIDEO_RESUME_INTERVAL_MS = 30000;
+const VIDEO_RESUME_POLL_MS = 1000;
 let videoResumeTimer = null;
 let videoResumeAppliedId = null;
 let videoResumeActiveId = null;
@@ -64,6 +64,21 @@ function saveCurrentVideoResume(player){
     if(!Number.isFinite(seconds) || seconds < 1) return;
     const map = readVideoResumeMap();
     map[videoId] = seconds;
+    writeVideoResumeMap(map);
+  }catch(_){}
+}
+
+function savePeriodicVideoResume(player){
+  if(!videoModalOverlay.classList.contains('open')) return;
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId || !player || !player.getCurrentTime) return;
+  try{
+    const seconds = Number(player.getCurrentTime());
+    if(!Number.isFinite(seconds) || seconds < 30) return;
+    const checkpoint = Math.floor(seconds / 30) * 30;
+    const map = readVideoResumeMap();
+    if(Number(map[videoId]) === checkpoint) return;
+    map[videoId] = checkpoint;
     writeVideoResumeMap(map);
   }catch(_){}
 }
@@ -170,10 +185,10 @@ function handleVideoResumeState(event){
       }
       try{
         if(player.getPlayerState && player.getPlayerState() === YT.PlayerState.PLAYING){
-          saveCurrentVideoResume(player);
+          savePeriodicVideoResume(player);
         }
       }catch(_){}
-    }, VIDEO_RESUME_INTERVAL_MS);
+    }, VIDEO_RESUME_POLL_MS);
     return;
   }
 
