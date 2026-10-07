@@ -61,8 +61,15 @@ function saveSeekCheckpoint(player){
   if(!videoId || !player || !player.getCurrentTime) return;
   try{
     const seconds = Number(player.getCurrentTime());
-    if(!Number.isFinite(seconds) || seconds < 30) return;
+    if(!Number.isFinite(seconds)) return;
     const map = readVideoResumeMap();
+    if(seconds < 30){
+      if(Object.prototype.hasOwnProperty.call(map, videoId)){
+        delete map[videoId];
+        writeVideoResumeMap(map);
+      }
+      return;
+    }
     const saved = Number(map[videoId]);
     if(Number.isFinite(saved) && Math.abs(seconds - saved) < 5) return;
     map[videoId] = Math.floor(seconds / 30) * 30;
@@ -89,12 +96,16 @@ function stopVideoResumeTimer(){
 
 function applySavedVideoResume(player){
   const videoId = currentPlayerVideoId(player);
-  if(!videoId || videoResumeAppliedId === videoId) return;
+  if(!videoId || videoResumeAppliedId === videoId) return false;
   videoResumeAppliedId = videoId;
   const saved = Number(readVideoResumeMap()[videoId]);
   if(Number.isFinite(saved) && saved >= 1 && player && player.seekTo){
-    try{ player.seekTo(saved, true); }catch(_){}
+    try{
+      player.seekTo(saved, true);
+      return true;
+    }catch(_){}
   }
+  return false;
 }
 
 function handleVideoResumeState(event){
@@ -110,8 +121,8 @@ function handleVideoResumeState(event){
 
   if(state === YT.PlayerState.PLAYING){
     videoResumeActiveId = currentPlayerVideoId(player) || videoResumeActiveId;
-    applySavedVideoResume(player);
-    saveSeekCheckpoint(player);
+    const resumedFromSavedCheckpoint = applySavedVideoResume(player);
+    if(!resumedFromSavedCheckpoint) saveSeekCheckpoint(player);
     stopVideoResumeTimer();
     videoResumeTimer = setInterval(()=>{
       if(!videoModalOverlay.classList.contains('open')){
