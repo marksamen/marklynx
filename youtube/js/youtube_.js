@@ -197,6 +197,16 @@ function handleVideoResumeState(event){
       videoResumeTransitionFromId = null;
     }
     if(playingVideoId) videoResumeActiveId = playingVideoId;
+
+    // REV12: The shared YT.Player can be created first for a normal video and later
+    // reused for a playlist via loadPlaylist(). In that reuse path, the playlist-only
+    // onStateChange callback from createPlaylistPlayer() was never installed. REV11
+    // proved the authoritative player index advanced while the custom sidebar stayed
+    // on the previous item. The resume state listener is attached to every shared
+    // player, so use its PLAYING event to repair the sidebar only when its active
+    // index differs from YouTube's authoritative playlist index.
+    syncPlaylistSidebarIfNeeded('RESUME_PLAYING');
+
     const resumedFromSavedCheckpoint = applySavedVideoResume(player);
     if(!resumedFromSavedCheckpoint) saveSeekCheckpoint(player);
     stopVideoResumeTimer();
@@ -676,6 +686,20 @@ function syncPlaylistSidebar(reason){
   renderPlaylistItems(ids, playlistPlayer.getPlaylistIndex ? playlistPlayer.getPlaylistIndex() : 0, playlistToken);
   playlistSyncLog('SYNC_AFTER', { reason: reason || 'unspecified' });
   return true;
+}
+
+function syncPlaylistSidebarIfNeeded(reason){
+  if(!playlistPlayer || !videoModalSidebar || videoModalSidebar.style.display !== 'block') return false;
+  let ids = [], playerIndex = -1;
+  try{ ids = playlistPlayer.getPlaylist ? (playlistPlayer.getPlaylist() || []) : []; }catch(_){}
+  try{ playerIndex = playlistPlayer.getPlaylistIndex ? Number(playlistPlayer.getPlaylistIndex()) : -1; }catch(_){}
+  if(!ids.length || !Number.isFinite(playerIndex) || playerIndex < 0) return false;
+  const activeEl = videoModalPlaylist && videoModalPlaylist.querySelector ? videoModalPlaylist.querySelector('.playlist-item.active') : null;
+  const sidebarIndex = activeEl ? Number(activeEl.dataset.playIndex) : -1;
+  playlistSyncLog('SYNC_CHECK', { reason: reason || 'unspecified', playerIndex, sidebarIndex });
+  if(sidebarIndex === playerIndex) return true;
+  playlistSyncLog('SYNC_MISMATCH_REPAIR', { reason: reason || 'unspecified', playerIndex, sidebarIndex });
+  return syncPlaylistSidebar(reason || 'MISMATCH_REPAIR');
 }
 
 function createPlaylistPlayer(playlistId, token){
