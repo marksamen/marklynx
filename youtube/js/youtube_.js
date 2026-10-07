@@ -26,39 +26,6 @@ let videoResumeAppliedId = null;
 let videoResumeActiveId = null;
 let videoResumeTransitionFromId = null;
 
-// REV11 restores resume diagnostics and adds targeted playlist-sidebar timing diagnostics.
-// REV07 proved YouTube does not reliably emit ENDED during playlist auto-advance,
-// so these logs remain until the complete playback feature passes and is cleaned up.
-function videoResumeStateName(state){
-  try{
-    if(state === YT.PlayerState.PLAYING) return 'PLAYING';
-    if(state === YT.PlayerState.PAUSED) return 'PAUSED';
-    if(state === YT.PlayerState.ENDED) return 'ENDED';
-    if(state === YT.PlayerState.BUFFERING) return 'BUFFERING';
-    if(state === YT.PlayerState.CUED) return 'CUED';
-    if(state === YT.PlayerState.UNSTARTED) return 'UNSTARTED';
-  }catch(_){}
-  return String(state);
-}
-
-function videoResumeSnapshot(player){
-  let playlistIndex = null;
-  let playlistIds = [];
-  let videoDataId = '';
-  let resolvedId = '';
-  let currentTime = null;
-  try{ playlistIndex = player && player.getPlaylistIndex ? Number(player.getPlaylistIndex()) : null; }catch(_){}
-  try{ playlistIds = player && player.getPlaylist ? (player.getPlaylist() || []).slice() : []; }catch(_){}
-  try{ const d = player && player.getVideoData ? player.getVideoData() : null; videoDataId = String(d && d.video_id || ''); }catch(_){}
-  try{ resolvedId = currentPlayerVideoId(player); }catch(_){}
-  try{ currentTime = player && player.getCurrentTime ? Number(player.getCurrentTime()) : null; }catch(_){}
-  return { playlistIndex, playlistIds, videoDataId, resolvedId, currentTime, activeId: videoResumeActiveId, transitionFromId: videoResumeTransitionFromId, appliedId: videoResumeAppliedId, storage: readVideoResumeMap() };
-}
-
-function videoResumeLog(label, player, extra){
-  try{ console.log('[RESUME-DIAG REV11]', label, Object.assign(videoResumeSnapshot(player), extra || {})); }catch(_){}
-}
-
 function readVideoResumeMap(){
   try{
     const parsed = JSON.parse(localStorage.getItem(VIDEO_RESUME_STORAGE_KEY) || '{}');
@@ -98,7 +65,6 @@ function saveCurrentVideoResume(player){
     const map = readVideoResumeMap();
     map[videoId] = seconds;
     writeVideoResumeMap(map);
-    videoResumeLog('CHECKPOINT_WRITE', player, { writeVideoId: videoId, writeSeconds: seconds });
   }catch(_){}
 }
 
@@ -111,10 +77,8 @@ function saveSeekCheckpoint(player){
     const map = readVideoResumeMap();
     if(seconds < 30){
       if(Object.prototype.hasOwnProperty.call(map, videoId)){
-        const before = Object.assign({}, map);
-        delete map[videoId];
+          delete map[videoId];
         writeVideoResumeMap(map);
-        videoResumeLog('SEEK_UNDER_30_DELETE', player, { deleteVideoId: videoId, storageBefore: before, storageAfter: readVideoResumeMap() });
       }
       return;
     }
@@ -122,7 +86,6 @@ function saveSeekCheckpoint(player){
     if(Number.isFinite(saved) && Math.abs(seconds - saved) < 5) return;
     map[videoId] = Math.floor(seconds / 30) * 30;
     writeVideoResumeMap(map);
-    videoResumeLog('SEEK_BOUNDARY_WRITE', player, { writeVideoId: videoId, observedSeconds: seconds, writeSeconds: map[videoId] });
   }catch(_){}
 }
 
@@ -160,7 +123,6 @@ function applySavedVideoResume(player){
 function handleVideoResumeState(event){
   const player = event && event.target ? event.target : playlistPlayer;
   const state = event && event.data;
-  videoResumeLog('STATE_' + videoResumeStateName(state), player, { rawState: state });
 
   // closeVideoModal removes .open before stopVideo(), so any state change caused
   // by closing the modal cannot save or clear resume data.
@@ -181,27 +143,18 @@ function handleVideoResumeState(event){
       videoResumeTransitionFromId = videoResumeActiveId;
       const completedVideoId = videoResumeTransitionFromId;
       const map = readVideoResumeMap();
-      const before = Object.assign({}, map);
-      const existedBeforeDelete = Object.prototype.hasOwnProperty.call(map, completedVideoId);
-      if(existedBeforeDelete){
+      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
         delete map[completedVideoId];
         writeVideoResumeMap(map);
       }
-      videoResumeLog('AUTO_COMPLETION_DELETE', player, {
-        playingVideoId,
-        completedVideoId,
-        existedBeforeDelete,
-        storageBefore: before,
-        storageAfter: readVideoResumeMap()
-      });
       videoResumeTransitionFromId = null;
     }
     if(playingVideoId) videoResumeActiveId = playingVideoId;
 
-    // REV12: The shared YT.Player can be created first for a normal video and later
+    // The shared YT.Player can be created first for a normal video and later
     // reused for a playlist via loadPlaylist(). In that reuse path, the playlist-only
-    // onStateChange callback from createPlaylistPlayer() was never installed. REV11
-    // proved the authoritative player index advanced while the custom sidebar stayed
+    // onStateChange callback from createPlaylistPlayer() is never installed. The
+    // authoritative player index can therefore advance while the custom sidebar stays
     // on the previous item. The resume state listener is attached to every shared
     // player, so use its PLAYING event to repair the sidebar only when its active
     // index differs from YouTube's authoritative playlist index.
@@ -232,16 +185,12 @@ function handleVideoResumeState(event){
     // item before ENDED is delivered. Clear the video that was actually playing,
     // not whichever item the player happens to report by the time this event runs.
     const completedVideoId = videoResumeTransitionFromId || videoResumeActiveId;
-    videoResumeLog('ENDED_DELETE_TARGET', player, { completedVideoId });
     if(completedVideoId){
       const map = readVideoResumeMap();
-      const before = Object.assign({}, map);
-      const existedBeforeDelete = Object.prototype.hasOwnProperty.call(map, completedVideoId);
-      if(existedBeforeDelete){
+      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
         delete map[completedVideoId];
         writeVideoResumeMap(map);
       }
-      videoResumeLog('ENDED_DELETE_RESULT', player, { completedVideoId, existedBeforeDelete, storageBefore: before, storageAfter: readVideoResumeMap() });
     }
     videoResumeActiveId = null;
     videoResumeTransitionFromId = null;
@@ -625,12 +574,10 @@ function renderPlaylistItems(videoIds, activeIndex, token){
     el.addEventListener('click', ()=>{
       const index = Number(el.dataset.playIndex);
       if(playlistPlayer && Number.isFinite(index)){
-        playlistSyncLog('MANUAL_CLICK_BEFORE', { requestedIndex:index });
         resetVideoResumeSelection();
         playlistPlayer.playVideoAt(index);
         videoModalPlaylist.querySelectorAll('.playlist-item').forEach(x=>x.classList.remove('active'));
         el.classList.add('active');
-        playlistSyncLog('MANUAL_CLICK_AFTER', { requestedIndex:index });
       }
     });
   });
@@ -651,40 +598,11 @@ function renderPlaylistItems(videoIds, activeIndex, token){
   requestAnimationFrame(updateMobilePlaylistMoreCue);
 }
 
-function playlistSyncSnapshot(){
-  let playerIndex = null, ids = [], videoDataId = '', playerState = null;
-  try{ playerIndex = playlistPlayer && playlistPlayer.getPlaylistIndex ? Number(playlistPlayer.getPlaylistIndex()) : null; }catch(_){}
-  try{ ids = playlistPlayer && playlistPlayer.getPlaylist ? (playlistPlayer.getPlaylist() || []).slice() : []; }catch(_){}
-  try{ const d = playlistPlayer && playlistPlayer.getVideoData ? playlistPlayer.getVideoData() : null; videoDataId = String(d && d.video_id || ''); }catch(_){}
-  try{ playerState = playlistPlayer && playlistPlayer.getPlayerState ? playlistPlayer.getPlayerState() : null; }catch(_){}
-  const activeEl = videoModalPlaylist && videoModalPlaylist.querySelector ? videoModalPlaylist.querySelector('.playlist-item.active') : null;
-  const activeIndex = activeEl ? Number(activeEl.dataset.playIndex) : null;
-  return {
-    playerIndex,
-    playlistIds: ids,
-    indexedVideoId: Number.isFinite(playerIndex) ? String(ids[playerIndex] || '') : '',
-    videoDataId,
-    playerState,
-    resolvedId: currentPlayerVideoId(playlistPlayer),
-    sidebarActiveIndex: activeIndex,
-    sidebarActiveId: Number.isFinite(activeIndex) ? String(ids[activeIndex] || '') : '',
-    playlistToken,
-    activeResumeId: videoResumeActiveId,
-    transitionFromId: videoResumeTransitionFromId
-  };
-}
-
-function playlistSyncLog(label, extra){
-  try{ console.log('[PLAYLIST-SYNC-DIAG REV11]', label, Object.assign(playlistSyncSnapshot(), extra || {})); }catch(_){}
-}
-
 function syncPlaylistSidebar(reason){
   if(!playlistPlayer) return;
   const ids = playlistPlayer.getPlaylist ? (playlistPlayer.getPlaylist() || []) : [];
   if(!ids.length) return false;
-  playlistSyncLog('SYNC_BEFORE', { reason: reason || 'unspecified' });
   renderPlaylistItems(ids, playlistPlayer.getPlaylistIndex ? playlistPlayer.getPlaylistIndex() : 0, playlistToken);
-  playlistSyncLog('SYNC_AFTER', { reason: reason || 'unspecified' });
   return true;
 }
 
@@ -696,9 +614,7 @@ function syncPlaylistSidebarIfNeeded(reason){
   if(!ids.length || !Number.isFinite(playerIndex) || playerIndex < 0) return false;
   const activeEl = videoModalPlaylist && videoModalPlaylist.querySelector ? videoModalPlaylist.querySelector('.playlist-item.active') : null;
   const sidebarIndex = activeEl ? Number(activeEl.dataset.playIndex) : -1;
-  playlistSyncLog('SYNC_CHECK', { reason: reason || 'unspecified', playerIndex, sidebarIndex });
   if(sidebarIndex === playerIndex) return true;
-  playlistSyncLog('SYNC_MISMATCH_REPAIR', { reason: reason || 'unspecified', playerIndex, sidebarIndex });
   return syncPlaylistSidebar(reason || 'MISMATCH_REPAIR');
 }
 
@@ -725,13 +641,8 @@ function createPlaylistPlayer(playlistId, token){
           if(syncPlaylistSidebar('READY_POLL') || ++attempts > 60) clearInterval(poll);
         }, 250);
       },
-      onStateChange: event=>{
-        playlistSyncLog('STATE_CHANGE_BEFORE_SYNC', { rawState:event && event.data, stateName:videoResumeStateName(event && event.data) });
+      onStateChange: ()=>{
         syncPlaylistSidebar('STATE_CHANGE');
-        playlistSyncLog('STATE_CHANGE_AFTER_SYNC', { rawState:event && event.data, stateName:videoResumeStateName(event && event.data) });
-        [0, 25, 75, 150, 300, 600].forEach(delay=>{
-          setTimeout(()=>playlistSyncLog('STATE_CHANGE_DELAYED_OBSERVE', { delayMs:delay, rawState:event && event.data, stateName:videoResumeStateName(event && event.data) }), delay);
-        });
       }
     }
   });
