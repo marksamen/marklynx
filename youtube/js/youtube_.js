@@ -16,7 +16,7 @@ let playlistToken = 0;
 // Keep resume state deliberately simple and local to each YouTube video ID:
 //   PLAYING -> checkpoint about every 30 seconds
 //   PAUSED  -> checkpoint immediately
-//   ENDED   -> clear the checkpoint
+//   ENDED / confirmed playlist auto-advance -> clear the completed checkpoint
 // Closing/navigating does not save anything. Playlist position is never stored;
 // playlist videos use the same per-video checkpoint behavior as normal videos.
 const VIDEO_RESUME_STORAGE_KEY = 'marklynx-video-progress_TEST';
@@ -26,9 +26,9 @@ let videoResumeAppliedId = null;
 let videoResumeActiveId = null;
 let videoResumeTransitionFromId = null;
 
-// REV07 diagnostic instrumentation only. These logs intentionally do not change
-// playback/resume behavior; they expose the exact YouTube state/event ordering and
-// localStorage mutations around playlist auto-advance.
+// REV08 keeps the diagnostic instrumentation active during TEST torture QA.
+// REV07 proved YouTube does not reliably emit ENDED during playlist auto-advance,
+// so these logs remain until the complete playback feature passes and is cleaned up.
 function videoResumeStateName(state){
   try{
     if(state === YT.PlayerState.PLAYING) return 'PLAYING';
@@ -56,7 +56,7 @@ function videoResumeSnapshot(player){
 }
 
 function videoResumeLog(label, player, extra){
-  try{ console.log('[RESUME-DIAG REV07]', label, Object.assign(videoResumeSnapshot(player), extra || {})); }catch(_){}
+  try{ console.log('[RESUME-DIAG REV08]', label, Object.assign(videoResumeSnapshot(player), extra || {})); }catch(_){}
 }
 
 function readVideoResumeMap(){
@@ -171,14 +171,30 @@ function handleVideoResumeState(event){
 
   if(state === YT.PlayerState.PLAYING){
     const playingVideoId = currentPlayerVideoId(player);
-    // YouTube playlist auto-advance can report PLAYING for the next item before
-    // delivering ENDED for the previous one. Preserve the previous identity across
-    // that transition so the later ENDED event clears the video that actually ended.
-    // Manual playlist clicks call resetVideoResumeSelection() first, so they never
-    // populate this auto-advance transition slot and therefore never look completed.
+    // REV07 diagnostics proved this embedded playlist does NOT reliably emit ENDED
+    // for the previous item during natural auto-advance. The reliable completion
+    // signal is PLAYING with a different playlist video ID while an active ID still
+    // exists. Manual playlist clicks call resetVideoResumeSelection() before
+    // playVideoAt(), so they arrive here with no previous active ID and are never
+    // mistaken for completion.
     if(playingVideoId && videoResumeActiveId && playingVideoId !== videoResumeActiveId){
       videoResumeTransitionFromId = videoResumeActiveId;
-      videoResumeLog('AUTO_TRANSITION_CAPTURED', player, { playingVideoId, capturedFromId: videoResumeTransitionFromId });
+      const completedVideoId = videoResumeTransitionFromId;
+      const map = readVideoResumeMap();
+      const before = Object.assign({}, map);
+      const existedBeforeDelete = Object.prototype.hasOwnProperty.call(map, completedVideoId);
+      if(existedBeforeDelete){
+        delete map[completedVideoId];
+        writeVideoResumeMap(map);
+      }
+      videoResumeLog('AUTO_COMPLETION_DELETE', player, {
+        playingVideoId,
+        completedVideoId,
+        existedBeforeDelete,
+        storageBefore: before,
+        storageAfter: readVideoResumeMap()
+      });
+      videoResumeTransitionFromId = null;
     }
     if(playingVideoId) videoResumeActiveId = playingVideoId;
     const resumedFromSavedCheckpoint = applySavedVideoResume(player);
