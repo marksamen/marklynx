@@ -684,6 +684,13 @@ function recycleSharedYouTubePlayerIfDue(){
     if(next && next.parentNode === parent) parent.insertBefore(mount, next);
     else parent.appendChild(mount);
   }
+
+  // Preserve the existing mobile first-open/autoplay fix across a recycle. Mobile
+  // normally enters a click with an already-primed empty player; rebuilding that
+  // shell immediately after close keeps the next playlist open on the proven path.
+  if(isMobileYouTubePrimeTarget()){
+    primeMobileYouTubePlayer().catch(()=>{});
+  }
   return true;
 }
 
