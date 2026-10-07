@@ -11,6 +11,206 @@ let playlistPlayer = null;
 let pendingPlaylist = null;
 let playlistToken = 0;
 
+
+// ---------- Playback resume checkpoints (TEST) ----------
+// Keep resume state deliberately simple and local to each YouTube video ID:
+//   PLAYING -> checkpoint about every 30 seconds
+//   PAUSED  -> checkpoint immediately
+//   ENDED / confirmed playlist auto-advance -> clear the completed checkpoint
+// Closing/navigating does not save anything. Playlist position is never stored;
+// playlist videos use the same per-video checkpoint behavior as normal videos.
+const VIDEO_RESUME_STORAGE_KEY = 'marklynx-video-progress';
+const VIDEO_RESUME_INTERVAL_MS = 30000;
+let videoResumeTimer = null;
+let videoResumeAppliedId = null;
+let videoResumeActiveId = null;
+let videoResumeTransitionFromId = null;
+
+function readVideoResumeMap(){
+  try{
+    const parsed = JSON.parse(localStorage.getItem(VIDEO_RESUME_STORAGE_KEY) || '{}');
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+  }catch(_){ return {}; }
+}
+
+function writeVideoResumeMap(map){
+  try{ localStorage.setItem(VIDEO_RESUME_STORAGE_KEY, JSON.stringify(map)); }catch(_){}
+}
+
+function currentPlayerVideoId(player){
+  try{
+    // For playlists, getVideoData() can briefly report the previous item while
+    // YouTube is auto-advancing. The playlist index is the authoritative item
+    // identity once the next video begins playing.
+    if(player && player.getPlaylist && player.getPlaylistIndex){
+      const ids = player.getPlaylist() || [];
+      const index = Number(player.getPlaylistIndex());
+      if(Array.isArray(ids) && Number.isInteger(index) && index >= 0 && index < ids.length){
+        const playlistVideoId = String(ids[index] || '').trim();
+        if(playlistVideoId) return playlistVideoId;
+      }
+    }
+    const data = player && player.getVideoData ? player.getVideoData() : null;
+    return String(data && data.video_id || '').trim();
+  }catch(_){ return ''; }
+}
+
+function saveCurrentVideoResume(player){
+  if(!videoModalOverlay.classList.contains('open')) return;
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId || !player || !player.getCurrentTime) return;
+  try{
+    const seconds = Number(player.getCurrentTime());
+    if(!Number.isFinite(seconds) || seconds < 1) return;
+    const map = readVideoResumeMap();
+    map[videoId] = seconds;
+    writeVideoResumeMap(map);
+  }catch(_){}
+}
+
+function saveSeekCheckpoint(player){
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId || !player || !player.getCurrentTime) return;
+  try{
+    const seconds = Number(player.getCurrentTime());
+    if(!Number.isFinite(seconds)) return;
+    const map = readVideoResumeMap();
+    if(seconds < 30){
+      if(Object.prototype.hasOwnProperty.call(map, videoId)){
+          delete map[videoId];
+        writeVideoResumeMap(map);
+      }
+      return;
+    }
+    const saved = Number(map[videoId]);
+    if(Number.isFinite(saved) && Math.abs(seconds - saved) < 5) return;
+    map[videoId] = Math.floor(seconds / 30) * 30;
+    writeVideoResumeMap(map);
+  }catch(_){}
+}
+
+function clearCurrentVideoResume(player){
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId) return;
+  const map = readVideoResumeMap();
+  if(Object.prototype.hasOwnProperty.call(map, videoId)){
+    delete map[videoId];
+    writeVideoResumeMap(map);
+  }
+}
+
+function stopVideoResumeTimer(){
+  if(videoResumeTimer){
+    clearInterval(videoResumeTimer);
+    videoResumeTimer = null;
+  }
+}
+
+function applySavedVideoResume(player){
+  const videoId = currentPlayerVideoId(player);
+  if(!videoId || videoResumeAppliedId === videoId) return false;
+  videoResumeAppliedId = videoId;
+  const saved = Number(readVideoResumeMap()[videoId]);
+  if(Number.isFinite(saved) && saved >= 1 && player && player.seekTo){
+    try{
+      player.seekTo(saved, true);
+      return true;
+    }catch(_){}
+  }
+  return false;
+}
+
+function handleVideoResumeState(event){
+  const player = event && event.target ? event.target : playlistPlayer;
+  const state = event && event.data;
+
+  // closeVideoModal removes .open before stopVideo(), so any state change caused
+  // by closing the modal cannot save or clear resume data.
+  if(!videoModalOverlay.classList.contains('open')){
+    stopVideoResumeTimer();
+    return;
+  }
+
+  if(state === YT.PlayerState.PLAYING){
+    const playingVideoId = currentPlayerVideoId(player);
+    // REV07 diagnostics proved this embedded playlist does NOT reliably emit ENDED
+    // for the previous item during natural auto-advance. The reliable completion
+    // signal is PLAYING with a different playlist video ID while an active ID still
+    // exists. Manual playlist clicks call resetVideoResumeSelection() before
+    // playVideoAt(), so they arrive here with no previous active ID and are never
+    // mistaken for completion.
+    if(playingVideoId && videoResumeActiveId && playingVideoId !== videoResumeActiveId){
+      videoResumeTransitionFromId = videoResumeActiveId;
+      const completedVideoId = videoResumeTransitionFromId;
+      const map = readVideoResumeMap();
+      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
+        delete map[completedVideoId];
+        writeVideoResumeMap(map);
+      }
+      videoResumeTransitionFromId = null;
+    }
+    if(playingVideoId) videoResumeActiveId = playingVideoId;
+
+    // The shared YT.Player can be created first for a normal video and later
+    // reused for a playlist via loadPlaylist(). In that reuse path, the playlist-only
+    // onStateChange callback from createPlaylistPlayer() is never installed. The
+    // authoritative player index can therefore advance while the custom sidebar stays
+    // on the previous item. The resume state listener is attached to every shared
+    // player, so use its PLAYING event to repair the sidebar only when its active
+    // index differs from YouTube's authoritative playlist index.
+    syncPlaylistSidebarIfNeeded('RESUME_PLAYING');
+
+    const resumedFromSavedCheckpoint = applySavedVideoResume(player);
+    if(!resumedFromSavedCheckpoint) saveSeekCheckpoint(player);
+    stopVideoResumeTimer();
+    videoResumeTimer = setInterval(()=>{
+      if(!videoModalOverlay.classList.contains('open')){
+        stopVideoResumeTimer();
+        return;
+      }
+      try{
+        if(player.getPlayerState && player.getPlayerState() === YT.PlayerState.PLAYING){
+          saveCurrentVideoResume(player);
+        }
+      }catch(_){}
+    }, VIDEO_RESUME_INTERVAL_MS);
+    return;
+  }
+
+  stopVideoResumeTimer();
+  if(state === YT.PlayerState.PAUSED){
+    saveCurrentVideoResume(player);
+  }else if(state === YT.PlayerState.ENDED){
+    // During playlist auto-advance YouTube can switch getVideoData() to the next
+    // item before ENDED is delivered. Clear the video that was actually playing,
+    // not whichever item the player happens to report by the time this event runs.
+    const completedVideoId = videoResumeTransitionFromId || videoResumeActiveId;
+    if(completedVideoId){
+      const map = readVideoResumeMap();
+      if(Object.prototype.hasOwnProperty.call(map, completedVideoId)){
+        delete map[completedVideoId];
+        writeVideoResumeMap(map);
+      }
+    }
+    videoResumeActiveId = null;
+    videoResumeTransitionFromId = null;
+    videoResumeAppliedId = null;
+  }
+}
+
+function attachVideoResumeTracking(player){
+  if(!player || player.__markLynxResumeTracking) return;
+  player.__markLynxResumeTracking = true;
+  try{ player.addEventListener('onStateChange', handleVideoResumeState); }catch(_){}
+}
+
+function resetVideoResumeSelection(){
+  stopVideoResumeTimer();
+  videoResumeAppliedId = null;
+  videoResumeActiveId = null;
+  videoResumeTransitionFromId = null;
+}
+
 // ---------- Site-wide video count ----------
 // Adult-flag playback + fallback diagnostic build.
 // Normal playlists are discovered through the YouTube IFrame API.
@@ -309,7 +509,7 @@ function primeMobileYouTubePlayer(){
       width: '100%',
       height: '100%',
       playerVars: { autoplay: 0, rel: 0, playsinline: 1 },
-      events: { onReady: ()=>resolve() }
+      events: { onReady: event=>{ attachVideoResumeTracking(event.target); resolve(); } }
     });
   }));
   return mobilePlayerPrimePromise;
@@ -374,6 +574,7 @@ function renderPlaylistItems(videoIds, activeIndex, token){
     el.addEventListener('click', ()=>{
       const index = Number(el.dataset.playIndex);
       if(playlistPlayer && Number.isFinite(index)){
+        resetVideoResumeSelection();
         playlistPlayer.playVideoAt(index);
         videoModalPlaylist.querySelectorAll('.playlist-item').forEach(x=>x.classList.remove('active'));
         el.classList.add('active');
@@ -397,12 +598,24 @@ function renderPlaylistItems(videoIds, activeIndex, token){
   requestAnimationFrame(updateMobilePlaylistMoreCue);
 }
 
-function syncPlaylistSidebar(){
+function syncPlaylistSidebar(reason){
   if(!playlistPlayer) return;
   const ids = playlistPlayer.getPlaylist ? (playlistPlayer.getPlaylist() || []) : [];
   if(!ids.length) return false;
   renderPlaylistItems(ids, playlistPlayer.getPlaylistIndex ? playlistPlayer.getPlaylistIndex() : 0, playlistToken);
   return true;
+}
+
+function syncPlaylistSidebarIfNeeded(reason){
+  if(!playlistPlayer || !videoModalSidebar || videoModalSidebar.style.display !== 'block') return false;
+  let ids = [], playerIndex = -1;
+  try{ ids = playlistPlayer.getPlaylist ? (playlistPlayer.getPlaylist() || []) : []; }catch(_){}
+  try{ playerIndex = playlistPlayer.getPlaylistIndex ? Number(playlistPlayer.getPlaylistIndex()) : -1; }catch(_){}
+  if(!ids.length || !Number.isFinite(playerIndex) || playerIndex < 0) return false;
+  const activeEl = videoModalPlaylist && videoModalPlaylist.querySelector ? videoModalPlaylist.querySelector('.playlist-item.active') : null;
+  const sidebarIndex = activeEl ? Number(activeEl.dataset.playIndex) : -1;
+  if(sidebarIndex === playerIndex) return true;
+  return syncPlaylistSidebar(reason || 'MISMATCH_REPAIR');
 }
 
 function createPlaylistPlayer(playlistId, token){
@@ -420,15 +633,16 @@ function createPlaylistPlayer(playlistId, token){
     events: {
       onReady: event=>{
         if(token !== playlistToken) return;
+        attachVideoResumeTracking(event.target);
         if(event.target.playVideo) event.target.playVideo();
         let attempts = 0;
         const poll = setInterval(()=>{
           if(token !== playlistToken){ clearInterval(poll); return; }
-          if(syncPlaylistSidebar() || ++attempts > 60) clearInterval(poll);
+          if(syncPlaylistSidebar('READY_POLL') || ++attempts > 60) clearInterval(poll);
         }, 250);
       },
       onStateChange: ()=>{
-        syncPlaylistSidebar();
+        syncPlaylistSidebar('STATE_CHANGE');
       }
     }
   });
@@ -436,7 +650,52 @@ function createPlaylistPlayer(playlistId, token){
 
 let videoModalCloseCallback = null;
 
+// Periodically recycle the shared YouTube iframe so long browsing sessions do not
+// depend forever on one player/event bridge. A close is the lifecycle boundary;
+// seeks, pauses and playlist moves do not count toward the recycle threshold.
+const PLAYER_RECYCLE_CLOSE_THRESHOLD = 5;
+let playerModalCloseCount = 0;
+
+function recycleSharedYouTubePlayerIfDue(){
+  playerModalCloseCount++;
+  if(playerModalCloseCount < PLAYER_RECYCLE_CLOSE_THRESHOLD) return false;
+  playerModalCloseCount = 0;
+
+  if(!playlistPlayer || typeof playlistPlayer.destroy !== 'function') return false;
+
+  resetVideoResumeSelection();
+
+  // YT.Player.destroy() removes the iframe. Preserve its DOM position and restore
+  // the mount div immediately so the next YT.Player constructor has a valid target.
+  let iframe = null, parent = null, next = null;
+  try{
+    iframe = playlistPlayer.getIframe ? playlistPlayer.getIframe() : null;
+    parent = iframe && iframe.parentNode ? iframe.parentNode : null;
+    next = iframe ? iframe.nextSibling : null;
+  }catch(_){}
+
+  try{ playlistPlayer.destroy(); }catch(_){}
+  playlistPlayer = null;
+  mobilePlayerPrimePromise = null;
+
+  if(parent && !document.getElementById('videoModalPlayer')){
+    const mount = document.createElement('div');
+    mount.id = 'videoModalPlayer';
+    if(next && next.parentNode === parent) parent.insertBefore(mount, next);
+    else parent.appendChild(mount);
+  }
+
+  // Preserve the existing mobile first-open/autoplay fix across a recycle. Mobile
+  // normally enters a click with an already-primed empty player; rebuilding that
+  // shell immediately after close keeps the next playlist open on the proven path.
+  if(isMobileYouTubePrimeTarget()){
+    primeMobileYouTubePlayer().catch(()=>{});
+  }
+  return true;
+}
+
 function openVideoModal(videoId, title, onClose){
+  resetVideoResumeSelection();
   videoModalCloseCallback = typeof onClose === 'function' ? onClose : null;
   playlistToken++;
   pendingPlaylist = null;
@@ -447,6 +706,7 @@ function openVideoModal(videoId, title, onClose){
 
   loadYouTubeIframeAPI().then(()=>waitForMobilePlayerPrime()).then(()=>{
     if(playlistPlayer && playlistPlayer.loadVideoById){
+      attachVideoResumeTracking(playlistPlayer);
       playlistPlayer.loadVideoById(videoId);
       if(playlistPlayer.playVideo) playlistPlayer.playVideo();
     } else {
@@ -457,6 +717,7 @@ function openVideoModal(videoId, title, onClose){
         playerVars: { autoplay: 1, rel: 0, playsinline: 1 },
         events: {
           onReady: event=>{
+            attachVideoResumeTracking(event.target);
             if(event.target.playVideo) event.target.playVideo();
           }
         }
@@ -466,6 +727,7 @@ function openVideoModal(videoId, title, onClose){
 }
 
 function openPlaylistModal(playlistId, title, onClose){
+  resetVideoResumeSelection();
   videoModalCloseCallback = typeof onClose === 'function' ? onClose : null;
   playlistToken++;
   const token = playlistToken;
@@ -480,6 +742,7 @@ function openPlaylistModal(playlistId, title, onClose){
   loadYouTubeIframeAPI().then(()=>waitForMobilePlayerPrime()).then(()=>{
     if(token !== playlistToken) return;
     if(playlistPlayer && playlistPlayer.loadPlaylist){
+      attachVideoResumeTracking(playlistPlayer);
       playlistPlayer.loadPlaylist({listType:'playlist', list:playlistId, index:0});
       setTimeout(syncPlaylistSidebar, 500);
     } else {
@@ -497,6 +760,7 @@ function closeVideoModal(){
   if(playlistPlayer && playlistPlayer.stopVideo){
     playlistPlayer.stopVideo();
   }
+  recycleSharedYouTubePlayerIfDue();
   const onClose = videoModalCloseCallback;
   videoModalCloseCallback = null;
   if(onClose) onClose();
