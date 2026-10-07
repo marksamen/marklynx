@@ -38,6 +38,17 @@ function writeVideoResumeMap(map){
 
 function currentPlayerVideoId(player){
   try{
+    // For playlists, getVideoData() can briefly report the previous item while
+    // YouTube is auto-advancing. The playlist index is the authoritative item
+    // identity once the next video begins playing.
+    if(player && player.getPlaylist && player.getPlaylistIndex){
+      const ids = player.getPlaylist() || [];
+      const index = Number(player.getPlaylistIndex());
+      if(Array.isArray(ids) && Number.isInteger(index) && index >= 0 && index < ids.length){
+        const playlistVideoId = String(ids[index] || '').trim();
+        if(playlistVideoId) return playlistVideoId;
+      }
+    }
     const data = player && player.getVideoData ? player.getVideoData() : null;
     return String(data && data.video_id || '').trim();
   }catch(_){ return ''; }

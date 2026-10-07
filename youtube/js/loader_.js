@@ -320,7 +320,7 @@
       if (!Number.isFinite(totalVideos) || totalVideos < 0) throw new Error('stats.json: invalid totalVideos');
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
-      await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV04');
+      await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV05');
       await loadScript('js/site_.js?v=GENRE-MULTISELECT-REV05');
       await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV02');
