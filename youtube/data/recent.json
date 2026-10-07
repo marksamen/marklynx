@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-06T08:33:58.123536+00:00",
+  "updated": "2026-10-07T08:35:38.641429+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "YBYJzh4PQXw",
+      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 7 | Shifting Floor Cave | All Star Coins",
+      "published": "2026-10-06T14:58:37+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/YBYJzh4PQXw/hqdefault.jpg"
+    },
     {
       "id": "Vdyz6u8uTys",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines Tower | Screwtop Tower | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 3 | Waddlewing's Nest | All Star Coins | Normal Ex",
       "published": "2026-09-30T14:35:58+00:00",
       "thumbnail": "https://i.ytimg.com/vi/dRXExs592wg/hqdefault.jpg"
-    },
-    {
-      "id": "vwu8IHTfgr0",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Grinding Stone Tower | No Star Coins | Normal Ex",
-      "published": "2026-09-29T15:42:28+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/vwu8IHTfgr0/hqdefault.jpg"
     }
   ]
 }
