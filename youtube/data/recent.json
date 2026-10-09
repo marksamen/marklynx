@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-08T15:39:22.035112+00:00",
+  "updated": "2026-10-09T15:19:44.906458+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "8Di4XsRH_o0",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Land of Flying Blocks | All Star Coins",
+      "published": "2026-10-08T23:58:57+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/8Di4XsRH_o0/hqdefault.jpg"
+    },
     {
       "id": "2dGJ8MqoGtE",
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Roy's Conveyor Castle | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy 5 | Walking Piranha Plants! | All Star Coins | Normal Ex",
       "published": "2026-10-02T19:36:28+00:00",
       "thumbnail": "https://i.ytimg.com/vi/3GwfjZXJTEw/hqdefault.jpg"
-    },
-    {
-      "id": "dn8BEZ6ef70",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 4 | Light Blocks, Dark Tower | All Star Coins",
-      "published": "2026-10-01T14:26:57+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/dn8BEZ6ef70/hqdefault.jpg"
     }
   ]
 }
