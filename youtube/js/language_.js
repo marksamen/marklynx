@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV13. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV16. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -91,6 +91,36 @@
       return translations['main.count_template'].replace('{shown}',m[1]).replace('{total}',m[2]);
     return source;
   };
+  // REV16: Translate split Text Guide badges by their complete stable-ID label.
+  // The public renderer separates the parenthetical detail into a nested span;
+  // translating those two text nodes independently cannot match text_guide.<id>.
+  const badgeOriginals = new WeakMap();
+  const badgeRendered = new WeakMap();
+  const updateTextGuideBadges = () => {
+    document.querySelectorAll('.text-guide-label').forEach(el => {
+      const detail = el.querySelector('.text-guide-detail');
+      const heading = [...el.childNodes].find(n => n.nodeType === Node.TEXT_NODE);
+      if (!heading) return;
+      const current = heading.nodeValue + (detail ? detail.textContent : '');
+      let source = badgeOriginals.get(el);
+      if (source === undefined || current !== badgeRendered.get(el)) {
+        source = current;
+        badgeOriginals.set(el,source);
+      }
+      const result = translated(source);
+      badgeRendered.set(el,result);
+      if (detail) {
+        // Preserve the renderer's existing two-line markup and English fallback.
+        const match = result.match(/^(.*?)(\s*\([^]*\))$/);
+        const first = match ? match[1] : result;
+        const second = match ? match[2] : '';
+        if (heading.nodeValue !== first) heading.nodeValue = first;
+        if (detail.textContent !== second) detail.textContent = second;
+      } else if (heading.nodeValue !== result) {
+        heading.nodeValue = result;
+      }
+    });
+  };
   const updateNode = node => {
     const current = node.nodeValue;
     if (!norm(current)) return;
@@ -179,10 +209,11 @@
           // This renderer can rewrite the count on filtering; leave numbers untouched.
         }
       }
+      updateTextGuideBadges();
       const walker = document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
         acceptNode(node) {
           const el = node.parentElement;
-          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, #footerModuleMount, .video-modal-player')
+          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, #footerModuleMount, .video-modal-player, .text-guide-label')
             ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
         }
       });
