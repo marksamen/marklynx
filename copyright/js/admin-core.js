@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
 import { initAdminPageModal } from "./admin-page-modal.js?v=DEVELOPER-PROVIDED-PROD-REV27";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management.js?v=DUPLICATE-YOUTUBE-GUARD-PROD-REV01";
+import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management.js?v=LANGUAGES-PROD-REV25";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";

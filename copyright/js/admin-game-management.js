@@ -1,3 +1,4 @@
+import {generateAllRecoveryFiles} from "./recovery-generator.js?v=LANGUAGES-PROD-REV25";
 let auth = null;
 let verifyProdDatabaseIdentity = null;
 
@@ -920,27 +921,16 @@ async function downloadRecoveryJson(){
   const writeStatus=document.getElementById("gameDevWriteStatus");
   button.disabled=true;
   writeStatus.style.color="#ffd36d";
-  writeStatus.textContent="Reading Supabase PROD and generating recovery files…";
+  writeStatus.textContent="Reading Supabase PROD and generating complete recovery files…";
   try{
-    const [games,publicDeveloperData,qualityBadgeData]=await Promise.all([
-      fetchAllSupabaseTestGames(),
-      fetchPublicDeveloperRecoveryData(),
-      fetchQualityBadgeRecoveryData()
-    ]);
-    if(!games.length)throw new Error("Supabase PROD returned zero games.");
-    const cleanGames=games.map(cleanGameForJson);
-    downloadJsonFile("games.json",cleanGames);
-    downloadJsonFile("public-developer-data.json",publicDeveloperData);
-    downloadJsonFile("quality-badges.json",qualityBadgeData);
+    const files=await generateAllRecoveryFiles(auth?.currentUser);
     writeStatus.style.color="#6dff8b";
-    writeStatus.textContent=`GENERATED — games.json (${cleanGames.length} games) + public-developer-data.json (${publicDeveloperData.showcase.length} showcase rows / ${publicDeveloperData.providedGames.length} provided games) + quality-badges.json (${qualityBadgeData.length} badges).`;
+    writeStatus.textContent="GENERATED — "+files.join(" + ")+". Upload to PROD youtube/data/.";
   }catch(e){
     writeStatus.style.color="#ff6d6d";
-    writeStatus.textContent="EXPORT FAILED — recovery files were not generated.";
+    writeStatus.textContent="EXPORT FAILED — "+(e.message||e);
     console.error("Supabase PROD recovery export failed:",e);
-  }finally{
-    button.disabled=false;
-  }
+  }finally{button.disabled=false;}
 }
 
 document.getElementById("gameDevExportSupabase").addEventListener("click",downloadRecoveryJson);
