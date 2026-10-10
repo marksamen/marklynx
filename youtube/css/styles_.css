@@ -3045,3 +3045,16 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+/* LANGUAGES REV23 — Normal Games GRID: wrap Developer Provided attribution.
+   Reuse portrait containment for desktop/landscape GRID only; LIST untouched. */
+@media (min-width:901px), (orientation:landscape){
+  #resultsGrid .card .developer-provided-badge{
+    max-width:100%;
+  }
+  #resultsGrid .card-meta .developer-provided-badge{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:break-word;
+  }
+}
