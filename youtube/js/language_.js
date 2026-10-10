@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV12. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV13. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -155,7 +155,7 @@
           if (node.nodeType !== Node.TEXT_NODE || !node.nodeValue.includes('Mark Lynx Gaming Network') || !node.nodeValue.includes('100%')) continue;
           const en = 'Mark Lynx Gaming Network  ·  100% Walkthroughs, Achievement Guides & Speed Runs';
           const es = translations['footer.tagline'];
-          node.nodeValue = language !== 'en' && es ? '\\n  ' + es + '\\n  ' : '\\n  ' + en + '\\n  ';
+          node.nodeValue = language !== 'en' && es ? '\n  ' + es + '\n  ' : '\n  ' + en + '\n  ';
         }
         const copyright = footer.querySelector('.copyright');
         if (copyright) {
