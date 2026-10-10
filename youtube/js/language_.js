@@ -203,6 +203,7 @@
   const setLanguage = async code => {
     language = enabled.has(code) ? code : 'en';
     selector.value = language;
+    label.textContent = language === 'es' ? 'Idioma' : 'Language';
     refreshFlag();
     document.documentElement.lang = language;
     translations = {};
