@@ -1,3 +1,15 @@
 *{box-sizing:border-box}body{margin:0;padding:20px;background:#111113;color:#f5f5f5;font:15px/1.5 Arial,sans-serif}main{max-width:1050px;margin:auto}h1{margin-bottom:4px}h2{font-size:1.15rem}p,.hint{color:#aaa}section{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:18px;margin:16px 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}label{display:block;margin:10px 0;font-weight:600}input,textarea,select{display:block;width:100%;margin-top:5px;background:#111113;color:#fff;border:1px solid #555;border-radius:7px;padding:10px;font:inherit}button{background:#173a63;border:1px solid #4d78a6;color:white;padding:9px 14px;border-radius:8px;font-weight:bold;cursor:pointer;margin:7px 7px 7px 0}button:disabled{opacity:.55;cursor:wait}.language,.translation{padding:10px 0;border-top:1px solid #38383c;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.error{color:#ff8c8c}.success{color:#93e6b1}.hint{font-size:.9rem}#status{min-height:24px}code{color:#b3cfff}
 
 #value{min-height:58px;resize:vertical}.confirm-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72)}.confirm-modal.open{display:flex}.confirm-card{width:min(92vw,540px);padding:22px;border:1px solid #4a4a4f;border-radius:12px;background:#171717;box-shadow:0 18px 48px #0009}.confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.confirm-actions button{background:#252529;border-color:#4a4a4f}.confirm-actions #confirmOK{background:#173a63;border-color:#4d78a6}
+
+.language-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.language-status{font-size:.78rem;font-weight:700;letter-spacing:.02em;border-radius:5px;padding:3px 8px}.language-status-enabled{color:#b5f5c6;background:#163b24;border:1px solid #398c53}.language-status-disabled{color:#ffc0c0;background:#471d21;border:1px solid #a8424a}
+
+/* REV05: visibly non-editable auto-populated language metadata. */
+#code[readonly],#native[readonly],#direction[readonly]{background:#29292e!important;color:#bfc0c7!important;border-color:#49494f!important;cursor:not-allowed;opacity:1;-webkit-text-fill-color:#bfc0c7}
+/* REV05: separate the label/status and make status clearly visible. */
+#languages .language{display:flex;align-items:center;justify-content:space-between;column-gap:24px;row-gap:12px;flex-wrap:wrap}
+#languages .language-info{display:flex;align-items:center;gap:16px;flex-wrap:wrap;min-width:0}
+#languages .language-status{display:inline-block!important;flex:none;margin-left:2px;padding:4px 10px;font-size:12px;font-weight:800;border-radius:6px;line-height:1.4;letter-spacing:.035em}
+#languages .language-status-disabled{color:#fff!important;background:#b32632!important;border:1px solid #e25762!important}
+#languages .language-status-enabled{color:#fff!important;background:#16763d!important;border:1px solid #39aa66!important}
+#languages .language>div:last-child{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
