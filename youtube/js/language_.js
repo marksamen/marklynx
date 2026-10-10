@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV18. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV19. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -87,25 +87,25 @@
       const prefix = String(source).match(/^(\s*[⚡🚫📄🎁×✕✖]\s*)/u);
       return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
     }
-    // REV18: Translate numeric ranges and recompletion suffixes without
-    // modifying stored English completion-time values. Single durations below
-    // retain their existing behavior and translation keys.
+    // REV19: Completion-time formats in the TEST game inventory include
+    // single values, numeric ranges, "Under N Unit", and "Recompletion".
+    // Translate the displayed value only; never change its English source.
     if (language !== 'en') {
-      const extended = norm(source).match(/^(\d+(?:[.,]\d+)?(?:\s*-\s*\d+(?:[.,]\d+)?)?)\s+(Minute|Minutes|Hour|Hours)(\s+Recompletion)?$/i);
-      if (extended && (extended[1].includes('-') || extended[3])) {
-        const unit = extended[2].toLowerCase();
-        const key = 'game.' + (unit.startsWith('minute') ? (unit === 'minute' ? 'minute' : 'minutes') : (unit === 'hour' ? 'hour' : 'hours'));
+      const time = norm(source).match(/^(Under\s+)?(\d+(?:[.,]\d+)?(?:\s*-\s*\d+(?:[.,]\d+)?)?)\s+(Minute|Minutes|Hour|Hours)(\s+Recompletion)?$/i);
+      if (time) {
+        const [, under, amount, unit, recompletion] = time;
+        const minutes = /^minute/i.test(unit);
+        // The quantity determines grammatical number, not the source spelling:
+        // e.g. "5 Minute Recompletion" needs "5 Minutos de Repetición".
+        const singular = !amount.includes('-') && Number(amount.replace(',', '.')) === 1;
+        const key = 'game.' + (minutes ? 'minute' : 'hour') + (singular ? '' : 's');
         const localizedUnit = translations[key];
-        if (localizedUnit) return extended[1] + ' ' + localizedUnit + (extended[3] ? ' de Repetición' : '');
+        if (localizedUnit && (!under && !recompletion || language === 'es')) {
+          const prefix = under ? 'Menos de ' : '';
+          const suffix = recompletion ? ' de Repetición' : '';
+          return prefix + amount + ' ' + localizedUnit + suffix;
+        }
       }
-    }
-    // Dynamic numeric durations must retain their numbers.
-    const duration = norm(source).match(/^(\d+(?:[.,]\d+)?)\s+(Minute|Minutes|Hour|Hours)$/i);
-    if (duration && language !== 'en') {
-      const unit = duration[2].toLowerCase();
-      const singular = unit === 'minute' || unit === 'hour';
-      const key = 'game.' + (unit.startsWith('minute') ? (singular ? 'minute' : 'minutes') : (singular ? 'hour' : 'hours'));
-      if (translations[key]) return duration[1] + ' ' + translations[key];
     }
     // A count line is produced by the existing game renderer.
     const m = norm(source).match(/^Showing (\d+) of (\d+) guides$/);
