@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV09. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV10. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -29,9 +29,15 @@
   const wrap = document.createElement('div');
   wrap.id = 'siteLanguageControl';
   wrap.style.cssText = 'display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
-  wrap.append(label,selector);
+  const flag = document.createElement('img');
+  flag.alt = '';
+  flag.setAttribute('aria-hidden','true');
+  flag.width = 20; flag.height = 14;
+  flag.style.cssText = 'width:20px;height:14px;object-fit:cover;border-radius:1px;flex:none;';
+  wrap.append(label,flag,selector);
   wrap.style.marginLeft = 'auto';
   wrap.style.justifyContent = 'flex-end';
+  const refreshFlag = () => { flag.src = language === 'es' ? 'images/flag-es_.svg' : 'images/flag-gb_.svg'; };
   const insertSelector = () => {
     const prefs = document.querySelector('.site-preferences-inner');
     if (prefs && !wrap.isConnected) prefs.append(wrap);
@@ -53,21 +59,22 @@
   let lookup = new Map();
   const setLanguages = rows => {
     enabled = new Set(['en']);
-    const options = [{value:'en',text:'🇬🇧 English'}];
+    const options = [{value:'en',text:'English'}];
     for (const row of rows) {
       if (row.code === 'en' || !row.enabled || !/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(row.code)) continue;
       enabled.add(row.code);
-      options.push({value:row.code,text:(row.code === 'es' ? '🇪🇸 ' : '') + (row.native_name || row.english_name || row.code)});
+      options.push({value:row.code,text:(row.native_name || row.english_name || row.code)});
     }
     selector.replaceChildren(...options.map(o => new Option(o.text,o.value)));
     selector.value = enabled.has(language) ? language : 'en';
+    refreshFlag();
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
-    const clean = norm(source).replace(/^[⚡🚫📄🎁]\s*/u,'');
+    const clean = norm(source).replace(/^[⚡🚫📄🎁×✕✖]\s*/u,'');
     const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
     if (key) {
-      const prefix = String(source).match(/^(\s*[⚡🚫📄🎁]\s*)/u);
+      const prefix = String(source).match(/^(\s*[⚡🚫📄🎁×✕✖]\s*)/u);
       return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
     }
     // Dynamic numeric durations must retain their numbers.
@@ -110,6 +117,55 @@
     busy = true;
     try {
       insertSelector();
+      refreshFlag();
+      // Footer counters: preserve the original number nodes and explicit spacing.
+      const footerLabels = [
+        ['quickEasyCount','footer.quick_easy','Quick & Easy'],
+        ['totalGamesCount','footer.games','Games'],
+        ['totalPlaylistsCount','footer.playlists','Playlists'],
+        ['totalVideosCount','footer.total_videos','Total Videos']
+      ];
+      for (const [id,key,source] of footerLabels) {
+        const number = document.getElementById(id);
+        if (!number) continue;
+        const span = number.closest('.footer-stats > span');
+        if (!span) continue;
+        let trailing = number.nextSibling;
+        if (!trailing || trailing.nodeType !== Node.TEXT_NODE) {
+          trailing = document.createTextNode('');
+          number.after(trailing);
+        }
+        const rendered = language !== 'en' && translations[key] ? translations[key] : source;
+        const expected = ' ' + rendered;
+        if (trailing.nodeValue !== expected) trailing.nodeValue = expected;
+        // The site uses a flex row; keep visual separation even with long Spanish labels.
+        span.style.whiteSpace = 'nowrap';
+      }
+      const footer = document.querySelector('#footerModuleMount footer');
+      if (footer) {
+        const stats = footer.querySelector('.footer-stats');
+        if (stats) {
+          stats.style.display = 'flex';
+          stats.style.flexWrap = 'wrap';
+          stats.style.justifyContent = 'center';
+          stats.style.columnGap = '16px';
+          stats.style.rowGap = '5px';
+        }
+        for (const node of footer.childNodes) {
+          if (node.nodeType !== Node.TEXT_NODE || !node.nodeValue.includes('100% Walkthroughs')) continue;
+          const en = 'Mark Lynx Gaming Network  ·  100% Walkthroughs, Achievement Guides & Speed Runs';
+          const es = translations['footer.tagline'];
+          node.nodeValue = language !== 'en' && es ? '\\n  ' + es + '\\n  ' : '\\n  ' + en + '\\n  ';
+        }
+        const copyright = footer.querySelector('.copyright');
+        if (copyright) {
+          const tail = [...copyright.childNodes].find(n => n.nodeType === Node.TEXT_NODE && (n.nodeValue.includes('Rights Reserved') || n.__langFooterTail));
+          if (tail) {
+            tail.__langFooterTail = true;
+            tail.nodeValue = ' Mark Lynx Gaming Network. ' + (language !== 'en' && translations['footer.rights'] ? translations['footer.rights'] : 'All Rights Reserved.');
+          }
+        }
+      }
       const count = document.getElementById('countLine');
       if (count && count.querySelectorAll('strong').length === 2) {
         const numbers = [...count.querySelectorAll('strong')].map(n => n.textContent);
@@ -126,7 +182,7 @@
       const walker = document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
         acceptNode(node) {
           const el = node.parentElement;
-          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, .video-modal-player')
+          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, #footerModuleMount, .video-modal-player')
             ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
         }
       });
@@ -147,6 +203,7 @@
   const setLanguage = async code => {
     language = enabled.has(code) ? code : 'en';
     selector.value = language;
+    refreshFlag();
     document.documentElement.lang = language;
     translations = {};
     if (language !== 'en') {
@@ -156,7 +213,7 @@
       } catch (err) {
         console.warn('[LANG TEST] Supabase translations unavailable; trying TEST JSON:',err);
         try {
-          const response = await fetch('data/translations_.json?v=LANG-REV09',{cache:'no-store'});
+          const response = await fetch('data/translations_.json?v=LANG-REV10',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
@@ -171,7 +228,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english_.json?v=LANG-REV09',{cache:'no-store'});
+      const response = await fetch('data/language-english_.json?v=LANG-REV10',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG TEST] English inventory unavailable:',e);}
