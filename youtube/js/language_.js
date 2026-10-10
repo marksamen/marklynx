@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV11. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV12. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -152,7 +152,7 @@
           stats.style.rowGap = '5px';
         }
         for (const node of footer.childNodes) {
-          if (node.nodeType !== Node.TEXT_NODE || !node.nodeValue.includes('100% Walkthroughs')) continue;
+          if (node.nodeType !== Node.TEXT_NODE || !node.nodeValue.includes('Mark Lynx Gaming Network') || !node.nodeValue.includes('100%')) continue;
           const en = 'Mark Lynx Gaming Network  ·  100% Walkthroughs, Achievement Guides & Speed Runs';
           const es = translations['footer.tagline'];
           node.nodeValue = language !== 'en' && es ? '\\n  ' + es + '\\n  ' : '\\n  ' + en + '\\n  ';
@@ -213,7 +213,7 @@
       } catch (err) {
         console.warn('[LANG TEST] Supabase translations unavailable; trying TEST JSON:',err);
         try {
-          const response = await fetch('data/translations_.json?v=LANG-REV10',{cache:'no-store'});
+          const response = await fetch('data/translations_.json?v=LANG-REV12',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
@@ -228,7 +228,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english_.json?v=LANG-REV10',{cache:'no-store'});
+      const response = await fetch('data/language-english_.json?v=LANG-REV12',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG TEST] English inventory unavailable:',e);}
