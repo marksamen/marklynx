@@ -132,6 +132,12 @@
     "suggest.why": "¿Por qué solicitas este juego?",
     "suggest.your_name": "Tu Nombre",
     "suggest.email_address": "Correo Electrónico",
-    "suggest.human_verification": "Verificación Humana"
+    "suggest.human_verification": "Verificación Humana",
+    "footer.quick_easy": "Rápido y Fácil",
+    "footer.games": "Juegos",
+    "footer.playlists": "Listas de Reproducción",
+    "footer.total_videos": "Videos Totales",
+    "footer.tagline": "Mark Lynx Gaming Network · 100% Guías Completas, Guías de Logros y Speedruns",
+    "footer.rights": "Todos los Derechos Reservados."
   }
 }

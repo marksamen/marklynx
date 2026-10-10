@@ -97,5 +97,11 @@
   "suggest.why": "Why are you requesting this game?",
   "suggest.your_name": "Your Name",
   "suggest.email_address": "Email Address",
-  "suggest.human_verification": "Human verification"
+  "suggest.human_verification": "Human verification",
+  "footer.quick_easy": "Quick & Easy",
+  "footer.games": "Games",
+  "footer.playlists": "Playlists",
+  "footer.total_videos": "Total Videos",
+  "footer.tagline": "Mark Lynx Gaming Network · 100% Walkthroughs, Achievement Guides & Speed Runs",
+  "footer.rights": "All Rights Reserved."
 }
