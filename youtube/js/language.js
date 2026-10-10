@@ -1,0 +1,322 @@
+/* MARKLYNX PUBLIC LANGUAGE — PROD REV19. Additive layer; never alters game data or frozen Recent scripts. */
+(() => {
+  'use strict';
+  const ROOT = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/';
+  const API_KEY = 'sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE';
+  const KEY = 'marklynx.public.language';
+  const originals = new WeakMap();
+  const lastRendered = new WeakMap();
+  const english = Object.create(null);
+  let translations = {}, language = 'en', enabled = new Set(['en']), busy = false, scheduled = false;
+  const norm = v => String(v ?? '').replace(/\s+/g, ' ').trim();
+  const headers = {apikey: API_KEY};
+  const fetchRows = async (table, query) => {
+    const r = await fetch(ROOT + table + '?' + query, {headers,cache:'no-store'});
+    if (!r.ok) throw Error(table + ': HTTP ' + r.status);
+    const rows = await r.json();
+    if (!Array.isArray(rows)) throw Error(table + ': invalid rows');
+    return rows;
+  };
+  const selector = document.createElement('select');
+  selector.id = 'siteLanguageSelect';
+  selector.setAttribute('aria-label','Website language');
+  selector.title = 'Website language';
+  selector.style.cssText = 'background:#20242b;color:#fff;border:1px solid #777;border-radius:6px;padding:7px 9px;max-width:145px;cursor:pointer;';
+  const label = document.createElement('label');
+  label.htmlFor = selector.id;
+  label.textContent = 'Language';
+  label.style.cssText = 'font-size:12px;font-weight:600;color:inherit;';
+  const wrap = document.createElement('div');
+  wrap.id = 'siteLanguageControl';
+  wrap.style.cssText = 'display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+  const flag = document.createElement('img');
+  flag.alt = '';
+  flag.setAttribute('aria-hidden','true');
+  flag.width = 20; flag.height = 14;
+  flag.style.cssText = 'width:20px;height:14px;object-fit:cover;border-radius:1px;flex:none;';
+  wrap.append(label,flag,selector);
+  wrap.style.marginLeft = 'auto';
+  wrap.style.justifyContent = 'flex-end';
+  const refreshFlag = () => { flag.src = language === 'es' ? 'images/flag-es.svg' : 'images/flag-gb.svg'; };
+  const insertSelector = () => {
+    const prefs = document.querySelector('.site-preferences-inner');
+    if (prefs && !wrap.isConnected) prefs.append(wrap);
+  };
+  const addEnglish = (key,value) => { if (value) english[key] = norm(value); };
+  const englishByText = () => {
+    const lookup = new Map();
+    for (const [key,value] of Object.entries(english)) {
+      if (!lookup.has(value)) lookup.set(value,key);
+    }
+    // Explicitly resolve the identical English strings that have distinct translation keys.
+    lookup.set('Recent Uploads','recent.heading');
+    for (const [source,key] of [...lookup.entries()]) {
+      const folded = source.toLocaleLowerCase('en');
+      if (!lookup.has(folded)) lookup.set(folded,key);
+    }
+    return lookup;
+  };
+  let lookup = new Map();
+  const setLanguages = rows => {
+    enabled = new Set(['en']);
+    const options = [{value:'en',text:'English'}];
+    for (const row of rows) {
+      if (row.code === 'en' || !row.enabled || !/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(row.code)) continue;
+      enabled.add(row.code);
+      options.push({value:row.code,text:(row.native_name || row.english_name || row.code)});
+    }
+    selector.replaceChildren(...options.map(o => new Option(o.text,o.value)));
+    selector.value = enabled.has(language) ? language : 'en';
+    refreshFlag();
+  };
+  const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
+  const translated = source => {
+    // REV24: Display-only wording correction. Supabase translations may still
+    // contain the older label; preserve the existing filter value/behavior.
+    if (/^(?:Text Guides Only|Text Guide Included)$/i.test(norm(source))) {
+      return language === 'es' ? 'Guía de Texto Incluida' : 'Text Guide Included';
+    }
+    // Developer Provided badges contain a dynamic company name, so their full
+    // text cannot match the static English inventory. Translate the label only.
+    const provided = norm(source).match(/^Provided by (.+)$/);
+    if (provided && language !== 'en') {
+      const label = translations['developer.provided_by'];
+      if (label) {
+        const prefix = label.replace(/\s+(?:el\s+)?Desarrollador\s*$/i, '').trim();
+        if (prefix && prefix !== label) return prefix + ' ' + provided[1];
+      }
+    }
+    const clean = norm(source).replace(/^[⚡🚫📄🎁×✕✖]\s*/u,'');
+    const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
+    if (key) {
+      const prefix = String(source).match(/^(\s*[⚡🚫📄🎁×✕✖]\s*)/u);
+      return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
+    }
+    // REV19: Completion-time formats in the game inventory include
+    // single values, numeric ranges, "Under N Unit", and "Recompletion".
+    // Translate the displayed value only; never change its English source.
+    if (language !== 'en') {
+      const time = norm(source).match(/^(Under\s+)?(\d+(?:[.,]\d+)?(?:\s*-\s*\d+(?:[.,]\d+)?)?)\s+(Minute|Minutes|Hour|Hours)(\s+Recompletion)?$/i);
+      if (time) {
+        const [, under, amount, unit, recompletion] = time;
+        const minutes = /^minute/i.test(unit);
+        // The quantity determines grammatical number, not the source spelling:
+        // e.g. "5 Minute Recompletion" needs "5 Minutos de Repetición".
+        const singular = !amount.includes('-') && Number(amount.replace(',', '.')) === 1;
+        const key = 'game.' + (minutes ? 'minute' : 'hour') + (singular ? '' : 's');
+        const localizedUnit = translations[key];
+        if (localizedUnit && (!under && !recompletion || language === 'es')) {
+          const prefix = under ? 'Menos de ' : '';
+          const suffix = recompletion ? ' de Repetición' : '';
+          return prefix + amount + ' ' + localizedUnit + suffix;
+        }
+      }
+    }
+    // A count line is produced by the existing game renderer.
+    const m = norm(source).match(/^Showing (\d+) of (\d+) guides$/);
+    if (m && language !== 'en' && translations['main.count_template'])
+      return translations['main.count_template'].replace('{shown}',m[1]).replace('{total}',m[2]);
+    return source;
+  };
+  // REV16: Translate split Text Guide badges by their complete stable-ID label.
+  // The public renderer separates the parenthetical detail into a nested span;
+  // translating those two text nodes independently cannot match text_guide.<id>.
+  const badgeOriginals = new WeakMap();
+  const badgeRendered = new WeakMap();
+  const updateTextGuideBadges = () => {
+    document.querySelectorAll('.text-guide-label').forEach(el => {
+      const detail = el.querySelector('.text-guide-detail');
+      const heading = [...el.childNodes].find(n => n.nodeType === Node.TEXT_NODE);
+      if (!heading) return;
+      const current = heading.nodeValue + (detail ? detail.textContent : '');
+      let source = badgeOriginals.get(el);
+      if (source === undefined || current !== badgeRendered.get(el)) {
+        source = current;
+        badgeOriginals.set(el,source);
+      }
+      const result = translated(source);
+      badgeRendered.set(el,result);
+      if (detail) {
+        // Preserve the renderer's existing two-line markup and English fallback.
+        const match = result.match(/^(.*?)(\s*\([^]*\))$/);
+        const first = match ? match[1] : result;
+        const second = match ? match[2] : '';
+        if (heading.nodeValue !== first) heading.nodeValue = first;
+        if (detail.textContent !== second) detail.textContent = second;
+      } else if (heading.nodeValue !== result) {
+        heading.nodeValue = result;
+      }
+    });
+  };
+  const updateNode = node => {
+    const current = node.nodeValue;
+    if (!norm(current)) return;
+    let source = originals.get(node);
+    if (source === undefined) { source = current; originals.set(node,source); }
+    else if (current !== lastRendered.get(node)) { source = current; originals.set(node,source); }
+    const result = translated(source);
+    lastRendered.set(node,result);
+    if (result !== current) node.nodeValue = result;
+  };
+  const updateAttribute = (element,attr) => {
+    const current = element.getAttribute(attr);
+    if (!current) return;
+    const key = '__lang_original_' + attr;
+    let source = element[key];
+    if (source === undefined) { source = current; element[key] = source; }
+    else if (current !== element[key + '_last']) { source = current; element[key] = source; }
+    const result = translated(source);
+    element[key + '_last'] = result;
+    if (result !== current) element.setAttribute(attr,result);
+  };
+  const apply = () => {
+    if (busy) return;
+    busy = true;
+    try {
+      insertSelector();
+      refreshFlag();
+      // Footer counters: preserve the original number nodes and explicit spacing.
+      const footerLabels = [
+        ['quickEasyCount','footer.quick_easy','Quick & Easy'],
+        ['totalGamesCount','footer.games','Games'],
+        ['totalPlaylistsCount','footer.playlists','Playlists'],
+        ['totalVideosCount','footer.total_videos','Total Videos']
+      ];
+      for (const [id,key,source] of footerLabels) {
+        const number = document.getElementById(id);
+        if (!number) continue;
+        const span = number.closest('.footer-stats > span');
+        if (!span) continue;
+        let trailing = number.nextSibling;
+        if (!trailing || trailing.nodeType !== Node.TEXT_NODE) {
+          trailing = document.createTextNode('');
+          number.after(trailing);
+        }
+        const rendered = language !== 'en' && translations[key] ? translations[key] : source;
+        const expected = ' ' + rendered;
+        if (trailing.nodeValue !== expected) trailing.nodeValue = expected;
+        // The site uses a flex row; keep visual separation even with long Spanish labels.
+        span.style.whiteSpace = 'nowrap';
+      }
+      const footer = document.querySelector('#footerModuleMount footer');
+      if (footer) {
+        const stats = footer.querySelector('.footer-stats');
+        if (stats) {
+          stats.style.display = 'flex';
+          stats.style.flexWrap = 'wrap';
+          stats.style.justifyContent = 'center';
+          stats.style.columnGap = '16px';
+          stats.style.rowGap = '5px';
+        }
+        for (const node of footer.childNodes) {
+          if (node.nodeType !== Node.TEXT_NODE || !node.nodeValue.includes('Mark Lynx Gaming Network') || !node.nodeValue.includes('100%')) continue;
+          const en = 'Mark Lynx Gaming Network  ·  100% Walkthroughs, Achievement Guides & Speed Runs';
+          const es = translations['footer.tagline'];
+          node.nodeValue = language !== 'en' && es ? '\n  ' + es + '\n  ' : '\n  ' + en + '\n  ';
+        }
+        const copyright = footer.querySelector('.copyright');
+        if (copyright) {
+          const tail = [...copyright.childNodes].find(n => n.nodeType === Node.TEXT_NODE && (n.nodeValue.includes('Rights Reserved') || n.__langFooterTail));
+          if (tail) {
+            tail.__langFooterTail = true;
+            tail.nodeValue = ' Mark Lynx Gaming Network. ' + (language !== 'en' && translations['footer.rights'] ? translations['footer.rights'] : 'All Rights Reserved.');
+          }
+        }
+      }
+      const count = document.getElementById('countLine');
+      if (count && count.querySelectorAll('strong').length === 2) {
+        const numbers = [...count.querySelectorAll('strong')].map(n => n.textContent);
+        const template = language !== 'en' ? translations['main.count_template'] : null;
+        const leading = template ? template.split('{shown}')[0] : 'Showing ';
+        const middle = template ? template.split('{shown}')[1]?.split('{total}')[0] : ' of ';
+        const trailing = template ? template.split('{total}')[1] : ' guides';
+        const nodes = [...count.childNodes];
+        if (nodes.length === 5 && nodes[1].nodeName === 'STRONG' && nodes[3].nodeName === 'STRONG') {
+          nodes[0].nodeValue = leading; nodes[2].nodeValue = middle; nodes[4].nodeValue = trailing;
+          // This renderer can rewrite the count on filtering; leave numbers untouched.
+        }
+      }
+      updateTextGuideBadges();
+      const walker = document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+        acceptNode(node) {
+          const el = node.parentElement;
+          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, #footerModuleMount, .video-modal-player, .text-guide-label')
+            ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) updateNode(walker.currentNode);
+      document.querySelectorAll('optgroup[label]').forEach(el => updateAttribute(el,'label'));
+      document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(el => {
+        if (el.closest('#siteLanguageControl')) return;
+        for (const attr of ['placeholder','title','aria-label']) if (el.hasAttribute(attr)) updateAttribute(el,attr);
+      });
+    } finally {busy = false;}
+  };
+  const schedule = () => {
+    if (scheduled || busy) return;
+    scheduled = true;
+    requestAnimationFrame(() => {scheduled = false;apply();});
+  };
+  const observer = new MutationObserver(schedule);
+  const setLanguage = async code => {
+    language = enabled.has(code) ? code : 'en';
+    selector.value = language;
+    label.textContent = language === 'es' ? 'Idioma' : 'Language';
+    refreshFlag();
+    document.documentElement.lang = language;
+    translations = {};
+    if (language !== 'en') {
+      try {
+        const rows = await fetchRows('site_translations','language_code=eq.' + encodeURIComponent(language) + '&select=translation_key,translated_text&limit=1000');
+        translations = Object.fromEntries(rows.map(r => [r.translation_key,r.translated_text]));
+      } catch (err) {
+        console.warn('[LANG PROD] Supabase translations unavailable; trying TEST JSON:',err);
+        try {
+          const response = await fetch('data/translations.json?v=LANG-REV14',{cache:'no-store'});
+          if (!response.ok) throw Error('HTTP ' + response.status);
+          translations = (await response.json())[language] || {};
+        } catch (jsonError) {console.warn('[LANG PROD] Translation recovery unavailable; English fallback:',jsonError);}
+      }
+    }
+    apply();
+  };
+  selector.addEventListener('change',() => {
+    try {localStorage.setItem(KEY,selector.value);} catch (_) {}
+    setLanguage(selector.value);
+  });
+  const start = async () => {
+    insertSelector();
+    try {
+      const response = await fetch('data/language-english.json?v=LANG-REV12',{cache:'no-store'});
+      if (!response.ok) throw Error('English inventory HTTP ' + response.status);
+      Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
+    } catch (e) {console.warn('[LANG PROD] English inventory unavailable:',e);}
+    // Dynamic options are keyed by stable IDs; never modify underlying English game data.
+    for (const [table,prefix] of [['genre_options','genre'],['platform_options','platform'],['text_guide_options','text_guide']]) {
+      try {
+        const rows = await fetchRows(table,'select=id,value&limit=1000');
+        for (const r of rows) addEnglish(prefix+'.'+r.id,r.value);
+      } catch (e) {console.warn('[LANG PROD] Dynamic English labels unavailable:',table,e);}
+    }
+    lookup = englishByText();
+    let rows = [];
+    try {rows = await fetchRows('site_languages','select=code,native_name,english_name,enabled,sort_order&order=sort_order.asc');}
+    catch (e) {
+      console.warn('[LANG PROD] Language registry unavailable; trying TEST JSON:',e);
+      try {
+        const response=await fetch('data/languages.json?v=LANG-REV14',{cache:'no-store'});
+        if(!response.ok)throw Error('HTTP '+response.status);
+        rows=await response.json();
+        if(!Array.isArray(rows))throw Error('Invalid language registry JSON');
+      }catch(jsonError){console.warn('[LANG PROD] Language registry recovery unavailable; English only:',jsonError);}
+    }
+    setLanguages(rows);
+    let preferred = 'en';
+    try {preferred = localStorage.getItem(KEY) || 'en';} catch (_) {}
+    await setLanguage(preferred);
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label','label']});
+    console.info('[LANG PROD] Language layer ready:',language);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
+})();
