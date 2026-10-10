@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV08. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV09. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -30,6 +30,8 @@
   wrap.id = 'siteLanguageControl';
   wrap.style.cssText = 'display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
   wrap.append(label,selector);
+  wrap.style.marginLeft = 'auto';
+  wrap.style.justifyContent = 'flex-end';
   const insertSelector = () => {
     const prefs = document.querySelector('.site-preferences-inner');
     if (prefs && !wrap.isConnected) prefs.append(wrap);
@@ -42,24 +44,40 @@
     }
     // Explicitly resolve the identical English strings that have distinct translation keys.
     lookup.set('Recent Uploads','recent.heading');
+    for (const [source,key] of [...lookup.entries()]) {
+      const folded = source.toLocaleLowerCase('en');
+      if (!lookup.has(folded)) lookup.set(folded,key);
+    }
     return lookup;
   };
   let lookup = new Map();
   const setLanguages = rows => {
     enabled = new Set(['en']);
-    const options = [{value:'en',text:'English'}];
+    const options = [{value:'en',text:'🇬🇧 English'}];
     for (const row of rows) {
       if (row.code === 'en' || !row.enabled || !/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(row.code)) continue;
       enabled.add(row.code);
-      options.push({value:row.code,text:row.native_name || row.english_name || row.code});
+      options.push({value:row.code,text:(row.code === 'es' ? '🇪🇸 ' : '') + (row.native_name || row.english_name || row.code)});
     }
     selector.replaceChildren(...options.map(o => new Option(o.text,o.value)));
     selector.value = enabled.has(language) ? language : 'en';
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
-    const key = lookup.get(norm(source));
-    if (key) return getTranslation(key,source);
+    const clean = norm(source).replace(/^[⚡🚫📄🎁]\s*/u,'');
+    const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
+    if (key) {
+      const prefix = String(source).match(/^(\s*[⚡🚫📄🎁]\s*)/u);
+      return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
+    }
+    // Dynamic numeric durations must retain their numbers.
+    const duration = norm(source).match(/^(\d+(?:[.,]\d+)?)\s+(Minute|Minutes|Hour|Hours)$/i);
+    if (duration && language !== 'en') {
+      const unit = duration[2].toLowerCase();
+      const singular = unit === 'minute' || unit === 'hour';
+      const key = 'game.' + (unit.startsWith('minute') ? (singular ? 'minute' : 'minutes') : (singular ? 'hour' : 'hours'));
+      if (translations[key]) return duration[1] + ' ' + translations[key];
+    }
     // A count line is produced by the existing game renderer.
     const m = norm(source).match(/^Showing (\d+) of (\d+) guides$/);
     if (m && language !== 'en' && translations['main.count_template'])
@@ -92,14 +110,28 @@
     busy = true;
     try {
       insertSelector();
+      const count = document.getElementById('countLine');
+      if (count && count.querySelectorAll('strong').length === 2) {
+        const numbers = [...count.querySelectorAll('strong')].map(n => n.textContent);
+        const template = language !== 'en' ? translations['main.count_template'] : null;
+        const leading = template ? template.split('{shown}')[0] : 'Showing ';
+        const middle = template ? template.split('{shown}')[1]?.split('{total}')[0] : ' of ';
+        const trailing = template ? template.split('{total}')[1] : ' guides';
+        const nodes = [...count.childNodes];
+        if (nodes.length === 5 && nodes[1].nodeName === 'STRONG' && nodes[3].nodeName === 'STRONG') {
+          nodes[0].nodeValue = leading; nodes[2].nodeValue = middle; nodes[4].nodeValue = trailing;
+          // This renderer can rewrite the count on filtering; leave numbers untouched.
+        }
+      }
       const walker = document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
         acceptNode(node) {
           const el = node.parentElement;
-          return el && !el.closest('script,style,textarea,option#siteLanguageSelect, #siteLanguageControl, .video-modal-player')
+          return el && !el.closest('script,style,textarea, #siteLanguageControl, #countLine, .video-modal-player')
             ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
         }
       });
       while (walker.nextNode()) updateNode(walker.currentNode);
+      document.querySelectorAll('optgroup[label]').forEach(el => updateAttribute(el,'label'));
       document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(el => {
         if (el.closest('#siteLanguageControl')) return;
         for (const attr of ['placeholder','title','aria-label']) if (el.hasAttribute(attr)) updateAttribute(el,attr);
@@ -124,7 +156,7 @@
       } catch (err) {
         console.warn('[LANG TEST] Supabase translations unavailable; trying TEST JSON:',err);
         try {
-          const response = await fetch('data/translations_.json?v=LANG-REV08',{cache:'no-store'});
+          const response = await fetch('data/translations_.json?v=LANG-REV09',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
@@ -139,7 +171,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english_.json?v=LANG-REV08',{cache:'no-store'});
+      const response = await fetch('data/language-english_.json?v=LANG-REV09',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG TEST] English inventory unavailable:',e);}
@@ -158,7 +190,7 @@
     let preferred = 'en';
     try {preferred = localStorage.getItem(KEY) || 'en';} catch (_) {}
     await setLanguage(preferred);
-    observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label']});
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label','label']});
     console.info('[LANG TEST] Language layer ready:',language);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',start,{once:true});
