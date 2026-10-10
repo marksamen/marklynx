@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-09T15:19:44.906458+00:00",
+  "updated": "2026-10-10T14:29:28.843884+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "7ltTZqeD9_k",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 2 | Seesaw Shrooms | All Star Coins",
+      "published": "2026-10-09T21:55:47+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/7ltTZqeD9_k/hqdefault.jpg"
+    },
     {
       "id": "8Di4XsRH_o0",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Land of Flying Blocks | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 5 | Walking Piranha Plants! | Secret Exit | Nabbit",
       "published": "2026-10-03T13:40:59+00:00",
       "thumbnail": "https://i.ytimg.com/vi/uwnGl7pr_9c/hqdefault.jpg"
-    },
-    {
-      "id": "3GwfjZXJTEw",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy 5 | Walking Piranha Plants! | All Star Coins | Normal Ex",
-      "published": "2026-10-02T19:36:28+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/3GwfjZXJTEw/hqdefault.jpg"
     }
   ]
 }
