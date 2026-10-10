@@ -1,11 +1,11 @@
-import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV05';
-import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV05';
+import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV06';
+import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV06';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
 const firebaseConfig={apiKey:'AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ',authDomain:'mark-lynx-admin.firebaseapp.com',projectId:'mark-lynx-admin',storageBucket:'mark-lynx-admin.firebasestorage.app',messagingSenderId:'749999035332',appId:'1:749999035332:web:52c78e6e358c1fef794a91'};
 const BASE='https://aikifibkcjibubqegvmb.supabase.co';
-const auth=getAuth(initializeApp(firebaseConfig));let user=null,cache={languages:[],translations:[]};
+const auth=getAuth(initializeApp(firebaseConfig));let user=null,cache={languages:[],translations:[]};let managedOptions={};
 const el=id=>document.getElementById(id);
 const status=(message,error=false)=>{el('status').textContent=message;el('status').className=error?'error':'success';};
 async function call(action,other={}){if(!user)throw new Error('Sign in to TEST Admin first.');const token=await user.getIdToken();const r=await fetch(`${BASE}/functions/v1/translations-admin`,{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({action,...other}),cache:'no-store'});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);return j;}
@@ -20,13 +20,21 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pending){e.preventD
 function languageFields(){const x=registry.find(x=>x.code===el('languageChoice').value);if(!x)return;el('code').value=x.code;el('english').value=x.name;el('native').value=x.native;el('direction').value=x.direction==='rtl'?'Right To Left':'Left To Right';}
 for(const x of registry){const o=node('option',x.name);o.value=x.code;el('languageChoice').append(o);}el('languageChoice').value='es';el('languageChoice').onchange=languageFields;languageFields();
 function setEnglish(key){el('key').value=key;const t=cache.translations.find(t=>t.language_code===el('translationLanguage').value&&t.translation_key===key);el('value').value=t?.translated_text||'';}
-function populateEnglish(wanted){const box=el('englishText');box.replaceChildren();for(const [key,english] of Object.entries(inventory[el('section').value]||{})){const o=node('option',english);o.value=key;box.append(o);}if(wanted&&[...box.options].some(x=>x.value===wanted))box.value=wanted;setEnglish(box.value);}
-function findKey(key){for(const [section,items] of Object.entries(inventory)){if(Object.hasOwn(items,key)){el('section').value=section;populateEnglish(key);return true;}}return false;}
-for(const section of Object.keys(inventory)){const o=node('option',section);o.value=section;el('section').append(o);}el('section').onchange=()=>populateEnglish();el('englishText').onchange=()=>setEnglish(el('englishText').value);populateEnglish();
+function sectionItems(section){
+  const sources={'Genres':['genre_options','genre.'],'Platforms':['platform_options','platform.'],'Text Guides':['text_guide_options','text_guide.']};
+  if(!sources[section])return inventory[section]||{};
+  const [table,prefix]=sources[section];const entries={};
+  for(const row of managedOptions[table]||[])entries[prefix+row.id]=row.value;
+  return entries;
+}
+function populateEnglish(wanted){const box=el('englishText');box.replaceChildren();for(const [key,english] of Object.entries(sectionItems(el('section').value))){const o=node('option',english);o.value=key;box.append(o);}if(wanted&&[...box.options].some(x=>x.value===wanted))box.value=wanted;setEnglish(box.value);}
+
+function findKey(key){for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){if(Object.hasOwn(sectionItems(section),key)){el('section').value=section;populateEnglish(key);return true;}}return false;}
+for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){const o=node('option',section);o.value=section;el('section').append(o);}el('section').onchange=()=>populateEnglish();el('englishText').onchange=()=>setEnglish(el('englishText').value);populateEnglish();
 function displayNative(value){const text=String(value||'');return text?text.charAt(0).toLocaleUpperCase()+text.slice(1):text;}
 function render(){const list=el('languages');list.replaceChildren();const select=el('translationLanguage');const selected=select.value;select.replaceChildren();for(const lang of cache.languages){const row=node('div','');row.className='language';const desc=node('span',`${lang.english_name} (${displayNative(lang.native_name)})`);const state=node('span',lang.enabled?'ENABLED':'DISABLED');state.className='language-status '+(lang.enabled?'language-status-enabled':'language-status-disabled');const info=node('div','');info.className='language-info';info.append(desc,state);const controls=node('div','');const edit=node('button','Edit');edit.onclick=()=>{if(!registry.some(x=>x.code===lang.code)){status('Language not in registry; cannot edit from this selector.',true);return;}el('languageChoice').value=lang.code;languageFields();el('sort').value=lang.sort_order;};const toggle=node('button',lang.enabled?'Disable':'Enable');toggle.onclick=()=>confirmAction(`${lang.enabled?'Disable':'Enable'} ${lang.english_name}?`,lang.enabled?'Temporarily hide this language. Saved translations and visitor preferences remain intact.':'Make this language available to visitors? Confirm translations are ready.',async()=>{await call('set-enabled',{code:lang.code,enabled:!lang.enabled});await reload();status('Saved in Supabase. Export and publish recovery JSON to synchronize fallback.');});controls.append(edit,toggle);row.append(info,controls);list.append(row);const opt=node('option',`${lang.english_name} (${lang.code})`);opt.value=lang.code;select.append(opt);}if([...select.options].some(o=>o.value===selected))select.value=selected;renderTranslations();setEnglish(el('englishText').value);}
 function renderTranslations(){const wrap=el('translations');wrap.replaceChildren();const code=el('translationLanguage').value;for(const item of cache.translations.filter(t=>t.language_code===code)){const row=node('div','');row.className='translation';row.append(node('code',item.translation_key),node('span',item.translated_text.slice(0,140)));const edit=node('button','Edit');edit.onclick=()=>{if(!findKey(item.translation_key)){status('This legacy translation key is outside the current English inventory. It remains saved and unchanged.',true);return;}el('value').value=item.translated_text;};row.append(edit);wrap.append(row);}}
-async function reload(){cache=await call('list');render();}
+async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);}
 el('translationLanguage').onchange=()=>{renderTranslations();setEnglish(el('englishText').value);};
 el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.trim();if(code.toLowerCase()==='en')throw Error('English cannot be managed.');await call('save-language',{code,english_name:el('english').value,native_name:displayNative(el('native').value),direction:el('direction').value==='Right To Left'?'rtl':'ltr',sort_order:Number(el('sort').value)});await reload();});
 el('saveTranslation').onclick=()=>perform(async()=>{const code=el('translationLanguage').value;if(!code)throw Error('Add a language first.');await call('save-translation',{code,key:el('key').value.trim(),text:el('value').value});await reload();setEnglish(el('englishText').value);});

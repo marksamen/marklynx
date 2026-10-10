@@ -1,1 +1,76 @@
-export const inventory={"Main": {"nav.recent_games": "Recent Games", "nav.quick_easy": "Quick & Easy", "nav.all_features": "All Features", "nav.search_games": "Search Games", "filter.difficulty": "Difficulty", "filter.genre": "Genre", "filter.platform": "Platform", "game.completion_time": "Completion Time", "game.text_guide": "Text Guide"}, "Developer": {"developer.provided": "Developer Provided", "developer.provided_by": "Provided by Developer"}, "Suggest a Game": {"suggest.title": "Suggest a Game", "suggest.game_name": "Game Name", "suggest.submit": "Submit", "suggest.cancel": "Cancel"}, "Video Player": {"player.resume": "Resume Playback", "player.start_over": "Start Over", "player.close": "Close"}};
+// REV06: English display labels verified against TEST public source. English remains in its original source.
+export const inventory={
+  "Main": {
+    "nav.recent_games": "Recent Uploads",
+    "nav.all_features": "All Features",
+    "nav.search_games": "Search games…",
+    "main.subscribe": "Subscribe on YouTube",
+    "main.suggest": "Suggest a Game",
+    "main.developers": "Developers",
+    "filter.genre": "All Genres",
+    "filter.difficulty": "All Difficulties",
+    "filter.platform": "All Platforms",
+    "filter.quality": "All Qualities",
+    "filter.text_only": "Text Guides Only",
+    "filter.developer_provided": "Developer Provided",
+    "sort.name_asc": "Name A–Z",
+    "sort.name_desc": "Name Z–A",
+    "sort.gamerscore_desc": "Gamerscore: High–Low",
+    "sort.gamerscore_asc": "Gamerscore: Low–High",
+    "view.grid": "Grid",
+    "view.list": "List",
+    "filter.clear": "Clear Filters",
+    "main.guides": "Game Guides",
+    "main.none": "No games found",
+    "main.try_different": "Try a different search term or clear your filters.",
+    "main.load_more": "Load More Guides",
+    "main.count_template": "Showing {shown} of {total} guides",
+    "main.kinect": "Kinect Required",
+    "game.text_guide": "Text Guide"
+  },
+  "Recent Uploads": {
+    "recent.heading": "Recent Uploads",
+    "recent.youtube": "View all on YouTube"
+  },
+  "Developer": {
+    "developer.hero": "Your game. A complete walkthrough.",
+    "developer.complete_guides": "Complete Game Guides",
+    "developer.4k": "4K Coverage",
+    "developer.multiplatform": "Multi-Platform Coverage",
+    "developer.interested": "Interested in having your game covered?",
+    "developer.contact_description": "Send the details below. Your message goes directly to Mark Lynx.",
+    "developer.youtube_about": "YouTube About Page",
+    "developer.studio": "Studio / Developer",
+    "developer.platforms": "Platform(s)",
+    "developer.platform_hint": "Xbox, Nintendo Switch, PlayStation, PC…",
+    "developer.website": "Website",
+    "developer.send": "Send Message",
+    "developer.sent_heading": "Message Sent Successfully",
+    "developer.sent_body": "Thanks for contacting Mark Lynx Gaming Network. Your game coverage request has been received.",
+    "developer.watch": "Watch walkthrough →",
+    "developer.provided": "Developer Provided",
+    "developer.provided_by": "Provided by Developer"
+  },
+  "Suggest a Game": {
+    "suggest.title": "Suggest a Game",
+    "suggest.subtitle": "What should Mark Lynx cover next?",
+    "suggest.youtube_username": "YouTube Username",
+    "suggest.submit": "Submit Suggestion",
+    "suggest.success_heading": "Suggestion Submitted Successfully",
+    "suggest.success_body": "Thanks! Your game suggestion has been sent to Mark Lynx Gaming Network for consideration.",
+    "suggest.invalid_email": "Please enter a complete email address (for example, name@example.com).",
+    "suggest.platform_required": "Please select at least one platform.",
+    "suggest.verification_required": "Please complete the human verification first.",
+    "suggest.verification_failed": "Human verification could not load. Please try again.",
+    "suggest.submitting": "Submitting your suggestion…",
+    "suggest.submit_error": "Your suggestion could not be received. Please try again.",
+    "suggest.submitting_button": "Submitting…",
+    "suggest.submitted_button": "Submitted"
+  },
+  "Theme": {
+    "theme.bright": "Bright",
+    "theme.dark": "Dark",
+    "theme.switch_bright": "Switch to Bright theme",
+    "theme.switch_dark": "Switch to Dark theme"
+  }
+};
