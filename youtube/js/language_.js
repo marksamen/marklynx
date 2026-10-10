@@ -213,7 +213,7 @@
       } catch (err) {
         console.warn('[LANG TEST] Supabase translations unavailable; trying TEST JSON:',err);
         try {
-          const response = await fetch('data/translations_.json?v=LANG-REV12',{cache:'no-store'});
+          const response = await fetch('data/translations_.json?v=LANG-REV14',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
@@ -242,7 +242,15 @@
     lookup = englishByText();
     let rows = [];
     try {rows = await fetchRows('site_languages','select=code,native_name,english_name,enabled,sort_order&order=sort_order.asc');}
-    catch (e) {console.warn('[LANG TEST] Language registry unavailable; English only:',e);}
+    catch (e) {
+      console.warn('[LANG TEST] Language registry unavailable; trying TEST JSON:',e);
+      try {
+        const response=await fetch('data/languages_.json?v=LANG-REV14',{cache:'no-store'});
+        if(!response.ok)throw Error('HTTP '+response.status);
+        rows=await response.json();
+        if(!Array.isArray(rows))throw Error('Invalid language registry JSON');
+      }catch(jsonError){console.warn('[LANG TEST] Language registry recovery unavailable; English only:',jsonError);}
+    }
     setLanguages(rows);
     let preferred = 'en';
     try {preferred = localStorage.getItem(KEY) || 'en';} catch (_) {}
