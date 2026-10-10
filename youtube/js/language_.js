@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV16. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV18. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -86,6 +86,18 @@
     if (key) {
       const prefix = String(source).match(/^(\s*[⚡🚫📄🎁×✕✖]\s*)/u);
       return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
+    }
+    // REV18: Translate numeric ranges and recompletion suffixes without
+    // modifying stored English completion-time values. Single durations below
+    // retain their existing behavior and translation keys.
+    if (language !== 'en') {
+      const extended = norm(source).match(/^(\d+(?:[.,]\d+)?(?:\s*-\s*\d+(?:[.,]\d+)?)?)\s+(Minute|Minutes|Hour|Hours)(\s+Recompletion)?$/i);
+      if (extended && (extended[1].includes('-') || extended[3])) {
+        const unit = extended[2].toLowerCase();
+        const key = 'game.' + (unit.startsWith('minute') ? (unit === 'minute' ? 'minute' : 'minutes') : (unit === 'hour' ? 'hour' : 'hours'));
+        const localizedUnit = translations[key];
+        if (localizedUnit) return extended[1] + ' ' + localizedUnit + (extended[3] ? ' de Repetición' : '');
+      }
     }
     // Dynamic numeric durations must retain their numbers.
     const duration = norm(source).match(/^(\d+(?:[.,]\d+)?)\s+(Minute|Minutes|Hour|Hours)$/i);
