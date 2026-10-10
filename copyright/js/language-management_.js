@@ -1,3 +1,4 @@
+import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=LANGUAGES-REV14";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
 import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV07';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
@@ -44,6 +45,11 @@ el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.tri
 el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);el('value').focus();};
 el('cancelTranslation').onclick=()=>setEnglish(el('englishText').value);
 el('saveTranslation').onclick=()=>perform(async()=>{const code=el('translationLanguage').value;if(!code)throw Error('Add a language first.');const key=el('key').value.trim();if(!key)throw Error('Select English text first.');await call('save-translation',{code,key,text:el('value').value});await reload();findKey(key);setEnglish(key);});
-function download(name,data){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-el('export').onclick=()=>perform(async()=>{const result=await call('export');download('manifest.json',result.manifest);for(const [code,content] of Object.entries(result.files))download(`${code}.json`,content);status('Recovery files downloaded. They are NOT automatically published to TEST.');});
+el('export').onclick=()=>perform(async()=>{
+  el('export').disabled=true;
+  try{
+    const files=await generateAllRecoveryFiles(user);
+    status('Complete TEST recovery downloaded: '+files.join(', ')+'. Upload to youtube/data/.');
+  }finally{el('export').disabled=false;}
+});
 await setPersistence(auth,browserLocalPersistence);onAuthStateChanged(auth,u=>{user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);});
