@@ -1,6 +1,27 @@
-// REV06: English display labels verified against TEST public source. English remains in its original source.
+// REV09: English display labels verified against TEST public source. English remains in its original source.
 export const inventory={
   "Main": {
+    "filter.quick_filters": "Quick Filters",
+    "filter.qe_only": "Quick & Easy Only",
+    "filter.hide_qe": "Hide Quick & Easy",
+    "filter.by_difficulty": "By Difficulty",
+    "filter.easy": "Easy",
+    "filter.moderate": "Moderate",
+    "filter.hard": "Hard",
+    "filter.quick_easy": "Quick & Easy",
+    "filter.text_guides_only": "Text Guides Only",
+    "filter.developer_only": "Developer Provided",
+    "sort.alphabetical": "Alphabetical",
+    "sort.by_gamerscore": "By Gamerscore",
+    "game.genre": "GENRE",
+    "game.time": "TIME",
+    "game.minutes": "Minutes",
+    "game.minute": "Minute",
+    "game.hours": "Hours",
+    "game.hour": "Hour",
+    "game.update": "Update",
+    "game.kinect_required": "Kinect Required",
+    "main.clear_search": "Clear search and filters",
     "nav.recent_games": "Recent Uploads",
     "nav.all_features": "All Features",
     "nav.search_games": "Search games…",
@@ -33,6 +54,14 @@ export const inventory={
     "recent.youtube": "View all on YouTube"
   },
   "Developer": {
+    "developer.kicker": "DEVELOPER-SUPPORTED COVERAGE",
+    "developer.intro": "Are you a game developer? Mark Lynx Gaming Network creates complete, easy-to-follow walkthroughs and achievement guides designed to help players discover and complete great games. If you'd like your game considered for coverage, get in touch.",
+    "developer.games_heading": "Games provided directly by developers",
+    "developer.name": "Name",
+    "developer.email": "Email",
+    "developer.game_title": "Game Title",
+    "developer.message": "Message",
+    "developer.confirmation": "A confirmation has been sent to your email address. Please allow 2–3 business days for a response.",
     "developer.hero": "Your game. A complete walkthrough.",
     "developer.complete_guides": "Complete Game Guides",
     "developer.4k": "4K Coverage",
@@ -52,6 +81,13 @@ export const inventory={
     "developer.provided_by": "Provided by Developer"
   },
   "Suggest a Game": {
+    "suggest.kicker": "SUGGEST A GAME",
+    "suggest.intro": "Suggest a game you'd like to see covered on Mark Lynx Gaming Network. We can create guides for pretty much any game, with Quick & Easy titles generally receiving the fastest turnaround.",
+    "suggest.game_name": "Game Name",
+    "suggest.why": "Why are you requesting this game?",
+    "suggest.your_name": "Your Name",
+    "suggest.email_address": "Email Address",
+    "suggest.human_verification": "Human verification",
     "suggest.title": "Suggest a Game",
     "suggest.subtitle": "What should Mark Lynx cover next?",
     "suggest.youtube_username": "YouTube Username",
