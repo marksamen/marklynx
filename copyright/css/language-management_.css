@@ -13,3 +13,7 @@
 #languages .language-status-disabled{color:#fff!important;background:#b32632!important;border:1px solid #e25762!important}
 #languages .language-status-enabled{color:#fff!important;background:#16763d!important;border:1px solid #39aa66!important}
 #languages .language>div:last-child{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* REV07: translation is locked until Edit; hidden buttons stay hidden. */
+#value.translation-locked{background:#29292e;color:#bfc0c7;border-color:#49494f;cursor:default;opacity:1;-webkit-text-fill-color:#bfc0c7}
+.translation-actions button[hidden]{display:none!important}
