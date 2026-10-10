@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-10T14:29:28.843884+00:00",
+  "updated": "2026-10-10T16:18:41.976184+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "BjQokWKAYbE",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 3 | Switchback Hill | All Star Coins",
+      "published": "2026-10-10T16:09:30+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/BjQokWKAYbE/hqdefault.jpg"
+    },
     {
       "id": "7ltTZqeD9_k",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 2 | Seesaw Shrooms | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "Bullet Trail | Easy 100% Completion | 1000 Gamerscore | 3 Minute Completion | 4K",
       "published": "2026-10-04T14:36:55+00:00",
       "thumbnail": "https://i.ytimg.com/vi/nUnKOcTK4Vg/hqdefault.jpg"
-    },
-    {
-      "id": "uwnGl7pr_9c",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 5 | Walking Piranha Plants! | Secret Exit | Nabbit",
-      "published": "2026-10-03T13:40:59+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/uwnGl7pr_9c/hqdefault.jpg"
     }
   ]
 }
