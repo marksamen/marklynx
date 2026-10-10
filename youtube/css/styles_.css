@@ -3024,3 +3024,24 @@ body.suggest-modal-open{overflow:hidden}
     font-size:10px;
   }
 }
+
+/* LANGUAGES REV22 — Normal Games GRID: contain descriptive Text Guide badges.
+   Extend the approved portrait wrapping behavior to desktop and landscape GRID.
+   LIST and existing portrait rules remain unchanged. */
+@media (min-width:901px), (orientation:landscape){
+  #resultsGrid .card-meta .text-guide-badge{
+    max-width:100%;
+    min-width:0;
+    white-space:normal;
+  }
+  #resultsGrid .card .text-guide-label{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  #resultsGrid .card .text-guide-detail{
+    display:block;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
