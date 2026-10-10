@@ -71,6 +71,16 @@
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
+    // Developer Provided badges contain a dynamic company name, so their full
+    // text cannot match the static English inventory. Translate the label only.
+    const provided = norm(source).match(/^Provided by (.+)$/);
+    if (provided && language !== 'en') {
+      const label = translations['developer.provided_by'];
+      if (label) {
+        const prefix = label.replace(/\s+(?:el\s+)?Desarrollador\s*$/i, '').trim();
+        if (prefix && prefix !== label) return prefix + ' ' + provided[1];
+      }
+    }
     const clean = norm(source).replace(/^[⚡🚫📄🎁×✕✖]\s*/u,'');
     const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
     if (key) {
