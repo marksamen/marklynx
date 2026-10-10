@@ -529,3 +529,12 @@ html[data-theme="bright"] .recent-uploads-head h2::after {
     padding-right:14px;
   }
 }
+
+/* LANGUAGES PROD REV25 — Bright-theme language selector paint only.
+   Match the adjacent Bright theme button; override the selector's inline dark colors.
+   No sizing, positioning, Dark theme, or other controls changed. */
+html[data-theme="bright"] #siteLanguageSelect {
+  background: #cec7c5 !important;
+  color: #20201e !important;
+  border-color: #96908d !important;
+}
