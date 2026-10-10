@@ -71,6 +71,11 @@
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
+    // REV24: Display-only wording correction. Supabase translations may still
+    // contain the older label; preserve the existing filter value/behavior.
+    if (/^(?:Text Guides Only|Text Guide Included)$/i.test(norm(source))) {
+      return language === 'es' ? 'Guía de Texto Incluida' : 'Text Guide Included';
+    }
     // Developer Provided badges contain a dynamic company name, so their full
     // text cannot match the static English inventory. Translate the label only.
     const provided = norm(source).match(/^Provided by (.+)$/);
