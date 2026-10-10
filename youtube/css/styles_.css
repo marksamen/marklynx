@@ -3014,3 +3014,13 @@ body.suggest-modal-open{overflow:hidden}
     display:block;
   }
 }
+
+/* LANGUAGES REV21 — Spanish Mobile Portrait top-action labels only.
+   Preserve the existing three-button geometry and all English styling. */
+@media (orientation:portrait) and (max-width:700px){
+  html[lang="es"] .subscribe-strip-inner > .youtube-subscribe-btn,
+  html[lang="es"] .subscribe-strip-inner > #suggestGameBtn,
+  html[lang="es"] .subscribe-strip-inner > .developer-showcase-btn{
+    font-size:10px;
+  }
+}
