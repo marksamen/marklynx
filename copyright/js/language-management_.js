@@ -1,5 +1,5 @@
-import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV04';
-import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV04';
+import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV05';
+import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV05';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
