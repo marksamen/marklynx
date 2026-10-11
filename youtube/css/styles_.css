@@ -3058,3 +3058,16 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:break-word;
   }
 }
+
+/* MOBILE FILTER SIZING REV01 — scope: six main-toolbar selects only.
+   JS sets a selected-label width; preserve native menus and desktop sizing. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
+    #qualityFilter, #featuresFilter, #sortSelect) {
+    box-sizing: border-box;
+    width: var(--mobile-filter-selected-width, auto);
+    max-width: 100%;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+}
