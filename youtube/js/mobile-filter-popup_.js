@@ -1,4 +1,4 @@
-/* TEST REV04 — shared mobile popup for all six filters; native selects remain authoritative. */
+/* TEST REV05 — shared mobile popup for all six filters; native selects remain authoritative. */
 (() => {
   const ids = ['typeFilter', 'diffFilter', 'platformFilter', 'qualityFilter', 'featuresFilter', 'sortSelect'];
   const mobile = matchMedia('(max-width: 900px), (orientation: landscape) and (max-height: 500px)');
@@ -14,6 +14,8 @@
   const initialWidth = Math.ceil(select.getBoundingClientRect().width);
   const anchor = document.createElement('span');
   anchor.className = 'ml-filter-popup-anchor';
+  // Keep the approved initial width as a floor when a translated selection is shorter.
+  // Longer selected labels can still grow the control through the existing width variable.
   if (initialWidth > 0) anchor.style.width = `${initialWidth}px`;
   select.parentNode.insertBefore(anchor, select);
   anchor.appendChild(select);
@@ -45,7 +47,10 @@
     // site_.js is the authoritative selected-label width calculator.
     // Its measurement is applied asynchronously; never collapse the wrapper while
     // that CSS variable is temporarily absent.
-    if (width) anchor.style.width = width;
+    if (width) {
+      const measured = Number.parseFloat(width);
+      if (Number.isFinite(measured)) anchor.style.width = `${Math.max(initialWidth, measured)}px`;
+    }
     const signature = options().map(o => `${o.value}:${o.textContent}:${o.selected}`).join('\u0001');
     if (open && signature !== lastSignature) renderOptions();
     lastSignature = signature;
