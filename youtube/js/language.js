@@ -270,7 +270,7 @@
         const rows = await fetchRows('site_translations','language_code=eq.' + encodeURIComponent(language) + '&select=translation_key,translated_text&limit=1000');
         translations = Object.fromEntries(rows.map(r => [r.translation_key,r.translated_text]));
       } catch (err) {
-        console.warn('[LANG PROD] Supabase translations unavailable; trying TEST JSON:',err);
+        console.warn('[LANG PROD] Supabase translations unavailable; trying PROD JSON:',err);
         try {
           const response = await fetch('data/translations.json?v=LANG-REV14',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
@@ -302,7 +302,7 @@
     let rows = [];
     try {rows = await fetchRows('site_languages','select=code,native_name,english_name,enabled,sort_order&order=sort_order.asc');}
     catch (e) {
-      console.warn('[LANG PROD] Language registry unavailable; trying TEST JSON:',e);
+      console.warn('[LANG PROD] Language registry unavailable; trying PROD JSON:',e);
       try {
         const response=await fetch('data/languages.json?v=LANG-REV14',{cache:'no-store'});
         if(!response.ok)throw Error('HTTP '+response.status);
