@@ -3072,14 +3072,20 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* MOBILE FILTER LAYOUT REV02 — allow Search to share a row with filters
-   when its remaining width is usable. Preserve REV01 select widths.
-   A smaller mobile flex basis avoids forcing Search onto its own row
-   merely because its former 220px minimum plus the next filter cannot fit.
-   Flex wrapping still handles longer translations without clipping. */
+/* MOBILE FILTER LAYOUT REV03 — balanced wrapping with a full-width search row.
+   Retain REV01 content-sized selects. Do not affect desktop or filter behavior. */
 @media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner {
+    justify-content: center;
+  }
   .toolbar-inner > .search-box {
-    flex: 1 1 160px;
-    min-width: min(160px, 100%);
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  /* Undo the older landscape-only right anchor: it creates lopsided rows. */
+  .toolbar-inner > .view-toggle {
+    margin-left: 0;
   }
 }
