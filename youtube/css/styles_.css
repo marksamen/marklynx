@@ -3133,3 +3133,16 @@ body.suggest-modal-open{overflow:hidden}
     padding-bottom: 8px;
   }
 }
+
+/* MOBILE FILTER HEIGHT REV11 — portrait search input only.
+   Reduce default ~42px search field by roughly one quarter; preserve dropdowns
+   and the approved landscape rules. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .toolbar-inner > .search-box > input {
+    box-sizing: border-box;
+    height: 32px;
+    min-height: 32px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
