@@ -3166,3 +3166,28 @@ body.suggest-modal-open{overflow:hidden}
 @media (hover: none) and (pointer: coarse) {
   html { touch-action: pan-x pan-y; }
 }
+
+/* RECENT TEXT GUIDE PROD REV01 — mobile Recent badges only.
+   Reuse approved Normal Videos ocean-blue treatment and portrait text containment.
+   Recent renderer stays frozen; natural wrapping works with its plain-text badge. */
+@media (max-width:900px) {
+  .recent-uploads-grid .recent-upload-under-title-badges {
+    max-width:100%;
+    min-width:0;
+  }
+  .recent-uploads-grid .recent-upload-under-title-badges .text-guide-badge {
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    border-color:#31586b;
+    background:linear-gradient(180deg,rgba(45,111,143,.16),rgba(45,111,143,.055));
+    color:#b9dce9;
+    font-weight:600;
+  }
+  .recent-uploads-grid .recent-upload-under-title-badges .text-guide-badge svg {
+    flex-shrink:0;
+    color:#65b7d6;
+  }
+}
