@@ -3089,26 +3089,34 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* MOBILE FILTER HEIGHT REV06 — portrait: modestly increase only toolbar select height.
-   Preserve REV05 widths, native dropdowns and all other toolbar controls. */
+/* MOBILE FILTER HEIGHT REV07 — explicit, scoped mobile control heights.
+   Keep REV05 widths and REV04 wrapping unchanged; native select padding alone
+   did not yield a visible difference in REV06. */
 @media (max-width: 900px) and (orientation: portrait) {
   .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
     #qualityFilter, #featuresFilter, #sortSelect) {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    box-sizing: border-box;
+    height: 43px;
+    min-height: 43px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
-/* MOBILE FILTER HEIGHT REV06 — phone landscape: bring search and select
-   heights closer together without changing widths or wrapping. */
 @media (orientation: landscape) and (max-height: 500px) {
   .toolbar-inner > .search-box > input {
-    padding-top: 9px;
-    padding-bottom: 9px;
+    box-sizing: border-box;
+    height: 42px;
+    min-height: 42px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
     #qualityFilter, #featuresFilter, #sortSelect) {
-    padding-top: 11px;
-    padding-bottom: 11px;
+    box-sizing: border-box;
+    height: 42px;
+    min-height: 42px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
