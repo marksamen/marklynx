@@ -3089,7 +3089,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* MOBILE FILTER HEIGHT REV07 — explicit, scoped mobile control heights.
+/* MOBILE FILTER HEIGHT REV08 — explicit, scoped mobile control heights.
    Keep REV05 widths and REV04 wrapping unchanged; native select padding alone
    did not yield a visible difference in REV06. */
 @media (max-width: 900px) and (orientation: portrait) {
@@ -3106,16 +3106,16 @@ body.suggest-modal-open{overflow:hidden}
 @media (orientation: landscape) and (max-height: 500px) {
   .toolbar-inner > .search-box > input {
     box-sizing: border-box;
-    height: 42px;
-    min-height: 42px;
+    height: 32px;
+    min-height: 32px;
     padding-top: 0;
     padding-bottom: 0;
   }
   .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
     #qualityFilter, #featuresFilter, #sortSelect) {
     box-sizing: border-box;
-    height: 42px;
-    min-height: 42px;
+    height: 32px;
+    min-height: 32px;
     padding-top: 0;
     padding-bottom: 0;
   }
