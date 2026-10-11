@@ -1,8 +1,14 @@
-/* TEST REV02 — mobile-only custom popup for Genre; native select remains authoritative. */
+/* TEST REV04 — shared mobile popup for all six filters; native selects remain authoritative. */
 (() => {
-  const select = document.getElementById('typeFilter');
-  if (!select || select.dataset.mlPopupEnhanced) return;
+  const ids = ['typeFilter', 'diffFilter', 'platformFilter', 'qualityFilter', 'featuresFilter', 'sortSelect'];
   const mobile = matchMedia('(max-width: 900px), (orientation: landscape) and (max-height: 500px)');
+  const labels = {typeFilter:'Genre',diffFilter:'Difficulty',platformFilter:'Platform',
+                  qualityFilter:'Quality',featuresFilter:'Features',sortSelect:'Sort'};
+  let popupSequence = 0;
+  let closePrevious = null;
+  ids.forEach(id => {
+  const select = document.getElementById(id);
+  if (!select || select.dataset.mlPopupEnhanced) return;
   // Capture the pre-wrapper width before the original direct-child CSS stops applying.
   // This prevents a zero/intrinsic-width flash while site_.js schedules its measurement.
   const initialWidth = Math.ceil(select.getBoundingClientRect().width);
@@ -16,13 +22,13 @@
   trigger.className = 'ml-filter-popup-trigger';
   trigger.setAttribute('aria-haspopup', 'listbox');
   trigger.setAttribute('aria-expanded', 'false');
-  trigger.setAttribute('aria-label', 'Genre');
+  trigger.setAttribute('aria-label', labels[id]);
   anchor.appendChild(trigger);
   const popup = document.createElement('div');
   popup.className = 'ml-filter-popup-menu';
-  popup.id = 'ml-genre-popup';
+  popup.id = `ml-filter-popup-${++popupSequence}`;
   popup.setAttribute('role', 'listbox');
-  popup.setAttribute('aria-label', 'Genre');
+  popup.setAttribute('aria-label', labels[id]);
   popup.hidden = true;
   document.body.appendChild(popup);
   trigger.setAttribute('aria-controls', popup.id);
@@ -94,9 +100,12 @@
     open = false;
     popup.hidden = true;
     trigger.setAttribute('aria-expanded', 'false');
+    if (closePrevious === close) closePrevious = null;
   }
   function show() {
     if (!mobile.matches) return;
+    if (closePrevious) closePrevious();
+    closePrevious = close;
     renderOptions();
     open = true;
     popup.hidden = false;
@@ -134,4 +143,5 @@
   addEventListener('scroll', position, true);
   if (mobile.addEventListener) mobile.addEventListener('change', () => { close(); sync(); });
   sync();
+  });
 })();
