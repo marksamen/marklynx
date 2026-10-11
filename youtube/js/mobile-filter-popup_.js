@@ -1,10 +1,14 @@
-/* TEST REV01 — mobile-only custom popup for Genre; native select remains authoritative. */
+/* TEST REV02 — mobile-only custom popup for Genre; native select remains authoritative. */
 (() => {
   const select = document.getElementById('typeFilter');
   if (!select || select.dataset.mlPopupEnhanced) return;
   const mobile = matchMedia('(max-width: 900px), (orientation: landscape) and (max-height: 500px)');
+  // Capture the pre-wrapper width before the original direct-child CSS stops applying.
+  // This prevents a zero/intrinsic-width flash while site_.js schedules its measurement.
+  const initialWidth = Math.ceil(select.getBoundingClientRect().width);
   const anchor = document.createElement('span');
   anchor.className = 'ml-filter-popup-anchor';
+  if (initialWidth > 0) anchor.style.width = `${initialWidth}px`;
   select.parentNode.insertBefore(anchor, select);
   anchor.appendChild(select);
   const trigger = document.createElement('button');
@@ -32,8 +36,10 @@
     const selected = select.selectedOptions[0];
     trigger.textContent = selected ? selected.textContent.trim() : '';
     const width = getComputedStyle(select).getPropertyValue('--mobile-filter-selected-width').trim();
+    // site_.js is the authoritative selected-label width calculator.
+    // Its measurement is applied asynchronously; never collapse the wrapper while
+    // that CSS variable is temporarily absent.
     if (width) anchor.style.width = width;
-    else anchor.style.width = '';
     const signature = options().map(o => `${o.value}:${o.textContent}:${o.selected}`).join('\u0001');
     if (open && signature !== lastSignature) renderOptions();
     lastSignature = signature;
@@ -123,7 +129,7 @@
   new MutationObserver(() => {
     if (raf) return;
     raf = requestAnimationFrame(() => { raf = 0; sync(); });
-  }).observe(select, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['label', 'selected'] });
+  }).observe(select, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['label', 'selected', 'style'] });
   addEventListener('resize', () => { if (!mobile.matches) close(); sync(); position(); });
   addEventListener('scroll', position, true);
   if (mobile.addEventListener) mobile.addEventListener('change', () => { close(); sync(); });
