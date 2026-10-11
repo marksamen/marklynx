@@ -3071,3 +3071,15 @@ body.suggest-modal-open{overflow:hidden}
     flex: 0 1 auto;
   }
 }
+
+/* MOBILE FILTER LAYOUT REV02 — allow Search to share a row with filters
+   when its remaining width is usable. Preserve REV01 select widths.
+   A smaller mobile flex basis avoids forcing Search onto its own row
+   merely because its former 220px minimum plus the next filter cannot fit.
+   Flex wrapping still handles longer translations without clipping. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > .search-box {
+    flex: 1 1 160px;
+    min-width: min(160px, 100%);
+  }
+}
