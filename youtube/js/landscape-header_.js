@@ -1,4 +1,4 @@
-/* Landscape Header TEST REV01 — relocates existing controls, never clones or rewires them. */
+/* Landscape Header TEST REV02 — relocates existing controls, never clones or rewires them. */
 (() => {
   const mq = matchMedia('(orientation: landscape) and (max-height: 500px) and (pointer: coarse)');
   let shell = null;
@@ -35,10 +35,13 @@
     if (!prefs || !banner || !strip || !search || !buttons || !document.getElementById('siteLanguageControl')) return;
     shell = document.createElement('div');
     shell.className = 'ml-landscape-header';
-    shell.innerHTML = '<div class="ml-landscape-brand"></div><div class="ml-landscape-side"><div class="ml-landscape-prefs"></div><div class="ml-landscape-buttons"></div><div class="ml-landscape-search"></div></div>';
+    shell.innerHTML = '<div class="ml-landscape-brand"></div><div class="ml-landscape-side"><div class="ml-landscape-top"><div class="ml-landscape-subscribe"></div><div class="ml-landscape-prefs"></div></div><div class="ml-landscape-buttons"></div><div class="ml-landscape-search"></div></div>';
     prefs.parentNode.insertBefore(shell, prefs);
+    const subscribe = buttons.querySelector('.youtube-subscribe-btn');
+    if (!subscribe) { shell.remove(); shell = null; return; }
     relocate(banner, shell.querySelector('.ml-landscape-brand'));
     relocate(prefs, shell.querySelector('.ml-landscape-prefs'));
+    relocate(subscribe, shell.querySelector('.ml-landscape-subscribe'));
     relocate(buttons, shell.querySelector('.ml-landscape-buttons'));
     relocate(search, shell.querySelector('.ml-landscape-search'));
     document.body.classList.add('ml-compact-landscape');
