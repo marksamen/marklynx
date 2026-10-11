@@ -1,4 +1,4 @@
-/* TEST REV01 — Genre-only mobile popup. No desktop or other filter changes. */
+/* TEST REV02 — Genre-only mobile popup. No desktop or other filter changes. */
 .ml-filter-popup-menu[hidden] { display: none !important; }
 @media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
   .toolbar-inner > .ml-filter-popup-anchor {
@@ -8,16 +8,27 @@
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    align-self: center;
   }
   .ml-filter-popup-anchor > #typeFilter {
     width: 100% !important;
     min-width: 0;
     opacity: 0;
     pointer-events: none;
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .ml-filter-popup-anchor > .ml-filter-popup-trigger {
     position: absolute;
     inset: 0;
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
     width: 100%;
     min-width: 0;
     padding: 0 28px 0 12px;
