@@ -3161,3 +3161,8 @@ body.suggest-modal-open{overflow:hidden}
     padding-bottom: 0;
   }
 }
+
+/* GODZILLA TEST REV02: disable touch zoom on mobile; retain scrolling. */
+@media (hover: none) and (pointer: coarse) {
+  html { touch-action: pan-x pan-y; }
+}
