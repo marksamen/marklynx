@@ -1,8 +1,8 @@
-// REV14 TEST: one recovery generator for main Admin and Language Management.
+// PROD recovery generator for main Admin and Language Management.
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
-async function fetchAllSupabaseTestGames(){
+async function fetchAllSupabaseProdGames(){
   const pageSize=1000;
   const all=[];
   for(let from=0;;from+=pageSize){
@@ -41,7 +41,7 @@ async function fetchQualityBadgeRecoveryData(){
     return {
       code,
       display_name:String(row?.display_name||code).trim()||code,
-      image_path:assetKey?`${assetKey}_.png`:"",
+      image_path:assetKey?`${assetKey}.png`:"",
       sort_order:row?.sort_order??null
     };
   }).filter(row=>row.code&&row.image_path);
@@ -112,7 +112,7 @@ async function fetchLanguageRecoveryData(user){
 export async function generateAllRecoveryFiles(user){
   // Fetch and validate EVERYTHING before starting any download.
   const [games,publicDeveloperData,qualityBadgeData,languageData]=await Promise.all([
-    fetchAllSupabaseTestGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user)
+    fetchAllSupabaseProdGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user)
   ]);
   if(!games.length)throw Error('Supabase PROD returned zero games.');
   if(!languageData.languages.length)throw Error('Language registry returned no rows.');
