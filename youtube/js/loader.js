@@ -58,7 +58,7 @@
   (async () => {
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
-      await loadHtml('sections/main.html?v=quality-filter-REV04', 'mainModuleMount');
+      await loadHtml('sections/main.html?v=LANGUAGE-PARITY-20261011A', 'mainModuleMount');
       await loadHtml('sections/developer.html?v=developer-provided-REV12', 'developerModuleMount');
       await loadHtml('sections/recent.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer.html?v=20260921-prod-promotion-01', 'footerModuleMount');
