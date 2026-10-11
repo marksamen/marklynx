@@ -3058,16 +3058,3 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:break-word;
   }
 }
-
-/* MOBILE FILTER REV32 — size native toolbar dropdowns to their selected option.
-   Scoped to the six main filters, not form selects or desktop controls.
-   field-sizing:content is progressive enhancement; unsupported browsers retain
-   their original native select sizing for safety. */
-@media (max-width:900px), (orientation:landscape) and (max-height:500px){
-  .toolbar-inner > :is(#typeFilter, #diffFilter, #platformFilter,
-                       #qualityFilter, #featuresFilter, #sortSelect){
-    field-sizing:content;
-    max-width:100%;
-    min-width:0;
-  }
-}
