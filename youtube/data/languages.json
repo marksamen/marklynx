@@ -3,7 +3,7 @@
     "code": "es",
     "native_name": "Español",
     "english_name": "Spanish",
-    "enabled": false,
+    "enabled": true,
     "sort_order": 0
   }
 ]
