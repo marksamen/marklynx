@@ -3191,3 +3191,38 @@ body.suggest-modal-open{overflow:hidden}
     color:#65b7d6;
   }
 }
+
+/* LANDSCAPE HEADER TEST REV01 — coarse-pointer phone landscape ONLY. */
+@media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
+  body.ml-compact-landscape .ml-landscape-header {
+    display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.15fr);
+    gap:8px; align-items:center; padding:5px 10px;
+    background:var(--bg); width:100%;
+  }
+  body.ml-compact-landscape .ml-landscape-brand,
+  body.ml-compact-landscape .ml-landscape-side {min-width:0;}
+  body.ml-compact-landscape .ml-landscape-brand .banner-wrap {width:100%;}
+  body.ml-compact-landscape .ml-landscape-brand .banner-wrap img {width:100%; height:auto; max-width:none;}
+  body.ml-compact-landscape .ml-landscape-brand .banner-wrap::after {width:100%;}
+  body.ml-compact-landscape .ml-landscape-side {display:grid; grid-template-rows:auto auto auto; gap:4px;}
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences {border:0;background:transparent;}
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences-inner {padding:0; min-height:0; gap:5px; justify-content:space-between;}
+  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageControl {margin-left:0!important; gap:3px!important; flex-wrap:nowrap!important; min-width:0;}
+  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageControl label {font-size:10px!important;}
+  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageSelect {min-width:0;max-width:96px!important;padding:3px!important;font-size:12px!important;}
+  body.ml-compact-landscape .ml-landscape-prefs .theme-toggle-btn {padding:3px 6px;min-height:26px;font-size:11px;}
+  body.ml-compact-landscape .ml-landscape-buttons .subscribe-strip-inner {display:flex;gap:4px;flex-wrap:nowrap;justify-content:space-between;max-width:none;}
+  body.ml-compact-landscape .ml-landscape-buttons .subscribe-strip-inner > * {flex:1 1 0;min-width:0;justify-content:center;padding:5px 3px;font-size:10px;line-height:1.15;white-space:normal;text-align:center;}
+  body.ml-compact-landscape .ml-landscape-buttons .subscribe-strip-inner svg {display:none;}
+  body.ml-compact-landscape .ml-landscape-search .search-box {min-width:0; width:100%;flex:none;}
+  body.ml-compact-landscape .ml-landscape-search .search-box input {height:30px;min-height:30px;padding-top:0;padding-bottom:0;font-size:16px;}
+  body.ml-compact-landscape .subscribe-strip {display:none;}
+  body.ml-compact-landscape .toolbar {padding:5px 10px;position:relative;top:auto;}
+  body.ml-compact-landscape .toolbar-inner {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;max-width:none;}
+  body.ml-compact-landscape .toolbar-inner > .ml-filter-popup-anchor {box-sizing:border-box;width:100%!important;min-width:0;max-width:100%;}
+  body.ml-compact-landscape .toolbar-inner > .ml-filter-popup-anchor .ml-filter-popup-trigger {width:100%;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  body.ml-compact-landscape .toolbar-inner > select {width:100%;min-width:0;}
+  body.ml-compact-landscape .toolbar-inner > .view-toggle {grid-column:1/3;justify-self:start;}
+  body.ml-compact-landscape .toolbar-inner > .clear-filters-btn {grid-column:3;justify-self:end;max-width:100%;}
+  body.ml-compact-landscape .toolbar::after {width:calc(100% - 20px);}
+}
