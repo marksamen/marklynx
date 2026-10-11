@@ -321,7 +321,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV16-BOUNDARY-FIX-20261007F');
-      await loadScript('js/site_.js?v=MOBILE-FILTER-SIZING-REV01');
+      await loadScript('js/site_.js?v=MOBILE-FILTER-SIZING-REV05');
       await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV02');
       await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');

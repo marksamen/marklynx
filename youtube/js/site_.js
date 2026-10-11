@@ -500,6 +500,16 @@ if(recentManagedQualityRoot){
    Read actual computed font; leave native select arrow and option menu intact.
    Watch translation changes and dynamically rebuilt filter options. */
 (function initMobileFilterSizing(){
+  // Spanish default labels are the approved visual width reference for English.
+  // Each control has its own reference; other languages retain content-based sizing.
+  const spanishReference = {
+    typeFilter: 'Todos los Géneros',
+    diffFilter: 'Todas las Dificultades',
+    platformFilter: 'Todas las Plataformas',
+    qualityFilter: 'Todas las Calidades',
+    featuresFilter: 'Todas las Funciones',
+    sortSelect: 'Nombre A–Z'
+  };
   const ids = ['typeFilter','diffFilter','platformFilter','qualityFilter','featuresFilter','sortSelect'];
   const controls = ids.map(id => document.getElementById(id)).filter(Boolean);
   if(!controls.length) return;
@@ -522,7 +532,12 @@ if(recentManagedQualityRoot){
       const labelWidth = context.measureText(option.textContent.trim()).width;
       // 12px each side padding + native arrow/gap allowance (32px) + borders.
       // The same allowance is used for all six controls and languages.
-      const width = Math.ceil(labelWidth + 58);
+      // Only English gets the Spanish reference minimum; Spanish remains unchanged.
+      // Never clip a longer selected option, including future languages.
+      const isEnglish = (document.documentElement.lang || 'en').toLowerCase().split('-')[0] === 'en';
+      const reference = isEnglish ? spanishReference[select.id] : null;
+      const referenceWidth = reference ? context.measureText(reference).width : 0;
+      const width = Math.ceil(Math.max(labelWidth, referenceWidth) + 58);
       select.style.setProperty('--mobile-filter-selected-width', width + 'px');
     });
   }
