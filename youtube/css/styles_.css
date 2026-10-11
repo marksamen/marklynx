@@ -3192,9 +3192,9 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* LANDSCAPE HEADER TEST REV03 — Concept B.1. Landscape phone only. */
+/* LANDSCAPE HEADER TEST REV04 — REV03 structure; banner 20% wider (60% to 72% of content width), subscribe natural width and right-aligned. Landscape phone only. */
 @media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
- body.ml-compact-landscape .ml-landscape-header {display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:8px;align-items:center;padding:5px max(10px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left));background:var(--bg);}
+ body.ml-compact-landscape .ml-landscape-header {display:grid;grid-template-columns:minmax(0,18fr) minmax(0,7fr);gap:8px;align-items:center;padding:5px max(10px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left));background:var(--bg);}
  body.ml-compact-landscape .ml-landscape-brand,body.ml-compact-landscape .ml-landscape-side {min-width:0;}
  body.ml-compact-landscape .ml-landscape-brand .banner-wrap {width:100%;}
  body.ml-compact-landscape .ml-landscape-brand .banner-wrap::before,body.ml-compact-landscape .ml-landscape-brand .banner-wrap::after {display:none;}
@@ -3205,7 +3205,7 @@ body.suggest-modal-open{overflow:hidden}
  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageControl label {display:none;}
  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageSelect {min-width:0;max-width:104px!important;padding:3px!important;font-size:12px!important;}
  body.ml-compact-landscape .ml-landscape-prefs .theme-toggle-btn {box-sizing:border-box;height:30px;min-height:30px;padding:3px 7px;font-size:12px;white-space:nowrap;}
- body.ml-compact-landscape .ml-landscape-subscribe .youtube-subscribe-btn {display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;height:30px;min-height:30px;margin:0;padding:4px 7px;font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;border-radius:4px;}
+ body.ml-compact-landscape .ml-landscape-subscribe .youtube-subscribe-btn {display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;box-sizing:border-box;height:30px;min-height:30px;margin:0 0 0 auto;padding:4px 10px;font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;border-radius:4px;}
  body.ml-compact-landscape .ml-landscape-subscribe .youtube-subscribe-btn svg {width:15px;height:15px;}
  body.ml-compact-landscape .ml-landscape-actions {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);gap:6px;align-items:center;padding:0 max(10px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left));}
  body.ml-compact-landscape .ml-landscape-actions > * {min-width:0;}
