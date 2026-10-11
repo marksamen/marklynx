@@ -494,3 +494,65 @@ if(recentManagedQualityRoot){
   recentManagedQualityObserver.observe(recentManagedQualityRoot, { childList:true, subtree:true });
   upgradeRecentManagedQualityBadges();
 }
+
+
+/* MOBILE FILTER SIZING REV01 — selected label, not longest menu option.
+   Read actual computed font; leave native select arrow and option menu intact.
+   Watch translation changes and dynamically rebuilt filter options. */
+(function initMobileFilterSizing(){
+  // Spanish default labels are the approved visual width reference for English.
+  // Each control has its own reference; other languages retain content-based sizing.
+  const spanishReference = {
+    typeFilter: 'Todos los Géneros',
+    diffFilter: 'Todas las Dificultades',
+    platformFilter: 'Todas las Plataformas',
+    qualityFilter: 'Todas las Calidades',
+    featuresFilter: 'Todas las Funciones',
+    sortSelect: 'Nombre A–Z'
+  };
+  const ids = ['typeFilter','diffFilter','platformFilter','qualityFilter','featuresFilter','sortSelect'];
+  const controls = ids.map(id => document.getElementById(id)).filter(Boolean);
+  if(!controls.length) return;
+  const mobile = window.matchMedia('(max-width: 900px), (orientation: landscape) and (max-height: 500px)');
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  let queued = false;
+
+  function refresh(){
+    queued = false;
+    controls.forEach(select => {
+      if(!mobile.matches || !context){
+        select.style.removeProperty('--mobile-filter-selected-width');
+        return;
+      }
+      const option = select.selectedOptions[0];
+      if(!option) return;
+      const style = getComputedStyle(select);
+      context.font = style.font || [style.fontSize, style.fontFamily].join(' ');
+      const labelWidth = context.measureText(option.textContent.trim()).width;
+      // 12px each side padding + native arrow/gap allowance (32px) + borders.
+      // The same allowance is used for all six controls and languages.
+      // Only English gets the Spanish reference minimum; Spanish remains unchanged.
+      // Never clip a longer selected option, including future languages.
+      const isEnglish = (document.documentElement.lang || 'en').toLowerCase().split('-')[0] === 'en';
+      const reference = isEnglish ? spanishReference[select.id] : null;
+      const referenceWidth = reference ? context.measureText(reference).width : 0;
+      const width = Math.ceil(Math.max(labelWidth, referenceWidth) + 58);
+      select.style.setProperty('--mobile-filter-selected-width', width + 'px');
+    });
+  }
+  function schedule(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(refresh);
+  }
+  controls.forEach(select => select.addEventListener('change', schedule));
+  const toolbar = document.querySelector('.toolbar-inner');
+  if(toolbar){
+    new MutationObserver(schedule).observe(toolbar, {subtree:true, childList:true, characterData:true});
+  }
+  window.addEventListener('resize', schedule);
+  if(mobile.addEventListener) mobile.addEventListener('change', schedule);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  schedule();
+})();
