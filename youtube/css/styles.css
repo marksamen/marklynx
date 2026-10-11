@@ -2975,6 +2975,15 @@ body.suggest-modal-open{overflow:hidden}
     object-fit:contain;
   }
 }
+
+/* REV28 — Mobile landscape Grid/List alignment only.
+   Keep the existing toolbar flow; anchor the view control to the right edge of its row.
+   Portrait, desktop, Recent and responsive sizing rules untouched. */
+@media (orientation:landscape) and (max-height:500px) {
+  .toolbar-inner > .view-toggle {
+    margin-left:auto;
+  }
+}
 /* MOBILE PORTRAIT REV34: match Kinect Required badge sizing to Text Guide Included. */
 @media (orientation:portrait) and (max-width:700px){
   #resultsGrid .card .kinect-badge,
@@ -3003,5 +3012,49 @@ body.suggest-modal-open{overflow:hidden}
   #resultsGrid .card .text-guide-detail,
   #resultsList .text-guide-detail{
     display:block;
+  }
+}
+
+/* LANGUAGES REV21 — Spanish Mobile Portrait top-action labels only.
+   Preserve the existing three-button geometry and all English styling. */
+@media (orientation:portrait) and (max-width:700px){
+  html[lang="es"] .subscribe-strip-inner > .youtube-subscribe-btn,
+  html[lang="es"] .subscribe-strip-inner > #suggestGameBtn,
+  html[lang="es"] .subscribe-strip-inner > .developer-showcase-btn{
+    font-size:10px;
+  }
+}
+
+/* LANGUAGES REV22 — Normal Games GRID: contain descriptive Text Guide badges.
+   Extend the approved portrait wrapping behavior to desktop and landscape GRID.
+   LIST and existing portrait rules remain unchanged. */
+@media (min-width:901px), (orientation:landscape){
+  #resultsGrid .card-meta .text-guide-badge{
+    max-width:100%;
+    min-width:0;
+    white-space:normal;
+  }
+  #resultsGrid .card .text-guide-label{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  #resultsGrid .card .text-guide-detail{
+    display:block;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
+
+/* LANGUAGES REV23 — Normal Games GRID: wrap Developer Provided attribution.
+   Reuse portrait containment for desktop/landscape GRID only; LIST untouched. */
+@media (min-width:901px), (orientation:landscape){
+  #resultsGrid .card .developer-provided-badge{
+    max-width:100%;
+  }
+  #resultsGrid .card-meta .developer-provided-badge{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:break-word;
   }
 }
