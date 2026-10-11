@@ -3072,19 +3072,18 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* MOBILE FILTER LAYOUT REV03 — balanced wrapping with a full-width search row.
-   Retain REV01 content-sized selects. Do not affect desktop or filter behavior. */
+/* MOBILE FILTER LAYOUT REV04 — Desktop-style natural wrapping.
+   Keep REV01 selected-label sizing, without REV02/03 layout overrides.
+   Search grows into remaining space; controls wrap in document order. */
 @media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
   .toolbar-inner {
-    justify-content: center;
+    justify-content: flex-start;
   }
   .toolbar-inner > .search-box {
-    flex: 0 0 100%;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+    flex: 1 1 220px;
+    min-width: min(220px, 100%);
+    max-width: 100%;
   }
-  /* Undo the older landscape-only right anchor: it creates lopsided rows. */
   .toolbar-inner > .view-toggle {
     margin-left: 0;
   }
