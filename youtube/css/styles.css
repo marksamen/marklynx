@@ -3058,3 +3058,106 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:break-word;
   }
 }
+
+/* MOBILE FILTER SIZING REV01 — scope: six main-toolbar selects only.
+   JS sets a selected-label width; preserve native menus and desktop sizing. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
+    #qualityFilter, #featuresFilter, #sortSelect) {
+    box-sizing: border-box;
+    width: var(--mobile-filter-selected-width, auto);
+    max-width: 100%;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+}
+
+/* MOBILE FILTER LAYOUT REV04 — Desktop-style natural wrapping.
+   Keep REV01 selected-label sizing, without REV02/03 layout overrides.
+   Search grows into remaining space; controls wrap in document order. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner {
+    justify-content: flex-start;
+  }
+  .toolbar-inner > .search-box {
+    flex: 1 1 220px;
+    min-width: min(220px, 100%);
+    max-width: 100%;
+  }
+  .toolbar-inner > .view-toggle {
+    margin-left: 0;
+  }
+}
+
+/* MOBILE FILTER HEIGHT REV10 — portrait only.
+   Match the approved 30px landscape filter height without changing portrait
+   search sizing, widths, wrapping, or the frozen landscape rules. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .toolbar {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
+    #qualityFilter, #featuresFilter, #sortSelect) {
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > .search-box > input {
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .toolbar-inner > select:is(#typeFilter, #diffFilter, #platformFilter,
+    #qualityFilter, #featuresFilter, #sortSelect) {
+    box-sizing: border-box;
+    height: 30px;
+    min-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* MOBILE FILTER LANDSCAPE SPACING REV09 — reclaim vertical space only.
+   Portrait and desktop unaffected; preserve filter wrapping and button sizes. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+/* MOBILE FILTER HEIGHT REV11 — portrait search input only.
+   Reduce default ~42px search field by roughly one quarter; preserve dropdowns
+   and the approved landscape rules. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .toolbar-inner > .search-box > input {
+    box-sizing: border-box;
+    height: 32px;
+    min-height: 32px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* MOBILE FILTER GRID/LIST HEIGHT REV12 — Landscape only.
+   Match 30px filter boxes; preserve toggle width, layout and portrait. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > .view-toggle {
+    box-sizing: border-box;
+    height: 30px;
+  }
+  .toolbar-inner > .view-toggle > button {
+    box-sizing: border-box;
+    height: 28px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
