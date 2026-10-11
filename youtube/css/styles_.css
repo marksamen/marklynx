@@ -3146,3 +3146,18 @@ body.suggest-modal-open{overflow:hidden}
     padding-bottom: 0;
   }
 }
+
+/* MOBILE FILTER GRID/LIST HEIGHT REV12 — Landscape only.
+   Match 30px filter boxes; preserve toggle width, layout and portrait. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar-inner > .view-toggle {
+    box-sizing: border-box;
+    height: 30px;
+  }
+  .toolbar-inner > .view-toggle > button {
+    box-sizing: border-box;
+    height: 28px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
