@@ -3488,3 +3488,18 @@ body.suggest-modal-open{overflow:hidden}
     gap: 6px;
   }
 }
+
+/* RECENT LANDSCAPE GRID BADGE ALIGNMENT TEST REV08.
+   Recent GRID only: consistent vertical spacing and rectangular Kinect badge.
+   Normal Guides, Recent LIST, Portrait and desktop remain unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
+    border-radius: 6px;
+  }
+}
