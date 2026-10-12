@@ -3247,3 +3247,21 @@ body.suggest-modal-open{overflow:hidden}
   body.ml-compact-landscape .ml-landscape-side {justify-content:space-between;}
   body.ml-compact-landscape .ml-landscape-subscribe .youtube-subscribe-btn {margin-left:auto;margin-right:auto;}
 }
+
+/* LANDSCAPE HEADER TEST REV06 — match language control height to Bright;
+   remove preference-row separator in compact phone landscape only. */
+@media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
+  body.ml-compact-landscape .ml-landscape-prefs #siteLanguageSelect {
+    box-sizing:border-box; height:30px!important; min-height:30px!important;
+  }
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences,
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences-inner {
+    border:0!important; border-bottom:0!important; box-shadow:none!important;
+  }
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences::before,
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences::after,
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences-inner::before,
+  body.ml-compact-landscape .ml-landscape-prefs .site-preferences-inner::after {
+    display:none!important;
+  }
+}
