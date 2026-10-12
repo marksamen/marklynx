@@ -3324,3 +3324,154 @@ body.suggest-modal-open{overflow:hidden}
     box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
   }
 }
+
+
+/* NORMAL LANDSCAPE LIST PROD PROMOTION REV01 (TEST REV05 PASS) */
+/* NORMAL LANDSCAPE LIST QUALITY APPROVED TEST REV01
+   The 900px mobile rules hide the right-hand Quality column and show a
+   duplicate beneath the title. In touch Landscape, use the same dedicated
+   GS/Quality columns at both 814px and 932px; Portrait remains unchanged.
+   Recent, GRID, Desktop, header, and JS are outside this change. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row {
+    grid-template-columns: 120px minmax(0, 1fr) auto auto;
+    align-items: center;
+  }
+  #resultsList .mobile-quality-badge {
+    display: none !important;
+  }
+  #resultsList .list-col.gs {
+    grid-column: 3;
+    align-self: center;
+    justify-self: center;
+  }
+  #resultsList .list-col.quality {
+    display: inline-flex !important;
+    grid-column: 4;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    margin: 0;
+  }
+  #resultsList .list-col.quality .quality-badge {
+    width: 54px;
+  }
+}
+
+/* NORMAL + RECENT LANDSCAPE LIST LONG TITLE SAFETY — APPROVED TEST REV02.
+   Portrait, GRID and desktop intentionally unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row {
+    grid-template-columns: 120px minmax(0, 1fr) auto auto;
+    min-width: 0;
+  }
+  #resultsList .list-row > span:nth-child(2),
+  #resultsList .list-name,
+  #resultsList .list-sub,
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-title-block,
+  .recent-uploads-grid.list-mode .recent-upload-title,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    min-width: 0; max-width: 100%; overflow-wrap: anywhere;
+  }
+  #resultsList .list-row > span:nth-child(2),
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    align-self: center;
+  }
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex; flex-wrap: wrap; gap: 4px;
+  }
+  #resultsList .list-col.gs, #resultsList .list-col.quality,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality {
+    flex-shrink: 0; white-space: nowrap; align-self: center;
+  }
+  .landscape-title-parenthetical { display: block; }
+}
+
+/* NORMAL + RECENT LANDSCAPE LIST INFO AREA BOUNDARY — APPROVED TEST REV03.
+   Retain REV02 title handling. Constrain badge ROWS to their existing
+   flexible title grid track; let badges flow to another row.
+   Individual badge text wrapping is deliberately deferred. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row > span:nth-child(2),
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  #resultsList .badge-row > *,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges > * {
+    flex: 0 1 auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+
+/* NORMAL + RECENT LANDSCAPE LIST AVAILABLE-SPACE RESERVATION — APPROVED TEST REV04.
+   Keep REV02 long-title handling. Reserve the GS/Quality tracks first and
+   let badge groups wrap in the remaining minmax(0,1fr) title track.
+   No individual badge-text wrapping changes in this revision. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row {
+    grid-template-columns: 120px minmax(0, 1fr) minmax(52px, max-content) minmax(54px, max-content);
+    column-gap: 12px;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+  #resultsList .badge-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #resultsList .badge-row > * {
+    flex: 0 0 auto;
+  }
+
+}
+
+
+/* NORMAL LANDSCAPE LIST GRID PLACEMENT — APPROVED TEST REV05.
+   Explicitly place the visible Normal items in their intended tracks.
+   Preserve REV02 title wrapping and REV04 responsive track reservation.
+   Recent and individual badge text are deliberately untouched. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row > .list-thumb {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  #resultsList .list-row > .list-col.quality {
+    grid-column: 4;
+    grid-row: 1;
+  }
+}
