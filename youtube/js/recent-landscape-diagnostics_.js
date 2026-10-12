@@ -1,4 +1,4 @@
-/* TEST ONLY - diagnostic overlay, no layout changes. SAFARI GRID REV01 */
+/* TEST ONLY - diagnostic overlay, no layout changes. SAFARI NORMAL GRID REV01 */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
@@ -8,7 +8,7 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='TEST REV01 · SAFARI GRID';
+  var label=document.createElement('span'); label.textContent='TEST REV01 · SAFARI NORMAL GRID';
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
   head.appendChild(label);head.appendChild(btn);
@@ -40,7 +40,10 @@
       'Recent card: '+width('.recent-upload-card'),
       'Recent title: '+width('.recent-upload-title'),
       'Recent GS: '+width('.recent-upload-meta.gs'),
-      'Recent quality: '+width('.recent-upload-meta.quality')
+      'Recent quality: '+width('.recent-upload-meta.quality'),
+      'Normal grid: '+width('#resultsGrid'),
+      'Normal card: '+width('#resultsGrid .card'),
+      'Normal thumb: '+width('#resultsGrid .thumb-wrap')
     ];
     body.textContent=lines.join('\n');
   }
