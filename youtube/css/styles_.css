@@ -3499,3 +3499,28 @@ body.suggest-modal-open{overflow:hidden}
     flex: 0 0 auto;
   }
 }
+
+
+/* NORMAL LANDSCAPE LIST GRID PLACEMENT — TEST REV05.
+   Explicitly place the visible Normal items in their intended tracks.
+   Preserve REV02 title wrapping and REV04 responsive track reservation.
+   Recent and individual badge text are deliberately untouched. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row > .list-thumb {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  #resultsList .list-row > .list-col.quality {
+    grid-column: 4;
+    grid-row: 1;
+  }
+}
