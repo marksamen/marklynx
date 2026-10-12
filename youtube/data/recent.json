@@ -1,7 +1,19 @@
 {
-  "updated": "2026-10-11T18:28:36.293656+00:00",
+  "updated": "2026-10-12T17:58:26.486602+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "1zCvcWp8fyM",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Spinning Spirit House | All Star Coins | Secret",
+      "published": "2026-10-12T14:54:44+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/1zCvcWp8fyM/hqdefault.jpg"
+    },
+    {
+      "id": "SY3eoUE_Vuk",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Slide Lift Tower | All Star Coins | 4K",
+      "published": "2026-10-11T23:20:05+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/SY3eoUE_Vuk/hqdefault.jpg"
+    },
     {
       "id": "RL6adiY8K_Q",
       "title": "Honeyland | Easy 100% Completion | 5000 Gamerscore Update | 2-3 Minute Re-Completion | 4K | 60FPS",
@@ -37,18 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 7 | Shifting Floor Cave | All Star Coins",
       "published": "2026-10-06T14:58:37+00:00",
       "thumbnail": "https://i.ytimg.com/vi/YBYJzh4PQXw/hqdefault.jpg"
-    },
-    {
-      "id": "Vdyz6u8uTys",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines Tower | Screwtop Tower | All Star Coins",
-      "published": "2026-10-05T13:07:20+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Vdyz6u8uTys/hqdefault.jpg"
-    },
-    {
-      "id": "JSYoz0dweQ4",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 6 | Thrilling Spine Coaster | All Star Coins",
-      "published": "2026-10-05T02:08:31+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/JSYoz0dweQ4/hqdefault.jpg"
     }
   ]
 }
