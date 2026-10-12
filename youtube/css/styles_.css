@@ -3503,3 +3503,20 @@ body.suggest-modal-open{overflow:hidden}
     border-radius: 6px;
   }
 }
+
+/* LANDSCAPE GRID PLATFORM WRAPPING TEST REV09.
+   Keep individual platform names intact; wrap at separators where possible.
+   Recent and Normal GRID only; portrait and LIST remain unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform,
+  #resultsGrid .card .grid-list-sub {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit {
+    white-space: nowrap;
+  }
+}
