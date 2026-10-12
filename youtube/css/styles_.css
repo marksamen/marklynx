@@ -3416,3 +3416,20 @@ body.suggest-modal-open{overflow:hidden}
   }
   #resultsGrid .card-meta .game-meta-quality { display: none !important; }
 }
+
+/* LANDSCAPE GRID BADGE SIZING TEST REV03 — touch landscape only.
+   Align Normal GRID Difficulty and Kinect Required with the 25px
+   information badge height. Preserve LIST, Portrait, Recent metadata,
+   developer indicators, Text Guide wrapping and desktop behavior. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsGrid .card .diff-tag {
+    min-height: 25px !important;
+    padding: 3px 8px !important;
+    box-sizing: border-box;
+  }
+  #resultsGrid .card .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+  }
+}
