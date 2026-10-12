@@ -488,6 +488,57 @@ function upgradeRecentManagedQualityBadges(){
   });
 }
 
+// RECENT LANDSCAPE DEV ATTRIBUTION TEST REV04.
+// Enrich the existing Recent cards externally; never edit the frozen Recent renderer.
+// Match the source game by YouTube video ID first, then the same short-title
+// fallback as the frozen renderer. Do not invent a developer for unmatched games.
+function upgradeRecentLandscapeDeveloperBadges(){
+  const root = document.getElementById('recentUploadsSection');
+  if(!root || !window.matchMedia('(orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse)').matches) return;
+  const games = Array.isArray(window.RAW) ? window.RAW : [];
+  const normalize = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const byId = new Map();
+  const byName = new Map();
+  games.forEach(game=>{
+    if(!game) return;
+    if(game.v){
+      const key=String(game.v);
+      const existing=byId.get(key);
+      if(!existing || (game.testContent===true && existing.testContent!==true)) byId.set(key,game);
+    }
+    if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
+  });
+  root.querySelectorAll('.recent-upload-card').forEach(card=>{
+    if(card.querySelector('.recent-landscape-developer-badge')) return;
+    const originalTitle=(card.getAttribute('aria-label') || '').replace(/^Play /,'');
+    const img=card.querySelector('.recent-upload-thumb img');
+    const match=img?.src?.match(/\/vi\/([^/?#]+)\//);
+    const id=match ? decodeURIComponent(match[1]) : '';
+    const shortName=originalTitle.split('|')[0].trim();
+    const game=byId.get(id) || byName.get(normalize(shortName));
+    if(!game || !isDeveloperProvided(game)) return;
+    const titleBlock=card.querySelector('.recent-upload-title-block');
+    if(!titleBlock) return;
+    let badges=titleBlock.querySelector('.recent-upload-under-title-badges');
+    if(!badges){
+      badges=document.createElement('span');
+      badges.className='recent-upload-under-title-badges';
+      titleBlock.appendChild(badges);
+    }
+    const wrapper=document.createElement('span');
+    wrapper.className='recent-landscape-developer-badge';
+    wrapper.innerHTML=developerProvidedBadge(game);
+    badges.appendChild(wrapper);
+  });
+}
+const recentDeveloperRoot = document.getElementById('recentUploadsSection');
+if(recentDeveloperRoot){
+  const observer=new MutationObserver(upgradeRecentLandscapeDeveloperBadges);
+  observer.observe(recentDeveloperRoot,{childList:true,subtree:true});
+  upgradeRecentLandscapeDeveloperBadges();
+  window.addEventListener('orientationchange',upgradeRecentLandscapeDeveloperBadges);
+}
+
 const recentManagedQualityRoot = document.getElementById('recentUploadsSection');
 if(recentManagedQualityRoot){
   const recentManagedQualityObserver = new MutationObserver(upgradeRecentManagedQualityBadges);
