@@ -1,6 +1,12 @@
 // Field map: n=name p=platform g=gamerscore t=time ty=type tx=textguide q=quality df=difficulty u=url v=videoId
 // Optional: pl = playlist ID / playlist data; kinect = true marks games that require Kinect
 
+// LANDSCAPE GRID PLATFORM WRAPPING TEST REV09: keep each console name together.
+function platformUnitsHtml(value){
+  return String(value || '').split('|').map(v=>v.trim()).filter(Boolean)
+    .map(v=>`<span class="landscape-platform-unit">${escapeHtml(v)}</span>`).join('<span class="landscape-platform-separator"> | </span>');
+}
+
 function hasTextGuide(tx){
   return !!tx && tx.trim() !== '' && tx.trim().toLowerCase() !== 'no' && tx.trim() !== '-' && !tx.trim().toLowerCase().startsWith('no (');
 }
@@ -274,7 +280,7 @@ function cardHtml(r){
     </span>
     <span class="card-body">
       <h3 class="card-title">${escapeHtml(r.n)}</h3>
-      <div class="grid-list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="grid-list-sub">${platformUnitsHtml(r.p)}</div>
           <div class="card-meta">
         <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
         <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
@@ -531,6 +537,23 @@ function upgradeRecentLandscapeDeveloperBadges(){
     badges.appendChild(wrapper);
   });
 }
+// Apply the same platform grouping to frozen Recent cards without editing recent_.js.
+function upgradeRecentLandscapeGridPlatforms(){
+  const root=document.getElementById('recentUploadsSection');
+  if(!root) return;
+  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev09])').forEach(el=>{
+    const original=el.textContent || '';
+    if(!original.includes('|')) return;
+    el.dataset.platformUnitsRev09='1';
+    el.innerHTML=platformUnitsHtml(original);
+  });
+}
+const recentPlatformRoot=document.getElementById('recentUploadsSection');
+if(recentPlatformRoot){
+  new MutationObserver(upgradeRecentLandscapeGridPlatforms).observe(recentPlatformRoot,{childList:true,subtree:true});
+  upgradeRecentLandscapeGridPlatforms();
+}
+
 const recentDeveloperRoot = document.getElementById('recentUploadsSection');
 if(recentDeveloperRoot){
   const observer=new MutationObserver(upgradeRecentLandscapeDeveloperBadges);
