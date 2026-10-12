@@ -3448,3 +3448,13 @@ body.suggest-modal-open{overflow:hidden}
     box-sizing:border-box;
   }
 }
+
+/* RECENT LANDSCAPE GRID KINECT SIZING TEST REV05 — touch landscape only.
+   Match the existing Normal GRID Kinect badge dimensions; no LIST or Portrait changes. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+  }
+}
