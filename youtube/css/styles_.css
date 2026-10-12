@@ -3367,3 +3367,30 @@ body.suggest-modal-open{overflow:hidden}
   }
   #resultsList .list-col.quality .quality-badge { width: 54px; }
 }
+
+/* SAFARI RECENT LANDSCAPE GRID TEST REV01 — touch landscape only.
+   Match the four-column Recent GRID and anchor managed quality inside its thumbnail.
+   No LIST, Portrait, Normal Games or desktop changes. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.grid-mode {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .recent-uploads-grid.grid-mode .recent-grid-quality {
+    display: block !important;
+    position: absolute !important;
+    right: 6px !important;
+    bottom: 6px !important;
+    z-index: 3 !important;
+    line-height: 0 !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-grid-quality .quality-badge,
+  .recent-uploads-grid.grid-mode .recent-grid-quality img {
+    width: 40px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.quality {
+    display: none !important;
+  }
+}
