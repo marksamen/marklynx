@@ -541,10 +541,10 @@ function upgradeRecentLandscapeDeveloperBadges(){
 function upgradeRecentLandscapeGridPlatforms(){
   const root=document.getElementById('recentUploadsSection');
   if(!root) return;
-  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev09])').forEach(el=>{
+  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev10])').forEach(el=>{
     const original=el.textContent || '';
-    if(!original.includes('|')) return;
-    el.dataset.platformUnitsRev09='1';
+    if(!original.trim()) return;
+    el.dataset.platformUnitsRev10='1';
     el.innerHTML=platformUnitsHtml(original);
   });
 }
