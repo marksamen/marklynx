@@ -1,6 +1,12 @@
 // Field map: n=name p=platform g=gamerscore t=time ty=type tx=textguide q=quality df=difficulty u=url v=videoId
 // Optional: pl = playlist ID / playlist data; kinect = true marks games that require Kinect
 
+// LANDSCAPE GRID PLATFORM WRAPPING TEST REV09: keep each console name together.
+function platformUnitsHtml(value){
+  return String(value || '').split('|').map(v=>v.trim()).filter(Boolean)
+    .map(v=>`<span class="landscape-platform-unit">${escapeHtml(v)}</span>`).join('<span class="landscape-platform-separator"> | </span>');
+}
+
 function hasTextGuide(tx){
   return !!tx && tx.trim() !== '' && tx.trim().toLowerCase() !== 'no' && tx.trim() !== '-' && !tx.trim().toLowerCase().startsWith('no (');
 }
@@ -274,7 +280,7 @@ function cardHtml(r){
     </span>
     <span class="card-body">
       <h3 class="card-title">${escapeHtml(r.n)}</h3>
-      <div class="grid-list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="grid-list-sub">${platformUnitsHtml(r.p)}</div>
           <div class="card-meta">
         <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
         <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
@@ -307,7 +313,7 @@ function listRowHtml(r){
     <span class="list-thumb">${thumb}${isPlaylist?`<span class="playlist-pill" style="top:4px;left:4px;padding:1px 5px;font-size:9.5px;">Playlist</span>`:''}${isAdult?`<span class="adult-pill" style="top:4px;right:4px;padding:1px 5px;font-size:9.5px;">18+</span>`:''}</span>
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
-      <div class="list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="list-sub recent-upload-platform normal-list-recent-platform">${escapeHtml(r.p||'')}</div>
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
@@ -486,6 +492,74 @@ function upgradeRecentManagedQualityBadges(){
       thumb.appendChild(wrap);
     }
   });
+}
+
+// RECENT LANDSCAPE DEV ATTRIBUTION TEST REV04.
+// Enrich the existing Recent cards externally; never edit the frozen Recent renderer.
+// Match the source game by YouTube video ID first, then the same short-title
+// fallback as the frozen renderer. Do not invent a developer for unmatched games.
+function upgradeRecentLandscapeDeveloperBadges(){
+  const root = document.getElementById('recentUploadsSection');
+  if(!root || !window.matchMedia('(orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse)').matches) return;
+  const games = Array.isArray(window.RAW) ? window.RAW : [];
+  const normalize = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const byId = new Map();
+  const byName = new Map();
+  games.forEach(game=>{
+    if(!game) return;
+    if(game.v){
+      const key=String(game.v);
+      const existing=byId.get(key);
+      if(!existing || (game.testContent===true && existing.testContent!==true)) byId.set(key,game);
+    }
+    if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
+  });
+  root.querySelectorAll('.recent-upload-card').forEach(card=>{
+    if(card.querySelector('.recent-landscape-developer-badge')) return;
+    const originalTitle=(card.getAttribute('aria-label') || '').replace(/^Play /,'');
+    const img=card.querySelector('.recent-upload-thumb img');
+    const match=img?.src?.match(/\/vi\/([^/?#]+)\//);
+    const id=match ? decodeURIComponent(match[1]) : '';
+    const shortName=originalTitle.split('|')[0].trim();
+    const game=byId.get(id) || byName.get(normalize(shortName));
+    if(!game || !isDeveloperProvided(game)) return;
+    const titleBlock=card.querySelector('.recent-upload-title-block');
+    if(!titleBlock) return;
+    let badges=titleBlock.querySelector('.recent-upload-under-title-badges');
+    if(!badges){
+      badges=document.createElement('span');
+      badges.className='recent-upload-under-title-badges';
+      titleBlock.appendChild(badges);
+    }
+    const wrapper=document.createElement('span');
+    wrapper.className='recent-landscape-developer-badge';
+    wrapper.innerHTML=developerProvidedBadge(game);
+    badges.appendChild(wrapper);
+  });
+}
+// Apply the same platform grouping to frozen Recent cards without editing recent_.js.
+function upgradeRecentLandscapeGridPlatforms(){
+  const root=document.getElementById('recentUploadsSection');
+  if(!root) return;
+  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev12])').forEach(el=>{
+    const original=el.textContent || '';
+    if(!original.trim()) return;
+    el.dataset.platformUnitsRev12='1';
+    el.innerHTML=platformUnitsHtml(original);
+  });
+}
+const recentPlatformRoot=document.getElementById('recentUploadsSection');
+if(recentPlatformRoot){
+  new MutationObserver(upgradeRecentLandscapeGridPlatforms).observe(recentPlatformRoot,{childList:true,subtree:true});
+  upgradeRecentLandscapeGridPlatforms();
+}
+
+const recentDeveloperRoot = document.getElementById('recentUploadsSection');
+if(recentDeveloperRoot){
+  const observer=new MutationObserver(upgradeRecentLandscapeDeveloperBadges);
+  observer.observe(recentDeveloperRoot,{childList:true,subtree:true});
+  upgradeRecentLandscapeDeveloperBadges();
+  window.addEventListener('orientationchange',upgradeRecentLandscapeDeveloperBadges);
 }
 
 const recentManagedQualityRoot = document.getElementById('recentUploadsSection');
