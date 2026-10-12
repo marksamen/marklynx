@@ -3433,3 +3433,18 @@ body.suggest-modal-open{overflow:hidden}
     box-sizing: border-box;
   }
 }
+
+/* RECENT LANDSCAPE TEST REV04 — Developer attribution + Edge Text Guide wrap.
+   Scoped to touch Landscape Recent only; Normal, Portrait and desktop unchanged. */
+.recent-landscape-developer-badge { display:none; }
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid .recent-landscape-developer-badge { display:inline-flex; max-width:100%; min-width:0; }
+  .recent-uploads-grid .recent-upload-under-title-badges { min-width:0; max-width:100%; }
+  .recent-uploads-grid .recent-upload-under-title-badges .developer-provided-badge {
+    white-space:normal; overflow-wrap:anywhere; max-width:100%; min-width:0;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .text-guide-badge {
+    white-space:normal; overflow-wrap:anywhere; max-width:100%; min-width:0;
+    box-sizing:border-box;
+  }
+}
