@@ -3903,3 +3903,18 @@ body.suggest-modal-open{overflow:hidden}
     margin-top: 29px;
   }
 }
+
+/* PORTRAIT NORMAL LIST TEST REV07 — center the right-side Gamerscore +
+   quality pair as one compact visual unit within each row. Keep REV06
+   right alignment, thumbnail centering, and all other views unchanged. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row > .list-col.gs {
+    align-self: center;
+    transform: translateY(-15px);
+  }
+  #resultsList .list-row > .list-col.quality {
+    align-self: center;
+    margin-top: 0;
+    transform: translateY(15px);
+  }
+}
