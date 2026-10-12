@@ -3784,3 +3784,22 @@ body.suggest-modal-open{overflow:hidden}
     gap: 6px;
   }
 }
+
+/* PORTRAIT RECENT LIST TEST REV03 — reuse existing Landscape developer
+   attribution and match established platform-to-badge row separation. */
+@media (orientation: portrait) and (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    margin-top: 6px;
+  }
+  .recent-uploads-grid.list-mode .recent-landscape-developer-badge {
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
