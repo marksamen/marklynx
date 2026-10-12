@@ -3394,3 +3394,25 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+/* SAFARI NORMAL GRID TEST REV01 — narrow touch Landscape only.
+   Recent GRID REV01 remains unchanged; no LIST, Portrait or desktop changes. */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+  #resultsGrid.grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  #resultsGrid .card { min-width: 0; }
+  #resultsGrid .card .desktop-grid-quality {
+    display: inline-flex !important;
+    position: absolute !important;
+    right: 6px !important;
+    bottom: 6px !important;
+    z-index: 4 !important;
+  }
+  #resultsGrid .card .desktop-grid-quality .quality-badge {
+    width: 40px !important;
+    height: auto !important;
+  }
+  #resultsGrid .card-meta .game-meta-quality { display: none !important; }
+}
