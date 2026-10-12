@@ -1,4 +1,4 @@
-/* TEST ONLY - zoom/scroll diagnostic, no layout or gesture changes. ZOOM REV03 */
+/* TEST ONLY - zoom/scroll diagnostic, no layout or gesture changes. ZOOM REV04 */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
@@ -8,7 +8,7 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='TEST ZOOM REV03 · LIVE';
+  var label=document.createElement('span'); label.textContent='TEST ZOOM REV04 · LIVE';
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
   head.appendChild(label);head.appendChild(btn);
@@ -52,10 +52,13 @@
     if(scale!==lastScale){lastScale=scale;scaleChangedAt=now;}
 
     var lines=[
-      'ZOOM GUARD: '+(window.__mlZoomGuardRev03 ? 'LOADED REV03' : 'NOT DETECTED'),
-      'GUARD events: '+(window.__mlZoomGuardRev03 ? 'gesture '+window.__mlZoomGuardRev03.gestureEvents+' / multitouch '+window.__mlZoomGuardRev03.multiTouchMoves : 'N/A'),
-      'GUARD cancelable: '+(window.__mlZoomGuardRev03 ? window.__mlZoomGuardRev03.cancelable+' / noncancelable '+window.__mlZoomGuardRev03.nonCancelable : 'N/A'),
-      'GUARD prevented: '+(window.__mlZoomGuardRev03 ? window.__mlZoomGuardRev03.prevented+' / last '+window.__mlZoomGuardRev03.lastEvent : 'N/A'),
+      'SNAPBACK: '+(window.__mlZoomSnapRev04 ? 'LOADED REV04' : 'NOT DETECTED'),
+      'baseline scale: '+(window.__mlZoomSnapRev04 ? window.__mlZoomSnapRev04.baseline : 'N/A'),
+      'pinch observed: '+(window.__mlZoomSnapRev04 ? window.__mlZoomSnapRev04.multiTouchSeen : 'N/A'),
+      'restore: '+(window.__mlZoomSnapRev04 ? 'detected '+window.__mlZoomSnapRev04.detected+' / attempted '+window.__mlZoomSnapRev04.attempts : 'N/A'),
+      'result: '+(window.__mlZoomSnapRev04 ? 'success '+window.__mlZoomSnapRev04.successes+' / failed '+window.__mlZoomSnapRev04.failures : 'N/A'),
+      'scale before/after: '+(window.__mlZoomSnapRev04 ? window.__mlZoomSnapRev04.before+' / '+window.__mlZoomSnapRev04.after : 'N/A'),
+      'last reset: '+(window.__mlZoomSnapRev04 ? window.__mlZoomSnapRev04.last : 'N/A'),
       'SCROLL: '+(moving?'MOVING':'STILL')+' | y='+Math.round(window.scrollY)+' x='+Math.round(window.scrollX),
       'TOUCH: '+touchCount+' finger(s) | '+lastGesture+(now-lastTouchAt<1000?' (recent)':''),
       'VISUAL event: '+lastVisualEvent+(now-lastVisualAt<1000?' (recent)':''),
