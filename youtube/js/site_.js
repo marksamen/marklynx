@@ -313,7 +313,7 @@ function listRowHtml(r){
     <span class="list-thumb">${thumb}${isPlaylist?`<span class="playlist-pill" style="top:4px;left:4px;padding:1px 5px;font-size:9.5px;">Playlist</span>`:''}${isAdult?`<span class="adult-pill" style="top:4px;right:4px;padding:1px 5px;font-size:9.5px;">18+</span>`:''}</span>
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
-      <div class="list-sub">${escapeHtml(r.p||'')}</div>
+      <div class="list-sub landscape-normal-list-platform">${platformUnitsHtml(r.p)}</div>
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
@@ -541,10 +541,10 @@ function upgradeRecentLandscapeDeveloperBadges(){
 function upgradeRecentLandscapeGridPlatforms(){
   const root=document.getElementById('recentUploadsSection');
   if(!root) return;
-  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev10])').forEach(el=>{
+  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev11])').forEach(el=>{
     const original=el.textContent || '';
     if(!original.trim()) return;
-    el.dataset.platformUnitsRev10='1';
+    el.dataset.platformUnitsRev11='1';
     el.innerHTML=platformUnitsHtml(original);
   });
 }
