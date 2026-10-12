@@ -3385,3 +3385,35 @@ body.suggest-modal-open{overflow:hidden}
     width: 54px;
   }
 }
+
+/* NORMAL + RECENT LANDSCAPE LIST LONG TITLE SAFETY — TEST REV02.
+   Portrait, GRID and desktop intentionally unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row {
+    grid-template-columns: 120px minmax(0, 1fr) auto auto;
+    min-width: 0;
+  }
+  #resultsList .list-row > span:nth-child(2),
+  #resultsList .list-name,
+  #resultsList .list-sub,
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-title-block,
+  .recent-uploads-grid.list-mode .recent-upload-title,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    min-width: 0; max-width: 100%; overflow-wrap: anywhere;
+  }
+  #resultsList .list-row > span:nth-child(2),
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    align-self: center;
+  }
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex; flex-wrap: wrap; gap: 4px;
+  }
+  #resultsList .list-col.gs, #resultsList .list-col.quality,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality {
+    flex-shrink: 0; white-space: nowrap; align-self: center;
+  }
+  .landscape-title-parenthetical { display: block; }
+}
