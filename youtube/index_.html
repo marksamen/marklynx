@@ -2,7 +2,31 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=980, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- TEST REV08 diagnostic: fixed 930px viewport in phone landscape only. -->
+<script>
+(() => {
+  const viewport = document.querySelector('meta[name="viewport"]');
+  const portrait = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+  const landscape = 'width=930, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+  function isLandscape() {
+    // window.orientation is still supported on iOS Safari and iOS Edge.
+    if (typeof window.orientation === 'number') return Math.abs(window.orientation) === 90;
+    if (screen.orientation && screen.orientation.type) return screen.orientation.type.startsWith('landscape');
+    return matchMedia('(orientation: landscape)').matches;
+  }
+  function applyViewport() {
+    // Keep this diagnostic restricted to touch-screen phones, not desktop.
+    const phone = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) <= 500;
+    const target = phone && isLandscape() ? landscape : portrait;
+    if (viewport.content !== target) viewport.content = target;
+  }
+  applyViewport();
+  window.addEventListener('orientationchange', applyViewport);
+  window.addEventListener('resize', applyViewport);
+  if (screen.orientation) screen.orientation.addEventListener('change', applyViewport);
+})();
+</script>
 <title>(TEST) Mark Lynx Gaming Network — Game Guides &amp; Walkthroughs</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H17GSBEDXQ"></script>
