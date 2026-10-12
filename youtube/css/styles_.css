@@ -3415,7 +3415,6 @@ body.suggest-modal-open{overflow:hidden}
   .recent-uploads-grid.list-mode .recent-upload-meta.quality {
     flex-shrink: 0; white-space: nowrap; align-self: center;
   }
-  .landscape-title-parenthetical { display: block; }
 }
 
 /* NORMAL + RECENT LANDSCAPE LIST INFO AREA BOUNDARY — TEST REV03.
