@@ -3447,3 +3447,55 @@ body.suggest-modal-open{overflow:hidden}
     box-sizing: border-box;
   }
 }
+
+
+/* NORMAL + RECENT LANDSCAPE LIST AVAILABLE-SPACE RESERVATION — TEST REV04.
+   Keep REV02 long-title handling. Reserve the GS/Quality tracks first and
+   let badge groups wrap in the remaining minmax(0,1fr) title track.
+   No individual badge-text wrapping changes in this revision. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row {
+    grid-template-columns: 120px minmax(0, 1fr) minmax(52px, max-content) minmax(54px, max-content);
+    column-gap: 12px;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+  #resultsList .badge-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #resultsList .badge-row > * {
+    flex: 0 0 auto;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-card {
+    grid-template-columns: 92px minmax(0, 1fr) minmax(52px, max-content) minmax(45px, max-content);
+    column-gap: 12px;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges > * {
+    flex: 0 0 auto;
+  }
+}
