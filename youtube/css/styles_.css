@@ -3702,3 +3702,15 @@ body.suggest-modal-open{overflow:hidden}
     font: inherit !important;
   }
 }
+
+
+/* REV14: Recent GRID only. Separate platform box from following badges.
+   Existing LIST and Normal GRID styling is intentionally unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    margin-bottom: 8px !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges {
+    margin-top: 0 !important;
+  }
+}
