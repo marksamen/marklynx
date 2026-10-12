@@ -3239,3 +3239,11 @@ body.suggest-modal-open{overflow:hidden}
     clear:both;
   }
 }
+
+/* LANDSCAPE HEADER TEST REV05 — keep approved banner untouched.
+   Bright/Language at top; natural-width Subscribe centered at banner bottom. */
+@media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
+  body.ml-compact-landscape .ml-landscape-header {align-items:stretch;}
+  body.ml-compact-landscape .ml-landscape-side {justify-content:space-between;}
+  body.ml-compact-landscape .ml-landscape-subscribe .youtube-subscribe-btn {margin-left:auto;margin-right:auto;}
+}
