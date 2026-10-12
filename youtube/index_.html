@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<!-- TEST REV08 diagnostic: fixed 930px viewport in phone landscape only. -->
+<!-- TEST REV09 diagnostic: fixed 930px viewport in phone landscape only. -->
 <script>
 (() => {
   const viewport = document.querySelector('meta[name="viewport"]');
@@ -55,5 +55,59 @@
 <script src="js/loader_.js?v=MOBILE-POPUP-REV05"></script>
 <script src="js/language_.js?v=LANGUAGES-REV24-FILTER-WORDING"></script>
 <script src="js/landscape-header_.js?v=LANDSCAPE-B1-REV03"></script>
+
+<!-- TEST REV09: temporary viewport diagnostic overlay. Remove after QA. -->
+<script>
+(() => {
+  function start() {
+    const panel = document.createElement('aside');
+    panel.id = 'ml-viewport-debug-rev09';
+    panel.setAttribute('aria-label', 'TEST viewport diagnostics');
+    panel.style.cssText = 'position:fixed!important;left:8px!important;bottom:8px!important;z-index:2147483647!important;max-width:calc(100vw - 16px)!important;padding:8px 10px!important;border:1px solid #ffcc00!important;border-radius:6px!important;background:rgba(0,0,0,.94)!important;color:#fff!important;font:12px/1.35 monospace!important;box-shadow:0 2px 12px #0009!important;white-space:pre!important;pointer-events:auto!important;';
+    const output = document.createElement('div');
+    const controls = document.createElement('div');
+    controls.style.cssText = 'display:flex;gap:8px;margin-top:5px;';
+    const copy = document.createElement('button');
+    copy.textContent = 'Copy';
+    const hide = document.createElement('button');
+    hide.textContent = 'Hide';
+    [copy,hide].forEach(b => b.style.cssText='padding:3px 9px;background:#333;color:#fff;border:1px solid #aaa;border-radius:4px;font:12px monospace;');
+    controls.append(copy,hide);
+    panel.append(output,controls);
+    document.body.appendChild(panel);
+    let current = '';
+    function update() {
+      const v = window.visualViewport;
+      const meta = document.querySelector('meta[name="viewport"]');
+      const w = window.innerWidth;
+      const mq = matchMedia('(min-width: 901px)').matches;
+      current = ['REV09 VIEWPORT DEBUG',
+        'UA: ' + (/EdgiOS/i.test(navigator.userAgent) ? 'Edge iOS' : /CriOS/i.test(navigator.userAgent) ? 'Chrome iOS' : /Safari/i.test(navigator.userAgent) ? 'Safari/other' : 'Other'),
+        'innerWidth: ' + w + 'px',
+        'clientWidth: ' + document.documentElement.clientWidth + 'px',
+        'visualWidth: ' + (v ? v.width.toFixed(1) : 'n/a') + 'px',
+        'screen: ' + screen.width + ' x ' + screen.height,
+        'DPR: ' + devicePixelRatio,
+        'orientation: ' + (matchMedia('(orientation: landscape)').matches ? 'Landscape' : 'Portrait'),
+        'CSS >=901: ' + mq,
+        'viewport meta: ' + (meta ? meta.content : 'none')].join('\n');
+      output.textContent = current;
+    }
+    copy.addEventListener('click', () => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(current).catch(() => { window.prompt('Copy diagnostics:', current); });
+      } else window.prompt('Copy diagnostics:', current);
+    });
+    hide.addEventListener('click', () => { panel.style.display='none'; });
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('orientationchange', () => { update(); setTimeout(update, 350); });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', update);
+    setTimeout(update, 500);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once:true});
+  else start();
+})();
+</script>
 </body>
 </html>
