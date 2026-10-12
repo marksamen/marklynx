@@ -3417,3 +3417,33 @@ body.suggest-modal-open{overflow:hidden}
   }
   .landscape-title-parenthetical { display: block; }
 }
+
+/* NORMAL + RECENT LANDSCAPE LIST INFO AREA BOUNDARY — TEST REV03.
+   Retain REV02 title handling. Constrain badge ROWS to their existing
+   flexible title grid track; let badges flow to another row.
+   Individual badge text wrapping is deliberately deferred. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsList .list-row > span:nth-child(2),
+  .recent-uploads-grid.list-mode .recent-upload-title-block {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #resultsList .badge-row,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  #resultsList .badge-row > *,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges > * {
+    flex: 0 1 auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
