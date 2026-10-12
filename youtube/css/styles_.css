@@ -3741,3 +3741,9 @@ body.suggest-modal-open{overflow:hidden}
     word-break: normal !important;
   }
 }
+
+/* TEST REV18: Normal GRID Kinect badge matches the already-passing
+   rectangular Recent GRID badge in touch Landscape only. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  #resultsGrid .card .kinect-badge { border-radius: 6px; }
+}
