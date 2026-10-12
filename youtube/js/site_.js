@@ -556,3 +556,37 @@ if(recentManagedQualityRoot){
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
 })();
+
+
+/* TEST REV02: Display-only long parenthetical title wrapping for LIST cards.
+   Does not edit game data or frozen Recent rendering scripts. */
+(function(){
+  const isLong = text => text.length > 38;
+  function updateTitle(el){
+    if(el.dataset.landscapeTitleRev02 === '1') return;
+    const first = el.firstChild;
+    if(!first || first.nodeType !== Node.TEXT_NODE) return;
+    const full = first.textContent;
+    const match = /^(.*?)(\s+)(\([^()]+\))$/.exec(full);
+    if(!match || !isLong(full.trim())) return;
+    el.dataset.landscapeTitleRev02 = '1';
+    first.textContent = match[1];
+    const span = document.createElement('span');
+    span.className = 'landscape-title-parenthetical';
+    span.textContent = match[3];
+    el.insertBefore(span, first.nextSibling);
+    el.insertBefore(document.createTextNode(' '), span);
+  }
+  function refresh(){
+    document.querySelectorAll('#resultsList .list-name, .recent-uploads-grid.list-mode .recent-upload-title').forEach(updateTitle);
+  }
+  let queued = false;
+  function schedule(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(()=>{queued=false;refresh();});
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
+})();
