@@ -3458,3 +3458,21 @@ body.suggest-modal-open{overflow:hidden}
     box-sizing: border-box;
   }
 }
+
+
+/* LANDSCAPE LIST BADGE SIZING TEST REV06 — touch landscape only.
+   Override legacy 20px Recent LIST badges; align Kinect and Text Guide
+   with the established 25px information badges in both Recent and Normal.
+   GRID, portrait and desktop are outside this rule. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .kinect-badge,
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .text-guide-badge,
+  #resultsList .kinect-badge,
+  #resultsList .text-guide-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+}
