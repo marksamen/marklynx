@@ -3873,3 +3873,33 @@ body.suggest-modal-open{overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* PORTRAIT NORMAL LIST TEST REV06 — right-align managed quality beneath
+   Gamerscore with a compact gap; center the thumbnail and its attached play
+   overlay vertically within the complete game row. No Recent/GRID changes. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row {
+    grid-template-rows: auto;
+    row-gap: 0;
+  }
+  #resultsList .list-row > .list-thumb {
+    grid-row: 1;
+    align-self: center;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-row: 1;
+    align-self: center;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+  }
+  #resultsList .list-row > .list-col.quality {
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    margin-top: 29px;
+  }
+}
