@@ -3191,3 +3191,37 @@ body.suggest-modal-open{overflow:hidden}
     color:#65b7d6;
   }
 }
+
+/* RECENT LANDSCAPE METADATA TEST REV01
+   Match Normal Guides: Quality + Gamerscore only among metadata fields.
+   Retain thumbnail, title, platform and under-title badges.
+   Natural viewport, touch landscape only; do not affect desktop/portrait.
+   Quality uses the existing LIST/GRID presentation and is not repositioned. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-meta.type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.time,
+  .recent-uploads-grid.list-mode .recent-upload-meta.diff,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.type,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.time,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.diff {
+    display: none !important;
+  }
+
+  /* The compact mobile LIST baseline hides all metadata; restore GS only. */
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    grid-column: 3;
+    justify-self: end;
+    min-width: 0;
+  }
+
+  /* Mobile GRID likewise hides its metadata by default. */
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs {
+    display: inline-flex !important;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+  }
+}
