@@ -3265,3 +3265,46 @@ body.suggest-modal-open{overflow:hidden}
     display:none!important;
   }
 }
+
+
+/* LANDSCAPE HEADER TEST REV10 — Recent mobile landscape metadata only.
+   Natural device viewport; keep Quality and Gamerscore, hide secondary chips.
+   Preserve title/platform/under-title badges and frozen Recent renderer. */
+@media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
+  .recent-uploads-grid .recent-upload-meta.type,
+  .recent-uploads-grid .recent-upload-meta.time,
+  .recent-uploads-grid .recent-upload-meta.diff {
+    display:none !important;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    display:inline-flex !important;
+    grid-column:3;
+    grid-row:2;
+    justify-self:start;
+    align-items:center;
+    width:max-content;
+    max-width:100%;
+    min-width:0;
+    padding:3px 7px;
+    border:1px solid #454545;
+    border-radius:6px;
+    background:rgba(255,255,255,.045);
+    color:var(--red-bright);
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs {
+    display:inline-flex !important;
+    align-items:center;
+    width:max-content;
+    max-width:100%;
+    padding:3px 7px;
+    border:1px solid #454545;
+    border-radius:6px;
+    background:rgba(255,255,255,.045);
+    color:var(--red-bright);
+    font-size:11px;
+    font-weight:700;
+  }
+}
