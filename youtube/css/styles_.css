@@ -3748,7 +3748,7 @@ body.suggest-modal-open{overflow:hidden}
   #resultsGrid .card .kinect-badge { border-radius: 6px; }
 }
 
-/* PORTRAIT RECENT LIST TEST REV01 — three reported Safari/Edge issues only.
+/* PORTRAIT RECENT LIST TEST REV02 — three reported Safari/Edge issues only.
    Reuse the passed Landscape Recent LIST badge dimensions, platform box,
    and wrapped badge-row spacing. Normal and GRID views are untouched. */
 @media (orientation: portrait) and (max-width: 900px) {
