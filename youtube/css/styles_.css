@@ -3476,3 +3476,15 @@ body.suggest-modal-open{overflow:hidden}
     font-size: 11px;
   }
 }
+
+/* RECENT LANDSCAPE LIST BADGE SPACING TEST REV07.
+   Restore a wrapping badge row and uniform spacing; Recent LIST only.
+   Preserve badge sizing, GRID, Normal Guides, Portrait and desktop. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+}
