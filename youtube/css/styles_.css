@@ -3313,3 +3313,43 @@ body.suggest-modal-open{overflow:hidden}
     height: auto !important;
   }
 }
+
+/* RECENT LANDSCAPE SAFARI STYLING TEST REV06.
+   Match existing desktop Recent platform and Gamerscore visual treatment
+   at narrower landscape viewport widths. LIST only; no layout changes. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+    margin-top: 4px;
+    padding: 2px 6px;
+    border: 1px solid #343434;
+    border-radius: 5px;
+    background: rgba(255,255,255,.025);
+    color: #bdbdbd !important;
+    font-size: 9.5px !important;
+    font-weight: 700;
+    line-height: 1.15 !important;
+    letter-spacing: .01em;
+    white-space: normal;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 52px;
+    min-height: 22px;
+    padding: 3px 7px;
+    border: 1px solid #454545;
+    border-radius: 6px;
+    background: linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  }
+}
