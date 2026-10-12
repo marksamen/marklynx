@@ -3395,11 +3395,11 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* SAFARI NORMAL GRID TEST REV01 — narrow touch Landscape only.
-   Recent GRID REV01 remains unchanged; no LIST, Portrait or desktop changes. */
-@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+/* NORMAL LANDSCAPE GRID TEST REV02 — three columns on both sides of 900px.
+   Touch Landscape only; Recent GRID, LIST, Portrait and Desktop unchanged. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
   #resultsGrid.grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
   #resultsGrid .card { min-width: 0; }
