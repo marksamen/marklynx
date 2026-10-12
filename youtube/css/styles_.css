@@ -3829,3 +3829,47 @@ body.suggest-modal-open{overflow:hidden}
     word-break: normal !important;
   }
 }
+
+/* PORTRAIT NORMAL LIST TEST REV05 — keep the existing quality image directly
+   below Gamerscore in the right column, without touching Recent or Landscape. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row {
+    grid-template-columns: 88px minmax(0, 1fr) auto;
+    column-gap: 10px;
+    row-gap: 7px;
+    align-items: start;
+  }
+  #resultsList .list-row > .list-thumb {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
+    align-self: start;
+  }
+  #resultsList .list-row > .list-col.quality {
+    display: inline-flex !important;
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: center;
+    align-self: start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  #resultsList .list-row > .list-col.quality .quality-badge {
+    display: block;
+    width: 44px;
+    height: auto;
+  }
+  #resultsList .list-row .mobile-quality-badge {
+    display: none !important;
+  }
+}
