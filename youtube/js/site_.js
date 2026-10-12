@@ -558,35 +558,55 @@ if(recentManagedQualityRoot){
 })();
 
 
-/* TEST REV02: Display-only long parenthetical title wrapping for LIST cards.
-   Does not edit game data or frozen Recent rendering scripts. */
+/* TEST REV06: Landscape LIST-only display formatting for long parenthetical titles.
+   Portrait/Desktop are left untouched, including when the viewport rotates back. */
 (function(){
-  const isLong = text => text.length > 38;
-  function updateTitle(el){
-    if(el.dataset.landscapeTitleRev02 === '1') return;
+  const landscape = window.matchMedia('(orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse)');
+  const selector = '#resultsList .list-name, .recent-uploads-grid.list-mode .recent-upload-title';
+  const originals = new Map();
+  function restore(el){
+    const original = originals.get(el);
+    if(original === undefined) return;
+    const span = el.querySelector(':scope > .landscape-title-parenthetical');
+    if(span) span.remove();
+    const first = el.firstChild;
+    if(first && first.nodeType === Node.TEXT_NODE) first.textContent = original;
+    originals.delete(el);
+  }
+  function update(el){
+    if(originals.has(el)) return;
     const first = el.firstChild;
     if(!first || first.nodeType !== Node.TEXT_NODE) return;
-    const full = first.textContent;
-    const match = /^(.*?)(\s+)(\([^()]+\))$/.exec(full);
-    if(!match || !isLong(full.trim())) return;
-    el.dataset.landscapeTitleRev02 = '1';
-    first.textContent = match[1];
+    const original = first.textContent;
+    const match = /^(.*?)(\s+)(\([^()]+\))$/.exec(original);
+    if(!match || original.trim().length <= 38) return;
+    originals.set(el, original);
+    first.textContent = match[1] + ' ';
     const span = document.createElement('span');
     span.className = 'landscape-title-parenthetical';
     span.textContent = match[3];
     el.insertBefore(span, first.nextSibling);
-    el.insertBefore(document.createTextNode(' '), span);
-  }
-  function refresh(){
-    document.querySelectorAll('#resultsList .list-name, .recent-uploads-grid.list-mode .recent-upload-title').forEach(updateTitle);
   }
   let queued = false;
+  function refresh(){
+    queued = false;
+    if(!landscape.matches){
+      for(const el of Array.from(originals.keys())) restore(el);
+      return;
+    }
+    for(const el of Array.from(originals.keys())){
+      if(!el.isConnected || !el.matches(selector)) restore(el);
+    }
+    document.querySelectorAll(selector).forEach(update);
+  }
   function schedule(){
     if(queued) return;
     queued = true;
-    requestAnimationFrame(()=>{queued=false;refresh();});
+    requestAnimationFrame(refresh);
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
   else schedule();
   new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
+  if(landscape.addEventListener) landscape.addEventListener('change', schedule);
+  else landscape.addListener(schedule);
 })();
