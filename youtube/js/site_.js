@@ -308,12 +308,17 @@ function listRowHtml(r){
     : (useVideoModal ? `data-video-id="${r.v}" data-video-title="${escapeHtml(r.n)}"` : '');
   const tag = useModal ? 'div' : 'a';
   const hrefAttrs = useModal ? '' : `href="${r.u||'#'}" target="_blank" rel="noopener"`;
+  // REV14: ensure Safari landscape LIST receives the same platform box.
+  const normalListPlatformStyle = (window.matchMedia &&
+    window.matchMedia('(orientation: landscape) and (max-height: 500px) and (pointer: coarse)').matches)
+    ? ' style="display:inline-block!important;width:fit-content!important;max-width:100%!important;box-sizing:border-box!important;margin-top:4px!important;padding:3px 7px!important;border:1px solid var(--line)!important;border-radius:5px!important;background:transparent!important;color:var(--text)!important;font-size:12px!important;line-height:1.35!important;font-weight:700!important;white-space:normal!important;overflow-wrap:break-word!important;"'
+    : '';
   return `
   <${tag} class="list-row" ${hrefAttrs} ${openAttr} style="${useModal?'cursor:pointer;':''}">
     <span class="list-thumb">${thumb}${isPlaylist?`<span class="playlist-pill" style="top:4px;left:4px;padding:1px 5px;font-size:9.5px;">Playlist</span>`:''}${isAdult?`<span class="adult-pill" style="top:4px;right:4px;padding:1px 5px;font-size:9.5px;">18+</span>`:''}</span>
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
-      <div class="list-sub landscape-normal-list-platform">${platformUnitsHtml(r.p)}</div>
+      <div class="list-sub landscape-normal-list-platform"${normalListPlatformStyle}>${platformUnitsHtml(r.p)}</div>
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
