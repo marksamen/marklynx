@@ -45,6 +45,42 @@ el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.tri
 el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);el('value').focus();};
 el('cancelTranslation').onclick=()=>setEnglish(el('englishText').value);
 el('saveTranslation').onclick=()=>perform(async()=>{const code=el('translationLanguage').value;if(!code)throw Error('Add a language first.');const key=el('key').value.trim();if(!key)throw Error('Select English text first.');await call('save-translation',{code,key,text:el('value').value});await reload();findKey(key);setEnglish(key);});
+
+// REV01: Admin-only, data-driven bulk translation import through existing save-translation action.
+// Never enable a language automatically; each successful row is saved independently.
+const importInput=el('translationImportFile');
+el('importTranslations').onclick=()=>perform(async()=>{
+  const file=importInput.files?.[0];
+  if(!file)throw Error('Choose a translation JSON file first.');
+  const payload=JSON.parse(await file.text());
+  const code=String(payload?.language||'');
+  const strings=payload?.strings;
+  if(!code||!strings||Array.isArray(strings)||typeof strings!=='object')throw Error('Invalid translation file.');
+  if(!cache.languages.some(x=>x.code===code))throw Error('Add '+code+' in Language Management before importing.');
+  const valid=new Set(Object.keys(inventory).flatMap(section=>Object.keys(inventory[section])));
+  for(const section of ['Genres','Platforms','Text Guides'])for(const key of Object.keys(sectionItems(section)))valid.add(key);
+  const entries=Object.entries(strings);
+  if(!entries.length)throw Error('Translation file is empty.');
+  for(const [key,value] of entries){
+    if(!valid.has(key))throw Error('Unknown translation key: '+key);
+    if(typeof value!=='string'||!value.trim()||value.length>5000)throw Error('Invalid translated text: '+key);
+  }
+  if(!window.confirm('Import '+entries.length+' translations for '+code+' into TEST Supabase? Existing matching translations will be updated.'))return;
+  el('importTranslations').disabled=true;
+  let completed=0;
+  try{
+    for(const [key,text] of entries){
+      await call('save-translation',{code,key,text});
+      completed++;
+      status('Imported '+completed+' of '+entries.length+' translations for '+code+'.');
+    }
+    await reload();
+    status('Imported '+completed+' translations for '+code+'. Language enablement unchanged.');
+  }catch(e){
+    throw Error('Imported '+completed+' of '+entries.length+'. '+(e.message||e));
+  }finally{el('importTranslations').disabled=false;}
+});
+
 el('export').onclick=()=>perform(async()=>{
   el('export').disabled=true;
   try{
