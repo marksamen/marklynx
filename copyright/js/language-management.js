@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator.js?v=LANGUAGES-REV14";
 import {languages as registry} from './language-registry.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory.js?v=LANGUAGES-REV07';
+import {inventory} from './translation-inventory.js?v=LANGUAGE-PROD-REV07';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical PROD Firebase project and Supabase URL to existing Genre Management page.
@@ -39,7 +39,57 @@ function render(){const list=el('languages');list.replaceChildren();const select
 // REV07: translation entries are accessed through Section and English Text selectors only.
 // Keep existing database rows intact; never render internal keys or a crowded saved-translation list.
 
-async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);}
+function renderTranslationStatistics(){
+  const root=new Map();
+  for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){
+    for(const [key,english] of Object.entries(sectionItems(section)))root.set(key,english);
+  }
+  const expected=[...root.keys()].sort();
+  const expectedSet=new Set(expected);
+  const host=el('translationStatistics');
+  host.replaceChildren();
+  const summary=node('p',`Expected translation keys: ${expected.length} (English source inventory + live managed options).`);
+  host.append(summary);
+  for(const lang of cache.languages){
+    if(lang.code==='en')continue;
+    const rows=cache.translations.filter(x=>x.language_code===lang.code);
+    const present=new Set(rows.filter(x=>typeof x.translated_text==='string'&&x.translated_text.trim()).map(x=>x.translation_key));
+    const missing=expected.filter(key=>!present.has(key));
+    const extra=[...present].filter(key=>!expectedSet.has(key)).sort();
+    const line=node('div','');line.className='language';
+    const heading=node('strong',`${lang.english_name} (${lang.code}): ${expected.length-missing.length}/${expected.length} — ${missing.length} missing, ${extra.length} extra — ${lang.enabled?'ENABLED':'DISABLED'}`);
+    line.append(heading);
+    if(missing.length||extra.length){
+      const details=document.createElement('details');
+      const toggle=node('summary','Show missing / extra keys');details.append(toggle);
+      if(missing.length){details.append(node('p','Missing ('+missing.length+'):'));const ul=document.createElement('ul');for(const key of missing)ul.append(node('li',`${key} — ${root.get(key)}`));details.append(ul);}
+      if(extra.length){details.append(node('p','Extra / unregistered ('+extra.length+'):'));const ul=document.createElement('ul');for(const key of extra)ul.append(node('li',key));details.append(ul);}
+      line.append(details);
+    }
+    host.append(line);
+  }
+}
+let statsRefreshCount=0;
+el('refreshTranslationStatistics').onclick=async()=>{
+  const button=el('refreshTranslationStatistics');
+  if(button.disabled)return;
+  button.disabled=true;
+  button.textContent='Refreshing statistics…';
+  try{
+    await reload();
+    statsRefreshCount++;
+    const stamp=new Date().toLocaleString();
+    el('statisticsLastRefreshed').textContent=`Last refreshed: ${stamp} (refresh #${statsRefreshCount})`;
+    status('Translation statistics refreshed from PROD Supabase.');
+  }catch(e){
+    status(e.message||String(e),true);
+    el('statisticsLastRefreshed').textContent='Refresh failed. Existing figures may be outdated.';
+  }finally{
+    button.disabled=false;
+    button.textContent='Refresh translation statistics';
+  }
+};
+async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);renderTranslationStatistics();}
 el('translationLanguage').onchange=()=>{setEnglish(el('englishText').value);};
 el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.trim();if(code.toLowerCase()==='en')throw Error('English cannot be managed.');await call('save-language',{code,english_name:el('english').value,native_name:displayNative(el('native').value),direction:el('direction').value==='Right To Left'?'rtl':'ltr',sort_order:Number(el('sort').value)});await reload();});
 el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);el('value').focus();};
@@ -52,4 +102,39 @@ el('export').onclick=()=>perform(async()=>{
     status('Complete PROD recovery downloaded: '+files.join(', ')+'. Upload to youtube/data/ (PROD).');
   }finally{el('export').disabled=false;}
 });
+// REV01: Admin-only, data-driven bulk translation import through existing save-translation action.
+// Never enable a language automatically; each successful row is saved independently.
+const importInput=el('translationImportFile');
+el('importTranslations').onclick=()=>perform(async()=>{
+  const file=importInput.files?.[0];
+  if(!file)throw Error('Choose a translation JSON file first.');
+  const payload=JSON.parse(await file.text());
+  const code=String(payload?.language||'');
+  const strings=payload?.strings;
+  if(!code||!strings||Array.isArray(strings)||typeof strings!=='object')throw Error('Invalid translation file.');
+  if(!cache.languages.some(x=>x.code===code))throw Error('Add '+code+' in Language Management before importing.');
+  const valid=new Set(Object.keys(inventory).flatMap(section=>Object.keys(inventory[section])));
+  for(const section of ['Genres','Platforms','Text Guides'])for(const key of Object.keys(sectionItems(section)))valid.add(key);
+  const entries=Object.entries(strings);
+  if(!entries.length)throw Error('Translation file is empty.');
+  for(const [key,value] of entries){
+    if(!valid.has(key))throw Error('Unknown translation key: '+key);
+    if(typeof value!=='string'||!value.trim()||value.length>5000)throw Error('Invalid translated text: '+key);
+  }
+  if(!window.confirm('Import '+entries.length+' translations for '+code+' into PROD Supabase? Existing matching translations will be updated.'))return;
+  el('importTranslations').disabled=true;
+  let completed=0;
+  try{
+    for(const [key,text] of entries){
+      await call('save-translation',{code,key,text});
+      completed++;
+      status('Imported '+completed+' of '+entries.length+' translations for '+code+'.');
+    }
+    await reload();
+    status('Imported '+completed+' translations for '+code+'. Language enablement unchanged.');
+  }catch(e){
+    throw Error('Imported '+completed+' of '+entries.length+'. '+(e.message||e));
+  }finally{el('importTranslations').disabled=false;}
+});
+
 await setPersistence(auth,browserLocalPersistence);onAuthStateChanged(auth,u=>{user=u;if(u)perform(reload);else status('Sign in to the main PROD Admin first.',true);});
