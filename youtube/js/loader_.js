@@ -321,11 +321,11 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV16-BOUNDARY-FIX-20261007F');
-      await loadScript('js/site_.js?v=COMPLETION-TYPES-TEST-REV03');
+      await loadScript('js/site_.js?v=COMPLETION-TYPES-TEST-REV04');
       await loadScript('js/mobile-filter-popup_.js?v=MOBILE-POPUP-REV05');
       await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV02');
-      await loadScript('js/suggest_game_.js?v=REV03-suggest-authoritative-submission');
+      await loadScript('js/suggest_game_.js?v=REV04-suggest-authoritative-submission');
     } catch (error) {
       console.error('Modular site startup failed:', error);
       const empty = document.getElementById('emptyState');
