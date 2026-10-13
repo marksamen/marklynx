@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=LANGUAGES-REV14";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory_.js?v=PLAYLIST-TRANSLATION-REV17';
+import {inventory} from './translation-inventory_.js?v=LANGUAGE-STATS-REV06';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
