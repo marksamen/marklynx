@@ -500,7 +500,7 @@ function upgradeRecentManagedQualityBadges(){
 // fallback as the frozen renderer. Do not invent a developer for unmatched games.
 function upgradeRecentLandscapeDeveloperBadges(){
   const root = document.getElementById('recentUploadsSection');
-  if(!root || !window.matchMedia('(orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse)').matches) return;
+  if(!root || !window.matchMedia('((orientation: landscape) and (max-height: 500px) or (orientation: portrait) and (max-width: 900px)) and (hover: none) and (pointer: coarse)').matches) return;
   const games = Array.isArray(window.RAW) ? window.RAW : [];
   const normalize = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
   const byId = new Map();
