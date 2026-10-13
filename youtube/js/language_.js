@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV03 scalable translations. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV07 targeted smoke QA fixes. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -85,6 +85,14 @@
       const template = translations['developer.provided_by_template'];
       if (template && template.includes('{developer}'))
         return template.replaceAll('{developer}', provided[1]);
+    }
+    // REV07: The existing game data stores Gamerscore plus the English Update
+    // suffix in one value (e.g. 7,000G Update). Translate only that suffix;
+    // leave the numeric Gamerscore and the original game record untouched.
+    if (language !== 'en') {
+      const scoreUpdate = normalized.match(/^(\d[\d,]*G)\s+Update$/i);
+      if (scoreUpdate && translations['game.update'])
+        return scoreUpdate[1] + ' ' + translations['game.update'];
     }
     const clean = norm(source).replace(/^[⚡🚫📄🎁×✕✖]\s*/u,'');
     const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
