@@ -547,7 +547,7 @@ function upgradeRecentLandscapeDeveloperBadges(){
 function upgradeRecentLandscapeGridPlatforms(){
   const root=document.getElementById('recentUploadsSection');
   if(!root) return;
-  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev13])').forEach(el=>{
+  root.querySelectorAll('.recent-upload-platform:not([data-platform-units-rev12])').forEach(el=>{
     const original=el.textContent || '';
     if(!original.trim()) return;
     el.dataset.platformUnitsRev12='1';
