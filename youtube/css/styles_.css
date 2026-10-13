@@ -4429,3 +4429,15 @@ body.suggest-modal-open{overflow:hidden}
     color:#e34a43;
   }
 }
+
+/* COMPLETION TYPES TEST REV11 — Normal Videos mobile LANDSCAPE GRID paint only.
+   Touch-screen landscape can exceed 900px (Safari). Preserve desktop. */
+@media (orientation:landscape) and (pointer:coarse){
+  #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{color:#e34a43;}
+}

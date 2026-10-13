@@ -583,3 +583,14 @@ html[data-theme="bright"] #siteLanguageSelect {
     color:#8b211c !important;
   }
 }
+
+/* COMPLETION TYPES TEST REV11 — Bright Normal Videos mobile LANDSCAPE GRID paint only. */
+@media (orientation:landscape) and (pointer:coarse){
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    background:#c9c9c5 !important;
+    border-color:#666660 !important;
+    color:#20201e !important;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{color:#8b211c !important;}
+}
