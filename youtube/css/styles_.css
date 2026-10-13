@@ -4498,3 +4498,16 @@ body.suggest-modal-open{overflow:hidden}
     line-height:1.25;
   }
 }
+
+
+/* COMPLETION TYPES TEST REV18 — Desktop Normal LIST only.
+   Preserve the Gamerscore column for games with no Gamerscore.
+   No visible placeholder, no changes to mobile, GRID, or Recent. */
+@media (min-width:901px) and (pointer:fine) {
+  #resultsList .list-row:not(:has(> .list-col.gs)) {
+    grid-template-columns:120px minmax(0,1fr) auto auto auto minmax(50px,auto) auto;
+  }
+  #resultsList .list-row:not(:has(> .list-col.gs)) > .list-col.quality {
+    grid-column:7;
+  }
+}
