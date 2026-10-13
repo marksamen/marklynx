@@ -521,7 +521,11 @@ function upgradeRecentLandscapeDeveloperBadges(){
     const match=img?.src?.match(/\/vi\/([^/?#]+)\//);
     const id=match ? decodeURIComponent(match[1]) : '';
     const shortName=originalTitle.split('|')[0].trim();
-    const game=byId.get(id) || byName.get(normalize(shortName));
+    // The frozen Recent renderer already displays its resolved game's name
+    // in this title element. Use that existing match before the legacy
+    // YouTube-title fallback (thumbnails may use non-/vi/ URLs).
+    const displayedGameName=card.querySelector('.recent-upload-title')?.textContent || '';
+    const game=byId.get(id) || byName.get(normalize(displayedGameName)) || byName.get(normalize(shortName));
     if(!game || !isDeveloperProvided(game)) return;
     const titleBlock=card.querySelector('.recent-upload-title-block');
     if(!titleBlock) return;
