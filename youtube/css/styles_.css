@@ -4152,3 +4152,37 @@ body.suggest-modal-open{overflow:hidden}
     flex-shrink: 0;
   }
 }
+
+/* DESKTOP NORMAL GRID TEST REV08 — approved single platform container
+   reused from Desktop Recent GRID REV04 and Mobile Normal GRID.
+   Scoped to Normal GRID only; no LIST, Recent, or Mobile changes. */
+@media (min-width: 901px) {
+  #resultsGrid .card .grid-list-sub {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 3px 7px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+  #resultsGrid .card .grid-list-sub .landscape-platform-separator {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    white-space: normal;
+  }
+}
