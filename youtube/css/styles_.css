@@ -4353,3 +4353,34 @@ body.suggest-modal-open{overflow:hidden}
     font-weight:800;
   }
 }
+
+/* COMPLETION TYPES TEST REV07 — LIST ONLY. Match existing LIST type/time/diff
+   geometry, not the larger GRID dimensions introduced by REV06. */
+@media (min-width:901px){
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    box-sizing:border-box;
+    min-height:22px;
+    height:auto;
+    padding:3px 7px;
+    gap:5px;
+    border-width:1px;
+    border-radius:6px;
+    font-size:10px;
+    line-height:1.15;
+    font-weight:700;
+    align-items:center;
+    white-space:nowrap;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-meta-label{
+    font-size:9px;
+    line-height:1.15;
+    margin:0;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-completion-value{
+    font-size:10px;
+    line-height:1.15;
+    font-weight:800;
+  }
+}
