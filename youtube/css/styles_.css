@@ -4499,15 +4499,20 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-
-/* COMPLETION TYPES TEST REV18 — Desktop Normal LIST only.
-   Preserve the Gamerscore column for games with no Gamerscore.
-   No visible placeholder, no changes to mobile, GRID, or Recent. */
+/* COMPLETION TYPES TEST REV19 — Desktop Normal LIST only.
+   The original desktop grid auto-sizes six metadata columns. With no Gamerscore
+   element, the Quality column consumes the sixth track and shifts Genre/Time/
+   Difficulty. Restore the absent sixth item with an invisible CSS grid item.
+   Preserve the original seven-column template, rendering, and mobile views. */
 @media (min-width:901px) and (pointer:fine) {
-  #resultsList .list-row:not(:has(> .list-col.gs)) {
-    grid-template-columns:120px minmax(0,1fr) auto auto auto minmax(50px,auto) auto;
-  }
-  #resultsList .list-row:not(:has(> .list-col.gs)) > .list-col.quality {
-    grid-column:7;
+  #resultsList .list-row:not(:has(> .list-col.gs))::after {
+    content:"";
+    display:block;
+    box-sizing:border-box;
+    width:50px;
+    height:1px;
+    visibility:hidden;
+    order:6;
+    pointer-events:none;
   }
 }
