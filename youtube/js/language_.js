@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV19. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV03 scalable translations. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -37,7 +37,11 @@
   wrap.append(label,flag,selector);
   wrap.style.marginLeft = 'auto';
   wrap.style.justifyContent = 'flex-end';
-  const refreshFlag = () => { flag.src = language === 'es' ? 'images/flag-es_.svg' : 'images/flag-gb_.svg'; };
+  const refreshFlag = () => {
+    const code = language === 'en' ? 'gb' : language.toLowerCase().split('-')[0];
+    flag.onerror = () => { flag.onerror = null; flag.src = 'images/flag-gb_.svg'; };
+    flag.src = 'images/flag-' + encodeURIComponent(code) + '_.svg';
+  };
   const insertSelector = () => {
     const prefs = document.querySelector('.site-preferences-inner');
     if (prefs && !wrap.isConnected) prefs.append(wrap);
@@ -71,20 +75,16 @@
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
-    // REV24: Display-only wording correction. Supabase translations may still
-    // contain the older label; preserve the existing filter value/behavior.
-    if (/^(?:Text Guides Only|Text Guide Included)$/i.test(norm(source))) {
-      return language === 'es' ? 'Guía de Texto Incluida' : 'Text Guide Included';
+    // English is immutable. All other languages use the same Supabase/JSON keys.
+    const normalized = norm(source);
+    if (/^(?:Text Guides Only|Text Guide Included)$/i.test(normalized)) {
+      return getTranslation('filter.text_guide_included', 'Text Guide Included');
     }
-    // Developer Provided badges contain a dynamic company name, so their full
-    // text cannot match the static English inventory. Translate the label only.
-    const provided = norm(source).match(/^Provided by (.+)$/);
+    const provided = normalized.match(/^Provided by (.+)$/);
     if (provided && language !== 'en') {
-      const label = translations['developer.provided_by'];
-      if (label) {
-        const prefix = label.replace(/\s+(?:el\s+)?Desarrollador\s*$/i, '').trim();
-        if (prefix && prefix !== label) return prefix + ' ' + provided[1];
-      }
+      const template = translations['developer.provided_by_template'];
+      if (template && template.includes('{developer}'))
+        return template.replaceAll('{developer}', provided[1]);
     }
     const clean = norm(source).replace(/^[⚡🚫📄🎁×✕✖]\s*/u,'');
     const key = lookup.get(norm(source)) || lookup.get(clean) || lookup.get(clean.toLocaleLowerCase('en'));
@@ -105,10 +105,14 @@
         const singular = !amount.includes('-') && Number(amount.replace(',', '.')) === 1;
         const key = 'game.' + (minutes ? 'minute' : 'hour') + (singular ? '' : 's');
         const localizedUnit = translations[key];
-        if (localizedUnit && (!under && !recompletion || language === 'es')) {
-          const prefix = under ? 'Menos de ' : '';
-          const suffix = recompletion ? ' de Repetición' : '';
-          return prefix + amount + ' ' + localizedUnit + suffix;
+        if (localizedUnit) {
+          const unitText = amount + ' ' + localizedUnit;
+          const underTemplate = translations['game.under_template'];
+          const recompletionTemplate = translations['game.recompletion_template'];
+          if (under && !underTemplate) return source;
+          if (recompletion && !recompletionTemplate) return source;
+          const base = under ? underTemplate.replaceAll('{duration}',unitText) : unitText;
+          return recompletion ? recompletionTemplate.replaceAll('{duration}',base) : base;
         }
       }
     }
@@ -261,7 +265,7 @@
   const setLanguage = async code => {
     language = enabled.has(code) ? code : 'en';
     selector.value = language;
-    label.textContent = language === 'es' ? 'Idioma' : 'Language';
+    label.textContent = getTranslation('selector.language', 'Language');
     refreshFlag();
     document.documentElement.lang = language;
     translations = {};
@@ -272,12 +276,13 @@
       } catch (err) {
         console.warn('[LANG TEST] Supabase translations unavailable; trying TEST JSON:',err);
         try {
-          const response = await fetch('data/translations_.json?v=LANG-REV14',{cache:'no-store'});
+          const response = await fetch('data/translations_.json?v=LANG-REV03',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
       }
     }
+    label.textContent = getTranslation('selector.language', 'Language');
     apply();
   };
   selector.addEventListener('change',() => {
@@ -304,7 +309,7 @@
     catch (e) {
       console.warn('[LANG TEST] Language registry unavailable; trying TEST JSON:',e);
       try {
-        const response=await fetch('data/languages_.json?v=LANG-REV14',{cache:'no-store'});
+        const response=await fetch('data/languages_.json?v=LANG-REV03',{cache:'no-store'});
         if(!response.ok)throw Error('HTTP '+response.status);
         rows=await response.json();
         if(!Array.isArray(rows))throw Error('Invalid language registry JSON');
