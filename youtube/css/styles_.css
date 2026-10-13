@@ -4500,17 +4500,19 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* COMPLETION TYPES TEST REV21: Desktop Normal LIST only.
-   Keep the native seven-item auto-grid when Gamerscore is blank.
-   A visually hidden, non-interactive Gamerscore grid item occupies its
-   existing slot; on mobile the item is display:none. */
-@media (min-width:901px) {
-  #resultsList .list-col.gs-layout-placeholder {
-    visibility:hidden;
-    pointer-events:none;
-    min-width:0;
-  }
-}
-@media (max-width:900px) {
-  #resultsList .list-col.gs-layout-placeholder {display:none!important;}
+/* COMPLETION TYPES TEST REV22 - Desktop-only LIST Gamerscore-first order.
+   Original REV16 grid, spacing and markup; no placeholder or width changes.
+   Applies to both Normal Videos and Recent Uploads LIST only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsList .list-row > .list-col.gs {order:3;}
+  #resultsList .list-row > .list-col.type {order:4;}
+  #resultsList .list-row > .list-col.time {order:5;}
+  #resultsList .list-row > .list-col.diff {order:6;}
+  #resultsList .list-row > .list-col.quality {order:7;}
+
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {order:3;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.type {order:4;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.time {order:5;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.diff {order:6;}
+  .recent-uploads-grid.list-mode .recent-upload-meta.quality {order:7;}
 }
