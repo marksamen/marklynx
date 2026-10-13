@@ -4059,3 +4059,45 @@ body.suggest-modal-open{overflow:hidden}
     height: 10px;
   }
 }
+
+/* DESKTOP RECENT GRID TEST REV04 — match the approved single-box platform
+   and rectangular Kinect treatment without changing LIST or mobile. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 3px 7px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-separator {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    white-space: normal;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-separator {
+    padding-inline: 4px;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
+}
