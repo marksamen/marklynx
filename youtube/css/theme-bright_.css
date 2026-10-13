@@ -32,7 +32,7 @@ html[data-theme="bright"] .text-guide-badge { color:#244b61; background:#e7f3f8;
 html[data-theme="bright"] .kinect-badge { color:#4b4b48; background:#f1f1ef; border-color:#bdbdb9; }
 
 /* Keep thumbnail overlays intentionally dark for image contrast. */
-html[data-theme="bright"] .playlist-pill { color:#ffffff; }
+html[data-theme="bright"] .playlist-pill { color:var(--silver); }
 html[data-theme="bright"] .adult-pill,
 html[data-theme="bright"] .play-badge { color:inherit; }
 
