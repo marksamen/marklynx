@@ -4017,3 +4017,13 @@ body.suggest-modal-open{overflow:hidden}
     white-space: normal !important;
   }
 }
+
+/* DESKTOP RECENT LIST TEST REV01 — Kinect badge geometry only. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height:25px;
+    padding:3px 9px;
+    border-radius:6px;
+    box-sizing:border-box;
+  }
+}
