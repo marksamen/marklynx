@@ -4415,3 +4415,17 @@ body.suggest-modal-open{overflow:hidden}
   }
   #resultsList .list-row .completion-type-meta{margin-top:6px;}
 }
+
+/* COMPLETION TYPES TEST REV10 — Normal Videos Portrait GRID only.
+   Match Completion Type to the existing Genre/Time information bars. */
+@media (max-width:900px) and (orientation:portrait){
+  #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    border-color:#3b3b3b;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{
+    color:#e34a43;
+  }
+}
