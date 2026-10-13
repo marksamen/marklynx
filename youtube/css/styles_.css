@@ -4499,20 +4499,18 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* COMPLETION TYPES TEST REV19 — Desktop Normal LIST only.
-   The original desktop grid auto-sizes six metadata columns. With no Gamerscore
-   element, the Quality column consumes the sixth track and shifts Genre/Time/
-   Difficulty. Restore the absent sixth item with an invisible CSS grid item.
-   Preserve the original seven-column template, rendering, and mobile views. */
-@media (min-width:901px) and (pointer:fine) {
-  #resultsList .list-row:not(:has(> .list-col.gs))::after {
-    content:"";
-    display:block;
-    box-sizing:border-box;
-    width:50px;
-    height:1px;
-    visibility:hidden;
-    order:6;
-    pointer-events:none;
+
+/* COMPLETION TYPES TEST REV20: Desktop Normal LIST explicit columns only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsList .list-row {
+    grid-template-columns:120px minmax(0,1fr) 116px 150px 92px 92px 54px;
+    column-gap:16px;
   }
+  #resultsList .list-row > .list-thumb {grid-column:1;grid-row:1;}
+  #resultsList .list-row > span:nth-child(2) {grid-column:2;grid-row:1;min-width:0;}
+  #resultsList .list-row > .list-col.type {grid-column:3;grid-row:1;justify-self:end;}
+  #resultsList .list-row > .list-col.time {grid-column:4;grid-row:1;justify-self:end;}
+  #resultsList .list-row > .list-col.diff {grid-column:5;grid-row:1;justify-self:end;}
+  #resultsList .list-row > .list-col.gs {grid-column:6;grid-row:1;justify-self:end;}
+  #resultsList .list-row > .list-col.quality {grid-column:7;grid-row:1;justify-self:end;}
 }
