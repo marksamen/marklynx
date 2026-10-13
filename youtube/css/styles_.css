@@ -4283,3 +4283,36 @@ body.suggest-modal-open{overflow:hidden}
     align-self:center;
   }
 }
+
+/* COMPLETION TYPES TEST REV05 — Desktop Recent badge sizing ONLY.
+   Preserve dark-mode colors from REV04; reduce height, padding and type size.
+   The extra width of Completion Type text is intentional; height matches other metadata. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    padding:2px 5px;
+    min-height:0;
+    height:auto;
+    gap:4px;
+    font-size:10px;
+    line-height:1.15;
+    border-radius:4px;
+    font-weight:700;
+    box-shadow:none;
+    text-shadow:none;
+  }
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label{
+    font-size:9px;
+    font-weight:700;
+    margin:0;
+    line-height:inherit;
+  }
+  .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value{
+    font-weight:800;
+    font-size:10px;
+    line-height:inherit;
+  }
+}

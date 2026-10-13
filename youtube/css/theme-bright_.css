@@ -538,3 +538,34 @@ html[data-theme="bright"] #siteLanguageSelect {
   color: #20201e !important;
   border-color: #96908d !important;
 }
+
+/* COMPLETION TYPES TEST REV05 — Bright Recent paint ONLY.
+   Overrides earlier generic bright .gs !important rules without changing any
+   Normal Videos or other badge. Dark styling stays in styles_.css. */
+@media (min-width:901px){
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.gs{
+    background:#d6e7d6 !important;
+    border-color:#107C10 !important;
+    color:#174c17 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    background:#efd9d6 !important;
+    border-color:#E52521 !important;
+    color:#74211d !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label{
+    color:#205b20 !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label{
+    color:#92241f !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value{
+    color:#74211d !important;
+  }
+}
