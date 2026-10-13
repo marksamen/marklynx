@@ -3368,7 +3368,7 @@ body.suggest-modal-open{overflow:hidden}
   #resultsList .list-col.quality .quality-badge { width: 54px; }
 }
 
-/* SAFARI RECENT LANDSCAPE GRID PROD REV01 — touch landscape only.
+/* SAFARI RECENT LANDSCAPE GRID TEST REV01 — touch landscape only.
    Match the four-column Recent GRID and anchor managed quality inside its thumbnail.
    No LIST, Portrait, Normal Games or desktop changes. */
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
@@ -3395,7 +3395,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* NORMAL LANDSCAPE GRID PROD REV02 — three columns on both sides of 900px.
+/* NORMAL LANDSCAPE GRID TEST REV02 — three columns on both sides of 900px.
    Touch Landscape only; Recent GRID, LIST, Portrait and Desktop unchanged. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
   #resultsGrid.grid {
@@ -3417,7 +3417,7 @@ body.suggest-modal-open{overflow:hidden}
   #resultsGrid .card-meta .game-meta-quality { display: none !important; }
 }
 
-/* LANDSCAPE GRID BADGE SIZING PROD REV03 — touch landscape only.
+/* LANDSCAPE GRID BADGE SIZING TEST REV03 — touch landscape only.
    Align Normal GRID Difficulty and Kinect Required with the 25px
    information badge height. Preserve LIST, Portrait, Recent metadata,
    developer indicators, Text Guide wrapping and desktop behavior. */
@@ -3434,7 +3434,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* RECENT LANDSCAPE PROD REV04 — Developer attribution + Edge Text Guide wrap.
+/* RECENT LANDSCAPE TEST REV04 — Developer attribution + Edge Text Guide wrap.
    Scoped to touch Landscape Recent only; Normal, Portrait and desktop unchanged. */
 .recent-landscape-developer-badge { display:none; }
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3449,7 +3449,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* RECENT LANDSCAPE GRID KINECT SIZING PROD REV05 — touch landscape only.
+/* RECENT LANDSCAPE GRID KINECT SIZING TEST REV05 — touch landscape only.
    Match the existing Normal GRID Kinect badge dimensions; no LIST or Portrait changes. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
   .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
@@ -3460,7 +3460,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE LIST BADGE SIZING PROD REV06 — touch landscape only.
+/* LANDSCAPE LIST BADGE SIZING TEST REV06 — touch landscape only.
    Override legacy 20px Recent LIST badges; align Kinect and Text Guide
    with the established 25px information badges in both Recent and Normal.
    GRID, portrait and desktop are outside this rule. */
@@ -3477,7 +3477,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* RECENT LANDSCAPE LIST BADGE SPACING PROD REV07.
+/* RECENT LANDSCAPE LIST BADGE SPACING TEST REV07.
    Restore a wrapping badge row and uniform spacing; Recent LIST only.
    Preserve badge sizing, GRID, Normal Guides, Portrait and desktop. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3489,7 +3489,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* RECENT LANDSCAPE GRID BADGE ALIGNMENT PROD REV08.
+/* RECENT LANDSCAPE GRID BADGE ALIGNMENT TEST REV08.
    Recent GRID only: consistent vertical spacing and rectangular Kinect badge.
    Normal Guides, Recent LIST, Portrait and desktop remain unchanged. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3504,7 +3504,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* LANDSCAPE GRID PLATFORM WRAPPING PROD REV09.
+/* LANDSCAPE GRID PLATFORM WRAPPING TEST REV09.
    Keep individual platform names intact; wrap at separators where possible.
    Recent and Normal GRID only; portrait and LIST remain unchanged. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3521,7 +3521,7 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* LANDSCAPE PLATFORM PRESENTATION PROD REV10 — touch landscape only.
+/* LANDSCAPE PLATFORM PRESENTATION TEST REV10 — touch landscape only.
    Recent LIST: restore legible console label sizing without changing its box layout.
    Recent + Normal GRID: render each platform as a compact information chip. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3559,7 +3559,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE PLATFORM LEGIBILITY PROD REV11.
+/* LANDSCAPE PLATFORM LEGIBILITY TEST REV11.
    Explicitly cover Recent and Normal, GRID and Normal LIST, at Safari/Edge
    landscape widths. Preserve the already-passing Recent LIST treatment. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3610,7 +3610,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE PLATFORM SINGLE-BOX PROD REV12.
+/* LANDSCAPE PLATFORM SINGLE-BOX TEST REV12.
    Correct REV10/11 individual-chip experiment: all platforms remain inside
    ONE readable, wrapping container. Preserve passed Recent LIST treatment. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
@@ -3658,7 +3658,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* LANDSCAPE PLATFORM SINGLE-BOX PROD REV13.
+/* LANDSCAPE PLATFORM SINGLE-BOX TEST REV13.
    Match approved Recent LIST: one outlined box, no opaque grey backing.
    Use theme tokens for legibility in dark and bright modes.
    This is deliberately last to override REV10-12 experiments. */
@@ -3742,8 +3742,278 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* PROD REV18: Normal GRID Kinect badge matches the already-passing
+/* TEST REV18: Normal GRID Kinect badge matches the already-passing
    rectangular Recent GRID badge in touch Landscape only. */
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
   #resultsGrid .card .kinect-badge { border-radius: 6px; }
+}
+
+/* PORTRAIT RECENT LIST PROD REV02 (TEST REV02) (TEST REV02) — three reported Safari/Edge issues only.
+   Reuse the passed Landscape Recent LIST badge dimensions, platform box,
+   and wrapped badge-row spacing. Normal and GRID views are untouched. */
+@media (orientation: portrait) and (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 3px 7px;
+    border: 1px solid #343434;
+    border-radius: 5px;
+    background: rgba(255,255,255,.025);
+    color: #bdbdbd !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    line-height: 1.3 !important;
+    letter-spacing: .01em;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+/* PORTRAIT RECENT LIST PROD REV02 (TEST REV02) (TEST REV03) — reuse existing Landscape developer
+   attribution and match established platform-to-badge row separation. */
+@media (orientation: portrait) and (max-width: 900px) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges {
+    margin-top: 6px;
+  }
+  .recent-uploads-grid.list-mode .recent-landscape-developer-badge {
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+/* PORTRAIT NORMAL LIST PROD REV02 (TEST REV02) (TEST REV04) — reuse the passed Landscape REV17
+   single-box platform styling; leave Recent LIST and both GRID modes alone. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row .list-sub.normal-list-recent-platform {
+    display: block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin-top: 5px !important;
+    margin-bottom: 6px !important;
+    padding: 3px 7px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 5px !important;
+    background: transparent !important;
+    color: var(--text) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: .01em !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+}
+
+/* PORTRAIT NORMAL LIST PROD REV02 (TEST REV02) (TEST REV05) — keep the existing quality image directly
+   below Gamerscore in the right column, without touching Recent or Landscape. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row {
+    grid-template-columns: 88px minmax(0, 1fr) auto;
+    column-gap: 10px;
+    row-gap: 7px;
+    align-items: start;
+  }
+  #resultsList .list-row > .list-thumb {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
+    align-self: start;
+  }
+  #resultsList .list-row > .list-col.quality {
+    display: inline-flex !important;
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: center;
+    align-self: start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  #resultsList .list-row > .list-col.quality .quality-badge {
+    display: block;
+    width: 44px;
+    height: auto;
+  }
+  #resultsList .list-row .mobile-quality-badge {
+    display: none !important;
+  }
+}
+
+
+/* PORTRAIT NORMAL LIST PROD REV02 (TEST REV02) (TEST REV06) — right-align managed quality beneath
+   Gamerscore with a compact gap; center the thumbnail and its attached play
+   overlay vertically within the complete game row. No Recent/GRID changes. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row {
+    grid-template-rows: auto;
+    row-gap: 0;
+  }
+  #resultsList .list-row > .list-thumb {
+    grid-row: 1;
+    align-self: center;
+  }
+  #resultsList .list-row > span:nth-child(2) {
+    grid-row: 1;
+    align-self: center;
+  }
+  #resultsList .list-row > .list-col.gs {
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+  }
+  #resultsList .list-row > .list-col.quality {
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    margin-top: 29px;
+  }
+}
+
+/* PORTRAIT NORMAL LIST PROD REV02 (TEST REV02) (TEST REV07) — center the right-side Gamerscore +
+   quality pair as one compact visual unit within each row. Keep REV06
+   right alignment, thumbnail centering, and all other views unchanged. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsList .list-row > .list-col.gs {
+    align-self: center;
+    transform: translateY(-15px);
+  }
+  #resultsList .list-row > .list-col.quality {
+    align-self: center;
+    margin-top: 0;
+    transform: translateY(15px);
+  }
+}
+
+/* PORTRAIT RECENT GRID PROD REV02 (TEST REV02) (TEST REV01) — scoped to Recent GRID only.
+   Reuse approved Landscape single platform box, developer attribution,
+   rectangular Kinect and consistent information badge spacing. */
+@media (orientation: portrait) and (max-width: 900px) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+    padding: 3px 7px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 5px !important;
+    background: transparent !important;
+    color: var(--text) !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-separator {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font: inherit !important;
+    white-space: normal !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    margin-top: 0 !important;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px !important;
+  }
+  .recent-uploads-grid.grid-mode .recent-landscape-developer-badge {
+    display: inline-flex !important;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .recent-uploads-grid.grid-mode .recent-landscape-developer-badge .developer-provided-badge,
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .text-guide-badge {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+
+/* PORTRAIT NORMAL GRID PROD REV02 (TEST REV02) (TEST REV09) — platform box only.
+   Mirror the passed Recent GRID single-box treatment, without affecting
+   Recent, LIST, Landscape or Desktop views. */
+@media (orientation: portrait) and (max-width: 900px) {
+  #resultsGrid .card .grid-list-sub {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+    padding: 3px 7px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 5px !important;
+    background: transparent !important;
+    color: var(--text) !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+  #resultsGrid .card .grid-list-sub .landscape-platform-separator {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font: inherit !important;
+    white-space: normal !important;
+  }
 }
