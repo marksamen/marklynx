@@ -4032,3 +4032,8 @@ body.suggest-modal-open{overflow:hidden}
     min-width: 0;
   }
 }
+
+/* DESKTOP NORMAL LIST TEST REV02 — rectangular Kinect only; retain REV01 Recent fixes. */
+@media (min-width: 901px) {
+  #resultsList .kinect-badge { border-radius: 6px; }
+}
