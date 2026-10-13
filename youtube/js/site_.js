@@ -675,7 +675,10 @@ function upgradeRecentCompletionLabels(){
       const label=document.createElement('span');
       label.className='recent-meta-label';
       label.textContent='Completion Type';
-      badge.append(label,document.createTextNode(completion));
+      const value=document.createElement('strong');
+      value.className='recent-completion-value';
+      value.textContent=completion;
+      badge.append(label,value);
       card.appendChild(badge);
     }
   });
