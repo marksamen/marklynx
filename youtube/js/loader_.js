@@ -59,7 +59,7 @@
     try {
       // Main owns the stable page structure and contains the Recent Uploads mount.
       await loadHtml('sections/main_.html?v=quality-filter-REV07', 'mainModuleMount');
-      await loadHtml('sections/developer_.html?v=developer-provided-REV12', 'developerModuleMount');
+      await loadHtml('sections/developer_.html?v=developer-provided-REV13', 'developerModuleMount');
       await loadHtml('sections/recent_.html?v=20260921-prod-promotion-01', 'recentModuleMount');
       await loadHtml('sections/footer_.html?v=20260921-prod-promotion-01', 'footerModuleMount');
 
@@ -321,7 +321,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV16-BOUNDARY-FIX-20261007F');
-      await loadScript('js/site_.js?v=COMPLETION-TYPES-TEST-REV12');
+      await loadScript('js/site_.js?v=COMPLETION-TYPES-TEST-REV13');
       await loadScript('js/mobile-filter-popup_.js?v=MOBILE-POPUP-REV07');
       await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV02');
