@@ -636,3 +636,52 @@ if(recentManagedQualityRoot){
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
 })();
+
+
+// COMPLETION TYPES TEST REV02: enrich frozen Recent cards without editing recent_.js.
+// Preserve Xbox Gamerscore data and display its existing full value (including Update).
+function upgradeRecentCompletionLabels(){
+  const root=document.getElementById('recentUploadsSection');
+  if(!root || !Array.isArray(window.RAW)) return;
+  const byVideo=new Map(),byName=new Map();
+  const normalize=v=>String(v||'').trim().toLowerCase().replace(/\s+/g,' ');
+  window.RAW.forEach(game=>{
+    if(!game) return;
+    if(game.v && !byVideo.has(String(game.v))) byVideo.set(String(game.v),game);
+    if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
+  });
+  root.querySelectorAll('.recent-upload-card').forEach(card=>{
+    const img=card.querySelector('.recent-upload-thumb img');
+    const match=img?.src?.match(/\/vi\/([^/?#]+)\//);
+    const videoId=match?decodeURIComponent(match[1]):'';
+    const title=card.querySelector('.recent-upload-title')?.textContent||'';
+    const game=byVideo.get(videoId)||byName.get(normalize(title));
+    if(!game) return;
+    const completion=String(game.completion_type||'').trim();
+    const gamerscore=String(game.g||'').trim();
+    // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
+    const existing=card.querySelector('.recent-upload-meta.gs');
+    if(existing && gamerscore){
+      if(!existing.querySelector('.recent-meta-label')){
+        const label=document.createElement('span');
+        label.className='recent-meta-label';
+        label.textContent='Gamerscore';
+        existing.prepend(label);
+      }
+    }
+    if(completion && !card.querySelector('.recent-upload-meta.completion-type')){
+      const badge=document.createElement('span');
+      badge.className='recent-upload-meta completion-type';
+      const label=document.createElement('span');
+      label.className='recent-meta-label';
+      label.textContent='Completion Type';
+      badge.append(label,document.createTextNode(completion));
+      card.appendChild(badge);
+    }
+  });
+}
+const completionRecentRoot=document.getElementById('recentUploadsSection');
+if(completionRecentRoot){
+  new MutationObserver(upgradeRecentCompletionLabels).observe(completionRecentRoot,{childList:true,subtree:true});
+  upgradeRecentCompletionLabels();
+}
