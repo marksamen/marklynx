@@ -4384,3 +4384,34 @@ body.suggest-modal-open{overflow:hidden}
     font-weight:800;
   }
 }
+
+/* COMPLETION TYPES TEST REV08 — NORMAL VIDEOS ONLY. Keep the completion
+   metadata readable on mobile, independent of desktop-only pill rules. */
+@media (max-width:900px){
+  #resultsGrid .card-meta .completion-type-meta,
+  #resultsList .list-row .completion-type-meta{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    min-height:22px;
+    max-width:100%;
+    box-sizing:border-box;
+    padding:3px 7px;
+    border:1px solid #b43b37;
+    border-radius:6px;
+    background:rgba(229,37,33,.10);
+    color:inherit;
+    font-size:10.5px;
+    line-height:1.15;
+    font-weight:800;
+    white-space:normal;
+  }
+  #resultsGrid .card-meta .completion-type-meta .game-meta-label,
+  #resultsList .list-row .completion-type-meta .game-meta-label{
+    color:#e52521;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+  }
+  #resultsList .list-row .completion-type-meta{margin-top:6px;}
+}
