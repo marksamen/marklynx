@@ -252,6 +252,10 @@ function qualityBadge(q){
   return escapeHtml(rawQuality);
 }
 
+function completionTypeBadge(r){
+  return r.completion_type ? `<span class="game-meta-pill completion-type-meta" title="Completion Type"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '';
+}
+
 function cardHtml(r){
   const isPlaylist = !!r.pl;
   const isAdult = !!r.adult;
@@ -270,7 +274,7 @@ function cardHtml(r){
   <${tag} class="card${isPlaylist?' playlist-card':''}" ${hrefAttrs} ${openAttr} style="${useModal?'cursor:pointer;':''}">
     <span class="thumb-wrap">
       ${thumb}
-      <span class="gs-pill">${escapeHtml(r.g||'—')}</span>
+      ${r.g ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : ''}
       ${playlistPill(r)}
       ${adultPill(r)}
       <span class="desktop-grid-quality">${qualityBadge(r.q)}</span>
@@ -289,6 +293,7 @@ function cardHtml(r){
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
         ${developerProvidedBadge(r)}
+        ${completionTypeBadge(r)}
       </div>
     </span>
   </${tag}>`;
@@ -314,6 +319,7 @@ function listRowHtml(r){
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
       <div class="list-sub recent-upload-platform normal-list-recent-platform">${escapeHtml(r.p||'')}</div>
+      ${completionTypeBadge(r)}
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
