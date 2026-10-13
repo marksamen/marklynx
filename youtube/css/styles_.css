@@ -4441,3 +4441,33 @@ body.suggest-modal-open{overflow:hidden}
   }
   #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{color:#e34a43;}
 }
+
+/* COMPLETION TYPES TEST REV15 — NORMAL VIDEOS LIST ONLY.
+   Same compact completion badge on wider desktop / mobile-landscape viewports.
+   <=900px keeps the existing REV08 styling (Safari approved). */
+@media (min-width:901px){
+  #resultsList .list-row .completion-type-meta{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    min-height:22px;
+    max-width:100%;
+    box-sizing:border-box;
+    padding:3px 7px;
+    border:1px solid #3b3b3b;
+    border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    color:#e3e3e3;
+    font-size:10.5px;
+    line-height:1.15;
+    font-weight:800;
+    white-space:normal;
+    margin-top:6px;
+  }
+  #resultsList .list-row .completion-type-meta .game-meta-label{
+    color:#e34a43;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+  }
+}

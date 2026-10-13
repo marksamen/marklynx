@@ -594,3 +594,16 @@ html[data-theme="bright"] #siteLanguageSelect {
   }
   html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{color:#8b211c !important;}
 }
+
+/* COMPLETION TYPES TEST REV15 — Bright NORMAL LIST at desktop/wide landscape only. */
+@media (min-width:901px){
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta{
+    background:#e5e5e1;
+    border-color:#686862;
+    color:#20201e;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta .game-meta-label{
+    color:#8b211c;
+  }
+}
