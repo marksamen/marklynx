@@ -5,7 +5,7 @@ import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=DEVELOPER-PROVIDED-ADMIN-REV08";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management_.js?v=LANGUAGES-REV14";
+import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=LANGUAGES-REV14";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
@@ -82,6 +82,15 @@ window.addEventListener("genres-modal-closed",()=>{
 });
 
 
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin||event.data?.type!=="completion-types-updated")return;
+  loadCompletionTypeOptions().catch(console.error);
+  loadGamesTest().catch(console.error);
+});
+window.addEventListener("completion-types-modal-closed",()=>{
+  loadCompletionTypeOptions().catch(console.error);
+  loadGamesTest().catch(console.error);
+});
 await setPersistence(auth,browserLocalPersistence);
 onAuthStateChanged(auth,user=>user?loggedIn():loggedOut());
 

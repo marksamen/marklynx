@@ -4,7 +4,7 @@ let verifyTestDatabaseIdentity = null;
 
 const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
-const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","completion_type","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 
 let resultYesAction=null;
 let providedDeveloperCompanies=[];
@@ -14,6 +14,18 @@ let qualityBadges=[];
 let textGuideOptions=[];
 let platformOptions=[];
 let genreOptions=[];
+let completionTypeOptions=[];
+export async function loadCompletionTypeOptions(){
+  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/completion_types?select=id,value,sort_order&order=value.asc`,{headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},cache:"no-store"});
+  if(!response.ok)throw new Error(`Completion Types: Supabase TEST HTTP ${response.status}`);
+  const rows=await response.json();
+  if(!Array.isArray(rows))throw new Error("Invalid Completion Type options");
+  completionTypeOptions=rows;
+  const select=document.getElementById("gdCompletionType"),current=select.value;
+  select.replaceChildren(new Option("None — optional",""),...rows.map(row=>new Option(String(row.value),String(row.value))));
+  if(current&&rows.some(row=>row.value===current))select.value=current;
+}
+
 
 export async function loadTextGuideOptions(){
   const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/text_guide_options?select=id,value,sort_order&order=sort_order.asc,value.asc`,{
@@ -327,7 +339,7 @@ export async function loadGamesTest(){
     status.style.color=passed?"#6dff8b":"#ffd36d";
     window.GAMEDEV_RAW=games;
     await loadProvidedDeveloperAdminData();
-    await Promise.all([loadQualityBadges(),loadTextGuideOptions(),loadPlatformOptions(),loadGenreOptions()]);
+    await Promise.all([loadQualityBadges(),loadTextGuideOptions(),loadPlatformOptions(),loadGenreOptions(),loadCompletionTypeOptions()]);
     populateGameDev(games);
   }catch(e){
     status.textContent="FAILED — could not read Supabase TEST games.";
@@ -478,6 +490,7 @@ function drawSelectedGame(){
   document.getElementById("gdGamerscoreUpdate").checked=/\s+Update$/i.test(String(g.g||""));
   document.getElementById("gdGamerscore").value=normalizeGamerscore(g.g??"")??"";
   setCompletionTime(g.t??"");
+  document.getElementById("gdCompletionType").value=g.completion_type??"";
   setQualityValue(g.q??"");
   setTextGuideValue(g.tx??"");
   document.getElementById("gdAdult").value=g.adult===true?"true":"false";
@@ -569,6 +582,7 @@ function beginAddGame(){
   setChoices("gdTypeChoices","");
   document.getElementById("gdGamerscore").value="";
   document.getElementById("gdGamerscoreUpdate").checked=false;
+  document.getElementById("gdCompletionType").value="";
   document.getElementById("gdGamerscoreError").textContent="";
   document.getElementById("gdTime").value="";
   document.getElementById("gdTimeUnit").value="Minutes";
@@ -623,6 +637,7 @@ async function createGameDev(){
     p:getChoices("gdPlatformChoices"),
     ty:getChoices("gdTypeChoices"),
     tx:document.getElementById("gdTextGuide").value,
+    completion_type:document.getElementById("gdCompletionType").value||null,
     df:document.getElementById("gdDifficulty").value.trim(),
     testContent:document.getElementById("gdTest").value==="true",
     always_show_recent:document.getElementById("gdAlwaysRecent").value==="true"
@@ -770,6 +785,7 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     t:completionTimeValue() || null,
     ty:getChoices("gdTypeChoices") || null,
     tx:document.getElementById("gdTextGuide").value || null,
+    completion_type:document.getElementById("gdCompletionType").value||null,
     q:qualityValue() || null,
     df:document.getElementById("gdDifficulty").value.trim() || null,
     adult:document.getElementById("gdAdult").value==="true",
