@@ -4500,17 +4500,17 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* COMPLETION TYPES TEST REV20: Desktop Normal LIST explicit columns only. */
-@media (min-width:901px) and (hover:hover) and (pointer:fine) {
-  #resultsList .list-row {
-    grid-template-columns:120px minmax(0,1fr) 116px 150px 92px 92px 54px;
-    column-gap:16px;
+/* COMPLETION TYPES TEST REV21: Desktop Normal LIST only.
+   Keep the native seven-item auto-grid when Gamerscore is blank.
+   A visually hidden, non-interactive Gamerscore grid item occupies its
+   existing slot; on mobile the item is display:none. */
+@media (min-width:901px) {
+  #resultsList .list-col.gs-layout-placeholder {
+    visibility:hidden;
+    pointer-events:none;
+    min-width:0;
   }
-  #resultsList .list-row > .list-thumb {grid-column:1;grid-row:1;}
-  #resultsList .list-row > span:nth-child(2) {grid-column:2;grid-row:1;min-width:0;}
-  #resultsList .list-row > .list-col.type {grid-column:3;grid-row:1;justify-self:end;}
-  #resultsList .list-row > .list-col.time {grid-column:4;grid-row:1;justify-self:end;}
-  #resultsList .list-row > .list-col.diff {grid-column:5;grid-row:1;justify-self:end;}
-  #resultsList .list-row > .list-col.gs {grid-column:6;grid-row:1;justify-self:end;}
-  #resultsList .list-row > .list-col.quality {grid-column:7;grid-row:1;justify-self:end;}
+}
+@media (max-width:900px) {
+  #resultsList .list-col.gs-layout-placeholder {display:none!important;}
 }
