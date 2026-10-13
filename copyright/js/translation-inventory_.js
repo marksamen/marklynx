@@ -1,6 +1,11 @@
 // REV09: English display labels verified against TEST public source. English remains in its original source.
 export const inventory={
   "Main": {
+    "selector.language": "Language",
+    "filter.text_guide_included": "Text Guide Included",
+    "developer.provided_by_template": "Provided by {developer}",
+    "game.under_template": "Under {duration}",
+    "game.recompletion_template": "{duration} Recompletion",
     "filter.quick_filters": "Quick Filters",
     "filter.qe_only": "Quick & Easy Only",
     "filter.hide_qe": "Hide Quick & Easy",

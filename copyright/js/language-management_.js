@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=LANGUAGES-REV14";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV07';
+import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV04';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
@@ -39,7 +39,38 @@ function render(){const list=el('languages');list.replaceChildren();const select
 // REV07: translation entries are accessed through Section and English Text selectors only.
 // Keep existing database rows intact; never render internal keys or a crowded saved-translation list.
 
-async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);}
+function renderTranslationStatistics(){
+  const root=new Map();
+  for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){
+    for(const [key,english] of Object.entries(sectionItems(section)))root.set(key,english);
+  }
+  const expected=[...root.keys()].sort();
+  const expectedSet=new Set(expected);
+  const host=el('translationStatistics');
+  host.replaceChildren();
+  const summary=node('p',`Expected translation keys: ${expected.length} (English source inventory + live managed options).`);
+  host.append(summary);
+  for(const lang of cache.languages){
+    if(lang.code==='en')continue;
+    const rows=cache.translations.filter(x=>x.language_code===lang.code);
+    const present=new Set(rows.filter(x=>typeof x.translated_text==='string'&&x.translated_text.trim()).map(x=>x.translation_key));
+    const missing=expected.filter(key=>!present.has(key));
+    const extra=[...present].filter(key=>!expectedSet.has(key)).sort();
+    const line=node('div','');line.className='language';
+    const heading=node('strong',`${lang.english_name} (${lang.code}): ${expected.length-missing.length}/${expected.length} — ${missing.length} missing, ${extra.length} extra — ${lang.enabled?'ENABLED':'DISABLED'}`);
+    line.append(heading);
+    if(missing.length||extra.length){
+      const details=document.createElement('details');
+      const toggle=node('summary','Show missing / extra keys');details.append(toggle);
+      if(missing.length){details.append(node('p','Missing ('+missing.length+'):'));const ul=document.createElement('ul');for(const key of missing)ul.append(node('li',`${key} — ${root.get(key)}`));details.append(ul);}
+      if(extra.length){details.append(node('p','Extra / unregistered ('+extra.length+'):'));const ul=document.createElement('ul');for(const key of extra)ul.append(node('li',key));details.append(ul);}
+      line.append(details);
+    }
+    host.append(line);
+  }
+}
+el('refreshTranslationStatistics').onclick=()=>perform(async()=>{await reload();status('Translation statistics refreshed from TEST Supabase.');});
+async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);renderTranslationStatistics();}
 el('translationLanguage').onchange=()=>{setEnglish(el('englishText').value);};
 el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.trim();if(code.toLowerCase()==='en')throw Error('English cannot be managed.');await call('save-language',{code,english_name:el('english').value,native_name:displayNative(el('native').value),direction:el('direction').value==='Right To Left'?'rtl':'ltr',sort_order:Number(el('sort').value)});await reload();});
 el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);el('value').focus();};
