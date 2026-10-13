@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=LANGUAGES-REV14";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory_.js?v=LANGUAGES-REV04';
+import {inventory} from './translation-inventory_.js?v=LANGUAGE-STATS-REV05';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
@@ -69,7 +69,26 @@ function renderTranslationStatistics(){
     host.append(line);
   }
 }
-el('refreshTranslationStatistics').onclick=()=>perform(async()=>{await reload();status('Translation statistics refreshed from TEST Supabase.');});
+let statsRefreshCount=0;
+el('refreshTranslationStatistics').onclick=async()=>{
+  const button=el('refreshTranslationStatistics');
+  if(button.disabled)return;
+  button.disabled=true;
+  button.textContent='Refreshing statistics…';
+  try{
+    await reload();
+    statsRefreshCount++;
+    const stamp=new Date().toLocaleString();
+    el('statisticsLastRefreshed').textContent=`Last refreshed: ${stamp} (refresh #${statsRefreshCount})`;
+    status('Translation statistics refreshed from TEST Supabase.');
+  }catch(e){
+    status(e.message||String(e),true);
+    el('statisticsLastRefreshed').textContent='Refresh failed. Existing figures may be outdated.';
+  }finally{
+    button.disabled=false;
+    button.textContent='Refresh translation statistics';
+  }
+};
 async function reload(){const [saved,managed]=await Promise.all([call('list'),call('list-options')]);cache=saved;managedOptions=managed.options||{};render();populateEnglish(el('englishText').value);renderTranslationStatistics();}
 el('translationLanguage').onchange=()=>{setEnglish(el('englishText').value);};
 el('saveLanguage').onclick=()=>perform(async()=>{const code=el('code').value.trim();if(code.toLowerCase()==='en')throw Error('English cannot be managed.');await call('save-language',{code,english_name:el('english').value,native_name:displayNative(el('native').value),direction:el('direction').value==='Right To Left'?'rtl':'ltr',sort_order:Number(el('sort').value)});await reload();});

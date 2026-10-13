@@ -54,6 +54,14 @@ export const inventory={
     "main.kinect": "Kinect Required",
     "game.text_guide": "Text Guide"
   },
+  "Footer": {
+    "footer.quick_easy": "Quick & Easy",
+    "footer.games": "Games",
+    "footer.playlists": "Playlists",
+    "footer.total_videos": "Total Videos",
+    "footer.tagline": "Mark Lynx Gaming Network · 100% Walkthroughs, Achievement Guides & Speed Runs",
+    "footer.rights": "All Rights Reserved."
+  },
   "Recent Uploads": {
     "recent.heading": "Recent Uploads",
     "recent.youtube": "View all on YouTube"
