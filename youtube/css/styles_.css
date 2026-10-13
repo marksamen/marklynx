@@ -4231,3 +4231,55 @@ body.suggest-modal-open{overflow:hidden}
   .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-meta-label{margin-right:0;}
   .recent-upload-meta.completion-type .recent-completion-value{font-weight:900;}
 }
+
+/* COMPLETION TYPES TEST REV04 — Desktop Recent badges only.
+   Xbox Gamerscore green, Completion Type Mario-red; compact identical structure.
+   No Normal Videos, mobile, or frozen Recent script changes. */
+@media (min-width:901px){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    padding:3px 7px;
+    min-height:0;
+    width:auto;
+    max-width:100%;
+    border-radius:5px;
+    font-size:inherit;
+    line-height:1.2;
+    font-weight:700;
+    white-space:nowrap;
+    box-shadow:none;
+    text-shadow:none;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs{
+    border:1px solid #107C10;
+    background:#e4f3e4;
+    color:#194f19;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    border:1px solid #E52521;
+    background:#fff0ee;
+    color:#79201c;
+  }
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label{
+    margin:0;
+    font-weight:700;
+    color:inherit;
+  }
+  .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value{
+    font-weight:900;
+    color:inherit;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    order:initial;
+    align-self:center;
+  }
+}
