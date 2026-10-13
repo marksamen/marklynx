@@ -4017,3 +4017,183 @@ body.suggest-modal-open{overflow:hidden}
     white-space: normal !important;
   }
 }
+
+/* DESKTOP RECENT LIST TEST REV01 — only the approved three presentation fixes. */
+@media (min-width: 901px) {
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .kinect-badge {
+    border-radius: 6px;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-platform .landscape-platform-separator {
+    padding-inline: 4px;
+  }
+  .recent-uploads-grid.list-mode .recent-landscape-developer-badge {
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+/* DESKTOP NORMAL LIST TEST REV02 — rectangular Kinect only; retain REV01 Recent fixes. */
+@media (min-width: 901px) {
+  #resultsList .kinect-badge { border-radius: 6px; }
+}
+
+/* DESKTOP RECENT LIST TEST REV03 — match developer attribution to the
+   already-approved compact Recent Kinect/Text Guide sizing. Platform uses
+   the same 20px minimum height. Normal LIST, GRID and mobile untouched. */
+@media (min-width: 901px) {
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    min-height: 20px;
+    box-sizing: border-box;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge {
+    min-height: 20px;
+    padding: 2px 6px;
+    font-size: 9.5px;
+    line-height: 1.1;
+    gap: 4px;
+    box-sizing: border-box;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* DESKTOP RECENT GRID TEST REV04 — match the approved single-box platform
+   and rectangular Kinect treatment without changing LIST or mobile. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 3px 7px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-separator {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    white-space: normal;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-separator {
+    padding-inline: 4px;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge {
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
+}
+
+/* DESKTOP RECENT GRID TEST REV05 — spacing refinement of approved REV04.
+   Keep the REV04 platform container and Kinect shape; align badges in one row. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .recent-uploads-grid.grid-mode .recent-upload-platform {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    vertical-align: top;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 6px;
+    row-gap: 6px;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .kinect-badge,
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .text-guide-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 25px;
+    padding: 3px 9px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    vertical-align: middle;
+    margin: 0;
+    line-height: 1.35;
+  }
+}
+
+
+/* DESKTOP RECENT GRID REV07 — port the approved Normal GRID containment
+   (LANGUAGES REV22) to Recent's plain-text badge markup. Recent does not
+   have Normal's .text-guide-label / .text-guide-detail inner spans. */
+@media (min-width: 901px) {
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .text-guide-badge {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-under-title-badges .text-guide-badge svg {
+    flex-shrink: 0;
+  }
+}
+
+/* DESKTOP NORMAL GRID TEST REV08 — approved single platform container
+   reused from Desktop Recent GRID REV04 and Mobile Normal GRID.
+   Scoped to Normal GRID only; no LIST, Recent, or Mobile changes. */
+@media (min-width: 901px) {
+  #resultsGrid .card .grid-list-sub {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 3px 7px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+  #resultsGrid .card .grid-list-sub .landscape-platform-separator {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    white-space: normal;
+  }
+}
+
+/* DESKTOP RECENT GRID TEST REV10 — mirror the approved Desktop Recent LIST
+   visibility of the existing database-driven Developer Provided badge.
+   Mobile, Normal GRID, and Recent LIST are unchanged. */
+@media (min-width: 901px) {
+  .recent-uploads-grid.grid-mode .recent-landscape-developer-badge {
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
