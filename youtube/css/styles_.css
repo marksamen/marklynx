@@ -4037,3 +4037,25 @@ body.suggest-modal-open{overflow:hidden}
 @media (min-width: 901px) {
   #resultsList .kinect-badge { border-radius: 6px; }
 }
+
+/* DESKTOP RECENT LIST TEST REV03 — match developer attribution to the
+   already-approved compact Recent Kinect/Text Guide sizing. Platform uses
+   the same 20px minimum height. Normal LIST, GRID and mobile untouched. */
+@media (min-width: 901px) {
+  .recent-uploads-grid.list-mode .recent-upload-platform {
+    min-height: 20px;
+    box-sizing: border-box;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge {
+    min-height: 20px;
+    padding: 2px 6px;
+    font-size: 9.5px;
+    line-height: 1.1;
+    gap: 4px;
+    box-sizing: border-box;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-under-title-badges .developer-provided-badge svg {
+    width: 10px;
+    height: 10px;
+  }
+}
