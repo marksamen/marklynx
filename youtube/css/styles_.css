@@ -4620,3 +4620,16 @@ body.suggest-modal-open{overflow:hidden}
     white-space:nowrap;
   }
 }
+
+/* COMPLETION TYPES TEST REV32 - Desktop Normal GRID 18+ YouTube bubble.
+   Match gold Playlist badge height and preserve position/wording. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsGrid .card .thumb-wrap .adult-pill {
+    min-height:27px;
+    padding:5px 7px;
+    line-height:1.1;
+    color:#fff;
+    font-weight:800;
+    text-shadow:none;
+  }
+}

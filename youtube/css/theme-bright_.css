@@ -649,3 +649,11 @@ html[data-theme="bright"] #siteLanguageSelect {
     background:#D7B34C; border-color:#A77B18; color:#302200;
   }
 }
+
+/* COMPLETION TYPES TEST REV32 - Ensure white 18+ text on Bright GRID. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-theme="bright"] #resultsGrid .card .thumb-wrap .adult-pill {
+    color:#fff !important;
+    text-shadow:none !important;
+  }
+}
