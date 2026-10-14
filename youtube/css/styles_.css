@@ -4516,3 +4516,20 @@ body.suggest-modal-open{overflow:hidden}
   .recent-uploads-grid.list-mode .recent-upload-meta.diff {order:6;}
   .recent-uploads-grid.list-mode .recent-upload-meta.quality {order:7;}
 }
+
+
+/* COMPLETION TYPES TEST REV23: Desktop Normal LIST only.
+   Completion Type occupies the Gamerscore-first position, not under title.
+   Keep the approved mobile presentation and existing Xbox layout. */
+#resultsList .list-row > .completion-type-list-desktop{display:none!important;}
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  #resultsList .list-row > span:nth-child(2) > .completion-type-meta{display:none!important;}
+  #resultsList .list-row > .completion-type-list-desktop{
+    display:inline-flex!important;order:3;align-items:center;justify-content:center;
+    margin:0;min-height:22px;padding:3px 7px;gap:5px;white-space:nowrap;
+    font-size:10.5px;line-height:1.15;font-weight:700;justify-self:end;
+  }
+  #resultsList .list-row > .completion-type-list-desktop .game-meta-label{
+    font-size:9px;line-height:1.15;
+  }
+}
