@@ -1,7 +1,7 @@
 // PROD recovery generator for main Admin and Language Management.
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
-const GAME_EXPORT_FIELDS=["id","n","p","g","t","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
+const GAME_EXPORT_FIELDS=["id","n","p","g","t","completion_type","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
 async function fetchAllSupabaseProdGames(){
   const pageSize=1000;
   const all=[];
