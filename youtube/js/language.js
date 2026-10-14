@@ -304,7 +304,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english.json?v=COMPLETION-LANGUAGE-PROD-REV06',{cache:'no-store'});
+      const response = await fetch('data/language-english.json?v=COMPLETION-LANGUAGE-PROD-REV07',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG PROD] English inventory unavailable:',e);}
@@ -324,7 +324,7 @@
     } catch (err) {
       console.warn('[LANG PROD] Completion Types unavailable; trying PROD JSON:',err);
       try {
-        const response = await fetch('data/completion-types.json?v=COMPLETION-LANGUAGE-PROD-REV06',{cache:'no-store'});
+        const response = await fetch('data/completion-types.json?v=COMPLETION-LANGUAGE-PROD-REV07',{cache:'no-store'});
         if (!response.ok) throw Error('HTTP '+response.status);
         const rows = await response.json();
         if (!Array.isArray(rows)) throw Error('Invalid Completion Type recovery JSON');
