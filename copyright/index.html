@@ -51,6 +51,7 @@
 <div id="adminWorkspace"><div id="adminControls">
 <button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
 <button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
+<button id="completionTypeManagement" class="admin-link" type="button" data-admin-modal-url="completion-types/index.html?v=COMPLETION-TYPES-PROD-REV02" data-admin-modal-title="Completion Type Management" style="background:#173a63;color:#fff">Completion Type Management</button>
 <button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/?v=TEXT-GUIDE-MANAGEMENT-PROD-REV04" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
 <button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index.html?v=PLATFORM-MANAGEMENT-REV04" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
 <button id="languageManagement" class="admin-link" type="button" data-admin-modal-url="languages/index.html?v=LANGUAGES-PROD-20261013-REV07" data-admin-modal-title="Language Management" style="background:#173a63;color:#fff">Language Management</button>
@@ -109,6 +110,7 @@
 <div><strong>Genre / Type</strong><details class="multi-select"><summary id="gdTypeSummary">Select genres…</summary><div id="gdTypeChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every genre/type that applies. Admin builds the stored value automatically.</span></div>
 <label>Completion Time<div class="inline-pair"><input id="gdTime" inputmode="text" placeholder="Example: 3 or 6-7"><select id="gdTimeUnit" aria-label="Completion time unit"><option value="Minutes">Minutes</option><option value="Hours">Hours</option></select></div><span class="field-help">Enter one amount or a range (example: 6-7), then choose Minutes or Hours.</span><span id="gdTimeError" class="field-error"></span></label>
 <label>Gamerscore<input id="gdGamerscore" inputmode="numeric" placeholder="Example: 2000 → 2,000G"><span class="field-help">Optional. Enter numbers only; Admin formats the value automatically. Leave blank for games/platforms without Gamerscore.</span><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="gdGamerscoreUpdate" type="checkbox" style="width:auto"> Update video</label><span class="field-help">Checked = stores the Gamerscore as, for example, 2,000G Update.</span><span id="gdGamerscoreError" class="field-error"></span></label>
+<label>Completion Type<select id="gdCompletionType"><option value="">None — optional</option></select><span class="field-help">Independent of Xbox Gamerscore. Manage choices in Completion Type Management.</span></label>
 <div><strong>Platform</strong><details class="multi-select"><summary id="gdPlatformSummary">Select platforms…</summary><div id="gdPlatformChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every platform that applies. Multiple selections are supported.</span></div>
 <label>Quality<select id="gdQuality"><option value="">Select quality…</option></select><span class="field-help">Quality options are managed in Quality Badge Management.</span></label>
 <label>Text Guide<select id="gdTextGuide"><option value="">Select Text Guide…</option></select><span class="field-help">Text Guide options are managed in Text Guide Management.</span></label>
@@ -222,7 +224,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core.js?v=LANGUAGE-PARITY-20261011A"></script>
+<script type="module" src="js/admin-core.js?v=COMPLETION-TYPES-PROD-REV02"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
