@@ -8,6 +8,7 @@
   const lastRendered = new WeakMap();
   const english = Object.create(null);
   let translations = {}, language = 'en', enabled = new Set(['en']), busy = false, scheduled = false;
+  let completionLabels = new Map(); // English value -> stable Completion Type key; never changes game data
   const norm = v => String(v ?? '').replace(/\s+/g, ' ').trim();
   const headers = {apikey: API_KEY};
   const fetchRows = async (table, query) => {
@@ -32,8 +33,8 @@
   const flag = document.createElement('img');
   flag.alt = '';
   flag.setAttribute('aria-hidden','true');
-  flag.width = 20; flag.height = 14;
-  flag.style.cssText = 'width:20px;height:14px;object-fit:cover;border-radius:1px;flex:none;';
+  flag.width = 46; flag.height = 32;
+  flag.style.cssText = 'width:46px;height:32px;object-fit:cover;border-radius:2px;flex:none;';
   wrap.append(label,flag,selector);
   wrap.style.marginLeft = 'auto';
   wrap.style.justifyContent = 'flex-end';
@@ -75,6 +76,10 @@
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
+    // Completion Types share the existing Language Management translation keys.
+    const completionKey = completionLabels.get(norm(source));
+    if (completionKey && language !== 'en' && translations[completionKey])
+      return String(source).replace(norm(source), translations[completionKey]);
     // English is immutable. All other languages use the same Supabase/JSON keys.
     const normalized = norm(source);
     if (/^(?:Text Guides Only|Text Guide Included)$/i.test(normalized)) {
@@ -300,7 +305,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english_.json?v=PLAYLIST-TRANSLATION-REV17',{cache:'no-store'});
+      const response = await fetch('data/language-english_.json?v=CT-LABEL-TEST-REV05',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG TEST] English inventory unavailable:',e);}
@@ -311,6 +316,24 @@
         for (const r of rows) addEnglish(prefix+'.'+r.id,r.value);
       } catch (e) {console.warn('[LANG TEST] Dynamic English labels unavailable:',table,e);}
     }
+    // Stable IDs link English Completion Types to the existing site_translations table.
+    // The recovery catalogue contains only ID + English text, not separate translations.
+    try {
+      const rows = await fetchRows('completion_types','select=id,value&limit=1000');
+      completionLabels = new Map(rows.filter(r => r && r.value && Number.isInteger(Number(r.id)))
+        .map(r => [norm(r.value),'completion_type.'+r.id]));
+    } catch (err) {
+      console.warn('[LANG TEST] Completion Types unavailable; trying TEST JSON:',err);
+      try {
+        const response = await fetch('data/completion-types_.json?v=CT-LANGUAGE-TEST-REV04',{cache:'no-store'});
+        if (!response.ok) throw Error('HTTP '+response.status);
+        const rows = await response.json();
+        if (!Array.isArray(rows)) throw Error('Invalid Completion Type recovery JSON');
+        completionLabels = new Map(rows.filter(r => r && r.value && Number.isInteger(Number(r.id)))
+          .map(r => [norm(r.value),'completion_type.'+r.id]));
+      } catch (jsonError) {console.warn('[LANG TEST] Completion Type recovery unavailable; English fallback:',jsonError);}
+    }
+    for (const [englishValue,key] of completionLabels) addEnglish(key,englishValue);
     lookup = englishByText();
     let rows = [];
     try {rows = await fetchRows('site_languages','select=code,native_name,english_name,enabled,sort_order&order=sort_order.asc');}
