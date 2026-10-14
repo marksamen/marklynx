@@ -73,7 +73,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['id','n','p','g','t','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
+      const gameFields = ['id','n','p','g','t','completion_type','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
@@ -315,7 +315,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=PLAYBACK-RESUME-PROD-REV02-BOUNDARY-FIX-20261007B');
-      await loadScript('js/site.js?v=DESKTOP-PROD-REV01');
+      await loadScript('js/site.js?v=COMPLETION-TYPES-PROD-REV04');
       await loadScript('js/mobile-filter-popup.js?v=MOBILE-POPUP-PROD-REV01');
       await loadScript('js/developer.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');

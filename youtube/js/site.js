@@ -252,6 +252,10 @@ function qualityBadge(q){
   return escapeHtml(rawQuality);
 }
 
+function completionTypeBadge(r){
+  return r.completion_type ? `<span class="game-meta-pill completion-type-meta" title="Completion Type"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '';
+}
+
 function cardHtml(r){
   const isPlaylist = !!r.pl;
   const isAdult = !!r.adult;
@@ -270,7 +274,7 @@ function cardHtml(r){
   <${tag} class="card${isPlaylist?' playlist-card':''}" ${hrefAttrs} ${openAttr} style="${useModal?'cursor:pointer;':''}">
     <span class="thumb-wrap">
       ${thumb}
-      <span class="gs-pill">${escapeHtml(r.g||'—')}</span>
+      ${r.g ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : ''}
       ${playlistPill(r)}
       ${adultPill(r)}
       <span class="desktop-grid-quality">${qualityBadge(r.q)}</span>
@@ -289,6 +293,7 @@ function cardHtml(r){
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
         ${developerProvidedBadge(r)}
+        ${completionTypeBadge(r)}
       </div>
     </span>
   </${tag}>`;
@@ -314,6 +319,7 @@ function listRowHtml(r){
     <span>
       <div class="list-name">${escapeHtml(r.n)}${isAdult?' <span title="Age-restricted: opens directly on YouTube" style="font-size:11px;color:#ff8f86;font-weight:800;">· 18+ YouTube</span>':''}</div>
       <div class="list-sub recent-upload-platform normal-list-recent-platform">${escapeHtml(r.p||'')}</div>
+      ${completionTypeBadge(r)}
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
         <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
@@ -325,7 +331,7 @@ function listRowHtml(r){
     <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
-    <span class="list-col gs">${escapeHtml(r.g||'')}</span>
+    ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : (r.completion_type ? `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '')}
   </${tag}>`;
 }
 
@@ -630,3 +636,56 @@ if(recentManagedQualityRoot){
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
 })();
+
+
+
+// COMPLETION TYPES TEST REV02: enrich frozen Recent cards without editing recent_.js.
+// Preserve Xbox Gamerscore data and display its existing full value (including Update).
+function upgradeRecentCompletionLabels(){
+  const root=document.getElementById('recentUploadsSection');
+  if(!root || !Array.isArray(window.RAW)) return;
+  const byVideo=new Map(),byName=new Map();
+  const normalize=v=>String(v||'').trim().toLowerCase().replace(/\s+/g,' ');
+  window.RAW.forEach(game=>{
+    if(!game) return;
+    if(game.v && !byVideo.has(String(game.v))) byVideo.set(String(game.v),game);
+    if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
+  });
+  root.querySelectorAll('.recent-upload-card').forEach(card=>{
+    const img=card.querySelector('.recent-upload-thumb img');
+    const match=img?.src?.match(/\/vi\/([^/?#]+)\//);
+    const videoId=match?decodeURIComponent(match[1]):'';
+    const title=card.querySelector('.recent-upload-title')?.textContent||'';
+    const game=byVideo.get(videoId)||byName.get(normalize(title));
+    if(!game) return;
+    const completion=String(game.completion_type||'').trim();
+    const gamerscore=String(game.g||'').trim();
+    // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
+    const existing=card.querySelector('.recent-upload-meta.gs');
+    if(existing && gamerscore){
+      if(!existing.querySelector('.recent-meta-label')){
+        const label=document.createElement('span');
+        label.className='recent-meta-label';
+        label.textContent='Gamerscore';
+        existing.prepend(label);
+      }
+    }
+    if(completion && !card.querySelector('.recent-upload-meta.completion-type')){
+      const badge=document.createElement('span');
+      badge.className='recent-upload-meta completion-type';
+      const label=document.createElement('span');
+      label.className='recent-meta-label';
+      label.textContent='Completion Type';
+      const value=document.createElement('strong');
+      value.className='recent-completion-value';
+      value.textContent=completion;
+      badge.append(label,value);
+      card.appendChild(badge);
+    }
+  });
+}
+const completionRecentRoot=document.getElementById('recentUploadsSection');
+if(completionRecentRoot){
+  new MutationObserver(upgradeRecentCompletionLabels).observe(completionRecentRoot,{childList:true,subtree:true});
+  upgradeRecentCompletionLabels();
+}
