@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — PROD REV19. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — PROD REV10 TEST parity. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://igmunmyxaskizltdvvti.supabase.co/rest/v1/';
@@ -8,6 +8,7 @@
   const lastRendered = new WeakMap();
   const english = Object.create(null);
   let translations = {}, language = 'en', enabled = new Set(['en']), busy = false, scheduled = false;
+  let completionLabels = new Map(); // English value -> stable Completion Type key; never changes game data
   const norm = v => String(v ?? '').replace(/\s+/g, ' ').trim();
   const headers = {apikey: API_KEY};
   const fetchRows = async (table, query) => {
@@ -75,6 +76,10 @@
   };
   const getTranslation = (key,source) => language !== 'en' && translations[key] ? translations[key] : source;
   const translated = source => {
+    // Completion Types share the existing Language Management translation keys.
+    const completionKey = completionLabels.get(norm(source));
+    if (completionKey && language !== 'en' && translations[completionKey])
+      return String(source).replace(norm(source), translations[completionKey]);
     // English is immutable. All other languages use the same Supabase/JSON keys.
     const normalized = norm(source);
     if (/^(?:Text Guides Only|Text Guide Included)$/i.test(normalized)) {
@@ -100,7 +105,7 @@
       const prefix = String(source).match(/^(\s*[⚡🚫📄🎁×✕✖]\s*)/u);
       return prefix ? prefix[1] + getTranslation(key,source.replace(prefix[1],'')) : getTranslation(key,source);
     }
-    // REV19: Completion-time formats in the game inventory include
+    // REV19: Completion-time formats in the PROD game inventory include
     // single values, numeric ranges, "Under N Unit", and "Recompletion".
     // Translate the displayed value only; never change its English source.
     if (language !== 'en') {
@@ -284,7 +289,7 @@
       } catch (err) {
         console.warn('[LANG PROD] Supabase translations unavailable; trying PROD JSON:',err);
         try {
-          const response = await fetch('data/translations.json?v=LANG-REV14',{cache:'no-store'});
+          const response = await fetch('data/translations.json?v=TEST-PARITY-PROD-REV10-20261014',{cache:'no-store'});
           if (!response.ok) throw Error('HTTP ' + response.status);
           translations = (await response.json())[language] || {};
         } catch (jsonError) {console.warn('[LANG PROD] Translation recovery unavailable; English fallback:',jsonError);}
@@ -300,7 +305,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english.json?v=LANG-REV12',{cache:'no-store'});
+      const response = await fetch('data/language-english.json?v=TEST-PARITY-PROD-REV10-20261014',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG PROD] English inventory unavailable:',e);}
@@ -311,13 +316,31 @@
         for (const r of rows) addEnglish(prefix+'.'+r.id,r.value);
       } catch (e) {console.warn('[LANG PROD] Dynamic English labels unavailable:',table,e);}
     }
+    // Stable IDs link English Completion Types to the existing site_translations table.
+    // The recovery catalogue contains only ID + English text, not separate translations.
+    try {
+      const rows = await fetchRows('completion_types','select=id,value&limit=1000');
+      completionLabels = new Map(rows.filter(r => r && r.value && Number.isInteger(Number(r.id)))
+        .map(r => [norm(r.value),'completion_type.'+r.id]));
+    } catch (err) {
+      console.warn('[LANG PROD] Completion Types unavailable; trying PROD JSON:',err);
+      try {
+        const response = await fetch('data/completion-types.json?v=TEST-PARITY-PROD-REV10-20261014',{cache:'no-store'});
+        if (!response.ok) throw Error('HTTP '+response.status);
+        const rows = await response.json();
+        if (!Array.isArray(rows)) throw Error('Invalid Completion Type recovery JSON');
+        completionLabels = new Map(rows.filter(r => r && r.value && Number.isInteger(Number(r.id)))
+          .map(r => [norm(r.value),'completion_type.'+r.id]));
+      } catch (jsonError) {console.warn('[LANG PROD] Completion Type recovery unavailable; English fallback:',jsonError);}
+    }
+    for (const [englishValue,key] of completionLabels) addEnglish(key,englishValue);
     lookup = englishByText();
     let rows = [];
     try {rows = await fetchRows('site_languages','select=code,native_name,english_name,enabled,sort_order&order=sort_order.asc');}
     catch (e) {
       console.warn('[LANG PROD] Language registry unavailable; trying PROD JSON:',e);
       try {
-        const response=await fetch('data/languages.json?v=LANG-REV14',{cache:'no-store'});
+        const response=await fetch('data/languages.json?v=TEST-PARITY-PROD-REV10-20261014',{cache:'no-store'});
         if(!response.ok)throw Error('HTTP '+response.status);
         rows=await response.json();
         if(!Array.isArray(rows))throw Error('Invalid language registry JSON');
