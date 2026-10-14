@@ -3,9 +3,9 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic.js";
 import { initTestContentControl } from "./admin-test-content.js";
-import { initAdminPageModal } from "./admin-page-modal.js?v=LANGUAGE-PARITY-20261011A";
+import { initAdminPageModal } from "./admin-page-modal.js?v=COMPLETION-TYPES-PROD-REV02";
 import { initDataSourceControl, loadDataSourceStatus, verifyProdDatabaseIdentity } from "./admin-data-source.js?v=20260924-prod-db-recovery-rev02";
-import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions } from "./admin-game-management.js?v=LANGUAGES-PROD-20261011";
+import { initGameManagement, loadGamesProd, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management.js?v=COMPLETION-TYPES-PROD-REV02";
 import { initRecentRefresh } from "./admin-recent-refresh.js?v=recent-refresh-prod-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search.js?v=devpub-search-prod-rev01";
@@ -77,6 +77,16 @@ window.addEventListener("quality-badges-modal-closed",()=>{
   loadQualityBadges().catch(error=>console.error("Quality badge close refresh failed:",error));
 });
 
+
+window.addEventListener("message",event=>{
+  if(event.origin!==window.location.origin||event.data?.type!=="completion-types-updated")return;
+  loadCompletionTypeOptions().catch(console.error);
+  loadGamesProd().catch(console.error);
+});
+window.addEventListener("completion-types-modal-closed",()=>{
+  loadCompletionTypeOptions().catch(console.error);
+  loadGamesProd().catch(console.error);
+});
 
 await setPersistence(auth,browserLocalPersistence);
 onAuthStateChanged(auth,user=>user?loggedIn():loggedOut());
