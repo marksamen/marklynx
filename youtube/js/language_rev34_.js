@@ -305,7 +305,7 @@
   const start = async () => {
     insertSelector();
     try {
-      const response = await fetch('data/language-english_.json?v=LANG-REV12',{cache:'no-store'});
+      const response = await fetch('data/language-english_.json?v=CT-LABEL-TEST-REV05',{cache:'no-store'});
       if (!response.ok) throw Error('English inventory HTTP ' + response.status);
       Object.entries(await response.json()).forEach(([k,v]) => addEnglish(k,v));
     } catch (e) {console.warn('[LANG TEST] English inventory unavailable:',e);}
