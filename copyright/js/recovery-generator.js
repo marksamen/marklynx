@@ -78,16 +78,6 @@ async function fetchPublicDeveloperRecoveryData(){
   };
 }
 
-async function fetchCompletionTypeRecoveryData(){
-  const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/completion_types?select=id,value&order=value.asc`,{
-    headers:{apikey:SUPABASE_PROD_PUBLISHABLE_KEY},cache:'no-store'
-  });
-  if(!response.ok)throw new Error(`Completion Type recovery read failed (${response.status}).`);
-  const rows=await response.json();
-  if(!Array.isArray(rows))throw new Error('Completion Type recovery returned invalid data.');
-  return rows.map(row=>({id:Number(row.id),value:String(row.value||'').trim()})).filter(row=>Number.isInteger(row.id)&&row.id>0&&row.value);
-}
-
 function downloadJsonFile(filename,data){
   const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
   const url=URL.createObjectURL(blob);
@@ -121,8 +111,8 @@ async function fetchLanguageRecoveryData(user){
 }
 export async function generateAllRecoveryFiles(user){
   // Fetch and validate EVERYTHING before starting any download.
-  const [games,publicDeveloperData,qualityBadgeData,languageData,completionTypeData]=await Promise.all([
-    fetchAllSupabaseProdGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user),fetchCompletionTypeRecoveryData()
+  const [games,publicDeveloperData,qualityBadgeData,languageData]=await Promise.all([
+    fetchAllSupabaseProdGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user)
   ]);
   if(!games.length)throw Error('Supabase PROD returned zero games.');
   if(!languageData.languages.length)throw Error('Language registry returned no rows.');
@@ -130,7 +120,6 @@ export async function generateAllRecoveryFiles(user){
     ['games.json',games.map(cleanGameForJson)],
     ['public-developer-data.json',publicDeveloperData],
     ['quality-badges.json',qualityBadgeData],
-    ['completion-types.json',completionTypeData],
     ['languages.json',languageData.languages],
     ['translations.json',languageData.translations]
   ];
