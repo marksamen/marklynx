@@ -1,4 +1,4 @@
-import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=LANGUAGES-REV14";
+import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=COMPLETION-TRANSLATIONS-TEST-REV03";
 let auth = null;
 let verifyTestDatabaseIdentity = null;
 
