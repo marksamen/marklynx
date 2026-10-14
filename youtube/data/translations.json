@@ -1,5 +1,6 @@
 {
   "es": {
+    "completion_type.1": "Perfil de 5 estrellas",
     "developer.4k": "Cobertura en 4K",
     "developer.complete_guides": "Guías Completas de Juegos",
     "developer.confirmation": "Se ha enviado una confirmación a tu correo electrónico. Espera de 2 a 3 días hábiles para recibir una respuesta.",
@@ -50,6 +51,7 @@
     "footer.rights": "Todos los Derechos Reservados.",
     "footer.tagline": "Mark Lynx Gaming Network · 100% Guías Completas, Guías de Logros y Speedruns",
     "footer.total_videos": "Videos Totales",
+    "game.completion_type_label": "Tipo de finalización",
     "game.genre": "GÉNERO",
     "game.hour": "Hora",
     "game.hours": "Horas",
@@ -147,6 +149,7 @@
     "view.list": "Lista"
   },
   "pt": {
+    "completion_type.1": "Perfil de 5 estrelas",
     "developer.4k": "Cobertura em 4K",
     "developer.complete_guides": "Guias completos de jogos",
     "developer.confirmation": "Foi enviada uma confirmação para o seu endereço de e-mail. Aguarde 2 a 3 dias úteis por uma resposta.",
@@ -197,6 +200,7 @@
     "footer.rights": "Todos os direitos reservados.",
     "footer.tagline": "Mark Lynx Gaming Network · 100% Soluções completas, Guias de conquistas e Speedruns",
     "footer.total_videos": "Total de vídeos",
+    "game.completion_type_label": "Tipo de conclusão",
     "game.genre": "GÉNERO",
     "game.hour": "Hora",
     "game.hours": "Horas",
