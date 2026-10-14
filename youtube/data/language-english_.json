@@ -104,5 +104,6 @@
   "footer.total_videos": "Total Videos",
   "footer.tagline": "Mark Lynx Gaming Network · 100% Walkthroughs, Achievement Guides & Speed Runs",
   "footer.rights": "All Rights Reserved.",
-  "playlist.badge": "Playlist"
+  "playlist.badge": "Playlist",
+  "game.completion_type_label": "Completion Type"
 }
