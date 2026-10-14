@@ -4740,3 +4740,16 @@ body.suggest-modal-open{overflow:hidden}
     box-sizing:border-box;
   }
 }
+
+/* TEST REV01 — Desktop Normal GRID Completion Type: contain long translations.
+   Desktop pointer only; mobile/Safari and LIST remain unchanged. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    flex-wrap:wrap;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
