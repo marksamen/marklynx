@@ -1,4 +1,4 @@
-/* TEST ONLY - diagnostic overlay, no layout changes. COMPLETION TYPES REV23 */
+/* TEST ONLY - diagnostic overlay, no layout changes. COMPLETION TYPES REV24 */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
@@ -8,60 +8,65 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='TEST REV23 · COMPLETION TYPES · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+  var label=document.createElement('span'); label.textContent='TEST REV24 · COMPLETION TYPES · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
-  head.appendChild(label);head.appendChild(btn);
+  head.appendChild(label);
+  var refreshBtn=document.createElement('button');refreshBtn.type='button';refreshBtn.textContent='Inspect';
+  refreshBtn.style.cssText=btn.style.cssText;
+  head.appendChild(refreshBtn);head.appendChild(btn);
   var body=document.createElement('div');
   panel.appendChild(head);panel.appendChild(body);
   var minimized=false;
   btn.addEventListener('click',function(){minimized=!minimized;body.hidden=minimized;btn.textContent=minimized?'Show':'Hide';});
   function width(sel){var el=document.querySelector(sel);if(!el)return 'NOT FOUND';var r=el.getBoundingClientRect();var c=getComputedStyle(el);return Math.round(r.width)+'px / scroll '+el.scrollWidth+' / display '+c.display+' / grid '+c.gridTemplateColumns;}
-  function render(){
-    var v=window.visualViewport;
-    var styles=Array.from(document.styleSheets).filter(function(s){return (s.href||'').indexOf('styles_.css')>=0;});
-    var css=styles.map(function(s){return s.href.split('?')[1]||'no query';}).join(', ')||'NOT FOUND';
-    var viewport=document.querySelector('meta[name="viewport"]');
-    var normalPlatform=document.querySelector('#resultsList .list-row .list-sub');
-    var np=normalPlatform?getComputedStyle(normalPlatform):null;
-    var nr=normalPlatform?normalPlatform.getBoundingClientRect():null;
-    var kinect=document.querySelector('#resultsGrid .card .kinect-badge');
-    var lines=[
-      'innerWidth: '+innerWidth+' / innerHeight: '+innerHeight,
-      'html.clientWidth: '+document.documentElement.clientWidth,
-      'visual: '+(v?Math.round(v.width*10)/10+' x '+Math.round(v.height*10)/10+' scale '+v.scale:'N/A'),
-      'screen: '+screen.width+' x '+screen.height+' DPR '+devicePixelRatio,
-      'landscape: '+matchMedia('(orientation: landscape)').matches,
-      '>=901px: '+matchMedia('(min-width:901px)').matches,
-      '<=900px: '+matchMedia('(max-width:900px)').matches,
-      'document.scrollWidth: '+document.documentElement.scrollWidth,
-      'body.scrollWidth: '+document.body.scrollWidth,
-      'viewport meta: '+(viewport?viewport.content:'MISSING'),
-      'styles CSS: '+css,
-      'Recent section: '+width('.recent-uploads'),
-      'Recent inner: '+width('.recent-uploads-inner'),
-      'Recent grid: '+width('.recent-uploads-grid'),
-      'Recent card: '+width('.recent-upload-card'),
-      'Recent title: '+width('.recent-upload-title'),
-      'Recent GS: '+width('.recent-upload-meta.gs'),
-      'Recent quality: '+width('.recent-upload-meta.quality'),
-      'Normal LIST: '+width('#resultsList'),
-      'Normal LIST row: '+width('#resultsList .list-row'),
-      'Normal platform found: '+!!normalPlatform,
-      'Normal platform classes: '+(normalPlatform?normalPlatform.className:'N/A'),
-      'Normal platform CSS: '+(np?('display='+np.display+' border='+np.borderTopWidth+'/'+np.borderTopStyle+' padding='+np.padding+' font='+np.fontSize+' whiteSpace='+np.whiteSpace+' wrap='+np.overflowWrap+' width='+Math.round(nr.width)):'N/A'),
-      'Normal platform text: '+(normalPlatform?normalPlatform.textContent.trim().slice(0,90):'N/A'),
-      'Normal GRID Kinect: '+(kinect?('radius='+getComputedStyle(kinect).borderRadius+' / text='+kinect.textContent.trim()):'NOT FOUND'),
-      'Normal grid: '+width('#resultsGrid'),
-      'Normal card: '+width('#resultsGrid .card'),
-      'Normal thumb: '+width('#resultsGrid .thumb-wrap')
+  function elementInfo(el){
+    if(!el)return 'MISSING';
+    var c=getComputedStyle(el),r=el.getBoundingClientRect();
+    return 'x='+Math.round(r.x)+' w='+Math.round(r.width)+
+      ' display='+c.display+' visibility='+c.visibility+
+      ' order='+c.order+' gridCol='+c.gridColumn+
+      ' position='+c.position+' margin='+c.marginLeft+'/'+c.marginRight+
+      ' text='+JSON.stringify(el.textContent.trim().slice(0,45));
+  }
+  function inspectRow(row,title){
+    if(!row)return [title+': ROW NOT FOUND'];
+    var c=getComputedStyle(row),r=row.getBoundingClientRect();
+    var lines=[title+' ROW x='+Math.round(r.x)+' w='+Math.round(r.width)+
+      ' display='+c.display+' justify='+c.justifyContent+
+      ' gap='+c.columnGap+' grid='+c.gridTemplateColumns];
+    var selectors=[
+      ['Gamerscore','.list-col.gs'],
+      ['Completion','.completion-type-list-desktop'],
+      ['Genre','.list-col.type'],
+      ['Time','.list-col.time'],
+      ['Difficulty','.list-col.diff'],
+      ['Quality','.list-col.quality']
     ];
+    selectors.forEach(function(entry){lines.push('  '+entry[0]+': '+elementInfo(row.querySelector(entry[1])));});
+    return lines;
+  }
+  function render(){
+    var rows=Array.from(document.querySelectorAll('#resultsList .list-row'));
+    var mario=rows.find(function(r){return /New Super Mario Bros/i.test(r.textContent);});
+    var test=rows.find(function(r){return /TEST VIDEO 1080p/i.test(r.textContent);});
+    var xbox=rows.find(function(r){return r.querySelector('.list-col.gs');});
+    var lines=[
+      'REV24 LIST INSPECTOR (manual snapshot)',
+      'width='+innerWidth+' fine='+matchMedia('(pointer:fine)').matches+
+      ' hover='+matchMedia('(hover:hover)').matches,
+      'rows currently rendered='+rows.length,
+      'Normal LIST display='+getComputedStyle(document.querySelector('#resultsList')||document.body).display
+    ];
+    lines=lines.concat(inspectRow(mario,'MARIO'),inspectRow(test,'TEST VIDEO 1080p'),inspectRow(xbox,'XBOX SAMPLE'));
+    if(!mario&&!test)lines.push('Search for Mario or TEST VIDEO 1080p, then click Inspect.');
     body.textContent=lines.join('\n');
   }
+  refreshBtn.addEventListener('click',render);
   function mount(){if(!document.body)return;document.body.appendChild(panel);render();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
   window.addEventListener('resize',render);
   window.addEventListener('orientationchange',render);
   if(window.visualViewport)window.visualViewport.addEventListener('resize',render);
-  setInterval(render,1500);
+  // No timer or mutation observer: diagnostic runs only on load, resize or Inspect.
 })();
