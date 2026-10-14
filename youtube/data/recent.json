@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-13T16:02:31.416333+00:00",
+  "updated": "2026-10-14T13:45:42.233399+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "KEgXtEaT79s",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Spinning Spirit House | No Star Coins | Normal",
+      "published": "2026-10-13T18:41:21+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/KEgXtEaT79s/hqdefault.jpg"
+    },
     {
       "id": "1zCvcWp8fyM",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Spinning Spirit House | All Star Coins | Secret",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines | Roy's Conveyor Castle | All Star Coins",
       "published": "2026-10-07T16:04:58+00:00",
       "thumbnail": "https://i.ytimg.com/vi/2dGJ8MqoGtE/hqdefault.jpg"
-    },
-    {
-      "id": "YBYJzh4PQXw",
-      "title": "New Super Mario Bros. U Deluxe | Rock Candy Mines 7 | Shifting Floor Cave | All Star Coins",
-      "published": "2026-10-06T14:58:37+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/YBYJzh4PQXw/hqdefault.jpg"
     }
   ]
 }
