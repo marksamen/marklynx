@@ -144,7 +144,9 @@
     "filter.text_guide_included": "Guía de Texto Incluida",
     "developer.provided_by_template": "Proporcionado por {developer}",
     "game.under_template": "Menos de {duration}",
-    "game.recompletion_template": "{duration} de Repetición"
+    "game.recompletion_template": "{duration} de Repetición",
+    "game.completion_type": "Tipo de finalización",
+    "completion_type.5_star_profile": "Perfil de 5 estrellas"
   },
   "pt": {
     "filter.quick_filters": "Filtros rápidos",
@@ -291,6 +293,8 @@
     "filter.text_guide_included": "Guia de texto incluído",
     "developer.provided_by_template": "Fornecido por {developer}",
     "game.under_template": "Menos de {duration}",
-    "game.recompletion_template": "{duration} para repetir"
+    "game.recompletion_template": "{duration} para repetir",
+    "game.completion_type": "Tipo de conclusão",
+    "completion_type.5_star_profile": "Perfil de 5 estrelas"
   }
 }
