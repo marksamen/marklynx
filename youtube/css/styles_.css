@@ -4533,3 +4533,16 @@ body.suggest-modal-open{overflow:hidden}
     font-size:9px;line-height:1.15;
   }
 }
+
+/* COMPLETION TYPES TEST REV27 - Desktop Normal LIST Xbox Gamerscore badge only.
+   Match the approved green Xbox badge in Recent Uploads. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  #resultsList .list-row > .list-col.gs{
+    border:1px solid #107C10;
+    background:#e4f3e4;
+    color:#194f19;
+    border-radius:5px;
+    padding:3px 7px;
+    font-weight:900;
+  }
+}

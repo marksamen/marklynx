@@ -621,3 +621,14 @@ html[data-theme="bright"] #siteLanguageSelect {
     color:#8b211c !important;
   }
 }
+
+/* COMPLETION TYPES TEST REV27 - Bright Desktop Normal LIST Xbox badge. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  html[data-theme="bright"] #resultsList .list-row > .list-col.gs{
+    background:#d7e9d6 !important;
+    border-color:#107C10 !important;
+    color:#174c17 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+}
