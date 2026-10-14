@@ -1,4 +1,4 @@
-// PROD recovery generator for main Admin and Language Management.
+// PROD REV10: one recovery generator for main Admin and Language Management.
 const SUPABASE_PROD_URL="https://igmunmyxaskizltdvvti.supabase.co";
 const SUPABASE_PROD_PUBLISHABLE_KEY="sb_publishable_FwiOj7IyowVx1pvzwXx-Rw_QN_QFRdE";
 const GAME_EXPORT_FIELDS=["id","n","p","g","t","completion_type","ty","tx","q","df","u","v","pl","kinect","adult","testContent","always_show_recent","developer_1","developer_2","developer_3","developer_4","developer_5","publisher_1","publisher_2","publisher_3"];
@@ -78,6 +78,16 @@ async function fetchPublicDeveloperRecoveryData(){
   };
 }
 
+async function fetchCompletionTypeRecoveryData(){
+  const response=await fetch(`${SUPABASE_PROD_URL}/rest/v1/completion_types?select=id,value&order=value.asc`,{
+    headers:{apikey:SUPABASE_PROD_PUBLISHABLE_KEY},cache:'no-store'
+  });
+  if(!response.ok)throw new Error(`Completion Type recovery read failed (${response.status}).`);
+  const rows=await response.json();
+  if(!Array.isArray(rows))throw new Error('Completion Type recovery returned invalid data.');
+  return rows.map(row=>({id:Number(row.id),value:String(row.value||'').trim()})).filter(row=>Number.isInteger(row.id)&&row.id>0&&row.value);
+}
+
 function downloadJsonFile(filename,data){
   const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
   const url=URL.createObjectURL(blob);
@@ -111,8 +121,8 @@ async function fetchLanguageRecoveryData(user){
 }
 export async function generateAllRecoveryFiles(user){
   // Fetch and validate EVERYTHING before starting any download.
-  const [games,publicDeveloperData,qualityBadgeData,languageData]=await Promise.all([
-    fetchAllSupabaseProdGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user)
+  const [games,publicDeveloperData,qualityBadgeData,languageData,completionTypeData]=await Promise.all([
+    fetchAllSupabaseProdGames(),fetchPublicDeveloperRecoveryData(),fetchQualityBadgeRecoveryData(),fetchLanguageRecoveryData(user),fetchCompletionTypeRecoveryData()
   ]);
   if(!games.length)throw Error('Supabase PROD returned zero games.');
   if(!languageData.languages.length)throw Error('Language registry returned no rows.');
@@ -120,6 +130,7 @@ export async function generateAllRecoveryFiles(user){
     ['games.json',games.map(cleanGameForJson)],
     ['public-developer-data.json',publicDeveloperData],
     ['quality-badges.json',qualityBadgeData],
+    ['completion-types.json',completionTypeData],
     ['languages.json',languageData.languages],
     ['translations.json',languageData.translations]
   ];
