@@ -290,19 +290,6 @@
         } catch (jsonError) {console.warn('[LANG TEST] Translation recovery unavailable; English fallback:',jsonError);}
       }
     }
-    // REV42: new Completion Type labels are present in TEST recovery JSON even
-    // before their optional Supabase translation rows have been synchronized.
-    if (language !== 'en') {
-      try {
-        const response = await fetch('data/translations_.json?v=COMPLETION-LANG-TEST-REV42',{cache:'no-store'});
-        if (response.ok) {
-          const supplemental = (await response.json())[language] || {};
-          for (const key of ['game.completion_type','completion_type.5_star_profile']) {
-            if (!translations[key] && supplemental[key]) translations[key] = supplemental[key];
-          }
-        }
-      } catch (err) { console.warn('[LANG TEST] Completion label fallback unavailable:',err); }
-    }
     label.textContent = getTranslation('selector.language', 'Language');
     apply();
   };
