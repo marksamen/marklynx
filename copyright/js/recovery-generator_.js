@@ -79,13 +79,13 @@ async function fetchPublicDeveloperRecoveryData(){
 }
 
 async function fetchCompletionTypeRecoveryData(){
-  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/completion_types?select=value,es_es,pt_pt&order=value.asc`,{
+  const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/completion_types?select=id,value&order=value.asc`,{
     headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},cache:'no-store'
   });
   if(!response.ok)throw new Error(`Completion Type recovery read failed (${response.status}).`);
   const rows=await response.json();
   if(!Array.isArray(rows))throw new Error('Completion Type recovery returned invalid data.');
-  return rows.map(row=>({value:String(row.value||'').trim(),es_es:row.es_es||null,pt_pt:row.pt_pt||null})).filter(row=>row.value);
+  return rows.map(row=>({id:Number(row.id),value:String(row.value||'').trim()})).filter(row=>Number.isInteger(row.id)&&row.id>0&&row.value);
 }
 
 function downloadJsonFile(filename,data){

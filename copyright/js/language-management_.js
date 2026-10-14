@@ -1,4 +1,4 @@
-import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=COMPLETION-TRANSLATIONS-TEST-REV03";
+import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=CT-LANGUAGE-TEST-REV04";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
 import {inventory} from './translation-inventory_.js?v=LANGUAGE-STATS-REV06';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
@@ -24,7 +24,7 @@ let editingTranslation=false;
 function setEditMode(editing){editingTranslation=editing;el('value').readOnly=!editing;el('value').classList.toggle('translation-locked',!editing);el('editTranslation').hidden=editing;el('saveTranslation').hidden=!editing;el('cancelTranslation').hidden=!editing;}
 function setEnglish(key){el('key').value=key||'';const t=cache.translations.find(t=>t.language_code===el('translationLanguage').value&&t.translation_key===key);el('value').value=t?.translated_text||'';setEditMode(false);el('editTranslation').disabled=!key;}
 function sectionItems(section){
-  const sources={'Genres':['genre_options','genre.'],'Platforms':['platform_options','platform.'],'Text Guides':['text_guide_options','text_guide.']};
+  const sources={'Genres':['genre_options','genre.'],'Platforms':['platform_options','platform.'],'Text Guides':['text_guide_options','text_guide.'],'Completion Types':['completion_types','completion_type.']};
   if(!sources[section])return inventory[section]||{};
   const [table,prefix]=sources[section];const entries={};
   for(const row of managedOptions[table]||[])entries[prefix+row.id]=row.value;
@@ -32,8 +32,8 @@ function sectionItems(section){
 }
 function populateEnglish(wanted){const box=el('englishText');box.replaceChildren();for(const [key,english] of Object.entries(sectionItems(el('section').value))){const o=node('option',english);o.value=key;box.append(o);}if(wanted&&[...box.options].some(x=>x.value===wanted))box.value=wanted;setEnglish(box.value);}
 
-function findKey(key){for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){if(Object.hasOwn(sectionItems(section),key)){el('section').value=section;populateEnglish(key);return true;}}return false;}
-for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){const o=node('option',section);o.value=section;el('section').append(o);}el('section').onchange=()=>populateEnglish();el('englishText').onchange=()=>setEnglish(el('englishText').value);populateEnglish();
+function findKey(key){for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides','Completion Types']){if(Object.hasOwn(sectionItems(section),key)){el('section').value=section;populateEnglish(key);return true;}}return false;}
+for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides','Completion Types']){const o=node('option',section);o.value=section;el('section').append(o);}el('section').onchange=()=>populateEnglish();el('englishText').onchange=()=>setEnglish(el('englishText').value);populateEnglish();
 function displayNative(value){const text=String(value||'');return text?text.charAt(0).toLocaleUpperCase()+text.slice(1):text;}
 function render(){const list=el('languages');list.replaceChildren();const select=el('translationLanguage');const selected=select.value;select.replaceChildren();for(const lang of cache.languages){const row=node('div','');row.className='language';const desc=node('span',`${lang.english_name} (${displayNative(lang.native_name)})`);const state=node('span',lang.enabled?'ENABLED':'DISABLED');state.className='language-status '+(lang.enabled?'language-status-enabled':'language-status-disabled');const info=node('div','');info.className='language-info';info.append(desc,state);const controls=node('div','');const edit=node('button','Edit');edit.onclick=()=>{if(!registry.some(x=>x.code===lang.code)){status('Language not in registry; cannot edit from this selector.',true);return;}el('languageChoice').value=lang.code;languageFields();el('sort').value=lang.sort_order;};const toggle=node('button',lang.enabled?'Disable':'Enable');toggle.onclick=()=>confirmAction(`${lang.enabled?'Disable':'Enable'} ${lang.english_name}?`,lang.enabled?'Temporarily hide this language. Saved translations and visitor preferences remain intact.':'Make this language available to visitors? Confirm translations are ready.',async()=>{await call('set-enabled',{code:lang.code,enabled:!lang.enabled});await reload();status('Saved in Supabase. Export and publish recovery JSON to synchronize fallback.');});controls.append(edit,toggle);row.append(info,controls);list.append(row);const opt=node('option',`${lang.english_name} (${lang.code})`);opt.value=lang.code;select.append(opt);}if([...select.options].some(o=>o.value===selected))select.value=selected;setEnglish(el('englishText').value);}
 // REV07: translation entries are accessed through Section and English Text selectors only.
@@ -41,7 +41,7 @@ function render(){const list=el('languages');list.replaceChildren();const select
 
 function renderTranslationStatistics(){
   const root=new Map();
-  for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides']){
+  for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides','Completion Types']){
     for(const [key,english] of Object.entries(sectionItems(section)))root.set(key,english);
   }
   const expected=[...root.keys()].sort();
@@ -108,7 +108,7 @@ el('importTranslations').onclick=()=>perform(async()=>{
   if(!code||!strings||Array.isArray(strings)||typeof strings!=='object')throw Error('Invalid translation file.');
   if(!cache.languages.some(x=>x.code===code))throw Error('Add '+code+' in Language Management before importing.');
   const valid=new Set(Object.keys(inventory).flatMap(section=>Object.keys(inventory[section])));
-  for(const section of ['Genres','Platforms','Text Guides'])for(const key of Object.keys(sectionItems(section)))valid.add(key);
+  for(const section of ['Genres','Platforms','Text Guides','Completion Types'])for(const key of Object.keys(sectionItems(section)))valid.add(key);
   const entries=Object.entries(strings);
   if(!entries.length)throw Error('Translation file is empty.');
   for(const [key,value] of entries){
