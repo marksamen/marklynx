@@ -4605,3 +4605,18 @@ body.suggest-modal-open{overflow:hidden}
      offsetting the word. Hide only that icon on Desktop Normal GRID. */
   #resultsGrid .card .thumb-wrap .playlist-pill svg { display:none; }
 }
+
+/* TEST REV31 - Desktop Normal GRID age badge text centering only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsGrid .card .thumb-wrap .adult-pill {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+    min-height:22px;
+    padding:3px 7px;
+    line-height:1;
+    text-align:center;
+    white-space:nowrap;
+  }
+}
