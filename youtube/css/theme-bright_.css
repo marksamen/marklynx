@@ -632,3 +632,13 @@ html[data-theme="bright"] #siteLanguageSelect {
     text-shadow:none !important;
   }
 }
+
+/* REV28 TEST - Match soft red on Bright desktop LIST only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type,
+  html[data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop{
+    background:#f4d9d9 !important;
+    border-color:#b76b6b !important;
+    color:#842525 !important;
+  }
+}
