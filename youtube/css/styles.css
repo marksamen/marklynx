@@ -4753,3 +4753,30 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+/* TEST REV03 — Desktop NORMAL GRID time badge: contain translated Recompletion.
+   Match the existing Completion Type containment; do not affect LIST or touch/mobile. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  #resultsGrid .card-meta .game-meta-pill.time-meta{
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    flex-wrap:wrap;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
+
+/* TEST REV04 — Mobile Landscape NORMAL GRID Completion Time/Recompletion containment.
+   Touch devices on both sides of the 900/901px breakpoint; Desktop, Portrait,
+   LIST and RECENT are intentionally excluded. */
+@media (orientation:landscape) and (max-height:900px) and (hover:none) and (pointer:coarse){
+  #resultsGrid .card-meta .game-meta-pill.time-meta{
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    flex-wrap:wrap;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
