@@ -1,6 +1,7 @@
 // REV09: English display labels verified against TEST public source. English remains in its original source.
 export const inventory={
   "Main": {
+    "playlist.badge": "Playlist",
     "game.completion_type_label": "Completion Type",
     "selector.language": "Language",
     "filter.text_guide_included": "Text Guide Included",
