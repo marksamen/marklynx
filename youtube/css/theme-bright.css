@@ -538,3 +538,122 @@ html[data-theme="bright"] #siteLanguageSelect {
   color: #20201e !important;
   border-color: #96908d !important;
 }
+
+/* COMPLETION TYPES TEST REV05 — Bright Recent paint ONLY.
+   Overrides earlier generic bright .gs !important rules without changing any
+   Normal Videos or other badge. Dark styling stays in styles_.css. */
+@media (min-width:901px){
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.gs{
+    background:#d6e7d6 !important;
+    border-color:#107C10 !important;
+    color:#174c17 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type{
+    background:#efd9d6 !important;
+    border-color:#E52521 !important;
+    color:#74211d !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label{
+    color:#205b20 !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label{
+    color:#92241f !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value{
+    color:#74211d !important;
+  }
+}
+
+/* COMPLETION TYPES TEST REV10 — Normal Videos Portrait GRID Bright only.
+   Use the same palette as the approved Genre/Time info bars. */
+@media (max-width:900px) and (orientation:portrait){
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    background:#c9c9c5 !important;
+    border-color:#666660 !important;
+    color:#20201e !important;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{
+    color:#8b211c !important;
+  }
+}
+
+/* COMPLETION TYPES TEST REV11 — Bright Normal Videos mobile LANDSCAPE GRID paint only. */
+@media (orientation:landscape) and (pointer:coarse){
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta{
+    background:#c9c9c5 !important;
+    border-color:#666660 !important;
+    color:#20201e !important;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label{color:#8b211c !important;}
+}
+
+/* COMPLETION TYPES TEST REV15 — Bright NORMAL LIST at desktop/wide landscape only. */
+@media (min-width:901px){
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta{
+    background:#e5e5e1;
+    border-color:#686862;
+    color:#20201e;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta .game-meta-label{
+    color:#8b211c;
+  }
+}
+
+
+/* COMPLETION TYPES TEST REV16 — mobile Normal LIST Bright matches GRID. */
+@media (max-width:900px), (orientation:landscape) and (pointer:coarse){
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta{
+    background:#c9c9c5 !important;
+    border-color:#666660 !important;
+    color:#20201e !important;
+    box-shadow:none !important;
+  }
+  html[data-theme="bright"] #resultsList .list-row .completion-type-meta .game-meta-label{
+    color:#8b211c !important;
+  }
+}
+
+/* COMPLETION TYPES TEST REV27 - Bright Desktop Normal LIST Xbox badge. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  html[data-theme="bright"] #resultsList .list-row > .list-col.gs{
+    background:#d7e9d6 !important;
+    border-color:#107C10 !important;
+    color:#174c17 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+}
+
+/* REV28 TEST - Match soft red on Bright desktop LIST only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type,
+  html[data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop{
+    background:#f4d9d9 !important;
+    border-color:#b76b6b !important;
+    color:#842525 !important;
+  }
+}
+
+/* TEST REV29: preserve gold Playlist thumbnail pill in Bright desktop GRID. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-theme="bright"] .card .thumb-wrap .playlist-pill {
+    background:#D7B34C; border-color:#A77B18; color:#302200;
+  }
+}
+
+/* COMPLETION TYPES TEST REV32 - Ensure white 18+ text on Bright GRID. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-theme="bright"] #resultsGrid .card .thumb-wrap .adult-pill {
+    color:#fff !important;
+    text-shadow:none !important;
+  }
+}
