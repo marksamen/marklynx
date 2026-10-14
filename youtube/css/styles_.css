@@ -4563,3 +4563,18 @@ body.suggest-modal-open{overflow:hidden}
     color:#842525 !important;
   }
 }
+
+/* TEST REV29: desktop GRID thumbnail Playlist pill only. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  .card .thumb-wrap .playlist-pill {
+    display:inline-flex; align-items:center; justify-content:center;
+    box-sizing:border-box; line-height:1; min-height:21px;
+    gap:4px; padding:3px 7px;
+    background:#D7B34C; border:1px solid #A77B18; color:#302200;
+    font-weight:800; text-shadow:none;
+  }
+  .card .thumb-wrap .playlist-pill svg {
+    display:block; width:10px; height:10px; flex:0 0 10px;
+    fill:currentColor;
+  }
+}

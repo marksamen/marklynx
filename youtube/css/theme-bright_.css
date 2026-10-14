@@ -642,3 +642,10 @@ html[data-theme="bright"] #siteLanguageSelect {
     color:#842525 !important;
   }
 }
+
+/* TEST REV29: preserve gold Playlist thumbnail pill in Bright desktop GRID. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-theme="bright"] .card .thumb-wrap .playlist-pill {
+    background:#D7B34C; border-color:#A77B18; color:#302200;
+  }
+}
