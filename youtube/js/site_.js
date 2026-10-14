@@ -288,7 +288,7 @@ function cardHtml(r){
           <div class="card-meta">
         <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
         <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-        <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+        <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
         <span class="game-meta-quality">${qualityBadge(r.q)}</span>
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
@@ -297,6 +297,16 @@ function cardHtml(r){
       </div>
     </span>
   </${tag}>`;
+}
+
+// TEST REV01: derive the visible Recompletion suffix from the existing Update flag.
+// Leave source records untouched; legacy time suffixes remain readable.
+function displayedCompletionTime(r){
+  const original = String(r.t || '').trim();
+  if (!original) return '—';
+  const base = original.replace(/(?:\s+Recompletion)+\s*$/i, '').trim();
+  const updated = /\s+Update$/i.test(String(r.g || ''));
+  return updated ? `${base} Recompletion` : original;
 }
 
 function listRowHtml(r){
@@ -322,13 +332,13 @@ function listRowHtml(r){
       ${completionTypeBadge(r)}
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
       </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
       ${(r.kinect || hasTextGuide(r.tx) || isDeveloperProvided(r)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}${developerProvidedBadge(r)}</div>` : ''}
     </span>
     <span class="list-col type game-meta-pill list-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-    <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+    <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
     ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : (r.completion_type ? `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '')}
