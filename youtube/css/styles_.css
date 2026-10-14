@@ -4633,3 +4633,141 @@ body.suggest-modal-open{overflow:hidden}
     text-shadow:none;
   }
 }
+
+/* TEST REV34 — Language selector sizing across desktop, Android and iPhone. */
+#siteLanguageControl { gap:8px; }
+#siteLanguageControl label { font-size:15px !important; line-height:1.25; }
+#siteLanguageControl #siteLanguageSelect {
+  font-size:15px !important;
+  min-height:36px;
+  box-sizing:border-box;
+}
+#siteLanguageControl img {
+  width:39px !important;
+  height:27px !important;
+  object-fit:contain !important;
+  border-radius:2px;
+}
+@media (max-width:600px) {
+  #siteLanguageControl { gap:6px; }
+  #siteLanguageControl label { font-size:14px !important; }
+  #siteLanguageControl #siteLanguageSelect { font-size:14px !important; min-height:34px; }
+  #siteLanguageControl img { width:30px !important; height:21px !important; }
+}
+
+/* TEST REV37 — Mobile landscape flag sizing only.
+   REV36 portrait is already approved; desktop remains unchanged. */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:600px) {
+  #siteLanguageControl img { width:30px !important; height:21px !important; }
+}
+
+/* COMPLETION TYPES TEST REV38 — Desktop Normal LIST only.
+   Match the Xbox Gamerscore badge typography/box; retain Completion Type red.
+   Do not alter Recent, GRID, mobile or stored Completion Type values. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsList .list-row > .completion-type-list-desktop {
+    min-height:0;
+    padding:3px 7px;
+    border-radius:5px;
+    font-size:inherit;
+    font-weight:900;
+    line-height:normal;
+    letter-spacing:normal;
+    gap:0;
+  }
+  #resultsList .list-row > .completion-type-list-desktop .game-meta-label {
+    display:none!important;
+  }
+}
+
+/* COMPLETION TYPES TEST REV39 — Desktop Normal LIST only.
+   REV38 used font-size:inherit (13px parent), while Xbox Gamerscore
+   explicitly uses 12px. Match its font and retain REV38 label hiding. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsList .list-row > .completion-type-list-desktop {
+    font-size:12px;
+    font-weight:900;
+    line-height:normal;
+    letter-spacing:.02em;
+    padding:3px 7px;
+    min-height:0;
+    border-radius:5px;
+  }
+}
+
+/* TEST REV40 — Normal GRID thumbnail badges only.
+   Adult label moves away from top-right Gamerscore; Playlist stays top-left.
+   Recent GRID and all LIST views intentionally excluded. */
+#resultsGrid .card .thumb-wrap .adult-pill {
+  top:auto; right:auto; bottom:8px; left:8px;
+  display:inline-flex; align-items:center; justify-content:center;
+  box-sizing:border-box; min-height:27px; padding:5px 8px;
+  font-size:12px; font-weight:800; line-height:1.1;
+  color:#fff; text-align:center; white-space:nowrap; text-shadow:none;
+}
+#resultsGrid .card .thumb-wrap .playlist-pill {
+  display:inline-flex; align-items:center; justify-content:center;
+  box-sizing:border-box; min-height:27px; padding:5px 9px;
+  font-size:12px; font-weight:800; line-height:1.1;
+  text-align:center; white-space:nowrap;
+}
+/* Normal GRID: remove decorative playlist icon so text is optically centered. */
+#resultsGrid .card .thumb-wrap .playlist-pill svg { display:none; }
+/* Landscape phones/tablets and portrait phones share the same pill dimensions. */
+@media (hover:none), (pointer:coarse) {
+  #resultsGrid .card .thumb-wrap .adult-pill {
+    top:auto; right:auto; bottom:8px; left:8px;
+    min-height:27px; padding:5px 8px; font-size:12px; color:#fff;
+  }
+  #resultsGrid .card .thumb-wrap .playlist-pill {
+    min-height:27px; padding:5px 9px; font-size:12px;
+  }
+}
+
+/* TEST REV41 — Mobile Normal GRID Playlist pill ONLY.
+   Make Playlist visually comparable to the other thumbnail pills.
+   Desktop, Recent GRID, and all other elements remain unchanged. */
+@media (hover:none), (pointer:coarse) {
+  #resultsGrid .card .thumb-wrap .playlist-pill {
+    min-height:30px;
+    padding:5px 10px;
+    font-size:14px;
+    font-weight:800;
+    line-height:1.1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+  }
+}
+
+/* TEST REV01: Safari touch Landscape Recent LIST ONLY.
+   Uses the already-approved landscape grid; no desktop or portrait geometry edits.
+   Mobile default hides all Recent metadata with !important; selectively restore
+   only completion / Gamerscore on the existing right-hand badge column. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    display:inline-flex !important;
+    grid-column:3; grid-row:1;
+    justify-self:center; align-self:center;
+    align-items:center; justify-content:center;
+    box-sizing:border-box;
+    width:auto; min-width:0; max-width:100%;
+    min-height:22px; height:auto; margin:0; padding:3px 7px;
+    gap:5px; border-radius:6px; border-width:1px; border-style:solid;
+    font-size:10px; line-height:1.15; font-weight:700;
+    white-space:normal; overflow-wrap:break-word; text-align:center;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    border-color:#107C10; background:#e4f3e4; color:#194f19;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type {
+    border-color:#b76b6b; background:#f4d9d9; color:#842525;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-meta-label,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-completion-value {
+    color:inherit; margin:0; font-weight:800;
+  }
+}

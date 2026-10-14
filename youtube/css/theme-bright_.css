@@ -657,3 +657,21 @@ html[data-theme="bright"] #siteLanguageSelect {
     text-shadow:none !important;
   }
 }
+
+/* TEST REV01: Bright Safari touch Landscape Recent LIST badges ONLY.
+   Override the existing global Bright neutral !important metadata paint. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    background:#d6e7d6 !important; border-color:#107C10 !important;
+    color:#174c17 !important; box-shadow:none !important; text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type {
+    background:#f4d9d9 !important; border-color:#b76b6b !important;
+    color:#842525 !important; box-shadow:none !important; text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.gs .recent-meta-label,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-meta-label,
+  html[data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-completion-value {
+    color:inherit !important;
+  }
+}
