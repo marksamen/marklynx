@@ -4578,3 +4578,30 @@ body.suggest-modal-open{overflow:hidden}
     fill:currentColor;
   }
 }
+
+
+/* TEST REV30: Desktop Normal GRID Playlist thumbnail badge matches Gamerscore
+   height/typography, with genuinely centered text. No other layouts affected. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #resultsGrid .card .thumb-wrap .playlist-pill {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
+    top:8px;
+    left:8px;
+    min-height:0;
+    padding:5px 10px;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.1;
+    letter-spacing:.02em;
+    border-radius:20px;
+    white-space:nowrap;
+    text-align:center;
+    gap:0;
+  }
+  /* The existing SVG is a non-visible line-only path; its 10px box was
+     offsetting the word. Hide only that icon on Desktop Normal GRID. */
+  #resultsGrid .card .thumb-wrap .playlist-pill svg { display:none; }
+}
