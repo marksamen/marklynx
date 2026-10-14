@@ -669,6 +669,23 @@ function upgradeRecentCompletionLabels(){
     if(!game) return;
     const completion=String(game.completion_type||'').trim();
     const gamerscore=String(game.g||'').trim();
+    // TEST REV02: Recent is rendered by frozen recent_.js. Update its existing
+    // time metadata in place using the same rule as Normal, without editing source data.
+    const recentTime=card.querySelector('.recent-upload-meta.time');
+    if(recentTime){
+      const desired=displayedCompletionTime(game);
+      const originalTime=String(game.t||'').trim();
+      if(originalTime && desired!=='—'){
+        // Preserve any nested label or styling nodes; change only the text node.
+        const textNodes=Array.from(recentTime.childNodes).filter(n=>n.nodeType===3);
+        const timeText=textNodes.find(n=>n.textContent.trim());
+        if(timeText && timeText.textContent.trim()!==desired){
+          const leading=timeText.textContent.match(/^\s*/)?.[0]||'';
+          const trailing=timeText.textContent.match(/\s*$/)?.[0]||'';
+          timeText.textContent=leading+desired+trailing;
+        }
+      }
+    }
     // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
     const existing=card.querySelector('.recent-upload-meta.gs');
     if(existing && gamerscore){
