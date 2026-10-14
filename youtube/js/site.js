@@ -288,7 +288,7 @@ function cardHtml(r){
           <div class="card-meta">
         <span class="diff-tag"><span class="diff-dot" style="background:${diffColor(r.df)}"></span>${escapeHtml(r.df||'')}</span>
         <span class="game-meta-pill genre-meta"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-        <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+        <span class="game-meta-pill time-meta"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
         <span class="game-meta-quality">${qualityBadge(r.q)}</span>
         ${kinectBadge(r)}
         ${textGuideBadge(r)}
@@ -299,6 +299,15 @@ function cardHtml(r){
   </${tag}>`;
 }
 
+// TEST REV01: derive the visible Recompletion suffix from the existing Update flag.
+// Leave source records untouched; legacy time suffixes remain readable.
+function displayedCompletionTime(r){
+  const original = String(r.t || '').trim();
+  if (!original) return '—';
+  const base = original.replace(/(?:\s+Recompletion)+\s*$/i, '').trim();
+  const updated = /\s+Update$/i.test(String(r.g || ''));
+  return updated ? `${base} Recompletion` : original;
+}
 function listRowHtml(r){
   const isPlaylist = !!r.pl;
   const isAdult = !!r.adult;
@@ -322,13 +331,13 @@ function listRowHtml(r){
       ${completionTypeBadge(r)}
       <div class="mobile-game-meta">
         <span class="game-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+        <span class="game-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
       </div>
       <div class="mobile-quality-badge">${qualityBadge(r.q)}</div>
       ${(r.kinect || hasTextGuide(r.tx) || isDeveloperProvided(r)) ? `<div class="badge-row" style="margin-top:4px;">${kinectBadge(r)}${textGuideBadge(r)}${developerProvidedBadge(r)}</div>` : ''}
     </span>
     <span class="list-col type game-meta-pill list-meta-pill"><span class="game-meta-label">Genre</span>${escapeHtml(r.ty||'—')}</span>
-    <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
+    <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
     ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : (r.completion_type ? `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '')}
@@ -660,6 +669,23 @@ function upgradeRecentCompletionLabels(){
     if(!game) return;
     const completion=String(game.completion_type||'').trim();
     const gamerscore=String(game.g||'').trim();
+    // TEST REV02: Recent is rendered by frozen recent_.js. Update its existing
+    // time metadata in place using the same rule as Normal, without editing source data.
+    const recentTime=card.querySelector('.recent-upload-meta.time');
+    if(recentTime){
+      const desired=displayedCompletionTime(game);
+      const originalTime=String(game.t||'').trim();
+      if(originalTime && desired!=='—'){
+        // Preserve any nested label or styling nodes; change only the text node.
+        const textNodes=Array.from(recentTime.childNodes).filter(n=>n.nodeType===3);
+        const timeText=textNodes.find(n=>n.textContent.trim());
+        if(timeText && timeText.textContent.trim()!==desired){
+          const leading=timeText.textContent.match(/^\s*/)?.[0]||'';
+          const trailing=timeText.textContent.match(/\s*$/)?.[0]||'';
+          timeText.textContent=leading+desired+trailing;
+        }
+      }
+    }
     // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
     const existing=card.querySelector('.recent-upload-meta.gs');
     if(existing && gamerscore){

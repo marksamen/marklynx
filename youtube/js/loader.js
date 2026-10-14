@@ -315,7 +315,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube.js?v=PLAYBACK-RESUME-PROD-REV02-BOUNDARY-FIX-20261007B');
-      await loadScript('js/site.js?v=COMPLETION-TYPES-PROD-REV04');
+      await loadScript('js/site.js?v=RECOMPLETION-PROD-REV04-20261014');
       await loadScript('js/mobile-filter-popup.js?v=MOBILE-POPUP-PROD-REV01');
       await loadScript('js/developer.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent.js?v=20260924-test-content-integrity-REV01');
