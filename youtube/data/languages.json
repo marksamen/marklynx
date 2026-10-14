@@ -1,15 +1,15 @@
 [
   {
-    "code": "es",
-    "native_name": "Español",
-    "english_name": "Spanish",
+    "code": "pt",
+    "native_name": "Português",
+    "english_name": "Portuguese",
     "enabled": true,
     "sort_order": 0
   },
   {
-    "code": "pt",
-    "native_name": "Português",
-    "english_name": "Portuguese",
+    "code": "es",
+    "native_name": "Español",
+    "english_name": "Spanish",
     "enabled": true,
     "sort_order": 0
   }
