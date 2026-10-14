@@ -331,7 +331,7 @@ function listRowHtml(r){
     <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(r.t||'—')}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
-    ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : ''}
+    ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : (r.completion_type ? `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '')}
   </${tag}>`;
 }
 
