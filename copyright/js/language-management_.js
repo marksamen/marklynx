@@ -13,7 +13,7 @@ async function call(action,other={}){if(!user)throw new Error('Sign in to TEST A
 async function perform(task){try{await task();status('Operation completed.');}catch(e){status(e.message||String(e),true);}}
 function node(tag,text){const n=document.createElement(tag);n.textContent=text;return n;}
 let pending=null;
-function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmOK').textContent=title.startsWith('Disable')?'Disable':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
+function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmOK').textContent=title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
 function closeConfirm(){pending=null;el('confirmModal').classList.remove('open');el('confirmModal').setAttribute('aria-hidden','true');}
 el('confirmCancel').onclick=closeConfirm;
 el('confirmOK').onclick=()=>{const action=pending;if(!action)return;closeConfirm();perform(action);};
@@ -96,7 +96,8 @@ el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);
 el('cancelTranslation').onclick=()=>setEnglish(el('englishText').value);
 el('saveTranslation').onclick=()=>perform(async()=>{const code=el('translationLanguage').value;if(!code)throw Error('Add a language first.');const key=el('key').value.trim();if(!key)throw Error('Select English text first.');await call('save-translation',{code,key,text:el('value').value});await reload();findKey(key);setEnglish(key);});
 
-// REV01: Admin-only, data-driven bulk translation import through existing save-translation action.
+// REV01: Reuse existing Admin confirmation modal for bulk translation import.
+// Admin-only, data-driven bulk translation import through existing save-translation action.
 // Never enable a language automatically; each successful row is saved independently.
 const importInput=el('translationImportFile');
 el('importTranslations').onclick=()=>perform(async()=>{
@@ -115,20 +116,23 @@ el('importTranslations').onclick=()=>perform(async()=>{
     if(!valid.has(key))throw Error('Unknown translation key: '+key);
     if(typeof value!=='string'||!value.trim()||value.length>5000)throw Error('Invalid translated text: '+key);
   }
-  if(!window.confirm('Import '+entries.length+' translations for '+code+' into TEST Supabase? Existing matching translations will be updated.'))return;
-  el('importTranslations').disabled=true;
-  let completed=0;
-  try{
-    for(const [key,text] of entries){
-      await call('save-translation',{code,key,text});
-      completed++;
-      status('Imported '+completed+' of '+entries.length+' translations for '+code+'.');
-    }
-    await reload();
-    status('Imported '+completed+' translations for '+code+'. Language enablement unchanged.');
-  }catch(e){
-    throw Error('Imported '+completed+' of '+entries.length+'. '+(e.message||e));
-  }finally{el('importTranslations').disabled=false;}
+  confirmAction('Import '+entries.length+' translations?',
+    'Language: '+code+'. Import into TEST Supabase? Existing matching translations will be overwritten. Language enablement will not change.',
+    async()=>{
+      el('importTranslations').disabled=true;
+      let completed=0;
+      try{
+        for(const [key,text] of entries){
+          await call('save-translation',{code,key,text});
+          completed++;
+          status('Imported '+completed+' of '+entries.length+' translations for '+code+'.');
+        }
+        await reload();
+        status('Imported '+completed+' translations for '+code+'. Language enablement unchanged.');
+      }catch(e){
+        throw Error('Imported '+completed+' of '+entries.length+'. '+(e.message||e));
+      }finally{el('importTranslations').disabled=false;}
+    });
 });
 
 el('export').onclick=()=>perform(async()=>{
