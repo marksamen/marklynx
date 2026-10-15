@@ -153,6 +153,47 @@ verifiedExport.onclick=()=>perform(async()=>{
   status('Verified import JSON downloaded for '+code+'. This is not a recovery JSON file.');
 });
 el('importTranslations').insertAdjacentElement('afterend',verifiedExport);
+// REV07: Read-only English-to-selected-language text review export.
+// English is drawn from the same live PROD inventory as the editor and statistics.
+const reviewExport=node('button','Download English → Translation TXT');
+reviewExport.type='button';
+reviewExport.onclick=()=>perform(async()=>{
+  const code=el('translationLanguage').value;
+  const lang=cache.languages.find(item=>item.code===code);
+  if(!lang)throw Error('Select a language first.');
+  const translations=new Map(cache.translations.filter(row=>row.language_code===code).map(row=>[row.translation_key,row.translated_text]));
+  const sections=[...Object.keys(inventory),'Genres','Platforms','Text Guides','Completion Types'];
+  const lines=[
+    'MARK LYNX GAMING NETWORK — TRANSLATION REVIEW',
+    'Environment: PROD',
+    `Language: ${lang.english_name} (${code})`,
+    'English source: PROD Admin inventory and live PROD Supabase managed options',
+    'This file is for review only. It cannot be imported.',
+    ''
+  ];
+  let total=0,missing=0;
+  for(const section of sections){
+    const entries=Object.entries(sectionItems(section));
+    if(!entries.length)continue;
+    lines.push('='.repeat(72),section.toUpperCase(),'='.repeat(72),'');
+    for(const [key,english] of entries){
+      const translated=translations.get(key);
+      const present=typeof translated==='string'&&!!translated.trim();
+      lines.push(`Key: ${key}`,`English: ${english}`,`${lang.english_name}: ${present?translated:'[MISSING TRANSLATION]'}`,'');
+      total++;
+      if(!present)missing++;
+    }
+  }
+  lines.push('='.repeat(72),`SUMMARY: ${total-missing}/${total} translated; ${missing} missing.`,'');
+  const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`${code}-english-translation-review.txt`;a.click();URL.revokeObjectURL(url);
+  status(`Downloaded PROD English → ${lang.english_name} review TXT (${total-missing}/${total}).`);
+});
+verifiedExport.insertAdjacentElement('afterend',reviewExport);
+
+
+
 
 // REV04: Validate the complete import against this environment before any writes.
 const importInput=el('translationImportFile');
