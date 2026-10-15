@@ -4811,3 +4811,23 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+
+/* TEST REV05 — Mobile landscape RECENT GRID Completion Type translation wrap.
+   Applies across the 900/901px breakpoint on touch devices only.
+   Do not alter desktop, portrait, LIST, Normal or other Recent badges. */
+@media (orientation:landscape) and (max-height:900px) and (hover:none) and (pointer:coarse){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type{
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    flex-wrap:wrap;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-completion-value{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
