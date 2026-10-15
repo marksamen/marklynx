@@ -4854,3 +4854,27 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+
+/* TEST REV08 — Recent GRID on wide touch LANDSCAPE only (901px+).
+   Override desktop min-width:901px nowrap for Gamerscore / Completion Type;
+   keep REV07 narrow-landscape behavior, LIST, Normal, Portrait and pointer desktop intact. */
+@media (min-width:901px) and (orientation:landscape) and (hover:none) and (pointer:coarse){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+    height:auto;
+    white-space:normal;
+    flex-wrap:wrap;
+    overflow-wrap:anywhere;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-completion-value{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
