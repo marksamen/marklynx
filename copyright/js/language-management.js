@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator.js?v=TEST-PARITY-PROD-REV10-20261014";
 import {languages as registry} from './language-registry.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory.js?v=FRENCH-PROD-REV01-20261015';
+import {inventory} from './translation-inventory.js?v=TEST-PARITY-PROD-REV10-20261014';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical PROD Firebase project and Supabase URL to existing Genre Management page.
