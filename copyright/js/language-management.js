@@ -13,7 +13,7 @@ async function call(action,other={}){if(!user)throw new Error('Sign in to PROD A
 async function perform(task){try{await task();status('Operation completed.');}catch(e){status(e.message||String(e),true);}}
 function node(tag,text){const n=document.createElement(tag);n.textContent=text;return n;}
 let pending=null;
-function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmOK').textContent=title.startsWith('Disable')?'Disable':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
+function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmMessage').style.whiteSpace='pre-wrap';el('confirmOK').textContent=title==='Import BLOCKED'?'Close':title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':title.startsWith('Delete')?'Delete':'Enable';el('confirmCancel').hidden=title==='Import BLOCKED';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');(title==='Import BLOCKED'?el('confirmOK'):el('confirmCancel')).focus();}
 function closeConfirm(){pending=null;el('confirmModal').classList.remove('open');el('confirmModal').setAttribute('aria-hidden','true');}
 el('confirmCancel').onclick=closeConfirm;
 el('confirmOK').onclick=()=>{const action=pending;if(!action)return;closeConfirm();perform(action);};
@@ -61,9 +61,51 @@ function renderTranslationStatistics(){
     line.append(heading);
     if(missing.length||extra.length){
       const details=document.createElement('details');
-      const toggle=node('summary','Show missing / extra keys');details.append(toggle);
-      if(missing.length){details.append(node('p','Missing ('+missing.length+'):'));const ul=document.createElement('ul');for(const key of missing)ul.append(node('li',`${key} — ${root.get(key)}`));details.append(ul);}
-      if(extra.length){details.append(node('p','Extra / unregistered ('+extra.length+'):'));const ul=document.createElement('ul');for(const key of extra)ul.append(node('li',key));details.append(ul);}
+      details.append(node('summary','Show missing / extra keys'));
+      if(missing.length){
+        details.append(node('p','Missing ('+missing.length+'):'));
+        const ul=document.createElement('ul');
+        for(const key of missing){
+          const li=document.createElement('li');
+          li.append(node('span',`${key} — ${root.get(key)} `));
+          const edit=node('button','Open in editor');
+          edit.type='button';
+          edit.onclick=()=>{
+            el('translationLanguage').value=lang.code;
+            if(!findKey(key)){status('English key no longer exists; refresh statistics.',true);return;}
+            setEnglish(key);
+            el('section').closest('section').scrollIntoView({block:'center',behavior:'smooth'});
+            status('Selected '+key+' for '+lang.english_name+'. Click Edit to enter the translation.');
+          };
+          li.append(edit);ul.append(li);
+        }
+        details.append(ul);
+      }
+      if(extra.length){
+        details.append(node('p','Extra / unregistered ('+extra.length+'):'));
+        const ul=document.createElement('ul');
+        for(const key of extra){
+          const row=rows.find(x=>x.translation_key===key);
+          const li=document.createElement('li');
+          li.append(node('span',`${key} — saved text: ${row?.translated_text||'(empty)'} `));
+          const managed=/^(genre|platform|text_guide|completion_type)\.([1-9]\d*)$/.test(key);
+          if(managed){
+            const remove=node('button','Delete orphan');remove.type='button';
+            remove.onclick=()=>confirmAction('Delete orphan translation?',
+              'PROD Supabase only. Language: '+lang.code+'. Key: '+key+'. Saved text: '+row.translated_text+'. Delete this translation record? This cannot be undone.',
+              async()=>{
+                await call('delete-translation',{code:lang.code,key,expected_text:row.translated_text});
+                await reload();
+                status('Deleted orphan '+key+' for '+lang.code+'. Export updated PROD recovery JSON before testing fallback.');
+              });
+            li.append(remove);
+          }else{
+            li.append(node('span',' (Review source inventory; deletion disabled)'));
+          }
+          ul.append(li);
+        }
+        details.append(ul);
+      }
       line.append(details);
     }
     host.append(line);
@@ -96,8 +138,23 @@ el('editTranslation').onclick=()=>{if(!el('key').value)return;setEditMode(true);
 el('cancelTranslation').onclick=()=>setEnglish(el('englishText').value);
 el('saveTranslation').onclick=()=>perform(async()=>{const code=el('translationLanguage').value;if(!code)throw Error('Add a language first.');const key=el('key').value.trim();if(!key)throw Error('Select English text first.');await call('save-translation',{code,key,text:el('value').value});await reload();findKey(key);setEnglish(key);});
 
-// REV01: Admin-only, data-driven bulk translation import through existing save-translation action.
-// Never enable a language automatically; each successful row is saved independently.
+// REV04: Download a source-verified import file for the selected language.
+// This is separate from public recovery JSON; recovery format remains unchanged.
+const verifiedExport=node('button','Download verified import JSON');
+verifiedExport.type='button';
+verifiedExport.onclick=()=>perform(async()=>{
+  const code=el('translationLanguage').value;
+  if(!code)throw Error('Select a language first.');
+  const strings={};const english_sources={};
+  for(const row of cache.translations.filter(row=>row.language_code===code&&typeof row.translated_text==='string'&&row.translated_text.trim()))strings[row.translation_key]=row.translated_text;
+  for(const section of ['Genres','Platforms','Text Guides','Completion Types'])Object.assign(english_sources,sectionItems(section));
+  const blob=new Blob([JSON.stringify({version:2,language:code,strings,english_sources},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${code}-verified-import.json`;a.click();URL.revokeObjectURL(url);
+  status('Verified import JSON downloaded for '+code+'. This is not a recovery JSON file.');
+});
+el('importTranslations').insertAdjacentElement('afterend',verifiedExport);
+
+// REV04: Validate the complete import against this environment before any writes.
 const importInput=el('translationImportFile');
 el('importTranslations').onclick=()=>perform(async()=>{
   const file=importInput.files?.[0];
@@ -107,28 +164,32 @@ el('importTranslations').onclick=()=>perform(async()=>{
   const strings=payload?.strings;
   if(!code||!strings||Array.isArray(strings)||typeof strings!=='object')throw Error('Invalid translation file.');
   if(!cache.languages.some(x=>x.code===code))throw Error('Add '+code+' in Language Management before importing.');
-  const valid=new Set(Object.keys(inventory).flatMap(section=>Object.keys(inventory[section])));
-  for(const section of ['Genres','Platforms','Text Guides','Completion Types'])for(const key of Object.keys(sectionItems(section)))valid.add(key);
-  const entries=Object.entries(strings);
-  if(!entries.length)throw Error('Translation file is empty.');
-  for(const [key,value] of entries){
-    if(!valid.has(key))throw Error('Unknown translation key: '+key);
-    if(typeof value!=='string'||!value.trim()||value.length>5000)throw Error('Invalid translated text: '+key);
-  }
-  if(!window.confirm('Import '+entries.length+' translations for '+code+' into PROD Supabase? Existing matching translations will be updated.'))return;
-  el('importTranslations').disabled=true;
-  let completed=0;
-  try{
-    for(const [key,text] of entries){
-      await call('save-translation',{code,key,text});
-      completed++;
-      status('Imported '+completed+' of '+entries.length+' translations for '+code+'.');
-    }
-    await reload();
-    status('Imported '+completed+' translations for '+code+'. Language enablement unchanged.');
-  }catch(e){
-    throw Error('Imported '+completed+' of '+entries.length+'. '+(e.message||e));
-  }finally{el('importTranslations').disabled=false;}
+  const expected={};
+  for(const section of [...Object.keys(inventory),'Genres','Platforms','Text Guides','Completion Types'])Object.assign(expected,sectionItems(section));
+  const keys=Object.keys(strings);
+  const extra=keys.filter(key=>!Object.hasOwn(expected,key));
+  const missing=Object.keys(expected).filter(key=>!Object.hasOwn(strings,key));
+  const invalid=keys.filter(key=>typeof strings[key]!=='string'||!strings[key].trim()||strings[key].length>5000);
+  const managed=/^(genre|platform|text_guide|completion_type)\.[1-9]\d*$/;
+  const source=payload?.english_sources;
+  const mismatched=keys.filter(key=>managed.test(key)&&Object.hasOwn(expected,key)&&(!source||typeof source[key]!=='string'||source[key]!==expected[key]));
+  const lines=[`Environment: PROD Supabase`,`Language: ${code}`,`Expected: ${Object.keys(expected).length} | JSON: ${keys.length}`];
+  if(extra.length)lines.push(`Unknown keys (${extra.length}): ${extra.join(', ')}`);
+  if(invalid.length)lines.push(`Invalid text (${invalid.length}): ${invalid.join(', ')}`);
+  if(mismatched.length)lines.push(`Unverified/mismatched English sources (${mismatched.length}): ${mismatched.join(', ')}`);
+  if(missing.length)lines.push(`Missing (${missing.length}): ${missing.map(key=>key+' — '+expected[key]).join('; ')}`);
+  const blocked=extra.length||invalid.length||mismatched.length;
+  if(blocked){confirmAction('Import BLOCKED',lines.join('\n')+'\nNo changes made.',async()=>{});return;}
+  lines.push(missing.length?'WARNING: incomplete import. Continue only if intended.':'PASS: All expected keys present.');
+  lines.push('Existing matching translations will be overwritten. Language enablement will not change.');
+  confirmAction(missing.length?'Import WARNING':'Import validated',lines.join('\n'),async()=>{
+    el('importTranslations').disabled=true;
+    try{
+      const result=await call('import-translations',{code,strings,english_sources:source||{},expected_keys:Object.keys(expected)});
+      await reload();
+      status(`Imported ${result.imported} translations for ${code}. Language enablement unchanged.`);
+    }finally{el('importTranslations').disabled=false;}
+  });
 });
 
 el('export').onclick=()=>perform(async()=>{
