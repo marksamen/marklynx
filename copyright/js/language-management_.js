@@ -149,7 +149,7 @@ verifiedExport.onclick=()=>perform(async()=>{
   for(const row of cache.translations.filter(row=>row.language_code===code&&typeof row.translated_text==='string'&&row.translated_text.trim()))strings[row.translation_key]=row.translated_text;
   for(const section of ['Genres','Platforms','Text Guides','Completion Types'])Object.assign(english_sources,sectionItems(section));
   const blob=new Blob([JSON.stringify({version:2,language:code,strings,english_sources},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${code}-verified-import.json`;a.click();URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${code}-verified-import_.json`;a.click();URL.revokeObjectURL(url);
   status('Verified import JSON downloaded for '+code+'. This is not a recovery JSON file.');
 });
 el('importTranslations').insertAdjacentElement('afterend',verifiedExport);
