@@ -13,7 +13,7 @@ async function call(action,other={}){if(!user)throw new Error('Sign in to TEST A
 async function perform(task){try{await task();status('Operation completed.');}catch(e){status(e.message||String(e),true);}}
 function node(tag,text){const n=document.createElement(tag);n.textContent=text;return n;}
 let pending=null;
-function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmMessage').style.whiteSpace='pre-wrap';el('confirmOK').textContent=title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':title.startsWith('Delete')?'Delete':title.startsWith('Import BLOCKED')?'Close':title.startsWith('Import')?'Import':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
+function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmMessage').style.whiteSpace='pre-wrap';el('confirmOK').textContent=title==='Import BLOCKED'?'Close':title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':title.startsWith('Delete')?'Delete':'Enable';el('confirmCancel').hidden=title==='Import BLOCKED';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');(title==='Import BLOCKED'?el('confirmOK'):el('confirmCancel')).focus();}
 function closeConfirm(){pending=null;el('confirmModal').classList.remove('open');el('confirmModal').setAttribute('aria-hidden','true');}
 el('confirmCancel').onclick=closeConfirm;
 el('confirmOK').onclick=()=>{const action=pending;if(!action)return;closeConfirm();perform(action);};
