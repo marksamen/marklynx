@@ -13,7 +13,7 @@ async function call(action,other={}){if(!user)throw new Error('Sign in to TEST A
 async function perform(task){try{await task();status('Operation completed.');}catch(e){status(e.message||String(e),true);}}
 function node(tag,text){const n=document.createElement(tag);n.textContent=text;return n;}
 let pending=null;
-function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmOK').textContent=title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
+function confirmAction(title,message,action){if(pending)return;pending=action;el('confirmTitle').textContent=title;el('confirmMessage').textContent=message;el('confirmOK').textContent=title.startsWith('Disable')?'Disable':title.startsWith('Import')?'Import':title.startsWith('Delete')?'Delete':'Enable';el('confirmModal').classList.add('open');el('confirmModal').setAttribute('aria-hidden','false');el('confirmCancel').focus();}
 function closeConfirm(){pending=null;el('confirmModal').classList.remove('open');el('confirmModal').setAttribute('aria-hidden','true');}
 el('confirmCancel').onclick=closeConfirm;
 el('confirmOK').onclick=()=>{const action=pending;if(!action)return;closeConfirm();perform(action);};
@@ -61,9 +61,51 @@ function renderTranslationStatistics(){
     line.append(heading);
     if(missing.length||extra.length){
       const details=document.createElement('details');
-      const toggle=node('summary','Show missing / extra keys');details.append(toggle);
-      if(missing.length){details.append(node('p','Missing ('+missing.length+'):'));const ul=document.createElement('ul');for(const key of missing)ul.append(node('li',`${key} — ${root.get(key)}`));details.append(ul);}
-      if(extra.length){details.append(node('p','Extra / unregistered ('+extra.length+'):'));const ul=document.createElement('ul');for(const key of extra)ul.append(node('li',key));details.append(ul);}
+      details.append(node('summary','Show missing / extra keys'));
+      if(missing.length){
+        details.append(node('p','Missing ('+missing.length+'):'));
+        const ul=document.createElement('ul');
+        for(const key of missing){
+          const li=document.createElement('li');
+          li.append(node('span',`${key} — ${root.get(key)} `));
+          const edit=node('button','Open in editor');
+          edit.type='button';
+          edit.onclick=()=>{
+            el('translationLanguage').value=lang.code;
+            if(!findKey(key)){status('English key no longer exists; refresh statistics.',true);return;}
+            setEnglish(key);
+            el('section').closest('section').scrollIntoView({block:'center',behavior:'smooth'});
+            status('Selected '+key+' for '+lang.english_name+'. Click Edit to enter the translation.');
+          };
+          li.append(edit);ul.append(li);
+        }
+        details.append(ul);
+      }
+      if(extra.length){
+        details.append(node('p','Extra / unregistered ('+extra.length+'):'));
+        const ul=document.createElement('ul');
+        for(const key of extra){
+          const row=rows.find(x=>x.translation_key===key);
+          const li=document.createElement('li');
+          li.append(node('span',`${key} — saved text: ${row?.translated_text||'(empty)'} `));
+          const managed=/^(genre|platform|text_guide|completion_type)\.([1-9]\d*)$/.test(key);
+          if(managed){
+            const remove=node('button','Delete orphan');remove.type='button';
+            remove.onclick=()=>confirmAction('Delete orphan translation?',
+              'TEST Supabase only. Language: '+lang.code+'. Key: '+key+'. Saved text: '+row.translated_text+'. Delete this translation record? This cannot be undone.',
+              async()=>{
+                await call('delete-translation',{code:lang.code,key,expected_text:row.translated_text});
+                await reload();
+                status('Deleted orphan '+key+' for '+lang.code+'. Export updated TEST recovery JSON before testing fallback.');
+              });
+            li.append(remove);
+          }else{
+            li.append(node('span',' (Review source inventory; deletion disabled)'));
+          }
+          ul.append(li);
+        }
+        details.append(ul);
+      }
       line.append(details);
     }
     host.append(line);
