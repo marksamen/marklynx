@@ -4780,3 +4780,70 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+/* PROD REV01 (from approved TEST REV07) — Recent GRID on narrow touch LANDSCAPE only.
+   The base grid hides all .recent-upload-meta and the <=900px rule hides them
+   again. Restore only Gamerscore and Completion Type; leave all other badges,
+   Portrait, LIST, Normal and >=901px layouts unchanged. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    padding:3px 7px;
+    border-radius:5px;
+    font-size:12px;
+    line-height:1.2;
+    font-weight:700;
+    white-space:normal;
+    flex-wrap:wrap;
+    overflow-wrap:anywhere;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs{
+    border:1px solid #107C10;
+    background:#e4f3e4;
+    color:#194f19;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type{
+    border:1px solid #E52521;
+    background:#fff0ee;
+    color:#79201c;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-completion-value{
+    color:inherit;
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
+
+
+/* PROD REV01 (from approved TEST REV08) — Recent GRID on wide touch LANDSCAPE only (901px+).
+   Override desktop min-width:901px nowrap for Gamerscore / Completion Type;
+   keep REV07 narrow-landscape behavior, LIST, Normal, Portrait and pointer desktop intact. */
+@media (min-width:901px) and (orientation:landscape) and (hover:none) and (pointer:coarse){
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+    height:auto;
+    white-space:normal;
+    flex-wrap:wrap;
+    overflow-wrap:anywhere;
+  }
+  .recent-uploads-grid.grid-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-meta-label,
+  .recent-uploads-grid.grid-mode .recent-upload-meta.completion-type .recent-completion-value{
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
