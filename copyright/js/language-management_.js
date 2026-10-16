@@ -282,7 +282,8 @@ function wnRender(){
   const announcement=el('wnAnnouncement'),language=el('wnLanguage');
   const oldId=announcement.value,oldCode=language.value;
   announcement.replaceChildren();language.replaceChildren();
-  for(const a of wnData.announcements){const en=wnData.translations.find(t=>t.announcement_id===a.id&&t.language_code==='en');const o=node('option',`#${a.id} — ${en?.title||'(English not entered)'} (${a.status})`);o.value=a.id;announcement.append(o);}
+  const q=el('wnSearch').value.trim().toLocaleLowerCase();
+  for(const a of wnData.announcements){const en=wnData.translations.find(t=>t.announcement_id===a.id&&t.language_code==='en');const label=`#${a.id} — ${en?.title||'(English not entered)'} (${a.status})`;if(q&&!label.toLocaleLowerCase().includes(q))continue;const o=node('option',label);o.value=a.id;announcement.append(o);}
   for(const lang of cache.languages){const o=node('option',`${lang.english_name} (${lang.code})`);o.value=lang.code;language.append(o);}
   if([...announcement.options].some(o=>o.value===oldId))announcement.value=oldId;
   if([...language.options].some(o=>o.value===oldCode))language.value=oldCode;
@@ -296,11 +297,14 @@ function wnSelect(){
   el('wnEnglish').value=en?`TITLE: ${en.title}\n\nSUMMARY: ${en.summary}\n\nMESSAGE: ${en.body}`:'English original not yet entered.';
   for(const [field,key] of [['wnTitle','title'],['wnSummary','summary'],['wnBody','body']]){el(field).value=t?.[key]||'';el(field).readOnly=!a||a.status!=='draft';}
   el('wnSave').disabled=!a||!code||!en||a.status!=='draft';
+  el('wnEditorHeading').textContent=a?`Open #${a.id} — ${en?.title||'(English not entered)'} (${a.status})`:'No matching announcement';
+  if(!a)el('wnEditor').open=false;
   wnStatus(a?.status==='published'?'Unpublish this announcement in What’s New Management before editing translations.':'');
 }
 async function wnReload(){try{wnData=await wnCall('list');wnRender();}catch(e){wnStatus(e.message||String(e),true);}}
 el('wnRefresh').onclick=wnReload;
-el('wnAnnouncement').onchange=wnSelect;el('wnLanguage').onchange=wnSelect;
+el('wnAnnouncement').onchange=()=>{el('wnEditor').open=false;wnSelect();};el('wnLanguage').onchange=wnSelect;
+el('wnSearch').oninput=()=>{el('wnEditor').open=false;wnRender();};
 el('wnSave').onclick=async()=>{
  try{
   const id=Number(el('wnAnnouncement').value),language_code=el('wnLanguage').value;
