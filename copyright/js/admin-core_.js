@@ -154,7 +154,8 @@ window.addEventListener("message", async event => {
       throw new Error(`Edge Function HTTP ${response.status}: unexpected list response structure`);
     }
     reply({ok:true, httpStatus:response.status, enabled:result.settings.enabled === true,
-      announcementCount:result.announcements.length, translationCount:result.translations.length});
+      announcements: result.announcements.map(a => ({id:a.id, status:a.status, created_at:a.created_at, published_at:a.published_at, updated_at:a.updated_at})),
+      translations: result.translations.map(t => ({announcement_id:t.announcement_id, language_code:t.language_code, title:t.title, summary:t.summary}))});
   } catch (error) {
     reply({ok:false, error: error instanceof Error ? error.message : "Unknown connection error"});
   } finally {
