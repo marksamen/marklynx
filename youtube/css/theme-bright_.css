@@ -675,3 +675,20 @@ html[data-theme="bright"] #siteLanguageSelect {
     color:inherit !important;
   }
 }
+
+
+/* TEST REV02 — Safari touch Landscape Recent GRID Gamerscore color ONLY.
+   The generic Bright metadata !important rule paints .gs neutral at <=900px.
+   Restore approved Xbox green in GRID without touching LIST or other layouts. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.gs {
+    background:#d6e7d6 !important;
+    border-color:#107C10 !important;
+    color:#174c17 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-meta.gs .recent-meta-label {
+    color:inherit !important;
+  }
+}
