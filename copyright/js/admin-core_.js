@@ -117,4 +117,45 @@ window.addEventListener("message", event => {
   event.source.postMessage({type:"wn-probe-auth-status-response", authenticated: Boolean(auth.currentUser)}, event.origin);
 });
 
+
+// What's New TEST REV05: parent-only authenticated read-only connection.
+// No Firebase SDK in iframe; no credentials/tokens posted to iframe.
+let wnReadOnlyBusy = false;
+window.addEventListener("message", async event => {
+  if (event.origin !== window.location.origin || event.data?.type !== "wn-probe-readonly-request") return;
+  const frame = document.getElementById("adminPageModalFrame");
+  if (!frame || event.source !== frame.contentWindow || !frame.getAttribute("src")?.startsWith("whats-new-probe/")) return;
+  if (wnReadOnlyBusy) return;
+  wnReadOnlyBusy = true;
+  const reply = payload => {
+    // Avoid posting a result into a different page if the modal closed while fetching.
+    if (frame.contentWindow === event.source && frame.getAttribute("src")?.startsWith("whats-new-probe/")) {
+      event.source.postMessage({type:"wn-probe-readonly-response", ...payload}, event.origin);
+    }
+  };
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error("Parent Admin is not authenticated");
+    const token = await user.getIdToken();
+    const response = await fetch(`${SUPABASE_TEST_URL}/functions/v1/whats-new-admin`, {
+      method: "POST",
+      headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
+      body: JSON.stringify({action:"list"}),
+      cache: "no-store"
+    });
+    const result = await response.json();
+    if (!response.ok || result?.ok !== true) throw new Error(`Edge Function HTTP ${response.status}: ${String(result?.error || "Unknown response").slice(0,180)}`);
+    if (!Array.isArray(result.announcements) || !Array.isArray(result.translations) || !Array.isArray(result.languages)) {
+      throw new Error("Unexpected read-only response structure");
+    }
+    reply({ok:true, httpStatus:response.status, enabled:result.settings?.enabled === true,
+      announcementCount:result.announcements.length, translationCount:result.translations.length,
+      enabledLanguageCount:result.languages.length});
+  } catch (error) {
+    reply({ok:false, error: error instanceof Error ? error.message : "Unknown connection error"});
+  } finally {
+    wnReadOnlyBusy = false;
+  }
+});
+
 initAdminPageModal();
