@@ -1,13 +1,5 @@
 // REV09: English display labels verified against TEST public source. English remains in its original source.
 export const inventory={
-  "What’s New": {
-    "whats_new.title": "What’s New",
-    "whats_new.new": "New",
-    "whats_new.archive": "Archive",
-    "whats_new.back": "Back to Announcements",
-    "whats_new.close": "Close",
-    "whats_new.empty": "No announcements here yet."
-},
   "Main": {
     "playlist.badge": "Playlist",
     "game.completion_type_label": "Completion Type",

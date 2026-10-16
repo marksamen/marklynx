@@ -1,6 +1,6 @@
 import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=CT-LANGUAGE-TEST-REV04";
 import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
-import {inventory} from './translation-inventory_.js?v=WHATS-NEW-TEST-REV02';
+import {inventory} from './translation-inventory_.js?v=CT-LABEL-TEST-REV05';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
 // Identical TEST Firebase project and Supabase URL to existing Genre Management page.
@@ -264,60 +264,4 @@ el('export').onclick=()=>perform(async()=>{
     status('Complete TEST recovery downloaded: '+files.join(', ')+'. Upload to youtube/data/.');
   }finally{el('export').disabled=false;}
 });
-function lmAuthDiag(event,detail=""){
- console.info(`[ML-AUTH-REV06][LANGUAGE IFRAME][${new Date().toISOString()}] ${event}`,detail);
- try{window.parent.postMessage({type:'ML_AUTH_REV07_EVENT',source:'LANGUAGE IFRAME',event,detail},window.location.origin);}catch(_e){}
-}
-lmAuthDiag('setPersistence START',{signedIn:!!auth.currentUser});
-try{await setPersistence(auth,browserLocalPersistence);lmAuthDiag('setPersistence COMPLETE',{signedIn:!!auth.currentUser});}catch(e){lmAuthDiag('setPersistence ERROR',{code:e?.code||'unknown'});throw e;}
-onAuthStateChanged(auth,u=>{lmAuthDiag('primary onAuthStateChanged',{signedIn:!!u});user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);},e=>lmAuthDiag('primary observer ERROR',{code:e?.code||'unknown'}));
-
-// What's New dynamic content: the English original is owned by What's New Management.
-// Announcement translations are stored in whats_new_translations, NOT site_translations.
-let wnData={announcements:[],translations:[]};
-async function wnCall(action,other={}){
-  if(!user)throw Error('Sign in to TEST Admin first.');
-  const token=await user.getIdToken();
-  const response=await fetch(`${BASE}/functions/v1/whats-new-admin`,{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({action,...other}),cache:'no-store'});
-  const result=await response.json().catch(()=>({}));
-  if(!response.ok)throw Error(result.error||`HTTP ${response.status}`);
-  return result;
-}
-const wnStatus=(message,error=false)=>{el('wnStatus').textContent=message;el('wnStatus').className=error?'error':'success';};
-function wnRender(){
-  const announcement=el('wnAnnouncement'),language=el('wnLanguage');
-  const oldId=announcement.value,oldCode=language.value;
-  announcement.replaceChildren();language.replaceChildren();
-  const q=el('wnSearch').value.trim().toLocaleLowerCase();
-  for(const a of wnData.announcements){const en=wnData.translations.find(t=>t.announcement_id===a.id&&t.language_code==='en');const label=`#${a.id} — ${en?.title||'(English not entered)'} (${a.status})`;if(q&&!label.toLocaleLowerCase().includes(q))continue;const o=node('option',label);o.value=a.id;announcement.append(o);}
-  for(const lang of cache.languages){const o=node('option',`${lang.english_name} (${lang.code})`);o.value=lang.code;language.append(o);}
-  if([...announcement.options].some(o=>o.value===oldId))announcement.value=oldId;
-  if([...language.options].some(o=>o.value===oldCode))language.value=oldCode;
-  wnSelect();
-}
-function wnSelect(){
-  const id=Number(el('wnAnnouncement').value),code=el('wnLanguage').value;
-  const a=wnData.announcements.find(x=>x.id===id);
-  const en=wnData.translations.find(t=>t.announcement_id===id&&t.language_code==='en');
-  const t=wnData.translations.find(t=>t.announcement_id===id&&t.language_code===code);
-  el('wnEnglish').value=en?`TITLE: ${en.title}\n\nSUMMARY: ${en.summary}\n\nMESSAGE: ${en.body}`:'English original not yet entered.';
-  for(const [field,key] of [['wnTitle','title'],['wnSummary','summary'],['wnBody','body']]){el(field).value=t?.[key]||'';el(field).readOnly=!a||a.status!=='draft';}
-  el('wnSave').disabled=!a||!code||!en||a.status!=='draft';
-  el('wnEditorHeading').textContent=a?`Open #${a.id} — ${en?.title||'(English not entered)'} (${a.status})`:'No matching announcement';
-  if(!a)el('wnEditor').open=false;
-  wnStatus(a?.status==='published'?'Unpublish this announcement in What’s New Management before editing translations.':'');
-}
-async function wnReload(){try{wnData=await wnCall('list');wnRender();}catch(e){wnStatus(e.message||String(e),true);}}
-el('wnRefresh').onclick=wnReload;
-el('wnAnnouncement').onchange=()=>{el('wnEditor').open=false;wnSelect();};el('wnLanguage').onchange=wnSelect;
-el('wnSearch').oninput=()=>{el('wnEditor').open=false;wnRender();};
-el('wnSave').onclick=async()=>{
- try{
-  const id=Number(el('wnAnnouncement').value),language_code=el('wnLanguage').value;
-  if(!id||!language_code)throw Error('Select an announcement and language.');
-  await wnCall('save-translation',{id,language_code,title:el('wnTitle').value,summary:el('wnSummary').value,body:el('wnBody').value});
-  await wnReload();wnStatus('Translation saved to TEST Supabase.');
- }catch(e){wnStatus(e.message||String(e),true);}
-};
-// Wait for the existing Admin Firebase session and language inventory to finish loading.
-onAuthStateChanged(auth,u=>{lmAuthDiag('Whats New onAuthStateChanged',{signedIn:!!u});if(u)setTimeout(wnReload,0);},e=>lmAuthDiag('Whats New observer ERROR',{code:e?.code||'unknown'}));
+await setPersistence(auth,browserLocalPersistence);onAuthStateChanged(auth,u=>{user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);});
