@@ -297,7 +297,6 @@
     }
     label.textContent = getTranslation('selector.language', 'Language');
     apply();
-    document.dispatchEvent(new CustomEvent('marklynx:translations-ready',{detail:{language,translations:{...translations}}}));
   };
   selector.addEventListener('change',() => {
     try {localStorage.setItem(KEY,selector.value);} catch (_) {}
