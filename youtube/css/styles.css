@@ -4741,6 +4741,37 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
+/* PROD: Approved TEST REV01 Safari touch Landscape Recent LIST ONLY.
+   Uses the already-approved landscape grid; no desktop or portrait geometry edits.
+   Mobile default hides all Recent metadata with !important; selectively restore
+   only completion / Gamerscore on the existing right-hand badge column. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type,
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    display:inline-flex !important;
+    grid-column:3; grid-row:1;
+    justify-self:center; align-self:center;
+    align-items:center; justify-content:center;
+    box-sizing:border-box;
+    width:auto; min-width:0; max-width:100%;
+    min-height:22px; height:auto; margin:0; padding:3px 7px;
+    gap:5px; border-radius:6px; border-width:1px; border-style:solid;
+    font-size:10px; line-height:1.15; font-weight:700;
+    white-space:normal; overflow-wrap:break-word; text-align:center;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs {
+    border-color:#107C10; background:#e4f3e4; color:#194f19;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type {
+    border-color:#b76b6b; background:#f4d9d9; color:#842525;
+  }
+  .recent-uploads-grid.list-mode .recent-upload-meta.gs .recent-meta-label,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-meta-label,
+  .recent-uploads-grid.list-mode .recent-upload-meta.completion-type .recent-completion-value {
+    color:inherit; margin:0; font-weight:800;
+  }
+}
+
 /* TEST REV01 — Desktop Normal GRID Completion Type: contain long translations.
    Desktop pointer only; mobile/Safari and LIST remain unchanged. */
 @media (min-width:901px) and (hover:hover) and (pointer:fine){
