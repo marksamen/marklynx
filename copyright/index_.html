@@ -54,7 +54,7 @@
 <button id="completionTypeManagement" class="admin-link" type="button" data-admin-modal-url="completion-types/index_.html?v=COMPLETION-TYPES-TEST-REV02" data-admin-modal-title="Completion Type Management" style="background:#173a63;color:#fff">Completion Type Management</button>
 <button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/index_.html?v=TEXT-GUIDE-MANAGEMENT-REV02" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
 <button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index_.html?v=PLATFORM-MANAGEMENT-REV01" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
-<button id="whatsNewProbe" class="admin-link" type="button" data-admin-modal-url="whats-new-probe/index_.html?v=WN-AUTH-PROBE-REV02" data-admin-modal-title="What's New — Authentication Probe (TEST)" style="background:#173a63;color:#fff">What's New (TEST PROBE)</button>
+<button id="whatsNewProbe" class="admin-link" type="button" data-admin-modal-url="whats-new-probe/index_.html?v=WN-AUTH-PROBE-REV03" data-admin-modal-title="What's New — Authentication Probe (TEST)" style="background:#173a63;color:#fff">What's New (TEST PROBE)</button>
 <button id="languageManagement" class="admin-link" type="button" data-admin-modal-url="languages/index_.html?v=TRANSLATION-SEARCH-TEST-REV01" data-admin-modal-title="Language Management (TEST)" style="background:#173a63;color:#fff">Language Management (TEST)</button>
 <button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index_.html?v=GENRE-MANAGEMENT-REV01" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
 <button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/index_.html?v=QUALITY-BADGE-ADD-FIX-REV02" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
@@ -224,7 +224,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=WN-DIAG-REV02-20261016"></script>
+<script type="module" src="js/admin-core_.js?v=WN-DIAG-REV03-20261016"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
@@ -237,14 +237,14 @@
 </div>
 
 
-<!-- TEST REV02: read-only diagnostic overlay. No Firebase SDK calls or auth mutations. -->
+<!-- TEST REV03: read-only diagnostic overlay. No Firebase SDK calls or auth mutations. -->
 <style>
 #wnDiag{position:fixed;bottom:10px;right:10px;z-index:2147483647;width:min(380px,calc(100vw - 20px));max-height:45vh;overflow:auto;background:#111827;color:#e5e7eb;border:2px solid #facc15;border-radius:9px;padding:9px;font:11px/1.45 Consolas,monospace;box-shadow:0 5px 24px #000a}
 #wnDiag button{background:#facc15;color:#111;border:0;border-radius:4px;padding:3px 7px;cursor:pointer;font-weight:bold}
 #wnDiag pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font:inherit}
 #wnDiag .head{display:flex;justify-content:space-between;gap:8px;align-items:center}
 </style>
-<div id="wnDiag" aria-label="TEST REV02 Admin diagnostic panel"><div class="head"><strong>TEST REV02 — ADMIN DIAGNOSTICS</strong><button id="wnDiagCopy" type="button">Copy log</button></div><pre id="wnDiagText">Starting…</pre></div>
+<div id="wnDiag" aria-label="TEST REV03 Admin diagnostic panel"><div class="head"><strong>TEST REV03 — ADMIN DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
 <script>
 (function(){
  const panel=document.getElementById('wnDiagText'), logs=[];
@@ -252,6 +252,7 @@
  const visible=id=>{const el=$(id);return el?getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden':'missing';};
  const state=()=>({loginVisible:visible('login'),adminVisible:visible('admin'),modalOpen:$('adminPageModal')?.classList.contains('open'),iframeSrc:$('adminPageModalFrame')?.getAttribute('src'),viewport:innerWidth+'x'+innerHeight,visualViewport:window.visualViewport?Math.round(visualViewport.width)+'x'+Math.round(visualViewport.height)+' @'+visualViewport.scale:'n/a',devicePixelRatio:devicePixelRatio,visibility:document.visibilityState});
  const log=(event)=>{const line=new Date().toLocaleTimeString()+' '+event+' '+JSON.stringify(state());logs.push(line);if(logs.length>35)logs.shift();panel.textContent=logs.join('\n');panel.parentElement.scrollTop=panel.parentElement.scrollHeight;};
+ $('wnDiagHide').addEventListener('click',()=>{const pre=$('wnDiagText'),hide=pre.style.display!=='none';pre.style.display=hide?'none':'';$('wnDiagHide').textContent=hide?'SHOW':'HIDE';$('wnDiagHide').setAttribute('aria-expanded',String(!hide));$('wnDiag').style.maxHeight=hide?'none':'45vh';});
  $('wnDiagCopy').addEventListener('click',()=>navigator.clipboard?.writeText(logs.join('\n')).catch(()=>{}));
  const observe=()=>{for(const id of ['login','admin','adminPageModal','adminPageModalFrame']){const el=$(id);if(el)new MutationObserver(()=>log('DOM change '+id)).observe(el,{attributes:true,attributeFilter:['style','class','src','aria-hidden']});}}
  observe();log('page initialized');
