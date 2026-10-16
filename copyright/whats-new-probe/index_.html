@@ -1,13 +1,6 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>What's New — TEST Authentication Probe REV02</title>
-<style>body{margin:0;padding:24px;font:16px/1.5 system-ui,Arial,sans-serif;background:#17212c;color:#f1f5f9}main{max-width:680px;margin:auto}h1{font-size:1.35rem}#status{padding:12px;background:#253647;border-radius:8px}small{color:#becbda}</style></head><body><main><h1>What's New — TEST Authentication Probe REV02</h1><p>This page only observes the existing Firebase login state. It does not sign in, sign out, change persistence, or call Supabase.</p><p id="status" role="status">Checking Firebase session…</p><p><small>After this shows a result, close this window and verify Game Management and Language Management still work without signing in again.</small></p></main>
-<script type="module">
-import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
-import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
-const firebaseConfig={apiKey:'AIzaSyAyaoxwg1-Ru821Y6ohRxwT_DL3bsO8zfQ',authDomain:'mark-lynx-admin.firebaseapp.com',projectId:'mark-lynx-admin',storageBucket:'mark-lynx-admin.firebasestorage.app',messagingSenderId:'749999035332',appId:'1:749999035332:web:52c78e6e358c1fef794a91'};
-const status=document.getElementById('status'); parent.postMessage({wnProbeEvent:'probe script started'},location.origin);
-try {
- const auth=getAuth(initializeApp(firebaseConfig));
- onAuthStateChanged(auth,user=>{parent.postMessage({wnProbeEvent:user?'firebase user present':'firebase user absent'},location.origin);status.textContent=user?'PASS: Existing Firebase user is visible in this page. No sign-in or sign-out was performed.':'NO USER: This page does not see an authenticated Firebase user. Do not sign in here.';},error=>{status.textContent='ERROR: '+error.message;});
-} catch(error) {status.textContent='ERROR: '+error.message;}
-</script></body></html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>What's New — TEST Probe REV03</title>
+<style>body{margin:0;padding:24px;font:16px/1.5 system-ui,Arial,sans-serif;background:#17212c;color:#f1f5f9}main{max-width:680px;margin:auto}h1{font-size:1.35rem}#status{padding:12px;background:#253647;border-radius:8px}</style></head><body>
+<main><h1>What's New — TEST Probe REV03</h1><p>This page does not import Firebase, read authentication, access Supabase, or change browser storage.</p><p id="status" role="status">PASS: Static probe loaded without Firebase.</p><p>Leave this window open for five seconds, then close it. Check whether the parent Admin remains signed in.</p></main>
+<script>window.parent.postMessage({wnProbeEvent:'REV03 static probe loaded; no Firebase initialized'},location.origin);</script>
+</body></html>
