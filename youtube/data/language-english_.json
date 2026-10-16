@@ -105,11 +105,5 @@
   "footer.tagline": "Mark Lynx Gaming Network · 100% Walkthroughs, Achievement Guides & Speed Runs",
   "footer.rights": "All Rights Reserved.",
   "playlist.badge": "Playlist",
-  "game.completion_type_label": "Completion Type",
-  "whats_new.title": "What’s New",
-  "whats_new.new": "New",
-  "whats_new.archive": "Archive",
-  "whats_new.back": "Back to Announcements",
-  "whats_new.close": "Close",
-  "whats_new.empty": "No announcements here yet."
+  "game.completion_type_label": "Completion Type"
 }

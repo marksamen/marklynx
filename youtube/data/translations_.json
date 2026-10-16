@@ -148,13 +148,7 @@
     "theme.switch_bright": "Mudar para o tema claro",
     "theme.switch_dark": "Mudar para o tema escuro",
     "view.grid": "Grelha",
-    "view.list": "Lista",
-    "whats_new.title": "Novidades",
-    "whats_new.new": "Novas",
-    "whats_new.archive": "Arquivo",
-    "whats_new.back": "Voltar aos anúncios",
-    "whats_new.close": "Fechar",
-    "whats_new.empty": "Ainda não há anúncios."
+    "view.list": "Lista"
   },
   "es": {
     "completion_type.1": "Perfil de 5 estrellas",
@@ -305,13 +299,7 @@
     "theme.switch_bright": "Cambiar al Tema Claro",
     "theme.switch_dark": "Cambiar al Tema Oscuro",
     "view.grid": "Cuadrícula",
-    "view.list": "Lista",
-    "whats_new.title": "Novedades",
-    "whats_new.new": "Nuevas",
-    "whats_new.archive": "Archivo",
-    "whats_new.back": "Volver a los anuncios",
-    "whats_new.close": "Cerrar",
-    "whats_new.empty": "Todavía no hay anuncios."
+    "view.list": "Lista"
   },
   "fr": {
     "completion_type.1": "Profil 5 étoiles",
@@ -462,13 +450,7 @@
     "theme.switch_bright": "Passer au thème clair",
     "theme.switch_dark": "Passer au thème sombre",
     "view.grid": "Grille",
-    "view.list": "Liste",
-    "whats_new.title": "Nouveautés",
-    "whats_new.new": "Nouveau",
-    "whats_new.archive": "Archives",
-    "whats_new.back": "Retour aux annonces",
-    "whats_new.close": "Fermer",
-    "whats_new.empty": "Aucune annonce pour le moment."
+    "view.list": "Liste"
   },
   "it": {
     "completion_type.1": "Profilo a 5 stelle",
@@ -619,13 +601,7 @@
     "theme.switch_bright": "Passa al tema chiaro",
     "theme.switch_dark": "Passa al tema scuro",
     "view.grid": "Griglia",
-    "view.list": "Elenco",
-    "whats_new.title": "Novità",
-    "whats_new.new": "Nuove",
-    "whats_new.archive": "Archivio",
-    "whats_new.back": "Torna agli annunci",
-    "whats_new.close": "Chiudi",
-    "whats_new.empty": "Nessun annuncio per ora."
+    "view.list": "Elenco"
   },
   "de": {
     "completion_type.1": "5-Sterne-Profil",
@@ -776,12 +752,6 @@
     "theme.switch_bright": "Zum hellen Design wechseln",
     "theme.switch_dark": "Zum dunklen Design wechseln",
     "view.grid": "Raster",
-    "view.list": "Liste",
-    "whats_new.title": "Neuigkeiten",
-    "whats_new.new": "Neu",
-    "whats_new.archive": "Archiv",
-    "whats_new.back": "Zurück zu den Ankündigungen",
-    "whats_new.close": "Schließen",
-    "whats_new.empty": "Hier gibt es noch keine Ankündigungen."
+    "view.list": "Liste"
   }
 }
