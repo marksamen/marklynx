@@ -27,7 +27,10 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-function authDiag(event,detail=""){console.info(`[ML-AUTH-REV06][PARENT][${new Date().toISOString()}] ${event}`,detail);}
+function authDiag(event,detail=""){
+ console.info(`[ML-AUTH-REV06][PARENT][${new Date().toISOString()}] ${event}`,detail);
+ window.mlDebugAdd?.('PARENT',event,detail);
+}
 window.addEventListener("click",e=>{const button=e.target.closest?.("[data-admin-modal-url]");if(button?.dataset.adminModalUrl?.startsWith("languages/"))authDiag("Language Management clicked",{signedIn:!!auth.currentUser});},true);
 function loggedOut(){authDiag("loggedOut() invoked",{signedIn:!!auth.currentUser});admin.style.display="none";login.style.display="block";}
 function loggedIn(){authDiag("loggedIn() invoked",{signedIn:!!auth.currentUser});login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}

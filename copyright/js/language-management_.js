@@ -264,7 +264,10 @@ el('export').onclick=()=>perform(async()=>{
     status('Complete TEST recovery downloaded: '+files.join(', ')+'. Upload to youtube/data/.');
   }finally{el('export').disabled=false;}
 });
-function lmAuthDiag(event,detail=""){console.info(`[ML-AUTH-REV06][LANGUAGE IFRAME][${new Date().toISOString()}] ${event}`,detail);}
+function lmAuthDiag(event,detail=""){
+ console.info(`[ML-AUTH-REV06][LANGUAGE IFRAME][${new Date().toISOString()}] ${event}`,detail);
+ try{window.parent.postMessage({type:'ML_AUTH_REV07_EVENT',source:'LANGUAGE IFRAME',event,detail},window.location.origin);}catch(_e){}
+}
 lmAuthDiag('setPersistence START',{signedIn:!!auth.currentUser});
 try{await setPersistence(auth,browserLocalPersistence);lmAuthDiag('setPersistence COMPLETE',{signedIn:!!auth.currentUser});}catch(e){lmAuthDiag('setPersistence ERROR',{code:e?.code||'unknown'});throw e;}
 onAuthStateChanged(auth,u=>{lmAuthDiag('primary onAuthStateChanged',{signedIn:!!u});user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);},e=>lmAuthDiag('primary observer ERROR',{code:e?.code||'unknown'}));
