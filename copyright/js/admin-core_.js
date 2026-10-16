@@ -118,7 +118,7 @@ window.addEventListener("message", event => {
 });
 
 
-// What's New TEST REV05: parent-only authenticated read-only connection.
+// What's New TEST REV06: parent-only authenticated read-only connection.
 // No Firebase SDK in iframe; no credentials/tokens posted to iframe.
 let wnReadOnlyBusy = false;
 window.addEventListener("message", async event => {
@@ -143,14 +143,18 @@ window.addEventListener("message", async event => {
       body: JSON.stringify({action:"list"}),
       cache: "no-store"
     });
-    const result = await response.json();
+    const raw = await response.text();
+    let result;
+    try { result = JSON.parse(raw); }
+    catch { throw new Error(`Edge Function HTTP ${response.status}: invalid JSON response (${raw.slice(0,120)})`); }
     if (!response.ok || result?.ok !== true) throw new Error(`Edge Function HTTP ${response.status}: ${String(result?.error || "Unknown response").slice(0,180)}`);
-    if (!Array.isArray(result.announcements) || !Array.isArray(result.translations) || !Array.isArray(result.languages)) {
-      throw new Error("Unexpected read-only response structure");
+    // Deployed TEST function returns settings, announcements and translations; it does not return languages.
+    if (!result.settings || typeof result.settings !== "object" ||
+        !Array.isArray(result.announcements) || !Array.isArray(result.translations)) {
+      throw new Error(`Edge Function HTTP ${response.status}: unexpected list response structure`);
     }
-    reply({ok:true, httpStatus:response.status, enabled:result.settings?.enabled === true,
-      announcementCount:result.announcements.length, translationCount:result.translations.length,
-      enabledLanguageCount:result.languages.length});
+    reply({ok:true, httpStatus:response.status, enabled:result.settings.enabled === true,
+      announcementCount:result.announcements.length, translationCount:result.translations.length});
   } catch (error) {
     reply({ok:false, error: error instanceof Error ? error.message : "Unknown connection error"});
   } finally {
