@@ -1,5 +1,26 @@
 [
   {
+    "code": "fr",
+    "native_name": "Français",
+    "english_name": "French",
+    "enabled": true,
+    "sort_order": 0
+  },
+  {
+    "code": "de",
+    "native_name": "Deutsch",
+    "english_name": "German",
+    "enabled": true,
+    "sort_order": 0
+  },
+  {
+    "code": "it",
+    "native_name": "Italiano",
+    "english_name": "Italian",
+    "enabled": true,
+    "sort_order": 0
+  },
+  {
     "code": "pt",
     "native_name": "Português",
     "english_name": "Portuguese",
