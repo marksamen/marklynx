@@ -3,7 +3,7 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
-import { initAdminPageModal } from "./admin-page-modal_.js?v=COMPLETION-TYPES-TEST-REV02";
+import { initAdminPageModal } from "./admin-page-modal_.js?v=WN-XONLY-REV04";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=RECOMPLETION-TEST-REV01-20261014";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
@@ -107,5 +107,14 @@ document.getElementById("logout").addEventListener("click",()=>signOut(auth));
 
 initTestContentControl();
 
+
+
+// What's New TEST REV04: parent-owned auth status handshake; no credentials sent.
+window.addEventListener("message", event => {
+  if (event.origin !== window.location.origin || event.data?.type !== "wn-probe-auth-status-request") return;
+  const frame = document.getElementById("adminPageModalFrame");
+  if (!frame || event.source !== frame.contentWindow || !frame.getAttribute("src")?.startsWith("whats-new-probe/")) return;
+  event.source.postMessage({type:"wn-probe-auth-status-response", authenticated: Boolean(auth.currentUser)}, event.origin);
+});
 
 initAdminPageModal();
