@@ -27,8 +27,10 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
+function authDiag(event,detail=""){console.info(`[ML-AUTH-REV06][PARENT][${new Date().toISOString()}] ${event}`,detail);}
+window.addEventListener("click",e=>{const button=e.target.closest?.("[data-admin-modal-url]");if(button?.dataset.adminModalUrl?.startsWith("languages/"))authDiag("Language Management clicked",{signedIn:!!auth.currentUser});},true);
+function loggedOut(){authDiag("loggedOut() invoked",{signedIn:!!auth.currentUser});admin.style.display="none";login.style.display="block";}
+function loggedIn(){authDiag("loggedIn() invoked",{signedIn:!!auth.currentUser});login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
 
 // Supabase TEST recovery export — public SELECT only. No database writes.
@@ -91,8 +93,9 @@ window.addEventListener("completion-types-modal-closed",()=>{
   loadCompletionTypeOptions().catch(console.error);
   loadGamesTest().catch(console.error);
 });
-await setPersistence(auth,browserLocalPersistence);
-onAuthStateChanged(auth,user=>user?loggedIn():loggedOut());
+authDiag("setPersistence START",{signedIn:!!auth.currentUser});
+try{await setPersistence(auth,browserLocalPersistence);authDiag("setPersistence COMPLETE",{signedIn:!!auth.currentUser});}catch(e){authDiag("setPersistence ERROR",{code:e?.code||"unknown"});throw e;}
+onAuthStateChanged(auth,user=>{authDiag("onAuthStateChanged",{signedIn:!!user});user?loggedIn():loggedOut();},e=>authDiag("auth observer ERROR",{code:e?.code||"unknown"}));
 
 form.addEventListener("submit",async e=>{
   e.preventDefault(); error.textContent="";
@@ -103,7 +106,7 @@ form.addEventListener("submit",async e=>{
   }catch(e){error.textContent="Invalid email or password.";}
 });
 
-document.getElementById("logout").addEventListener("click",()=>signOut(auth));
+document.getElementById("logout").addEventListener("click",()=>{authDiag("Manual Sign Out clicked");return signOut(auth);});
 
 initTestContentControl();
 

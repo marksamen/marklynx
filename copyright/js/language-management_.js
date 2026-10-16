@@ -264,7 +264,10 @@ el('export').onclick=()=>perform(async()=>{
     status('Complete TEST recovery downloaded: '+files.join(', ')+'. Upload to youtube/data/.');
   }finally{el('export').disabled=false;}
 });
-await setPersistence(auth,browserLocalPersistence);onAuthStateChanged(auth,u=>{user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);});
+function lmAuthDiag(event,detail=""){console.info(`[ML-AUTH-REV06][LANGUAGE IFRAME][${new Date().toISOString()}] ${event}`,detail);}
+lmAuthDiag('setPersistence START',{signedIn:!!auth.currentUser});
+try{await setPersistence(auth,browserLocalPersistence);lmAuthDiag('setPersistence COMPLETE',{signedIn:!!auth.currentUser});}catch(e){lmAuthDiag('setPersistence ERROR',{code:e?.code||'unknown'});throw e;}
+onAuthStateChanged(auth,u=>{lmAuthDiag('primary onAuthStateChanged',{signedIn:!!u});user=u;if(u)perform(reload);else status('Sign in to the main TEST Admin first.',true);},e=>lmAuthDiag('primary observer ERROR',{code:e?.code||'unknown'}));
 
 // What's New dynamic content: the English original is owned by What's New Management.
 // Announcement translations are stored in whats_new_translations, NOT site_translations.
@@ -314,4 +317,4 @@ el('wnSave').onclick=async()=>{
  }catch(e){wnStatus(e.message||String(e),true);}
 };
 // Wait for the existing Admin Firebase session and language inventory to finish loading.
-onAuthStateChanged(auth,u=>{if(u)setTimeout(wnReload,0);});
+onAuthStateChanged(auth,u=>{lmAuthDiag('Whats New onAuthStateChanged',{signedIn:!!u});if(u)setTimeout(wnReload,0);},e=>lmAuthDiag('Whats New observer ERROR',{code:e?.code||'unknown'}));
