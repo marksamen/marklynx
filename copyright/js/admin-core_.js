@@ -155,12 +155,68 @@ window.addEventListener("message", async event => {
     }
     reply({ok:true, httpStatus:response.status, enabled:result.settings.enabled === true,
       announcements: result.announcements.map(a => ({id:a.id, status:a.status, created_at:a.created_at, published_at:a.published_at, updated_at:a.updated_at})),
-      translations: result.translations.map(t => ({announcement_id:t.announcement_id, language_code:t.language_code, title:t.title, summary:t.summary}))});
+      translations: result.translations.map(t => ({announcement_id:t.announcement_id, language_code:t.language_code, title:t.title, summary:t.summary, body:t.body}))});
   } catch (error) {
     reply({ok:false, error: error instanceof Error ? error.message : "Unknown connection error"});
   } finally {
     wnReadOnlyBusy = false;
   }
+});
+
+
+// What's New TEST REV08: narrowly scoped authenticated draft management.
+// Parent owns Firebase and token. Never send credentials or tokens to the iframe.
+let wnWriteBusy = false;
+window.addEventListener("message", async event => {
+  if (event.origin !== window.location.origin || event.data?.type !== "wn-admin-action-request") return;
+  const frame = document.getElementById("adminPageModalFrame");
+  if (!frame || event.source !== frame.contentWindow || !frame.getAttribute("src")?.startsWith("whats-new-probe/")) return;
+  const requestId = event.data.requestId;
+  if (typeof requestId !== "string" || !/^wn08-[0-9]+$/.test(requestId)) return;
+  const send = payload => {
+    if (frame.contentWindow === event.source && frame.getAttribute("src")?.startsWith("whats-new-probe/")) {
+      event.source.postMessage({type:"wn-admin-action-response", requestId, ...payload}, event.origin);
+    }
+  };
+  if (wnWriteBusy) { send({ok:false,error:"Another save is in progress"}); return; }
+  const incoming = event.data.payload;
+  if (!incoming || typeof incoming !== "object" || Array.isArray(incoming)) return;
+  const action = incoming.action;
+  if (!["set-enabled", "create", "save-translation"].includes(action)) {send({ok:false,error:"Action not permitted in REV08"});return;}
+  // Reject malformed input before calling the TEST Edge Function.
+  const clean = {action};
+  if (action === "set-enabled") {
+    if (typeof incoming.enabled !== "boolean") {send({ok:false,error:"Invalid switch value"});return;}
+    clean.enabled = incoming.enabled;
+  } else if (action === "save-translation") {
+    const id = Number(incoming.id);
+    const code = incoming.language_code;
+    if (!Number.isSafeInteger(id) || id <= 0 || typeof code !== "string" || !/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(code)) {
+      send({ok:false,error:"Invalid announcement or language"});return;
+    }
+    const fields = [["title",160],["summary",500],["body",15000]];
+    if (fields.some(([key,max]) => typeof incoming[key] !== "string" || !incoming[key].trim() || incoming[key].trim().length > max)) {
+      send({ok:false,error:"Title, summary and body are required within length limits"});return;
+    }
+    Object.assign(clean,{id,language_code:code,title:incoming.title.trim(),summary:incoming.summary.trim(),body:incoming.body.trim()});
+  }
+  wnWriteBusy = true;
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error("Admin authentication required");
+    const token = await user.getIdToken();
+    const response = await fetch(`${SUPABASE_TEST_URL}/functions/v1/whats-new-admin`, {
+      method:"POST", headers:{"Authorization":`Bearer ${token}`,"Content-Type":"application/json"},
+      body:JSON.stringify(clean),cache:"no-store"
+    });
+    const raw = await response.text();
+    let result;
+    try {result=JSON.parse(raw);} catch {throw new Error(`HTTP ${response.status}: invalid JSON response`);}
+    if (!response.ok || result?.ok !== true) throw new Error(`HTTP ${response.status}: ${String(result?.error || "Request failed").slice(0,220)}`);
+    send({ok:true,httpStatus:response.status,action});
+  } catch (error) {
+    send({ok:false,error:error instanceof Error?error.message:"Unexpected save error"});
+  } finally {wnWriteBusy=false;}
 });
 
 initAdminPageModal();
