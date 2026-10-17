@@ -123,8 +123,8 @@ export const inventory={
     "whats_new.new": "New",
     "whats_new.archive": "Archive",
     "whats_new.close": "Close",
-    "whats_new.emptyNew": "No new announcements.",
-    "whats_new.emptyArchive": "No archived announcements.",
+    "whats_new.empty_new": "No new announcements.",
+    "whats_new.empty_archive": "No archived announcements.",
     "whats_new.published": "Published"
   },
   "Theme": {
