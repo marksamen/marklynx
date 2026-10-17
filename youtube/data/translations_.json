@@ -148,7 +148,14 @@
     "theme.switch_bright": "Mudar para o tema claro",
     "theme.switch_dark": "Mudar para o tema escuro",
     "view.grid": "Grelha",
-    "view.list": "Lista"
+    "view.list": "Lista",
+    "whats_new.title": "Novidades",
+    "whats_new.new": "Novas",
+    "whats_new.archive": "Arquivo",
+    "whats_new.close": "Fechar",
+    "whats_new.emptyNew": "Não há novos anúncios.",
+    "whats_new.emptyArchive": "Não há anúncios arquivados.",
+    "whats_new.published": "Publicado"
   },
   "es": {
     "completion_type.1": "Perfil de 5 estrellas",
@@ -299,7 +306,14 @@
     "theme.switch_bright": "Cambiar al Tema Claro",
     "theme.switch_dark": "Cambiar al Tema Oscuro",
     "view.grid": "Cuadrícula",
-    "view.list": "Lista"
+    "view.list": "Lista",
+    "whats_new.title": "Novedades",
+    "whats_new.new": "Nuevas",
+    "whats_new.archive": "Archivo",
+    "whats_new.close": "Cerrar",
+    "whats_new.emptyNew": "No hay anuncios nuevos.",
+    "whats_new.emptyArchive": "No hay anuncios archivados.",
+    "whats_new.published": "Publicado"
   },
   "fr": {
     "completion_type.1": "Profil 5 étoiles",
@@ -450,7 +464,14 @@
     "theme.switch_bright": "Passer au thème clair",
     "theme.switch_dark": "Passer au thème sombre",
     "view.grid": "Grille",
-    "view.list": "Liste"
+    "view.list": "Liste",
+    "whats_new.title": "Nouveautés",
+    "whats_new.new": "Nouvelles",
+    "whats_new.archive": "Archives",
+    "whats_new.close": "Fermer",
+    "whats_new.emptyNew": "Aucune nouvelle annonce.",
+    "whats_new.emptyArchive": "Aucune annonce archivée.",
+    "whats_new.published": "Publié"
   },
   "it": {
     "completion_type.1": "Profilo a 5 stelle",
@@ -601,7 +622,14 @@
     "theme.switch_bright": "Passa al tema chiaro",
     "theme.switch_dark": "Passa al tema scuro",
     "view.grid": "Griglia",
-    "view.list": "Elenco"
+    "view.list": "Elenco",
+    "whats_new.title": "Novità",
+    "whats_new.new": "Nuove",
+    "whats_new.archive": "Archivio",
+    "whats_new.close": "Chiudi",
+    "whats_new.emptyNew": "Nessun nuovo annuncio.",
+    "whats_new.emptyArchive": "Nessun annuncio archiviato.",
+    "whats_new.published": "Pubblicato"
   },
   "de": {
     "completion_type.1": "5-Sterne-Profil",
@@ -752,6 +780,13 @@
     "theme.switch_bright": "Zum hellen Design wechseln",
     "theme.switch_dark": "Zum dunklen Design wechseln",
     "view.grid": "Raster",
-    "view.list": "Liste"
+    "view.list": "Liste",
+    "whats_new.title": "Neuigkeiten",
+    "whats_new.new": "Neu",
+    "whats_new.archive": "Archiv",
+    "whats_new.close": "Schließen",
+    "whats_new.emptyNew": "Keine neuen Ankündigungen.",
+    "whats_new.emptyArchive": "Keine archivierten Ankündigungen.",
+    "whats_new.published": "Veröffentlicht"
   }
 }
