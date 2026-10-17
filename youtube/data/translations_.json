@@ -153,8 +153,8 @@
     "whats_new.new": "Novas",
     "whats_new.archive": "Arquivo",
     "whats_new.close": "Fechar",
-    "whats_new.emptyNew": "Não há novos anúncios.",
-    "whats_new.emptyArchive": "Não há anúncios arquivados.",
+    "whats_new.empty_new": "Não há novos anúncios.",
+    "whats_new.empty_archive": "Não há anúncios arquivados.",
     "whats_new.published": "Publicado"
   },
   "es": {
@@ -311,8 +311,8 @@
     "whats_new.new": "Nuevas",
     "whats_new.archive": "Archivo",
     "whats_new.close": "Cerrar",
-    "whats_new.emptyNew": "No hay anuncios nuevos.",
-    "whats_new.emptyArchive": "No hay anuncios archivados.",
+    "whats_new.empty_new": "No hay anuncios nuevos.",
+    "whats_new.empty_archive": "No hay anuncios archivados.",
     "whats_new.published": "Publicado"
   },
   "fr": {
@@ -469,8 +469,8 @@
     "whats_new.new": "Nouvelles",
     "whats_new.archive": "Archives",
     "whats_new.close": "Fermer",
-    "whats_new.emptyNew": "Aucune nouvelle annonce.",
-    "whats_new.emptyArchive": "Aucune annonce archivée.",
+    "whats_new.empty_new": "Aucune nouvelle annonce.",
+    "whats_new.empty_archive": "Aucune annonce archivée.",
     "whats_new.published": "Publié"
   },
   "it": {
@@ -627,8 +627,8 @@
     "whats_new.new": "Nuove",
     "whats_new.archive": "Archivio",
     "whats_new.close": "Chiudi",
-    "whats_new.emptyNew": "Nessun nuovo annuncio.",
-    "whats_new.emptyArchive": "Nessun annuncio archiviato.",
+    "whats_new.empty_new": "Nessun nuovo annuncio.",
+    "whats_new.empty_archive": "Nessun annuncio archiviato.",
     "whats_new.published": "Pubblicato"
   },
   "de": {
@@ -785,8 +785,8 @@
     "whats_new.new": "Neu",
     "whats_new.archive": "Archiv",
     "whats_new.close": "Schließen",
-    "whats_new.emptyNew": "Keine neuen Ankündigungen.",
-    "whats_new.emptyArchive": "Keine archivierten Ankündigungen.",
+    "whats_new.empty_new": "Keine neuen Ankündigungen.",
+    "whats_new.empty_archive": "Keine archivierten Ankündigungen.",
     "whats_new.published": "Veröffentlicht"
   }
 }
