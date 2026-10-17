@@ -85,3 +85,20 @@ html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot {bo
   html[data-theme="light"] #whatsNewMobileBtn {color:#222!important;}
   html[data-theme="dark"] #whatsNewMobileBtn {color:#f4f4f4!important;}
 }
+
+/* TEST REV20 — desktop Bright only: gentle red tint and clearer contrast. */
+@media (min-width:951px) {
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn {
+    background:#f2dcd8; border-color:#b46a63; color:#68231e;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn:hover {
+    background:#e9cbc5; border-color:#963e35; color:#541a16;
+  }
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot {
+    box-shadow:0 0 0 2px #f2dcd8;
+  }
+}
