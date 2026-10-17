@@ -182,7 +182,7 @@ window.addEventListener("message", async event => {
   const incoming = event.data.payload;
   if (!incoming || typeof incoming !== "object" || Array.isArray(incoming)) return;
   const action = incoming.action;
-  if (!["set-enabled", "create", "save-translation"].includes(action)) {send({ok:false,error:"Action not permitted in REV08"});return;}
+  if (!["set-enabled", "create", "save-translation", "publish", "unpublish", "delete"].includes(action)) {send({ok:false,error:"Action not permitted in TEST REV12"});return;}
   // Reject malformed input before calling the TEST Edge Function.
   const clean = {action};
   if (action === "set-enabled") {
@@ -199,6 +199,15 @@ window.addEventListener("message", async event => {
       send({ok:false,error:"Title, summary and body are required within length limits"});return;
     }
     Object.assign(clean,{id,language_code:code,title:incoming.title.trim(),summary:incoming.summary.trim(),body:incoming.body.trim()});
+  }
+  if (["publish", "unpublish", "delete"].includes(action)) {
+    const id = Number(incoming.id);
+    if (!Number.isSafeInteger(id) || id <= 0) {send({ok:false,error:"Invalid announcement ID"});return;}
+    clean.id = id;
+    if (action === "delete") {
+      if (incoming.confirm !== true) {send({ok:false,error:"Explicit delete confirmation required"});return;}
+      clean.confirm = true;
+    }
   }
   wnWriteBusy = true;
   try {
