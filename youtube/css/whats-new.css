@@ -1,0 +1,104 @@
+/* Mark Lynx What's New — TEST REV17; isolated styles */
+.wn-button{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 13px;border:1px solid #66809b;border-radius:8px;background:#253d52;color:#fff;font:inherit;cursor:pointer;white-space:nowrap}
+.wn-button[hidden],.wn-overlay[hidden],.wn-dot[hidden],.wn-body[hidden]{display:none!important}
+.wn-button svg{width:20px;height:20px;flex:none}.wn-dot{position:absolute;right:5px;top:3px;width:9px;height:9px;border-radius:50%;background:#e93445;box-shadow:0 0 0 2px #253d52}
+.wn-overlay{position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.78);display:flex;justify-content:center;align-items:center;padding:18px;box-sizing:border-box}
+.wn-dialog{background:#172431;color:#f5f7fa;border:1px solid #506275;border-radius:9px;width:min(740px,100%);max-height:min(85vh,850px);display:flex;flex-direction:column;box-shadow:0 18px 55px #0009;overflow:hidden}
+.wn-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 18px;border-bottom:1px solid #455668}.wn-head h2{font-size:20px;margin:0;color:inherit}.wn-close{background:#303b47;color:#fff;border:1px solid #647182;border-radius:6px;font-size:24px;width:35px;height:35px;cursor:pointer}
+.wn-tabs{display:flex;gap:8px;padding:13px 18px 0}.wn-tabs button{border:1px solid #60748b;border-radius:6px;background:#24374b;color:#fff;padding:9px 18px;cursor:pointer}.wn-tabs button[aria-selected=true]{background:#426483;border-color:#9db5cc}
+.wn-list{overflow:auto;padding:15px 18px 24px;min-height:100px}.wn-card{border:1px solid #42566b;border-radius:7px;margin-bottom:12px;background:#203245;overflow:hidden}.wn-entry{width:100%;text-align:left;border:0;background:none;color:inherit;display:flex;flex-direction:column;gap:7px;padding:14px;cursor:pointer;font:inherit}.wn-entry strong{font-size:16px}.wn-entry span{font-size:14px}.wn-entry small{opacity:.7}.wn-body{padding:14px;border-top:1px solid #42566b;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}.wn-empty{opacity:.8;margin:16px 0}.wn-open{overflow:hidden}
+@media(max-width:650px){.wn-button{padding:8px}.wn-button .wn-label{display:none}.wn-dialog{max-height:90dvh}.wn-head h2{font-size:18px}}
+
+.wn-mobile-button{display:none}
+@media(max-width:650px){.wn-button:not(.wn-mobile-button){display:none!important}.wn-mobile-button:not([hidden]){display:inline-flex!important;margin-left:8px}}
+
+/* Existing site theme uses data-theme on the root element. */
+html[data-theme="bright"] .wn-dialog,html[data-theme="light"] .wn-dialog{background:#fff;color:#182331;border-color:#aab5c2}
+html[data-theme="bright"] .wn-head,html[data-theme="light"] .wn-head{border-color:#d5dce3}
+html[data-theme="bright"] .wn-card,html[data-theme="light"] .wn-card{background:#f4f7fa;border-color:#b9c6d1}
+html[data-theme="bright"] .wn-body,html[data-theme="light"] .wn-body{border-color:#b9c6d1}
+html[data-theme="bright"] .wn-tabs button,html[data-theme="light"] .wn-tabs button{background:#e5ebf1;color:#182331;border-color:#98aabc}
+html[data-theme="bright"] .wn-tabs button[aria-selected="true"],html[data-theme="light"] .wn-tabs button[aria-selected="true"]{background:#c2d9ed}
+html[data-theme="bright"] .wn-close,html[data-theme="light"] .wn-close{background:#e5ebf1;color:#182331;border-color:#98aabc}
+.wn-entry:focus-visible,.wn-close:focus-visible,.wn-tabs button:focus-visible,.wn-button:focus-visible{outline:3px solid #e6ad2e;outline-offset:2px}
+
+/* TEST REV18 — public appearance correction; no behavior/backend changes. */
+@media (min-width:761px) {
+  .subscribe-strip-inner > #whatsNewPublicBtn { margin-right:auto; }
+}
+.wn-button {
+  background:#251313; border:1px solid #8f2924; border-radius:3px;
+  color:#fff; font:600 13px var(--sans,Arial,sans-serif);
+  padding:9px 14px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+  transition:background .15s,border-color .15s,transform .15s;
+}
+.wn-button:hover { background:#3a1715; border-color:var(--red-bright,#e0392f); transform:translateY(-1px); }
+.wn-button svg { width:18px;height:18px; }
+.wn-dot {box-shadow:0 0 0 2px #251313;}
+.wn-overlay {background:rgba(0,0,0,.86);backdrop-filter:blur(7px);}
+.wn-dialog {background:var(--bg-raised,#141414);color:var(--text,#e8e6e2);border:1px solid #4c2926;border-top:3px solid var(--red,#b3231c);border-radius:5px;box-shadow:0 18px 55px #000b;}
+.wn-head {border-bottom:1px solid var(--line,#262626);}
+.wn-close {background:#251313;color:var(--text,#e8e6e2);border:1px solid #6e302b;border-radius:3px;}
+.wn-close:hover {background:#3a1715;}
+.wn-tabs button {background:#201717;color:var(--text,#e8e6e2);border:1px solid #55302d;border-radius:3px;}
+.wn-tabs button[aria-selected=true] {background:#67231e;border-color:var(--red-bright,#e0392f);color:#fff;}
+.wn-card {background:var(--bg-card,#161616);border:1px solid #422b29;border-radius:4px;}
+.wn-body {border-top:1px solid var(--line,#262626);}
+/* Bright theme overrides use the site's existing theme marker when present. */
+html[data-theme="bright"] .wn-dialog,html[data-theme="light"] .wn-dialog {background:#fff;color:#1b1b1b;border-color:#b8a9a7;border-top-color:#b3231c;}
+html[data-theme="bright"] .wn-head,html[data-theme="light"] .wn-head {border-color:#ded8d7;}
+html[data-theme="bright"] .wn-card,html[data-theme="light"] .wn-card {background:#f8f6f5;border-color:#d5c7c4;}
+html[data-theme="bright"] .wn-body,html[data-theme="light"] .wn-body {border-color:#ded8d7;}
+html[data-theme="bright"] .wn-tabs button,html[data-theme="light"] .wn-tabs button {background:#f3e9e7;color:#272020;border-color:#bca6a2;}
+html[data-theme="bright"] .wn-tabs button[aria-selected="true"],html[data-theme="light"] .wn-tabs button[aria-selected="true"] {background:#b3231c;color:#fff;border-color:#8f1a1a;}
+html[data-theme="bright"] .wn-close,html[data-theme="light"] .wn-close {background:#f3e9e7;color:#272020;border-color:#bca6a2;}
+@media(max-width:760px){.subscribe-strip-inner > #whatsNewPublicBtn{margin-right:0;}}
+
+/* TEST REV19 — bright desktop neutral action; compact mobile bell for both orientations. */
+html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn {
+  background:#efebea; border-color:#a9a19f; color:#282322;
+  box-shadow:none;
+}
+html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn:hover {
+  background:#e3dcda; border-color:#817674; color:#211c1b;
+}
+html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot,
+html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot {box-shadow:0 0 0 2px #efebea;}
+/* Both mobile orientations: keep bell in the preferences row, never in action row. */
+@media (max-width:950px) and (pointer:coarse) {
+  .subscribe-strip-inner > #whatsNewPublicBtn {display:none!important;}
+  #whatsNewMobileBtn:not([hidden]) {
+    display:inline-flex!important; position:relative;
+    width:34px; height:34px; min-width:34px; min-height:34px;
+    margin-left:4px; padding:5px; box-sizing:border-box;
+    align-items:center; justify-content:center; flex:none;
+    background:transparent!important; border:0!important;
+    border-radius:3px; box-shadow:none!important;
+    color:var(--text,#eee); transform:none!important;
+  }
+  #whatsNewMobileBtn svg {width:20px;height:20px;flex:none;}
+  #whatsNewMobileBtn .wn-label {display:none!important;}
+  #whatsNewMobileBtn .wn-dot {top:2px;right:1px;width:9px;height:9px;box-shadow:0 0 0 2px var(--bg,#141414);}
+  html[data-theme="bright"] #whatsNewMobileBtn,
+  html[data-theme="light"] #whatsNewMobileBtn {color:#222!important;}
+  html[data-theme="dark"] #whatsNewMobileBtn {color:#f4f4f4!important;}
+}
+
+/* TEST REV20 — desktop Bright only: gentle red tint and clearer contrast. */
+@media (min-width:951px) {
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn {
+    background:#f2dcd8; border-color:#b46a63; color:#68231e;
+    box-shadow:none;
+  }
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn:hover {
+    background:#e9cbc5; border-color:#963e35; color:#541a16;
+  }
+  html[data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot,
+  html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot {
+    box-shadow:0 0 0 2px #f2dcd8;
+  }
+}
