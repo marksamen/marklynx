@@ -12,20 +12,26 @@
     published:'Published'};
   const PREFIX='whats_new.';
   let uiTranslations = {}, uiLanguage = 'en', languageRequest = 0;
-  const words = () => Object.fromEntries(Object.entries(EN).map(([k,v])=>[k,uiTranslations[PREFIX+k]||v]));
+  const KEY_SUFFIX = {emptyNew:'empty_new',emptyArchive:'empty_archive'};
+  const words = () => Object.fromEntries(Object.entries(EN).map(([k,v])=>[k,uiTranslations[PREFIX+(KEY_SUFFIX[k]||k)]||v]));
   async function loadUiLanguage() {
     const lang=language(); const token=++languageRequest;
     let next={};
     if(lang!=='en') {
+      // Recovery JSON contains the approved UI labels. Load it first, then
+      // allow Admin-managed Supabase translations to override individual keys.
+      // An empty successful Supabase response must not erase recovery labels.
+      try {
+        const response=await fetch('data/translations.json?v=WHATS-NEW-PROD-REV02',{cache:'no-store'});
+        if(response.ok) next=(await response.json())[lang]||{};
+      } catch(err) { console.warn('[WHATS NEW PROD] Translation recovery unavailable',err); }
       try {
         const rows=await request('site_translations','select=translation_key,translated_text&language_code=eq.'+encodeURIComponent(lang)+'&translation_key=like.whats_new.*');
-        next=Object.fromEntries(rows.map(x=>[x.translation_key,x.translated_text]));
-      } catch(err) {
-        try {
-          const response=await fetch('data/translations.json?v=WHATS-NEW-PROD-REV01',{cache:'no-store'});
-          if(response.ok) next=(await response.json())[lang]||{};
-        } catch(_) {}
-      }
+        for(const row of rows) {
+          if(typeof row.translated_text==='string' && row.translated_text.trim())
+            next[row.translation_key]=row.translated_text;
+        }
+      } catch(err) { console.warn('[WHATS NEW PROD] Managed UI translations unavailable; using recovery',err); }
     }
     if(token===languageRequest) {uiLanguage=lang;uiTranslations=next;render();}
   }
