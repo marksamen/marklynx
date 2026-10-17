@@ -118,6 +118,15 @@ export const inventory={
     "suggest.submitting_button": "Submitting…",
     "suggest.submitted_button": "Submitted"
   },
+  "What’s New": {
+    "whats_new.title": "What's New",
+    "whats_new.new": "New",
+    "whats_new.archive": "Archive",
+    "whats_new.close": "Close",
+    "whats_new.empty_new": "No new announcements.",
+    "whats_new.empty_archive": "No archived announcements.",
+    "whats_new.published": "Published"
+  },
   "Theme": {
     "theme.bright": "Bright",
     "theme.dark": "Dark",
