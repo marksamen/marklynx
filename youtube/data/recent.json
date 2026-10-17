@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-16T13:17:07.898511+00:00",
+  "updated": "2026-10-17T12:13:14.690721+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "n26pV-o2Htg",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 6 | Snaking above Mist Valley | All Star Coins",
+      "published": "2026-10-16T17:11:06+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/n26pV-o2Htg/hqdefault.jpg"
+    },
     {
       "id": "Wq_WfJH63KE",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 5 | A Quick Dip in the Sky | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 3 | Switchback Hill | All Star Coins",
       "published": "2026-10-10T16:09:30+00:00",
       "thumbnail": "https://i.ytimg.com/vi/BjQokWKAYbE/hqdefault.jpg"
-    },
-    {
-      "id": "7ltTZqeD9_k",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 2 | Seesaw Shrooms | All Star Coins",
-      "published": "2026-10-09T21:55:47+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/7ltTZqeD9_k/hqdefault.jpg"
     }
   ]
 }
