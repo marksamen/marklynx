@@ -12,7 +12,8 @@
     published:'Published'};
   const PREFIX='whats_new.';
   let uiTranslations = {}, uiLanguage = 'en', languageRequest = 0;
-  const words = () => Object.fromEntries(Object.entries(EN).map(([k,v])=>[k,uiTranslations[PREFIX+k]||v]));
+  const KEY_SUFFIX = {emptyNew:'empty_new',emptyArchive:'empty_archive'};
+  const words = () => Object.fromEntries(Object.entries(EN).map(([k,v])=>[k,uiTranslations[PREFIX+(KEY_SUFFIX[k]||k)]||v]));
   async function loadUiLanguage() {
     const lang=language(); const token=++languageRequest;
     let next={};
