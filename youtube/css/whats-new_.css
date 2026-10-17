@@ -21,3 +21,35 @@ html[data-theme="bright"] .wn-tabs button,html[data-theme="light"] .wn-tabs butt
 html[data-theme="bright"] .wn-tabs button[aria-selected="true"],html[data-theme="light"] .wn-tabs button[aria-selected="true"]{background:#c2d9ed}
 html[data-theme="bright"] .wn-close,html[data-theme="light"] .wn-close{background:#e5ebf1;color:#182331;border-color:#98aabc}
 .wn-entry:focus-visible,.wn-close:focus-visible,.wn-tabs button:focus-visible,.wn-button:focus-visible{outline:3px solid #e6ad2e;outline-offset:2px}
+
+/* TEST REV18 — public appearance correction; no behavior/backend changes. */
+@media (min-width:761px) {
+  .subscribe-strip-inner > #whatsNewPublicBtn { margin-right:auto; }
+}
+.wn-button {
+  background:#251313; border:1px solid #8f2924; border-radius:3px;
+  color:#fff; font:600 13px var(--sans,Arial,sans-serif);
+  padding:9px 14px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+  transition:background .15s,border-color .15s,transform .15s;
+}
+.wn-button:hover { background:#3a1715; border-color:var(--red-bright,#e0392f); transform:translateY(-1px); }
+.wn-button svg { width:18px;height:18px; }
+.wn-dot {box-shadow:0 0 0 2px #251313;}
+.wn-overlay {background:rgba(0,0,0,.86);backdrop-filter:blur(7px);}
+.wn-dialog {background:var(--bg-raised,#141414);color:var(--text,#e8e6e2);border:1px solid #4c2926;border-top:3px solid var(--red,#b3231c);border-radius:5px;box-shadow:0 18px 55px #000b;}
+.wn-head {border-bottom:1px solid var(--line,#262626);}
+.wn-close {background:#251313;color:var(--text,#e8e6e2);border:1px solid #6e302b;border-radius:3px;}
+.wn-close:hover {background:#3a1715;}
+.wn-tabs button {background:#201717;color:var(--text,#e8e6e2);border:1px solid #55302d;border-radius:3px;}
+.wn-tabs button[aria-selected=true] {background:#67231e;border-color:var(--red-bright,#e0392f);color:#fff;}
+.wn-card {background:var(--bg-card,#161616);border:1px solid #422b29;border-radius:4px;}
+.wn-body {border-top:1px solid var(--line,#262626);}
+/* Bright theme overrides use the site's existing theme marker when present. */
+html[data-theme="bright"] .wn-dialog,html[data-theme="light"] .wn-dialog {background:#fff;color:#1b1b1b;border-color:#b8a9a7;border-top-color:#b3231c;}
+html[data-theme="bright"] .wn-head,html[data-theme="light"] .wn-head {border-color:#ded8d7;}
+html[data-theme="bright"] .wn-card,html[data-theme="light"] .wn-card {background:#f8f6f5;border-color:#d5c7c4;}
+html[data-theme="bright"] .wn-body,html[data-theme="light"] .wn-body {border-color:#ded8d7;}
+html[data-theme="bright"] .wn-tabs button,html[data-theme="light"] .wn-tabs button {background:#f3e9e7;color:#272020;border-color:#bca6a2;}
+html[data-theme="bright"] .wn-tabs button[aria-selected="true"],html[data-theme="light"] .wn-tabs button[aria-selected="true"] {background:#b3231c;color:#fff;border-color:#8f1a1a;}
+html[data-theme="bright"] .wn-close,html[data-theme="light"] .wn-close {background:#f3e9e7;color:#272020;border-color:#bca6a2;}
+@media(max-width:760px){.subscribe-strip-inner > #whatsNewPublicBtn{margin-right:0;}}
