@@ -33,5 +33,12 @@
     "english_name": "Portuguese",
     "enabled": true,
     "sort_order": 50
+  },
+  {
+    "code": "pt-BR",
+    "native_name": "Português (Brasil)",
+    "english_name": "Portuguese (Brazil)",
+    "enabled": false,
+    "sort_order": 60
   }
 ]
