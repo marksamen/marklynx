@@ -1,37 +1,37 @@
 [
   {
-    "code": "fr",
-    "native_name": "Français",
-    "english_name": "French",
-    "enabled": true,
-    "sort_order": 0
-  },
-  {
     "code": "de",
     "native_name": "Deutsch",
     "english_name": "German",
     "enabled": true,
-    "sort_order": 0
-  },
-  {
-    "code": "it",
-    "native_name": "Italiano",
-    "english_name": "Italian",
-    "enabled": true,
-    "sort_order": 0
-  },
-  {
-    "code": "pt",
-    "native_name": "Português",
-    "english_name": "Portuguese",
-    "enabled": true,
-    "sort_order": 0
+    "sort_order": 10
   },
   {
     "code": "es",
     "native_name": "Español",
     "english_name": "Spanish",
     "enabled": true,
-    "sort_order": 0
+    "sort_order": 20
+  },
+  {
+    "code": "fr",
+    "native_name": "Français",
+    "english_name": "French",
+    "enabled": true,
+    "sort_order": 30
+  },
+  {
+    "code": "it",
+    "native_name": "Italiano",
+    "english_name": "Italian",
+    "enabled": true,
+    "sort_order": 40
+  },
+  {
+    "code": "pt",
+    "native_name": "Português",
+    "english_name": "Portuguese",
+    "enabled": true,
+    "sort_order": 50
   }
 ]

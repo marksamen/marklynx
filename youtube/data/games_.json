@@ -8962,5 +8962,32 @@
     "publisher_1": "Afil Games",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 333,
+    "n": "Knight With Tactics",
+    "p": "XBOX ONE | XBOX Series S/X",
+    "g": "1,000G",
+    "t": "1-2 Minutes",
+    "completion_type": null,
+    "ty": "Puzzle",
+    "tx": "Text Guide Included",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=5-JcBDbIbnw",
+    "v": "5-JcBDbIbnw",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Gametry",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Gametry",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
