@@ -38,7 +38,7 @@
   let announcements = [], translations = [], enabled = false, view = 'new', open = false;
   let button, overlay, dialog, list, tabs, title, closeButton;
   const readIds = (() => { try { const v = JSON.parse(localStorage.getItem(READ_KEY) || '[]'); return new Set(Array.isArray(v) ? v.map(String) : []); } catch { return new Set(); } })();
-  const language = () => { let v = document.getElementById('siteLanguageSelect')?.value || document.documentElement.lang; if (!v) { try { v = localStorage.getItem(LANGUAGE_KEY); } catch {} } return (v || 'en').split('-')[0].toLowerCase(); };
+  const language = () => { let v = document.getElementById('siteLanguageSelect')?.value || document.documentElement.lang; if (!v) { try { v = localStorage.getItem(LANGUAGE_KEY); } catch {} } return v || 'en'; };
   const request = async (table, query) => {
     const r = await fetch(ROOT + table + '?' + query, { headers: { apikey: KEY }, cache: 'no-store' });
     if (!r.ok) throw new Error(table + ' HTTP ' + r.status);
