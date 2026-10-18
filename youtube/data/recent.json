@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-18T12:37:41.751288+00:00",
+  "updated": "2026-10-18T15:52:30.429271+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "5-JcBDbIbnw",
+      "title": "Knight With Tactics | Easy 100% Completion | 1000 Gamerscore | 1-2 Minute Completion | 4K | 60FPS",
+      "published": "2026-10-18T15:48:49+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/5-JcBDbIbnw/hqdefault.jpg"
+    },
     {
       "id": "G_Y52gPk0M8",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Ludwig's Clockwork Castle | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Slide Lift Tower | All Star Coins | 4K",
       "published": "2026-10-11T23:20:05+00:00",
       "thumbnail": "https://i.ytimg.com/vi/SY3eoUE_Vuk/hqdefault.jpg"
-    },
-    {
-      "id": "RL6adiY8K_Q",
-      "title": "Honeyland | Easy 100% Completion | 5000 Gamerscore Update | 2-3 Minute Re-Completion | 4K | 60FPS",
-      "published": "2026-10-11T18:08:58+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/RL6adiY8K_Q/hqdefault.jpg"
     }
   ]
 }
