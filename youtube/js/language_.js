@@ -39,7 +39,7 @@
   wrap.style.marginLeft = 'auto';
   wrap.style.justifyContent = 'flex-end';
   const refreshFlag = () => {
-    const code = language === 'en' ? 'gb' : language.toLowerCase().split('-')[0];
+    const code = language === 'en' ? 'gb' : language.toLowerCase();
     flag.onerror = () => { flag.onerror = null; flag.src = 'images/flag-gb_.svg'; };
     flag.src = 'images/flag-' + encodeURIComponent(code) + '_.svg';
   };
