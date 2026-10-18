@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-17T12:13:14.690721+00:00",
+  "updated": "2026-10-18T12:37:41.751288+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "G_Y52gPk0M8",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Ludwig's Clockwork Castle | All Star Coins",
+      "published": "2026-10-18T01:13:31+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/G_Y52gPk0M8/hqdefault.jpg"
+    },
     {
       "id": "n26pV-o2Htg",
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 6 | Snaking above Mist Valley | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "Honeyland | Easy 100% Completion | 5000 Gamerscore Update | 2-3 Minute Re-Completion | 4K | 60FPS",
       "published": "2026-10-11T18:08:58+00:00",
       "thumbnail": "https://i.ytimg.com/vi/RL6adiY8K_Q/hqdefault.jpg"
-    },
-    {
-      "id": "BjQokWKAYbE",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 3 | Switchback Hill | All Star Coins",
-      "published": "2026-10-10T16:09:30+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/BjQokWKAYbE/hqdefault.jpg"
     }
   ]
 }
