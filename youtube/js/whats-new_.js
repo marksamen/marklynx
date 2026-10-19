@@ -69,8 +69,14 @@
       const heading = document.createElement('button'); heading.type='button'; heading.className='wn-entry'; heading.setAttribute('aria-expanded','false');
       const h = document.createElement('strong'); h.textContent=tr.title;
       const summary=document.createElement('span'); summary.textContent=tr.summary;
-      const timestamp=document.createElement('small'); timestamp.textContent=w.published+': '+date(a.published_at);
-      heading.append(h,summary,timestamp);
+      const timestamp=document.createElement('span'); timestamp.className='wn-date';
+      timestamp.setAttribute('aria-label',w.published+': '+date(a.published_at));
+      const calendar=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      calendar.setAttribute('viewBox','0 0 24 24'); calendar.setAttribute('aria-hidden','true');
+      calendar.innerHTML='<rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 3v4M17 3v4M3 10h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+      const dateText=document.createElement('span'); dateText.textContent=date(a.published_at);
+      timestamp.append(calendar,dateText);
+      heading.append(timestamp,h,summary);
       const body=document.createElement('div'); body.className='wn-body'; body.hidden=true; body.textContent=tr.body;
       heading.addEventListener('click', () => {
         const expanding=body.hidden; body.hidden=!expanding; heading.setAttribute('aria-expanded',String(expanding));
