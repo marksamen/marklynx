@@ -102,3 +102,8 @@ html[data-theme="light"] .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot {bo
     box-shadow:0 0 0 2px #f2dcd8;
   }
 }
+
+/* TEST REV01 — prominent chronological date above each announcement title. */
+.wn-entry .wn-date{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.065em;text-transform:uppercase;line-height:1.3;color:#f1c4ba;opacity:1;}
+.wn-entry .wn-date svg{width:15px;height:15px;flex:none;}
+html[data-theme="bright"] .wn-entry .wn-date,html[data-theme="light"] .wn-entry .wn-date{color:#8b3029;}
