@@ -22,7 +22,7 @@
   selector.id = 'siteLanguageSelect';
   selector.setAttribute('aria-label','Website language');
   selector.title = 'Website language';
-  selector.style.cssText = 'background:#20242b;color:#fff;border:1px solid #777;border-radius:6px;padding:7px 9px;max-width:145px;font-size:11.5px;cursor:pointer;';
+  selector.style.cssText = 'background:#20242b;color:#fff;border:1px solid #777;border-radius:6px;padding:7px 9px;max-width:145px;font-size:11px;cursor:pointer;';
   const label = document.createElement('label');
   label.htmlFor = selector.id;
   label.textContent = 'Language';
