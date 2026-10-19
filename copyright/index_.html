@@ -244,7 +244,7 @@
 #wnDiag pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font:inherit}
 #wnDiag .head{position:sticky;top:0;background:#111827;z-index:1;display:flex;justify-content:space-between;gap:8px;align-items:center}
 </style>
-<div id="wnDiag" aria-label="TEST REV16 Admin diagnostic panel"><div class="head"><strong>TEST REV16 — ADMIN DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
+<div id="wnDiag" aria-label="TEST REV03 What's New publication diagnostics"><div class="head"><strong>TEST REV03 — WHAT'S NEW PUBLICATION DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
 <script>
 (function(){
  const panel=document.getElementById('wnDiagText'), logs=[];
@@ -262,7 +262,22 @@
  window.addEventListener('storage',e=>log('storage event key='+String(e.key).slice(0,45)));
  document.addEventListener('visibilitychange',()=>log('visibility change'));
  window.addEventListener('resize',()=>log('resize'));
- window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data?.wnProbeEvent)log('probe: '+String(e.data.wnProbeEvent).slice(0,600));});
+  // TEST REV03: passive publication audit. Never log payload bodies, tokens or personal data.
+  // This listener observes messages; it does not dispatch requests or change announcement state.
+  window.addEventListener('message',e=>{
+    if(e.origin!==location.origin)return;
+    const d=e.data;if(!d||typeof d!=='object')return;
+    if(d.wnProbeEvent)log('probe: '+String(d.wnProbeEvent).slice(0,600));
+    // Observe only messages from the known TEST What's New iframe or parent responses.
+    const frame=$('adminPageModalFrame');
+    if(e.source!==frame?.contentWindow)return;
+    if(d.type==='wn-admin-action-request'){
+      const p=d.payload||{};
+      log('PUBLICATION ACTION REQUEST '+JSON.stringify({action:String(p.action||''),id:p.id??null,language:p.language_code??null,requestId:String(d.requestId||'')}));
+    }else if(d.type==='wn-probe-readonly-request')log('PUBLICATION LIST REQUEST');
+  });
+  // Existing iframe REV16 diagnostics report action responses and list counts.
+
  window.addEventListener('pagehide',()=>log('pagehide'));
 })();
 </script>
