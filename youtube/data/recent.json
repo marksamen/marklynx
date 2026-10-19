@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-19T15:39:27.595469+00:00",
+  "updated": "2026-10-19T23:55:48.561302+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "SrDtro6anRI",
+      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | All Star Coins | Normal exit",
+      "published": "2026-10-19T23:55:30+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/SrDtro6anRI/hqdefault.jpg"
+    },
     {
       "id": "QsehFt5_18M",
       "title": "Lord of the Click 5 | Easy 100% Completion | 5000 Gamerscore | 15 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 4 | Bouncy Cloud Boomerangs | All Star Coins",
       "published": "2026-10-14T20:13:39+00:00",
       "thumbnail": "https://i.ytimg.com/vi/Y6A62o4bQRc/hqdefault.jpg"
-    },
-    {
-      "id": "KEgXtEaT79s",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Spinning Spirit House | No Star Coins | Normal",
-      "published": "2026-10-13T18:41:21+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/KEgXtEaT79s/hqdefault.jpg"
     }
   ]
 }
