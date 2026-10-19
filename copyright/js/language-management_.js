@@ -1,5 +1,5 @@
 import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=CT-LANGUAGE-TEST-REV04";
-import {languages as registry} from './language-registry_.js?v=LANGUAGES-REV07';
+import {languages as registry} from './language-registry_.js?v=ESMX-TEST-REV02';
 import {inventory} from './translation-inventory_.js?v=CT-LABEL-TEST-REV05';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
 import {getAuth,setPersistence,browserLocalPersistence,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js';
