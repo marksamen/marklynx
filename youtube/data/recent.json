@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-18T15:52:30.429271+00:00",
+  "updated": "2026-10-19T12:12:30.251862+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "lb3evKjI4eM",
+      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Boarding the Airship | All Star Coins | Normal ex",
+      "published": "2026-10-19T02:07:21+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/lb3evKjI4eM/hqdefault.jpg"
+    },
     {
       "id": "5-JcBDbIbnw",
       "title": "Knight With Tactics | Easy 100% Completion | 1000 Gamerscore | 1-2 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Spinning Spirit House | All Star Coins | Secret",
       "published": "2026-10-12T14:54:44+00:00",
       "thumbnail": "https://i.ytimg.com/vi/1zCvcWp8fyM/hqdefault.jpg"
-    },
-    {
-      "id": "SY3eoUE_Vuk",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Slide Lift Tower | All Star Coins | 4K",
-      "published": "2026-10-11T23:20:05+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/SY3eoUE_Vuk/hqdefault.jpg"
     }
   ]
 }
