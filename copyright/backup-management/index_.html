@@ -3,15 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>(TEST) Backup Management — REV02</title>
+<title>(TEST) Backup Management — REV03</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:#111113;color:#fff}body{padding:24px}.wrap{width:min(980px,100%);margin:0 auto}.head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}h1{margin:0;font-size:1.6rem}.sub{color:#aaa;margin:8px 0 0;line-height:1.5}.env{color:#6dff8b;font-weight:800;font-size:.78rem;letter-spacing:.06em}.panel{background:#19191b;border:1px solid #35353a;border-radius:12px;padding:20px}.panel h2{margin:0 0 12px;font-size:1.1rem}.panel p{line-height:1.55;color:#ccc;margin:0 0 10px}.panel p:last-child{margin-bottom:0}@media(max-width:600px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}}
+:root{color-scheme:dark;--bg:#111113;--panel:#19191b;--border:#37373d;--text:#fff;--muted:#c3c3c9;--accent:#ff8a00;--accent-border:#ffc46b;--good:#62ff8a;--pending:#b9c0cb}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}body{padding:22px}.wrap{width:min(1000px,100%);margin:0 auto}.head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.title{margin:0;font-size:1.55rem}.sub{color:var(--muted);margin:7px 0 0;line-height:1.5}.env{color:var(--good);font-weight:900;font-size:.78rem;letter-spacing:.06em;white-space:nowrap}.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px}.panel h2{margin:0 0 10px;font-size:1.08rem}.panel p{line-height:1.55;color:var(--muted);margin:0 0 10px}.panel p:last-child{margin-bottom:0}.hero{border:2px solid var(--accent-border);box-shadow:0 0 0 1px #ff8a0020}.hero h2{color:#ffb04a}.primary{appearance:none;border:2px solid var(--accent-border);border-radius:8px;background:var(--accent);color:#171717;font-size:1rem;font-weight:900;padding:12px 16px;cursor:pointer;width:100%;min-height:48px}.primary:hover{background:#ffa52e}.primary:disabled{opacity:.6;cursor:wait}.status{margin-top:12px;padding:11px;border-radius:8px;background:#101012;border:1px solid var(--border);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;color:var(--muted);font-size:.92rem}.status.good{border-color:#247a3b;color:#a6ffba}.status.bad{border-color:#9a3434;color:#ffb3b3}.small{font-size:.86rem}.scope{padding-left:20px;color:var(--muted);line-height:1.55;margin:8px 0 0}.modules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.module{border:1px solid var(--border);border-radius:10px;padding:14px;background:#151517;min-width:0}.module h3{font-size:.98rem;margin:0 0 7px}.module p{font-size:.87rem;margin:0 0 9px}.tag{display:inline-block;border:1px solid #626873;border-radius:999px;padding:3px 8px;color:var(--pending);font-size:.72rem;font-weight:800;letter-spacing:.035em}.tag.active{border-color:#b86d13;color:#ffc46b}.counts{margin-top:12px;display:none;border-collapse:collapse;width:100%;font-size:.84rem}.counts th,.counts td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);overflow-wrap:anywhere}.counts th{color:#ffc46b}.warning{color:#ffd8a3!important}.foot{color:#96969e;font-size:.8rem;line-height:1.5;margin:14px 2px 0}
+@media(max-width:620px){body{padding:12px}.head{align-items:flex-start;flex-direction:column}.modules{grid-template-columns:1fr}.panel{padding:14px}.title{font-size:1.35rem}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<header class="head"><div><h1>Backup Management</h1><p class="sub">Dedicated TEST backup workspace</p></div><span class="env">TEST — REV02</span></header>
-<section class="panel" aria-labelledby="statusHeading"><h2 id="statusHeading">Backup operations</h2><p>This window is ready. Individual backup functions will be added and tested in subsequent revisions.</p><p>No backup or restore operation is available in REV02. No database, Storage, or Edge Function changes are performed by this page.</p></section>
+  <header class="head">
+    <div><h1 class="title">Backup Management</h1><p class="sub">Separate, verifiable backup operations — no restore actions in this revision.</p></div>
+    <span class="env">TEST — REV03</span>
+  </header>
+
+  <section class="panel hero" aria-labelledby="gameBackupHeading">
+    <h2 id="gameBackupHeading">1. Game &amp; Developer Data</h2>
+    <p>Export the active game-management records from the TEST Supabase database into one JSON file. The export includes a manifest and row counts for every included table.</p>
+    <button class="primary" id="downloadGameBackup" type="button">Download Game Database Backup (JSON)</button>
+    <div class="status" id="backupStatus" role="status" aria-live="polite">Ready. No database operation has run yet.</div>
+    <table class="counts" id="tableCounts" aria-label="Exported table row counts"><thead><tr><th>Table</th><th>Rows</th></tr></thead><tbody id="tableCountsBody"></tbody><tfoot><tr><th>Total records</th><th id="totalRows">0</th></tr></tfoot></table>
+    <p class="small warning" style="margin-top:12px">Scope limitation: this is a data export of the listed active game/developer tables. It does not include SQL schema, policies, triggers, Edge Function source, Storage objects, secrets, environment controls, or historical *_backup tables. Restore is not implemented. The export reads tables sequentially, not as one transaction; avoid editing game/developer data until it finishes.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="otherModulesHeading">
+    <h2 id="otherModulesHeading">Other backup categories</h2>
+    <p>These are separate modules so each can have its own export, verification, and recovery procedure. They are not active in REV03.</p>
+    <div class="modules">
+      <article class="module"><h3>2. Other Application Tables</h3><p>Language registry and translations, What's New content, site controls, TEST CONTENT state, identity/configuration rows, and remaining public tables.</p><span class="tag">PLANNED — LATER REV</span></article>
+      <article class="module"><h3>3. Database Schema &amp; Security</h3><p>Table definitions, constraints, indexes, sequences, RLS policies, triggers, views, SQL functions, and grants. Must be backed up separately from JSON row data.</p><span class="tag">PLANNED — LATER REV</span></article>
+      <article class="module"><h3>4. Edge Functions</h3><p>Versioned source code and a manifest for deployed functions. Secrets and service-role keys must never be included in a downloadable website backup.</p><span class="tag">PLANNED — LATER REV</span></article>
+      <article class="module"><h3>5. Storage Files</h3><p>Bucket inventory and the actual stored objects, including quality badge images. Database rows alone do not back up the file contents.</p><span class="tag">PLANNED — LATER REV</span></article>
+      <article class="module"><h3>6. Project Configuration</h3><p>Safe configuration inventory and recovery notes. Secret values require a separate protected handling process.</p><span class="tag">PLANNED — LATER REV</span></article>
+      <article class="module"><h3>7. Complete Backup Bundle</h3><p>A manifest-driven ZIP combining the verified exports from the individual modules once each component is implemented and tested.</p><span class="tag">PLANNED — AFTER MODULES PASS</span></article>
+    </div>
+  </section>
+  <p class="foot">TEST project only. The export endpoint is restricted to the existing Firebase Admin identity and the TEST Supabase project. Store the downloaded file securely; it includes admin-managed developer records.</p>
 </main>
+<script type="module">
+const TEST_FUNCTION_URL = "https://aikifibkcjibubqegvmb.supabase.co/functions/v1/backup-admin";
+const EXPECTED_PROJECT_REF = "aikifibkcjibubqegvmb";
+const EXPECTED_TABLES = [
+  "games", "completion_types", "developer_activity", "developer_companies",
+  "developer_contacts", "developer_game_links", "developer_provided_games",
+  "developer_public_settings", "developer_releases", "genre_options",
+  "platform_options", "quality_badges", "text_guide_options"
+];
+const button = document.getElementById("downloadGameBackup");
+const status = document.getElementById("backupStatus");
+const tableCounts = document.getElementById("tableCounts");
+const tableCountsBody = document.getElementById("tableCountsBody");
+const totalRowsNode = document.getElementById("totalRows");
+
+function setStatus(message, kind="") {
+  status.textContent = message;
+  status.className = `status${kind ? ` ${kind}` : ""}`;
+}
+
+function requestAdminToken() {
+  return new Promise((resolve, reject) => {
+    const requestId = `backup-${crypto.randomUUID()}`;
+    const timeout = setTimeout(() => {
+      window.removeEventListener("message", onMessage);
+      reject(new Error("Timed out requesting the signed-in Admin session. Close and reopen the popup, then retry."));
+    }, 10000);
+    function onMessage(event) {
+      if (event.origin !== window.location.origin || event.source !== window.parent) return;
+      const data = event.data;
+      if (data?.type !== "ml-backup-token-response" || data?.requestId !== requestId) return;
+      clearTimeout(timeout);
+      window.removeEventListener("message", onMessage);
+      if (typeof data.token !== "string" || !data.token) reject(new Error(data.error || "Admin authentication token was not provided."));
+      else resolve(data.token);
+    }
+    window.addEventListener("message", onMessage);
+    window.parent.postMessage({ type: "ml-backup-token-request", requestId }, window.location.origin);
+  });
+}
+
+function validateBackup(payload) {
+  if (!payload || payload.backupType !== "game-developer-data" || payload.environment !== "TEST" || payload.projectRef !== EXPECTED_PROJECT_REF || !payload.tables || typeof payload.tables !== "object") {
+    throw new Error("Backup response failed environment or manifest validation. No file was downloaded.");
+  }
+  if (payload.tableCount !== EXPECTED_TABLES.length || !Array.isArray(payload.manifest?.includedTables) || JSON.stringify(payload.manifest.includedTables) !== JSON.stringify(EXPECTED_TABLES)) {
+    throw new Error("Backup manifest does not match the approved table inventory. No file was downloaded.");
+  }
+  const missing = EXPECTED_TABLES.filter(name => !Object.prototype.hasOwnProperty.call(payload.tables, name));
+  if (missing.length) throw new Error(`Backup is incomplete; missing tables: ${missing.join(", ")}. No file was downloaded.`);
+  let total = 0;
+  const counts = [];
+  for (const name of EXPECTED_TABLES) {
+    const item = payload.tables[name];
+    if (!item || !Array.isArray(item.rows) || !Number.isInteger(item.rowCount) || item.rowCount !== item.rows.length || payload.manifest.rowCounts?.[name] !== item.rowCount) {
+      throw new Error(`Row-count validation failed for ${name}. No file was downloaded.`);
+    }
+    total += item.rowCount;
+    counts.push({ name, count: item.rowCount });
+  }
+  if (payload.totalRows !== total) throw new Error("Overall record count does not match the table totals. No file was downloaded.");
+  return { total, counts };
+}
+
+async function sha256(text) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+function downloadFile(filename, contents) {
+  const blob = new Blob([contents], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+button.addEventListener("click", async () => {
+  button.disabled = true;
+  tableCounts.style.display = "none";
+  tableCountsBody.replaceChildren();
+  setStatus("Authenticating the existing Admin session, then exporting TEST game/developer tables…");
+  try {
+    const token = await requestAdminToken();
+    const response = await fetch(TEST_FUNCTION_URL, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "export-game-data" }),
+      cache: "no-store"
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || `TEST backup endpoint returned HTTP ${response.status}.`);
+    const { total, counts } = validateBackup(payload);
+    const fileContents = JSON.stringify(payload, null, 2) + "\n";
+    const checksum = await sha256(fileContents);
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    const filename = `MARKLYNX-TEST-GAME-DATA-BACKUP-${stamp}.json`;
+    downloadFile(filename, fileContents);
+    for (const item of counts) {
+      const row = document.createElement("tr");
+      const name = document.createElement("td");
+      const count = document.createElement("td");
+      name.textContent = item.name;
+      count.textContent = String(item.count);
+      row.append(name, count);
+      tableCountsBody.append(row);
+    }
+    totalRowsNode.textContent = String(total);
+    tableCounts.style.display = "table";
+    setStatus(`BACKUP GENERATED — ${filename}\nEnvironment: TEST (${payload.projectRef})\nTables verified: ${counts.length}/${EXPECTED_TABLES.length}\nRecords exported: ${total}\nSHA-256: ${checksum}\n\nKeep this file secure. This verifies the downloaded JSON data export, not a full PostgreSQL/schema backup or a tested restore.`, "good");
+  } catch (error) {
+    console.error("TEST game-data backup failed:", error);
+    setStatus(`BACKUP FAILED — ${error?.message || error}\nNo backup file should be treated as complete.`, "bad");
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
