@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-20T13:34:38.527078+00:00",
+  "updated": "2026-10-20T22:45:48.318670+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "K5IhnuaNffs",
+      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | No Star Coins | Secret exit",
+      "published": "2026-10-20T22:45:15+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/K5IhnuaNffs/hqdefault.jpg"
+    },
     {
       "id": "SrDtro6anRI",
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | All Star Coins | Normal exit",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 5 | A Quick Dip in the Sky | All Star Coins",
       "published": "2026-10-16T01:08:56+00:00",
       "thumbnail": "https://i.ytimg.com/vi/Wq_WfJH63KE/hqdefault.jpg"
-    },
-    {
-      "id": "Y6A62o4bQRc",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds 4 | Bouncy Cloud Boomerangs | All Star Coins",
-      "published": "2026-10-14T20:13:39+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Y6A62o4bQRc/hqdefault.jpg"
     }
   ]
 }
