@@ -1,4 +1,4 @@
-/* MARKLYNX PUBLIC LANGUAGE — TEST REV08 targeted smoke QA fixes. Additive layer; never alters game data or frozen Recent scripts. */
+/* MARKLYNX PUBLIC LANGUAGE — TEST REV09 targeted smoke QA fixes. Additive layer; never alters game data or frozen Recent scripts. */
 (() => {
   'use strict';
   const ROOT = 'https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -68,7 +68,7 @@
     for (const row of rows) {
       if (row.code === 'en' || !row.enabled || !/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(row.code)) continue;
       enabled.add(row.code);
-      options.push({value:row.code,text:(row.code === 'pt-BR' ? 'Português | BR' : (row.code === 'es-MX' ? 'Español | LatAm' : (row.code === 'es' ? 'Español | España' : (row.native_name || row.english_name || row.code))))});
+      options.push({value:row.code,text:(row.code === 'pt-BR' ? 'Português | BR' : (row.code === 'es-MX' ? 'Español | LatAm' : (row.code === 'es' ? 'Español' : (row.native_name || row.english_name || row.code))))});
     }
     selector.replaceChildren(...options.map(o => new Option(o.text,o.value)));
     selector.value = enabled.has(language) ? language : 'en';
