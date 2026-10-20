@@ -23,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// TEST Backup Management REV03: provide a Firebase ID token only to the active same-origin backup iframe.
+// TEST Backup Management REV04: provide a Firebase ID token only to the active same-origin backup iframe.
 window.addEventListener("message", async event => {
   if (event.origin !== window.location.origin) return;
   if (event.source !== document.getElementById("adminPageModalFrame")?.contentWindow) return;
