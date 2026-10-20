@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>(TEST) Backup Management — REV04</title>
+<title>(TEST) Backup Management — REV05</title>
 <style>
 :root{color-scheme:dark;--bg:#111113;--panel:#19191b;--border:#37373d;--text:#fff;--muted:#c3c3c9;--accent:#ff8a00;--accent-border:#ffc46b;--good:#62ff8a;--pending:#b9c0cb}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}body{padding:22px}.wrap{width:min(1000px,100%);margin:0 auto}.head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.title{margin:0;font-size:1.55rem}.sub{color:var(--muted);margin:7px 0 0;line-height:1.5}.env{color:var(--good);font-weight:900;font-size:.78rem;letter-spacing:.06em;white-space:nowrap}.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px}.panel h2{margin:0 0 10px;font-size:1.08rem}.panel p{line-height:1.55;color:var(--muted);margin:0 0 10px}.panel p:last-child{margin-bottom:0}.hero{border:2px solid var(--accent-border);box-shadow:0 0 0 1px #ff8a0020}.hero h2{color:#ffb04a}.primary{appearance:none;border:2px solid var(--accent-border);border-radius:8px;background:var(--accent);color:#171717;font-size:1rem;font-weight:900;padding:12px 16px;cursor:pointer;width:100%;min-height:48px}.primary:hover{background:#ffa52e}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.actions .primary{font-size:.88rem;padding:9px 8px;min-height:40px}.secondary{background:#303035;color:#fff;border-color:#777}.secondary:hover{background:#43434a!important}.fileInput{display:none}.primary:disabled{opacity:.6;cursor:wait}.status{margin-top:12px;padding:11px;border-radius:8px;background:#101012;border:1px solid var(--border);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;color:var(--muted);font-size:.92rem}.status.good{border-color:#247a3b;color:#a6ffba}.status.bad{border-color:#9a3434;color:#ffb3b3}.small{font-size:.86rem}.scope{padding-left:20px;color:var(--muted);line-height:1.55;margin:8px 0 0}.modules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.module{border:1px solid var(--border);border-radius:10px;padding:14px;background:#151517;min-width:0}.module h3{font-size:.98rem;margin:0 0 7px}.module p{font-size:.87rem;margin:0 0 9px}.tag{display:inline-block;border:1px solid #626873;border-radius:999px;padding:3px 8px;color:var(--pending);font-size:.72rem;font-weight:800;letter-spacing:.035em}.tag.active{border-color:#b86d13;color:#ffc46b}.counts{margin-top:12px;display:none;border-collapse:collapse;width:100%;font-size:.84rem}.counts th,.counts td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);overflow-wrap:anywhere}.counts th{color:#ffc46b}.warning{color:#ffd8a3!important}.foot{color:#96969e;font-size:.8rem;line-height:1.5;margin:14px 2px 0}
@@ -14,21 +14,21 @@
 <main class="wrap">
   <header class="head">
     <div><h1 class="title">Backup Management</h1><p class="sub">Game data backup and read-only restore preview. Database replacement is not enabled.</p></div>
-    <span class="env">TEST — REV04</span>
+    <span class="env">TEST — REV05</span>
   </header>
 
   <section class="panel hero" aria-labelledby="gameBackupHeading">
     <h2 id="gameBackupHeading">1. Game &amp; Developer Data</h2>
-    <p>Export the active game-management records from the TEST Supabase database into one JSON file. The export includes a manifest and row counts for every included table. Tables are paged automatically.</p>
+    <p>Export the active game-management records from the TEST Supabase database into one JSON file. The export includes a manifest and row counts for every included table. All 13 tables are read through one PostgreSQL statement-level MVCC snapshot.</p>
     <div class="actions"><button class="primary" id="downloadGameBackup" type="button">Download Backup</button><button class="primary secondary" id="restoreGameBackup" type="button">Restore Backup</button></div><input class="fileInput" id="restoreFile" type="file" accept=".json,application/json"><p class="small warning" style="margin-top:8px">Restore currently performs a read-only file validation and preview. It cannot replace database records until the transactional restore procedure passes TEST verification.</p>
     <div class="status" id="backupStatus" role="status" aria-live="polite">Ready. No database operation has run yet.</div>
     <table class="counts" id="tableCounts" aria-label="Exported table row counts"><thead><tr><th>Table</th><th>Rows</th></tr></thead><tbody id="tableCountsBody"></tbody><tfoot><tr><th>Total records</th><th id="totalRows">0</th></tr></tfoot></table>
-    <p class="small warning" style="margin-top:12px">Scope limitation: this is a data export of the listed active game/developer tables. It does not include SQL schema, policies, triggers, Edge Function source, Storage objects, secrets, environment controls, or historical *_backup tables. Database restore is not yet enabled. The export reads tables sequentially, not as one transaction; avoid editing game/developer data until it finishes.</p>
+    <p class="small warning" style="margin-top:12px">Scope limitation: this is a data export of the listed active game/developer tables. It does not include SQL schema, policies, triggers, Edge Function source, Storage objects, secrets, environment controls, or historical *_backup tables. Database restore is not yet enabled. The export uses a single PostgreSQL statement-level MVCC snapshot; it is not a full database backup.</p>
   </section>
 
   <section class="panel" aria-labelledby="otherModulesHeading">
     <h2 id="otherModulesHeading">Other backup categories</h2>
-    <p>These are separate modules so each can have its own export, verification, and recovery procedure. They are not active in REV04.</p>
+    <p>These are separate modules so each can have its own export, verification, and recovery procedure. They are not active in REV05.</p>
     <div class="modules">
       <article class="module"><h3>2. Other Application Tables</h3><p>Language registry and translations, What's New content, site controls, TEST CONTENT state, identity/configuration rows, and remaining public tables.</p><span class="tag">PLANNED — LATER REV</span></article>
       <article class="module"><h3>3. Database Schema &amp; Security</h3><p>Table definitions, constraints, indexes, sequences, RLS policies, triggers, views, SQL functions, and grants. Must be backed up separately from JSON row data.</p><span class="tag">PLANNED — LATER REV</span></article>
@@ -167,6 +167,7 @@ button.addEventListener("click", async () => {
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || `TEST backup endpoint returned HTTP ${response.status}.`);
     const { total, counts } = validateBackup(payload);
+    if (payload.snapshot?.method !== "postgresql-stable-function-single-statement" || typeof payload.snapshot?.snapshotAt !== "string") throw new Error("Consistent snapshot metadata is missing. No file was downloaded.");
     const fileContents = JSON.stringify(payload, null, 2) + "\n";
     const checksum = await sha256(fileContents);
     const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
@@ -183,7 +184,7 @@ button.addEventListener("click", async () => {
     }
     totalRowsNode.textContent = String(total);
     tableCounts.style.display = "table";
-    setStatus(`BACKUP GENERATED — ${filename}\nEnvironment: TEST (${payload.projectRef})\nTables verified: ${counts.length}/${EXPECTED_TABLES.length}\nRecords exported: ${total}\nSHA-256: ${checksum}\n\nKeep this file secure. This verifies the downloaded JSON data export, not a full PostgreSQL/schema backup or a tested restore.`, "good");
+    setStatus(`BACKUP GENERATED — ${filename}\nEnvironment: TEST (${payload.projectRef})\nTables verified: ${counts.length}/${EXPECTED_TABLES.length}\nRecords exported: ${total}\nSnapshot: ${payload.snapshot.snapshotAt} (one PostgreSQL MVCC statement)\nSHA-256: ${checksum}\n\nKeep this file secure. This verifies the downloaded JSON data export, not a full PostgreSQL/schema backup or a tested restore.`, "good");
   } catch (error) {
     console.error("TEST game-data backup failed:", error);
     setStatus(`BACKUP FAILED — ${error?.message || error}\nNo backup file should be treated as complete.`, "bad");
