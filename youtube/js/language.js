@@ -22,7 +22,7 @@
   selector.id = 'siteLanguageSelect';
   selector.setAttribute('aria-label','Website language');
   selector.title = 'Website language';
-  selector.style.cssText = 'background:#20242b;color:#fff;border:1px solid #777;border-radius:6px;padding:7px 9px;max-width:145px;cursor:pointer;';
+  selector.style.cssText = 'background:#20242b;color:#fff;border:1px solid #777;border-radius:6px;padding:7px 9px;max-width:145px;font-size:12px;cursor:pointer;';
   const label = document.createElement('label');
   label.htmlFor = selector.id;
   label.textContent = 'Language';
@@ -68,7 +68,7 @@
     for (const row of rows) {
       if (row.code === 'en' || !row.enabled || !/^[a-z]{2,3}(?:-[a-z0-9]+)*$/i.test(row.code)) continue;
       enabled.add(row.code);
-      options.push({value:row.code,text:(row.code === 'pt-BR' ? 'Português (BR)' : (row.native_name || row.english_name || row.code))});
+      options.push({value:row.code,text:(row.code === 'pt-BR' ? 'Português | BR' : (row.code === 'es-MX' ? 'Español | LatAm' : (row.code === 'es' ? 'Español' : (row.native_name || row.english_name || row.code))))});
     }
     selector.replaceChildren(...options.map(o => new Option(o.text,o.value)));
     selector.value = enabled.has(language) ? language : 'en';

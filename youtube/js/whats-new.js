@@ -48,6 +48,29 @@
   const persistRead = () => { try { localStorage.setItem(READ_KEY, JSON.stringify([...readIds])); } catch {} };
   const translate = a => translations.find(t => String(t.announcement_id) === String(a.id) && t.language_code === language()) || translations.find(t => String(t.announcement_id) === String(a.id) && t.language_code === 'en');
   const unread = a => !readIds.has(String(a.id));
+  // Render Unicode country flags with the site's SVG assets, independently of OS emoji support.
+  // Country-code filenames are the default; regional language variants use their established asset names.
+  const FLAG_ASSET_OVERRIDES = { MX: 'es-mx', BR: 'pt-br' };
+  const FLAG_PAIR = /[\u{1F1E6}-\u{1F1FF}]{2}/gu;
+  function renderTitleWithFlags(element, value) {
+    const text = String(value || '');
+    element.textContent = '';
+    let offset = 0;
+    for (const match of text.matchAll(FLAG_PAIR)) {
+      if (match.index > offset) element.append(document.createTextNode(text.slice(offset, match.index)));
+      const emoji = match[0];
+      const country = [...emoji].map(c => String.fromCharCode(65 + c.codePointAt(0) - 0x1F1E6)).join('');
+      const asset = FLAG_ASSET_OVERRIDES[country] || country.toLowerCase();
+      const img = document.createElement('img');
+      img.className = 'wn-title-flag';
+      img.src = 'images/flag-' + asset + '.svg';
+      img.alt = emoji;
+      img.onerror = () => img.replaceWith(document.createTextNode(emoji));
+      element.append(img);
+      offset = match.index + emoji.length;
+    }
+    if (offset < text.length) element.append(document.createTextNode(text.slice(offset)));
+  }
   function render() {
     if (!button || !overlay) return;
     button.hidden = !enabled;
@@ -67,7 +90,7 @@
       const tr = translate(a); if (!tr) continue;
       const card = document.createElement('article'); card.className='wn-card';
       const heading = document.createElement('button'); heading.type='button'; heading.className='wn-entry'; heading.setAttribute('aria-expanded','false');
-      const h = document.createElement('strong'); h.textContent=tr.title;
+      const h = document.createElement('strong'); renderTitleWithFlags(h,tr.title);
       const summary=document.createElement('span'); summary.textContent=tr.summary;
       const timestamp=document.createElement('small'); timestamp.textContent=w.published+': '+date(a.published_at);
       heading.append(h,summary,timestamp);
