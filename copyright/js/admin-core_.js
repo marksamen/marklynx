@@ -22,6 +22,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// TEST Backup Management REV03: provide a Firebase ID token only to the active same-origin backup iframe.
+window.addEventListener("message", async event => {
+  if (event.origin !== window.location.origin) return;
+  if (event.source !== document.getElementById("adminPageModalFrame")?.contentWindow) return;
+  if (event.data?.type !== "ml-backup-token-request" || typeof event.data?.requestId !== "string") return;
+  const frame = document.getElementById("adminPageModalFrame");
+  if (!frame || !String(frame.getAttribute("src") || "").includes("backup-management/")) return;
+  const requestId = event.data.requestId;
+  const requester = event.source;
+  const stillBackupFrame = () => frame.contentWindow === requester && String(frame.getAttribute("src") || "").includes("backup-management/");
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error("Admin session is not signed in. Close the popup, sign in again, and retry.");
+    const token = await user.getIdToken();
+    if (stillBackupFrame()) requester?.postMessage({ type: "ml-backup-token-response", requestId, token }, event.origin);
+  } catch (error) {
+    if (stillBackupFrame()) requester?.postMessage({ type: "ml-backup-token-response", requestId, error: error?.message || "Could not obtain the Admin session token." }, event.origin);
+  }
+});
 const login = document.getElementById("login");
 const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
