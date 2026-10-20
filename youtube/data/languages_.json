@@ -14,6 +14,13 @@
     "sort_order": 20
   },
   {
+    "code": "es-MX",
+    "native_name": "Español (Latinoamérica)",
+    "english_name": "Spanish (Latin America)",
+    "enabled": true,
+    "sort_order": 21
+  },
+  {
     "code": "fr",
     "native_name": "Français",
     "english_name": "French",
@@ -38,7 +45,7 @@
     "code": "pt-BR",
     "native_name": "Português (Brasil)",
     "english_name": "Portuguese (Brazil)",
-    "enabled": false,
+    "enabled": true,
     "sort_order": 60
   }
 ]

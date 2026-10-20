@@ -8989,5 +8989,32 @@
     "publisher_1": "Gametry",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 334,
+    "n": "Lord of the Click 5",
+    "p": "Windows | XBOX 360 | XBOX Series S/X",
+    "g": "5,000G",
+    "t": "15 Minutes",
+    "completion_type": null,
+    "ty": "Strategy",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=QsehFt5_18M",
+    "v": "QsehFt5_18M",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "HugePixel",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Desert Water Games",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
