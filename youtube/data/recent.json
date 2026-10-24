@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-23T13:29:09.145188+00:00",
+  "updated": "2026-10-24T12:42:49.144845+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "xFvt7JJ5xbY",
+      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 4 | Firefall Cliffs | Normal Exit | All Star Coins",
+      "published": "2026-10-24T04:35:28+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/xFvt7JJ5xbY/hqdefault.jpg"
+    },
     {
       "id": "VMhIOCqmN-g",
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle 3 | Rising Tides of Lava | All Star Coins | Normal",
@@ -43,12 +49,6 @@
       "title": "Knight With Tactics | Easy 100% Completion | 1000 Gamerscore | 1-2 Minute Completion | 4K | 60FPS",
       "published": "2026-10-18T15:48:49+00:00",
       "thumbnail": "https://i.ytimg.com/vi/5-JcBDbIbnw/hqdefault.jpg"
-    },
-    {
-      "id": "G_Y52gPk0M8",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Ludwig's Clockwork Castle | All Star Coins",
-      "published": "2026-10-18T01:13:31+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/G_Y52gPk0M8/hqdefault.jpg"
     }
   ]
 }
