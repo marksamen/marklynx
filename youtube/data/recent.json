@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-25T13:12:21.213520+00:00",
+  "updated": "2026-10-26T15:13:30.937924+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "jNgY-DKIjvI",
+      "title": "New Super Mario Bros. U Deluxe | Peach's Castle | Final Boss Battle | All Star Coins | Normal Exit",
+      "published": "2026-10-26T02:09:13+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/jNgY-DKIjvI/hqdefault.jpg"
+    },
     {
       "id": "3nV9qP0YHR4",
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle Entrance | Red-Hot Elevator Ride | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "Lord of the Click 5 | Easy 100% Completion | 5000 Gamerscore | 15 Minute Completion | 4K | 60FPS",
       "published": "2026-10-19T15:28:47+00:00",
       "thumbnail": "https://i.ytimg.com/vi/QsehFt5_18M/hqdefault.jpg"
-    },
-    {
-      "id": "lb3evKjI4eM",
-      "title": "New Super Mario Bros. U Deluxe | Meringue Clouds | Boarding the Airship | All Star Coins | Normal ex",
-      "published": "2026-10-19T02:07:21+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/lb3evKjI4eM/hqdefault.jpg"
     }
   ]
 }
