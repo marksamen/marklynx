@@ -590,3 +590,16 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
     color:#ffcf85!important;
   }
 }
+
+/* REV24: Halloween Bright mobile popup trigger PAINT ONLY.
+   These are visible replacement buttons for the six native select controls.
+   Keep native selects, popup sizing, click/keyboard behavior and existing mobile fixes unchanged. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"]
+    .toolbar .ml-filter-popup-anchor > .ml-filter-popup-trigger {
+    background: #502268;
+    border-color: #7a488b;
+    color: #ffbe65;
+    box-shadow: none;
+  }
+}
