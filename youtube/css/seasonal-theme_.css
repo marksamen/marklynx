@@ -90,3 +90,70 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .list-row,
 html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card {border-color:#58315d;}
 html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {border-color:#c9a581;}
+
+/* REV03: requested inverse Halloween palettes. All changes TEST-only and seasonal-scoped.
+   Paint only; never alter layout, hit targets, banner artwork, or normal themes. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --bg:#ef9a32; --bg-raised:#ffb65c; --bg-card:#ffc67d;
+  --line:#8c4b50; --text:#2b1338; --text-dim:#442452;
+  --red:#56216d; --red-bright:#773294;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] body,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background-color:#ef9a32; color:#2b1338;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap {
+  background-image:radial-gradient(ellipse at 4% 50%,rgba(88,28,112,.18),transparent 38%),radial-gradient(ellipse at 96% 50%,rgba(88,28,112,.18),transparent 38%);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {background:#ffc67d; border-color:#a96749;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover {background:#ffcf93;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .clear-filters-btn {background:#58216f;border-color:#7e3698;color:#fff;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active:hover {background:#783393;border-color:#a55cc1;color:#fff;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .theme-toggle-btn {background:#592773;border-color:#8d49a4;color:#fff;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card-meta .completion-type-meta {background:#6c2d83!important;border-color:#49175f!important;color:#fff!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {color:#fff!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --bg:#180d23; --bg-raised:#271432; --bg-card:#30183b; --line:#6d3e76;
+  --red:#df751c; --red-bright:#ffa63e;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] body,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {background-color:#180d23;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap {background-image:radial-gradient(ellipse at 4% 50%,rgba(247,126,27,.16),transparent 38%),radial-gradient(ellipse at 96% 50%,rgba(247,126,27,.16),transparent 38%);}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .clear-filters-btn {background:#e88424;border-color:#ffad52;color:#211020;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {background:#ffa63e;border-color:#ffc47a;color:#211020;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn {background:#e88424;border-color:#ffad52;color:#211020;}
