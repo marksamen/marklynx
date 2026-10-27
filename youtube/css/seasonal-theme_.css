@@ -543,16 +543,16 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.
   background-color:#ef9a32!important;
 }
 
-/* REV18 — Halloween BRIGHT background paint only.
+/* REV18/REV19 — Halloween BRIGHT background paint only.
    Recent LIST and Normal LIST rows, Normal GRID cards.
    Preserve Recent GRID, layout, metadata, badges, titles and special flags. */
 html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row,
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card {
-  background:#eadcf0!important;
+  background:#f6aa49!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row:hover,
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card:hover {
-  background:#e1cce9!important;
+  background:#f8b65f!important;
 }
