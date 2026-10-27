@@ -209,3 +209,24 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card:hover {
   background:#3b2047;
   border-color:#e88424;
 }
+
+/* REV08: Halloween Dark orange controls use near-black text instead of white.
+   Paint only: no backgrounds, dimensions, layout or other theme changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageControl #siteLanguageSelect,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn {
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {
+  color:#151015!important;
+}
