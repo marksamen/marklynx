@@ -164,3 +164,48 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-tabs button[aria-se
   border-color:#ffad52;
   color:#211020;
 }
+
+
+/* REV07 — Halloween Dark ONLY. Match the established orange controls,
+   and bring Developer's contact section in line with Suggest's form. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageControl #siteLanguageSelect {
+  background:#e88424!important;
+  border-color:#ffad52!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button {
+  background:#e88424!important;
+  border-color:#ffad52!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button:hover {
+  background:#ffa63e!important;
+  border-color:#ffc47a!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot { box-shadow:0 0 0 2px #e88424; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn {
+  color:#fff!important;
+}
+/* Existing Developer contact block was omitted in REV06; Suggest's
+   matching .suggest-game-form already has the intended purple surface. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact {
+  background:#30183b;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form textarea:focus {
+  background:#180d23;
+  border-color:#e88424;
+  box-shadow:0 0 0 2px rgba(232,132,36,.16);
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card:hover {
+  background:#3b2047;
+  border-color:#e88424;
+}
