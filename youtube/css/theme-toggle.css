@@ -138,3 +138,23 @@ html[data-theme="bright"] .site-preferences-inner {
     padding-right:28px;
   }
 }
+
+/* PROD MOBILE TOP REV01: existing utility-strip divider paint only.
+   Preserve header/control geometry; align its divider to toolbar separator.
+   No new border or pseudo-element. */
+@media (pointer: coarse) {
+  .site-preferences-inner {
+    border-bottom: 0;
+    background-image: linear-gradient(#1f1f1f, #1f1f1f);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: calc(100% - 56px) 1px;
+  }
+  html[data-theme="bright"] .site-preferences-inner {
+    border-bottom: 0;
+    background-image: linear-gradient(#b8b8b3, #b8b8b3);
+  }
+}
+@media (pointer: coarse) and (max-width: 640px) {
+  .site-preferences-inner { background-size: calc(100% - 28px) 1px; }
+}
