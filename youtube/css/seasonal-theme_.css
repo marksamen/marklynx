@@ -659,6 +659,16 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-corner {color:#e4b7ef;opacity:.28}
 #ml-halloween-fx .ml-halloween-bat {position:absolute;left:calc(-1 * clamp(76px, 4.4vw, 190px));top:0;width:clamp(76px, 4.4vw, 190px);height:auto;aspect-ratio:48 / 28;will-change:transform,opacity;opacity:0}
 #ml-halloween-fx .ml-halloween-bat.fly {animation:ml-halloween-bat-fly 5.8s linear forwards}
+
+/* REV28: independent SVG wing flap. Container flight remains unchanged.
+   Scoped to the Halloween overlay; never affects game cards or mobile controls. */
+#ml-halloween-fx .ml-bat-wing-left,
+#ml-halloween-fx .ml-bat-wing-right {transform-box:view-box;will-change:transform}
+#ml-halloween-fx .ml-bat-wing-left {transform-origin:23px 9px;animation:ml-bat-flap-left .46s ease-in-out infinite alternate}
+#ml-halloween-fx .ml-bat-wing-right {transform-origin:25px 9px;animation:ml-bat-flap-right .46s ease-in-out infinite alternate}
+@keyframes ml-bat-flap-left {from{transform:rotate(-17deg) scaleY(.67)}to{transform:rotate(13deg) scaleY(1.12)}}
+@keyframes ml-bat-flap-right {from{transform:rotate(17deg) scaleY(.67)}to{transform:rotate(-13deg) scaleY(1.12)}}
+
 @keyframes ml-halloween-bat-fly {
   0% {opacity:0;transform:translate3d(0,18px,0) rotate(-10deg)}
   12% {opacity:.85}
@@ -669,4 +679,4 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-ha
   #ml-halloween-fx .ml-halloween-corner {width:clamp(105px, 27vw, 160px);height:clamp(105px, 27vw, 160px);opacity:.36}
   #ml-halloween-fx .ml-halloween-bat {width:clamp(65px, 17vw, 95px);height:auto}
 }
-@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none} #ml-halloween-fx .ml-bat-wing-left,#ml-halloween-fx .ml-bat-wing-right {animation:none!important}}
