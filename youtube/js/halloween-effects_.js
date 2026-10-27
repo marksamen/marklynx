@@ -2,14 +2,23 @@
 (function(){
   'use strict';
   var root=document.documentElement,layer=null,lastScroll=0,accumulated=0,lastFlight=0;
-  var batPath='M1 11 Q8 2 15 9 Q20 2 24 7 Q28 2 33 9 Q40 2 47 11 L40 12 L37 18 L31 14 L26 19 L24 15 L22 19 L16 14 L10 18 L7 12 Z';
   var webSvg='<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 0H100 M0 0V100 M0 0Q50 0 100 100 M0 0Q0 50 100 100 M0 0Q65 15 85 85 M0 0Q15 65 85 85"/><path d="M25 0Q25 25 0 25 M50 0Q50 50 0 50 M75 0Q75 75 0 75"/></svg>';
   function active(){return root.getAttribute('data-seasonal-theme')==='halloween';}
   function svgBat(){
     var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 48 22');svg.setAttribute('aria-hidden','true');
     svg.style.cssText='width:100%;height:100%;fill:currentColor';
-    var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',batPath);svg.appendChild(p);return svg;
+    // REV28: independent wings; retain the same flyby container and trigger logic.
+    // The left/right wings flap around their shoulder joints; body stays centered.
+    var ns='http://www.w3.org/2000/svg';
+    function part(cls,path){
+      var p=document.createElementNS(ns,'path');p.setAttribute('class',cls);
+      p.setAttribute('d',path);svg.appendChild(p);
+    }
+    part('ml-bat-wing-left','M23 9 Q17 2 13 7 Q7 1 1 11 L7 12 L10 18 L16 14 L20 17 Z');
+    part('ml-bat-wing-right','M25 9 Q31 2 35 7 Q41 1 47 11 L41 12 L38 18 L32 14 L28 17 Z');
+    part('ml-bat-body','M22 8 L21 5 L23 6 L24 8 L25 6 L27 5 L26 8 L28 12 L25 18 L24 16 L23 18 L20 12 Z');
+    return svg;
   }
   function mount(){
     if(layer||!document.body)return;
