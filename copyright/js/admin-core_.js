@@ -4,7 +4,7 @@ import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateD
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=WN-XONLY-REV04";
-import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=SEASONAL-TEST-REV01";
+import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=SEASONAL-TEST-REV05";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=RECOMPLETION-TEST-REV01-20261014";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
