@@ -1,4 +1,4 @@
-/* TEST ONLY - diagnostic overlay; seasonal public REV08 label. */
+/* TEST ONLY - diagnostic overlay; seasonal public REV09 label. */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
