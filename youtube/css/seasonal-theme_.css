@@ -25,3 +25,68 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences-inner
 /* Recolor the existing lower banner divider; never draw a second line. */
 html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::after { border-bottom-color:#622477; }
 html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after { border-bottom-color:#ed912a; }
+
+/* REV04: reintroduce the previously approved Halloween DARK palette only.
+   Source: isolated REV08 dark rules. No banner geometry/artwork or extra lines.
+   Bright styling below the header/banner remains unchanged from REV02. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --bg:#180d23;
+  --bg-raised:#271432;
+  --bg-card:#30183b;
+  --line:#6d3e76;
+  --red:#df751c;
+  --red-bright:#ffa63e;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] body,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar {
+  background-color:#180d23;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card {
+  background-color:#30183b;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card:hover {
+  background-color:#3b2047;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .clear-filters-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn {
+  background:#e88424;
+  border-color:#ffad52;
+  color:#211020;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {
+  background:#ffa63e;
+  border-color:#ffc47a;
+  color:#211020;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta {
+  background:#f6b45e!important;
+  border-color:#b86a20!important;
+  color:#482508!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
+  color:#482508!important;
+}
