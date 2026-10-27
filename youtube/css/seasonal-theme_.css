@@ -233,5 +233,81 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:n
 html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button:not(.active) {background:#30183b!important;color:#ffb65c!important;border-color:#6d3e76!important;}
 /* The banner images themselves contain opaque gray/black side pixels.
    Seasonal derivatives recolor only edge-connected flat backgrounds; original images untouched. */
-html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV05")!important;}
-html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV05")!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV06")!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV06")!important;}
+
+
+/* REV06 — scoped Halloween UI consistency, preserving functional/semantic badges. */
+/* Search visibility: brighter text and placeholder on purple Bright field. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar input[type="search"] {color:#fff!important;caret-color:#ffcd79!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar input::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] input[type="search"]::placeholder {color:#f6d9ff!important;opacity:1!important;}
+/* Bright list boundaries, dividers, and UI borders: no default gray/red. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-card {border-color:#8d4b83!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card + .recent-upload-card {border-top-color:#9a5a85!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .section-header,
+html[data-seasonal-theme="halloween"][data-theme="bright"] hr {border-color:#a96879!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--line:#a96879;}
+/* Shared modal surface palette: override hardcoded original black/red and bright white. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-panel,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-panel,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dialog {background:#f4ad56!important;color:#30123c!important;border-color:#742e85!important;border-top-color:#592773!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-cta,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-proof span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-meta span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-platform-grid label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-card {background:#ef9a32!important;color:#30123c!important;border-color:#92537c!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-panel h2,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-top strong,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-section-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-panel h2,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form label>span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-platforms legend,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-platform-grid label>span {color:#30123c!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-intro,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-intro,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-top>span {color:#51265e!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea {background:#ffe0a0!important;color:#30123c!important;border-color:#92537c!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-send-btn {background:#592773!important;color:#fff!important;border-color:#8d49a4!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-body {border-color:#92537c!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button[aria-selected="true"] {background:#7d3696!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-panel,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-panel,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dialog {background:#271432!important;color:#f9e9ff!important;border-color:#a45b9c!important;border-top-color:#e88424!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-cta,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-proof span,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card-meta span,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-platform-grid label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-card {background:#351b43!important;border-color:#734678!important;color:#f9e9ff!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-close,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-close,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-close,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-send-btn {background:#e88424!important;color:#211020!important;border-color:#ffb65c!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-tabs button[aria-selected="true"] {background:#ffac4a!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form input,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form textarea {background:#1b1027!important;color:#fff!important;border-color:#734678!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-head,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-body {border-color:#734678!important;}
+/* Informational metadata: change neutral chips only; leave GS, quality, difficulty and completion semantics alone. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-upload-meta:not(.completion-type):not(.gs),
+html[data-seasonal-theme="halloween"][data-theme="bright"] .game-meta-pill:not(.completion-type-meta):not(.gs),
+html[data-seasonal-theme="halloween"][data-theme="bright"] .platform-pill {background:#f7bf72!important;border-color:#92537c!important;color:#30123c!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-upload-meta:not(.completion-type):not(.gs),
+html[data-seasonal-theme="halloween"][data-theme="dark"] .game-meta-pill:not(.completion-type-meta):not(.gs),
+html[data-seasonal-theme="halloween"][data-theme="dark"] .platform-pill {background:#3d214a!important;border-color:#b46d5d!important;color:#ffe1b5!important;}
