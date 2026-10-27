@@ -26,15 +26,15 @@
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
     var n=matchMedia('(max-width: 700px)').matches?2:3;
-    var y=Math.round(Math.min(innerHeight*.65,Math.max(90,innerHeight*.22)));
+    var y=Math.round(Math.min(innerHeight*.72,Math.max(90,innerHeight*.49)));
     for(var i=0;i<n;i++){
       (function(index){
         var bat=document.createElement('div');bat.className='ml-halloween-bat';
-        bat.style.top=(y+index*21)+'px';bat.style.color=root.getAttribute('data-theme')==='bright'?'#30143f':'#d7a0e8';
+        bat.style.top=(y+index*(matchMedia('(max-width: 700px)').matches?28:46))+'px';bat.style.color=root.getAttribute('data-theme')==='bright'?'#30143f':'#d7a0e8';
         bat.style.animationDelay=(index*.16)+'s';bat.appendChild(svgBat());layer.appendChild(bat);
         bat.classList.add('fly');
         bat.addEventListener('animationend',function(){bat.remove();},{once:true});
-        setTimeout(function(){bat.remove();},4000);
+        setTimeout(function(){bat.remove();},8500);
       })(i);
     }
   }
