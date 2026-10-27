@@ -2,9 +2,9 @@
 (function(){
   'use strict';
   var root=document.documentElement,layer=null,lastScroll=0,accumulated=0,lastFlight=0;
-  // REV30: Opt-in sound. Never alter YouTube players or existing site audio.
+  // REV31: Sound is desired ON, but browser requires real user activation. Never alter players.
   // Fail closed: suppress sounds if any visible iframe/video is present.
-  var soundEnabled=false,audioContext=null,soundButton=null,lastSound=0;
+  var audioContext=null,lastSound=0;
   function playerPotentiallyVisible(){
     return Array.prototype.some.call(document.querySelectorAll('iframe,video,audio'),function(el){
       if(el.closest('#ml-halloween-fx'))return false;
@@ -14,7 +14,7 @@
     });
   }
   function canPlayEffect(){
-    return soundEnabled&&active()&&!document.hidden&&
+    return active()&&!document.hidden&&
       !matchMedia('(prefers-reduced-motion: reduce)').matches&&
       !playerPotentiallyVisible()&&performance.now()-lastSound>10000;
   }
@@ -41,30 +41,22 @@
     noise.start(start);noise.stop(start+.57);
     noise.onended=function(){noise.disconnect();filter.disconnect();gain.disconnect();};
   }
-  function syncSoundButton(){
-    if(!soundButton)return;
-    soundButton.textContent=soundEnabled?'🔊 Halloween FX':'🔇 Halloween FX';
-    soundButton.setAttribute('aria-pressed',String(soundEnabled));
-    soundButton.setAttribute('aria-label',soundEnabled?'Mute Halloween sound effects':'Enable Halloween sound effects');
+  // First ordinary trusted pointer/keyboard interaction unlocks Web Audio.
+  // A simulated click cannot unlock it; no sound is played on activation itself.
+  function unlockSound(event){
+    if(!event.isTrusted||!active())return;
+    var Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx)return;
+    try{
+      if(!audioContext)audioContext=new Ctx();
+      if(audioContext.state==='running')return;
+      var pending=audioContext.resume();
+      if(pending&&typeof pending.catch==='function')pending.catch(function(){});
+    }catch(e){/* Silent fail: visuals remain usable without audio. */}
   }
-  function createSoundButton(){
-    soundButton=document.createElement('button');soundButton.type='button';
-    soundButton.id='ml-halloween-sound-toggle';soundButton.setAttribute('aria-pressed','false');
-    syncSoundButton();
-    soundButton.addEventListener('click',function(){
-      if(soundEnabled){soundEnabled=false;syncSoundButton();return;}
-      var Ctx=window.AudioContext||window.webkitAudioContext;
-      if(!Ctx){soundButton.textContent='Sound unavailable';return;}
-      try{
-        if(!audioContext)audioContext=new Ctx();
-        // Explicit tap unlocks Web Audio; no sound plays from the tap itself.
-        var resume=audioContext.resume();
-        if(resume&&typeof resume.catch==='function')resume.catch(function(){soundEnabled=false;syncSoundButton();});
-        soundEnabled=true;syncSoundButton();
-      }catch(e){soundEnabled=false;soundButton.textContent='Sound unavailable';}
-    });
-    layer.appendChild(soundButton);
-  }
+  document.addEventListener('pointerdown',unlockSound,{passive:true});
+  document.addEventListener('keydown',unlockSound);
+  document.addEventListener('touchend',unlockSound,{passive:true});
   var webSvg='<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 0H100 M0 0V100 M0 0Q50 0 100 100 M0 0Q0 50 100 100 M0 0Q65 15 85 85 M0 0Q15 65 85 85"/><path d="M25 0Q25 25 0 25 M50 0Q50 50 0 50 M75 0Q75 75 0 75"/></svg>';
   function active(){return root.getAttribute('data-seasonal-theme')==='halloween';}
   function svgBat(){
@@ -94,7 +86,7 @@
     createSoundButton();
     lastScroll=window.scrollY||0;accumulated=0;
   }
-  function unmount(){if(layer){layer.remove();layer=null;}soundButton=null;soundEnabled=false;accumulated=0;}
+  function unmount(){if(layer){layer.remove();layer=null;}accumulated=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
