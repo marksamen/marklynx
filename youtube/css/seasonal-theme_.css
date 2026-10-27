@@ -444,3 +444,28 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row 
   border-color:#704179!important;
   color:#d5a9e4!important;
 }
+
+/* REV15 — Halloween DARK GRID ONLY. Match approved REV14 LIST colors.
+   Metadata, Recent platform, Normal platform; preserve geometry and all special badges.
+   No Recent JS modifications. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) .recent-meta-label {
+  color:#d59cbe!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-platform,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card .grid-list-sub {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+}
+/* Preserve the same platform palette if responsive rendering wraps platform units. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card .grid-list-sub .landscape-platform-unit {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+}
