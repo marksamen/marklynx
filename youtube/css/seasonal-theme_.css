@@ -379,3 +379,25 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card:hover
   background:#ffd08d!important;
   border-color:#30143f!important;
 }
+
+/* REV12 — Halloween Bright only: unread dot and Grid/List visibility.
+   Preserve existing active-state behavior, sizing and layout. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dot {
+  background:#f39827!important;
+  box-shadow:0 0 0 2px #502268!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active:hover {
+  background:#f39827!important;
+  color:#151015!important;
+  border-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active) {
+  background:#502268!important;
+  color:#ffbe65!important;
+  border-color:#7a488b!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#693284!important;
+  color:#ffcf85!important;
+}
