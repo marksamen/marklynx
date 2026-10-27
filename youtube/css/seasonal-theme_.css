@@ -157,3 +157,59 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner 
 html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
 html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {background:#ffa63e;border-color:#ffc47a;color:#211020;}
 html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn {background:#e88424;border-color:#ffad52;color:#211020;}
+
+
+/* REV04: Halloween paint corrections, scoped to Admin-selected Halloween only.
+   No changes to geometry, layout, actual banner image, or other themes. */
+/* The banner surround uses a separate painted layer in some base themes.
+   Override its background explicitly while retaining its geometry and banner image. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background-color:#ef9a32!important;
+  background-image:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {
+  background-color:#180d23!important;
+  background-image:none!important;
+}
+/* Bright: cover both Recent and Game Guides in list and grid layouts, without
+   changing thumbnail artwork or platform/achievement badge semantics. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card {
+  background-color:#ffc67d!important;
+  color:#2b1338;
+  border-color:#a96749;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card:hover {
+  background-color:#ffcf93!important;
+}
+/* What's New: match each inverse palette, including the mobile bell and unread dot.
+   Scope to the seasonal flag so normal What's New colors stay untouched. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #whatsNewMobileBtn {
+  background:#592773!important; border-color:#8d49a4!important; color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #whatsNewMobileBtn:hover {
+  background:#783393!important; border-color:#a55cc1!important; color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dot {
+  background:#ffa43b!important; box-shadow:0 0 0 2px #592773!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #whatsNewMobileBtn {
+  background:#e88424!important; border-color:#ffad52!important; color:#211020!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #whatsNewMobileBtn:hover {
+  background:#ffa63e!important; border-color:#ffc47a!important; color:#211020!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot {
+  background:#6c2d83!important; box-shadow:0 0 0 2px #e88424!important;
+}
