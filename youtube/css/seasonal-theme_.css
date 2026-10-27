@@ -233,8 +233,8 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:n
 html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button:not(.active) {background:#30183b!important;color:#ffb65c!important;border-color:#6d3e76!important;}
 /* The banner images themselves contain opaque gray/black side pixels.
    Seasonal derivatives recolor only edge-connected flat backgrounds; original images untouched. */
-html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV08")!important;}
-html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV08")!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV09")!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV09")!important;}
 
 
 /* REV06 — scoped Halloween UI consistency, preserving functional/semantic badges. */
@@ -312,7 +312,7 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-upload-meta:not
 html[data-seasonal-theme="halloween"][data-theme="dark"] .game-meta-pill:not(.completion-type-meta):not(.gs),
 html[data-seasonal-theme="halloween"][data-theme="dark"] .platform-pill {background:#3d214a!important;border-color:#b46d5d!important;color:#ffe1b5!important;}
 
-/* REV08:  Halloween-only corrections grounded in original styles_.css and theme-bright_.css.
+/* REV09:  Halloween-only corrections grounded in original styles_.css and theme-bright_.css.
    Keep controls, rows and original artwork geometries unchanged. */
 /* Developer contact form and suggestion form: match panel and form field surfaces. */
 html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact,
@@ -343,3 +343,27 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form text
 html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap + .subscribe-strip {background:#ef9a32!important;background-image:none!important;}
+
+/* REV09 — only banner continuity and structural divider consistency.
+   Scope: Halloween and selected Dark/Bright; no button or metadata recoloring. */
+/* Banner's thin bottom rule and top trim use the selected seasonal accent. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::after {border-bottom-color:#71358a!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after {border-bottom-color:#e88424!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {background-color:#ef9a32!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {background-color:#180d23!important;}
+/* Shared section boundaries: toolbar, Recent Uploads, guides and footer. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--line:#71358a;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--line:#e88424;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar::after,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-inner,
+html[data-seasonal-theme="halloween"][data-theme="bright"] footer::before,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .section-header,
+html[data-seasonal-theme="halloween"][data-theme="bright"] hr {border-color:#71358a!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar::after,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-inner,
+html[data-seasonal-theme="halloween"][data-theme="dark"] footer::before,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .section-header,
+html[data-seasonal-theme="halloween"][data-theme="dark"] hr {border-color:#e88424!important;}
+/* Override the old Bright gray banner image with the previously approved pumpkin-edge asset. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV09")!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV09")!important;}
