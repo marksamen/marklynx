@@ -469,3 +469,10 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card .gri
   border-color:#704179!important;
   color:#d5a9e4!important;
 }
+
+/* REV16 — Halloween DARK Recent GRID card background only.
+   Blend with the existing page background; no layout, spacing, or JS changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {
+  background-color:#180d23!important;
+}
