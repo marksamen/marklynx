@@ -31,9 +31,8 @@
     content:"";
     position:absolute;
     top:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(calc(100% - 56px), 1400px);
+    left:0;
+    right:0;
     height:4px;
     background:#000;
     z-index:1;
@@ -715,7 +714,6 @@
   }
 
   @media (max-width:640px){
-    .banner-wrap::before,
     .banner-wrap::after,
     .toolbar::after,
     footer::before{
