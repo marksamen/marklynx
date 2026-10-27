@@ -90,3 +90,12 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row 
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
   color:#482508!important;
 }
+
+/* REV05: Dark-only banner surround paint correction.
+   Use the existing banner wrapper and its existing top pseudo-element.
+   No new elements, overlays, separators, dimensions, or image adjustments.
+   A background shorthand resets all layers inherited from earlier themes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {
+  background:#180d23!important;
+}
