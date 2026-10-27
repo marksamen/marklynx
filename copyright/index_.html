@@ -28,7 +28,7 @@
 #testContentHeaderControls #testToggle,#testContentHeaderControls #logout{width:auto;margin:0;white-space:nowrap}
 @media(max-width:700px){#adminHeader{flex-wrap:wrap}#testContentHeaderControls{width:100%;justify-content:flex-start}}
 
-/* SEASONAL TEST REV02: compact header-only layout; no data or theme logic changes. */
+/* SEASONAL TEST REV05: compact header-only layout; no data or theme logic changes. */
 #adminHeader{gap:16px}
 #adminHeader>div:first-child{flex:0 0 auto}
 #seasonalThemePanel{box-sizing:border-box;flex:0 1 300px;min-width:215px;margin:0;padding:9px 12px;border:1px solid #c78339;border-radius:9px;background:#18191c;color:#fff;text-align:left}
@@ -42,6 +42,8 @@
 #seasonalThemePanel p#seasonalThemeStatus{margin:5px 0 0;font-size:.7rem;letter-spacing:0;text-transform:none;opacity:1;color:#f2d3a8;line-height:1.25;overflow-wrap:anywhere}
 @media(max-width:1080px){#adminHeader{flex-wrap:wrap}#seasonalThemePanel{flex:1 1 240px}#testContentHeaderControls{flex:1 1 100%;justify-content:flex-end}}
 @media(max-width:700px){#seasonalThemePanel{flex:1 1 100%;max-width:100%}#testContentHeaderControls{justify-content:flex-start}}
+#seasonalConfirmYes{background:#2e7d32;border-color:#43a047;color:#fff}
+#seasonalConfirmNo{background:#303036;color:#fff}
 </style>
 </head>
 <body>
@@ -59,7 +61,7 @@
 <div id="adminHeader">
   <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV03</p></div>
   <section id="seasonalThemePanel" aria-label="Seasonal Theme TEST">
-    <label for="seasonalThemeSelect">Seasonal Theme <span class="seasonalTestLabel">TEST REV02</span></label>
+    <label for="seasonalThemeSelect">Seasonal Theme <span class="seasonalTestLabel">TEST REV05</span></label>
     <div class="seasonalThemeActions">
       <select id="seasonalThemeSelect" disabled><option value="none">Normal (OFF)</option><option value="halloween">Halloween</option></select>
       <button id="seasonalThemeSave" type="button" disabled>Save</button>
@@ -239,6 +241,18 @@
     </div>
   </div>
 </div>
+
+<!-- SEASONAL TEST REV05: Admin-styled confirmation/result modal; independent of Game Management modal state. -->
+<div id="seasonalConfirmModal" class="gd-modal gd-result-modal" aria-hidden="true">
+  <div id="seasonalConfirmCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="seasonalConfirmTitle" aria-describedby="seasonalConfirmMessage">
+    <h2 id="seasonalConfirmTitle">Seasonal Theme</h2>
+    <p id="seasonalConfirmMessage"></p>
+    <div class="gd-result-actions" id="seasonalConfirmActions">
+      <button id="seasonalConfirmYes" type="button">Yes</button>
+      <button id="seasonalConfirmNo" type="button">No</button>
+    </div>
+  </div>
+</div>
 <div id="adminPageModal" aria-hidden="true">
   <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
     <div id="adminPageModalHeader">
@@ -248,7 +262,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=SEASONAL-TEST-REV01"></script>
+<script type="module" src="js/admin-core_.js?v=SEASONAL-TEST-REV05"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
