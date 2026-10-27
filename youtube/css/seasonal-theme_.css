@@ -230,3 +230,12 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner 
 html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {
   color:#151015!important;
 }
+
+/* REV09: Halloween Dark only — black YouTube action icon and unread dot.
+   Preserve icon geometry and unread visibility logic. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .youtube-subscribe-btn svg {
+  fill:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot {
+  background:#151015!important;
+}
