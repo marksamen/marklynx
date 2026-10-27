@@ -1,0 +1,27 @@
+/* TEST SEASONAL YOUTUBE REV02 — header and banner surround ONLY.
+   No banner geometry, images, body palette, controls, cards, or layout changes.
+   All paint requires Admin's halloween flag; no effect when OFF. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background-color:#ef9a32;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {
+  background-color:#130c1b;
+}
+/* Repaint the existing top divider, respecting its approved mobile inset. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences-inner { border-bottom-color:#622477; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences-inner { border-bottom-color:#ed912a; }
+@media (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences-inner {
+    background-image:linear-gradient(#622477,#622477);
+  }
+  html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences-inner {
+    background-image:linear-gradient(#ed912a,#ed912a);
+  }
+}
+/* Recolor the existing lower banner divider; never draw a second line. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::after { border-bottom-color:#622477; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after { border-bottom-color:#ed912a; }
