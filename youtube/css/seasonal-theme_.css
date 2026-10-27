@@ -556,3 +556,13 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-ro
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card:hover {
   background:#f8b65f!important;
 }
+
+/* REV20 — Halloween BRIGHT LIST separators only.
+   Existing 1px flex gap is colored by the list container background.
+   Change the container background and its existing outer border, without
+   altering geometry, row backgrounds, or GRID. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
+  background-color:#704179!important;
+  border-color:#704179!important;
+}
