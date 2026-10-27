@@ -2,6 +2,69 @@
 (function(){
   'use strict';
   var root=document.documentElement,layer=null,lastScroll=0,accumulated=0,lastFlight=0;
+  // REV30: Opt-in sound. Never alter YouTube players or existing site audio.
+  // Fail closed: suppress sounds if any visible iframe/video is present.
+  var soundEnabled=false,audioContext=null,soundButton=null,lastSound=0;
+  function playerPotentiallyVisible(){
+    return Array.prototype.some.call(document.querySelectorAll('iframe,video,audio'),function(el){
+      if(el.closest('#ml-halloween-fx'))return false;
+      var r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+      return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&
+        cs.display!=='none'&&cs.visibility!=='hidden';
+    });
+  }
+  function canPlayEffect(){
+    return soundEnabled&&active()&&!document.hidden&&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches&&
+      !playerPotentiallyVisible()&&performance.now()-lastSound>10000;
+  }
+  function flutter(){
+    if(!canPlayEffect())return;
+    var Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx||!audioContext||audioContext.state!=='running')return;
+    lastSound=performance.now();
+    // Original, synthesized soft flutter: short filtered noise pulses, no external assets.
+    var sampleRate=audioContext.sampleRate,frames=Math.floor(sampleRate*.58);
+    var buffer=audioContext.createBuffer(1,frames,sampleRate),data=buffer.getChannelData(0);
+    for(var i=0;i<frames;i++)data[i]=(Math.random()*2-1)*.45;
+    var noise=audioContext.createBufferSource();noise.buffer=buffer;
+    var filter=audioContext.createBiquadFilter();filter.type='lowpass';filter.frequency.value=550;
+    var gain=audioContext.createGain();gain.gain.value=0;
+    noise.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);
+    var start=audioContext.currentTime+.01;
+    for(var k=0;k<5;k++){
+      var t=start+k*.11;
+      gain.gain.setValueAtTime(0,t);
+      gain.gain.linearRampToValueAtTime(.035,t+.025);
+      gain.gain.exponentialRampToValueAtTime(.001,t+.095);
+    }
+    noise.start(start);noise.stop(start+.57);
+    noise.onended=function(){noise.disconnect();filter.disconnect();gain.disconnect();};
+  }
+  function syncSoundButton(){
+    if(!soundButton)return;
+    soundButton.textContent=soundEnabled?'🔊 Halloween FX':'🔇 Halloween FX';
+    soundButton.setAttribute('aria-pressed',String(soundEnabled));
+    soundButton.setAttribute('aria-label',soundEnabled?'Mute Halloween sound effects':'Enable Halloween sound effects');
+  }
+  function createSoundButton(){
+    soundButton=document.createElement('button');soundButton.type='button';
+    soundButton.id='ml-halloween-sound-toggle';soundButton.setAttribute('aria-pressed','false');
+    syncSoundButton();
+    soundButton.addEventListener('click',function(){
+      if(soundEnabled){soundEnabled=false;syncSoundButton();return;}
+      var Ctx=window.AudioContext||window.webkitAudioContext;
+      if(!Ctx){soundButton.textContent='Sound unavailable';return;}
+      try{
+        if(!audioContext)audioContext=new Ctx();
+        // Explicit tap unlocks Web Audio; no sound plays from the tap itself.
+        var resume=audioContext.resume();
+        if(resume&&typeof resume.catch==='function')resume.catch(function(){soundEnabled=false;syncSoundButton();});
+        soundEnabled=true;syncSoundButton();
+      }catch(e){soundEnabled=false;soundButton.textContent='Sound unavailable';}
+    });
+    layer.appendChild(soundButton);
+  }
   var webSvg='<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 0H100 M0 0V100 M0 0Q50 0 100 100 M0 0Q0 50 100 100 M0 0Q65 15 85 85 M0 0Q15 65 85 85"/><path d="M25 0Q25 25 0 25 M50 0Q50 50 0 50 M75 0Q75 75 0 75"/></svg>';
   function active(){return root.getAttribute('data-seasonal-theme')==='halloween';}
   function svgBat(){
@@ -28,12 +91,14 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
+    createSoundButton();
     lastScroll=window.scrollY||0;accumulated=0;
   }
-  function unmount(){if(layer){layer.remove();layer=null;}accumulated=0;}
+  function unmount(){if(layer){layer.remove();layer=null;}soundButton=null;soundEnabled=false;accumulated=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    flutter();
     var n=matchMedia('(max-width: 700px)').matches?2:5;
     var y=Math.round(Math.min(innerHeight*.72,Math.max(90,innerHeight*.49)));
     for(var i=0;i<n;i++){
