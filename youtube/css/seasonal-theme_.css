@@ -247,3 +247,135 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .game-guides-section .g
   color:#f39827;
   text-shadow:0 1px 0 rgba(0,0,0,.55);
 }
+
+
+/* REV11 — Halloween BRIGHT counterpart to approved Dark REV10.
+   Only applies while Admin's Halloween flag and Bright mode are BOTH active.
+   Paint only. Leave banners, layout, game cards, badges, titles and video UI alone. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --bg:#ef9a32;
+  --bg-raised:#ef9a32;
+  --bg-card:#ef9a32;
+  --line:#622477;
+  --text:#25112d;
+  --text-dim:#572b53;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] body,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background:#ef9a32!important;
+}
+/* All primary action buttons: rich purple with warm orange lettering. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .clear-filters-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #siteLanguageControl #siteLanguageSelect {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active:hover {
+  background:#693284!important;
+  border-color:#30143f!important;
+  color:#ffcf85!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .youtube-subscribe-btn svg {
+  fill:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dot {
+  background:#151015!important;
+  box-shadow:0 0 0 2px #502268!important;
+}
+/* Rich purple search and filter surfaces (no pale peach). */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input::placeholder { color:#e7b9db!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box svg { stroke:#ffbe65!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select:focus {
+  border-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#693284!important;
+  color:#ffcf85!important;
+}
+/* Existing section headings only; not game titles or metadata. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .game-guides-section .game-guides-head h2 {
+  color:#30143f!important;
+  text-shadow:0 1px 0 rgba(255,190,101,.45);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2::after {
+  background:linear-gradient(90deg,#502268 0%,#30143f 72%,rgba(48,20,63,0) 100%);
+}
+/* Popup shells, forms and controls: orange-dominant with purple surfaces. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dialog,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-panel,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-panel {
+  background:#f6ac50!important;
+  color:#30143f!important;
+  border-color:#622477!important;
+  border-top-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-body { border-color:#622477!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-cta,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form {
+  background:#ffc276!important;
+  border-color:#622477!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-thumb,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-proof span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-meta span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-platform-grid label {
+  background:#f6ac50!important;
+  border-color:#622477!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=text],
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=email],
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffdfb3!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-close {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button[aria-selected="true"] {
+  background:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card:hover {
+  background:#ffd08d!important;
+  border-color:#30143f!important;
+}
