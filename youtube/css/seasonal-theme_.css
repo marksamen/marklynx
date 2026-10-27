@@ -664,8 +664,8 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-ha
    Scoped to the Halloween overlay; never affects game cards or mobile controls. */
 #ml-halloween-fx .ml-bat-wing-left,
 #ml-halloween-fx .ml-bat-wing-right {transform-box:view-box;will-change:transform}
-#ml-halloween-fx .ml-bat-wing-left {transform-origin:23px 9px;animation:ml-bat-flap-left .46s ease-in-out infinite alternate}
-#ml-halloween-fx .ml-bat-wing-right {transform-origin:25px 9px;animation:ml-bat-flap-right .46s ease-in-out infinite alternate}
+#ml-halloween-fx .ml-bat-wing-left {transform-origin:23px 9px;animation:ml-bat-flap-left .32s ease-in-out infinite alternate}
+#ml-halloween-fx .ml-bat-wing-right {transform-origin:25px 9px;animation:ml-bat-flap-right .32s ease-in-out infinite alternate}
 @keyframes ml-bat-flap-left {from{transform:rotate(-17deg) scaleY(.67)}to{transform:rotate(13deg) scaleY(1.12)}}
 @keyframes ml-bat-flap-right {from{transform:rotate(17deg) scaleY(.67)}to{transform:rotate(-13deg) scaleY(1.12)}}
 
