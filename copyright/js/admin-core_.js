@@ -4,6 +4,7 @@ import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateD
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
 import { initAdminPageModal } from "./admin-page-modal_.js?v=WN-XONLY-REV04";
+import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=SEASONAL-TEST-REV01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=RECOMPLETION-TEST-REV01-20261014";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
@@ -28,7 +29,7 @@ const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
 function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
+function loggedIn(){refreshSeasonalTheme();login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
 
 // Supabase TEST recovery export — public SELECT only. No database writes.
@@ -36,6 +37,7 @@ const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 
 initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
+const refreshSeasonalTheme=initSeasonalThemeControl({auth,url:SUPABASE_TEST_URL});
 initGameManagement({auth,verifyTestDatabaseIdentity});
 initRecentRefresh({auth});
 initVideoCountRefresh({auth});
