@@ -681,20 +681,3 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-ha
 }
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none} #ml-halloween-fx .ml-bat-wing-left,#ml-halloween-fx .ml-bat-wing-right {animation:none!important}}
 
-/* REV30: fixed, opt-in Halloween sound toggle. Seasonal overlay only.
-   Does not change existing mobile controls, players or layout. */
-#ml-halloween-sound-toggle {
-  position:fixed;right:16px;bottom:16px;z-index:1;
-  pointer-events:auto;cursor:pointer;
-  border:2px solid #f39827;border-radius:999px;
-  background:#502268;color:#ffbe65;
-  font:600 13px/1.2 system-ui,sans-serif;
-  padding:10px 14px;box-shadow:0 3px 12px #0005;
-}
-html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-sound-toggle {
-  background:#f39827;color:#151015;border-color:#502268;
-}
-#ml-halloween-sound-toggle:focus-visible {outline:3px solid #fff;outline-offset:2px}
-@media(max-width:700px) {
-  #ml-halloween-sound-toggle {right:8px;bottom:8px;padding:9px 11px;font-size:12px}
-}
