@@ -1,0 +1,29 @@
+/* SEASONAL PUBLIC TEST REV01: paint only. No geometry, layout or playback changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --bg:#130c1b; --bg-raised:#201327; --bg-card:#24152b;
+  --line:#53335b; --text:#f6edf8; --text-dim:#d2b9d8;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] body,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip { background:#130c1b; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar { background:rgba(25,13,31,.97); }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .list-row,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card { background:#24152b; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .card:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover { background:#34203b; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before { background:#130c1b; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after { border-bottom-color:#a65b22; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-head h2::after { background:linear-gradient(90deg,#ff942f,#a354c6,transparent); }
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --bg:#fff3e5; --bg-raised:#fffaf3; --bg-card:#fffaf3;
+  --line:#dcbf9d; --silver:#77543b; --text:#35231d; --text-dim:#735848;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] body { background:#fff3e5; color:var(--text); }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar { background:rgba(255,243,229,.97); }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .card { background:#fffaf3; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .card:hover { background:#ffe6cd; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2::after { background:linear-gradient(90deg,#db741f,#a354c6,transparent); }
