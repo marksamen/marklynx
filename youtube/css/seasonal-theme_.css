@@ -628,3 +628,45 @@ html[data-seasonal-theme="halloween"][data-theme="bright"]
   .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label {
   color:inherit!important;
 }
+
+/* REV26 — Halloween-only scrollbars and noninteractive decorations.
+   DO NOT edit historical mobile filter, LIST/GRID or Recent fixes.
+   Firefox uses scrollbar-color; Chromium/WebKit use ::-webkit-scrollbar.
+   iOS Safari may retain OS-controlled overlay scroll indicators. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  scrollbar-color:#f39827 #180d23;
+  scrollbar-width:auto;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  scrollbar-color:#502268 #f39827;
+  scrollbar-width:auto;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar {width:12px;height:12px}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar {width:12px;height:12px}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-track {background:#180d23}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-track {background:#f39827}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-thumb {background:#f39827;border:2px solid #180d23;border-radius:9px}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-thumb {background:#502268;border:2px solid #f39827;border-radius:9px}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-thumb:hover {background:#ffb45d}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-thumb:hover {background:#704179}
+
+/* Isolated decorative overlay; no interaction or document geometry changes. */
+#ml-halloween-fx {position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8;contain:layout style paint}
+#ml-halloween-fx .ml-halloween-corner {position:absolute;width:105px;height:105px;opacity:.32}
+#ml-halloween-fx .ml-halloween-corner.left {left:0;top:0}
+#ml-halloween-fx .ml-halloween-corner.right {right:0;top:0;transform:scaleX(-1)}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-corner {color:#30143f;opacity:.38}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-corner {color:#e4b7ef;opacity:.28}
+#ml-halloween-fx .ml-halloween-bat {position:absolute;left:-80px;top:0;width:48px;height:28px;will-change:transform,opacity;opacity:0}
+#ml-halloween-fx .ml-halloween-bat.fly {animation:ml-halloween-bat-fly 2.8s ease-in-out forwards}
+@keyframes ml-halloween-bat-fly {
+  0% {opacity:0;transform:translate3d(0,18px,0) rotate(-10deg)}
+  12% {opacity:.85}
+  80% {opacity:.8}
+  100% {opacity:0;transform:translate3d(calc(100vw + 130px),-35px,0) rotate(8deg)}
+}
+@media(max-width:700px){
+  #ml-halloween-fx .ml-halloween-corner {width:58px;height:58px;opacity:.2}
+  #ml-halloween-fx .ml-halloween-bat {width:34px;height:20px}
+}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none}}
