@@ -34,7 +34,7 @@
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    var n=matchMedia('(max-width: 700px)').matches?2:3;
+    var n=matchMedia('(max-width: 700px)').matches?2:5;
     var y=Math.round(Math.min(innerHeight*.72,Math.max(90,innerHeight*.49)));
     for(var i=0;i<n;i++){
       (function(index){
