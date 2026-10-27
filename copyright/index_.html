@@ -1,323 +1,39 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
-<title>(TEST) Mark Lynx Admin</title>
-<link rel="stylesheet" href="css/admin-core_.css?v=REV30-video-count-refresh">
-<link rel="stylesheet" href="css/auth_.css">
-<link rel="stylesheet" href="css/games_.css?v=REV65-provided-relationship-dialog">
-<link rel="stylesheet" href="css/traffic-analytics_.css">
-<link rel="stylesheet" href="css/test-tools_.css">
-<link rel="stylesheet" href="css/admin-pages_.css">
-<link rel="stylesheet" href="css/admin-devpub-search_.css?v=devpub-search-rev01">
-<style>
-#devPubSearchHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-#devPubSearchHeader h2{margin:0;white-space:nowrap;flex:0 0 auto;align-self:flex-end;transform:translateY(-2px)}
-#devPubSearchActions{display:flex;flex-direction:column;align-items:stretch;gap:10px;flex:0 0 auto}
-#devPubAddCompany,#devPubManageCompanies{width:auto;display:inline-block;flex:0 0 auto;background:#173a63;border-color:#285784;color:#fff;cursor:pointer}
-#devPubPublicProfiles{width:auto;display:inline-block;flex:0 0 auto;background:#5b347e;border-color:#7a4ca3;color:#fff;cursor:pointer}
-@media(max-width:600px){#devPubSearchHeader{align-items:flex-start;flex-direction:column}}
-
-/* TEST CONTENT quick control — checkpoint cycle REV01. Layout/cosmetic only; existing IDs and JS are unchanged. */
-#testContentHeaderControls{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
-#testContentHeaderControls #testStatus{margin:0;padding:7px 10px;border:1px solid #3a3a3f;border-radius:6px;background:#151517;font-size:.78rem;font-weight:800;letter-spacing:.04em;line-height:1.1;white-space:nowrap}
-#testContentHeaderControls #testStatus.on{color:#6dff8b;border-color:rgba(109,255,139,.38)}
-#testContentHeaderControls #testStatus.off{color:#ff6d6d;border-color:rgba(255,109,109,.38)}
-#testContentHeaderControls #testToggle,#testContentHeaderControls #logout{width:auto;margin:0;white-space:nowrap}
-@media(max-width:700px){#adminHeader{flex-wrap:wrap}#testContentHeaderControls{width:100%;justify-content:flex-start}}
-
-/* SEASONAL TEST REV05: compact header-only layout; no data or theme logic changes. */
-#adminHeader{gap:16px}
-#adminHeader>div:first-child{flex:0 0 auto}
-#seasonalThemePanel{box-sizing:border-box;flex:0 1 300px;min-width:215px;margin:0;padding:9px 12px;border:1px solid #c78339;border-radius:9px;background:#18191c;color:#fff;text-align:left}
-#seasonalThemePanel>label{display:block;margin:0 0 6px;font-size:.85rem;font-weight:800;line-height:1.2;color:#fff}
-#seasonalThemePanel .seasonalTestLabel{font-size:.65rem;color:#ffcb85;white-space:nowrap}
-#seasonalThemePanel .seasonalThemeActions{display:flex;align-items:center;gap:7px}
-#seasonalThemePanel select{box-sizing:border-box;flex:1 1 auto;min-width:0;width:auto;height:35px;padding:5px 9px;border:1px solid #8b929e;border-radius:6px;background:#f7f7f7;color:#141414;font:700 .85rem Arial,sans-serif;color-scheme:light}
-#seasonalThemePanel select option{background:#fff;color:#111}
-#seasonalThemePanel button{box-sizing:border-box;flex:0 0 auto;width:auto;height:35px;margin:0;padding:5px 12px;border-radius:6px;background:#c78339;color:#111;font-size:.84rem;font-weight:800}
-#seasonalThemePanel button:disabled{opacity:.5;cursor:not-allowed}
-#seasonalThemePanel p#seasonalThemeStatus{margin:5px 0 0;font-size:.7rem;letter-spacing:0;text-transform:none;opacity:1;color:#f2d3a8;line-height:1.25;overflow-wrap:anywhere}
-@media(max-width:1080px){#adminHeader{flex-wrap:wrap}#seasonalThemePanel{flex:1 1 240px}#testContentHeaderControls{flex:1 1 100%;justify-content:flex-end}}
-@media(max-width:700px){#seasonalThemePanel{flex:1 1 100%;max-width:100%}#testContentHeaderControls{justify-content:flex-start}}
-#seasonalConfirmYes{background:#2e7d32;border-color:#43a047;color:#fff}
-#seasonalConfirmNo{background:#303036;color:#fff}
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>(TEST) Mark Lynx Gaming Network — Game Guides &amp; Walkthroughs</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H17GSBEDXQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H17GSBEDXQ');
+</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="css/styles_.css?v=ESMX-TEST-REV09-20261019">
+<link rel="stylesheet" href="css/mobile-filter-popup_.css?v=MOBILE-POPUP-REV05">
+<link rel="stylesheet" href="css/playlist_.css?v=20260916-prod2">
+<link rel="stylesheet" href="css/video-modal_.css?v=20260921-mobile-landscape-normal-video-prod01">
+<link rel="stylesheet" href="css/theme-dark_.css?v=DARK-BRIGHT-THEME-REV31">
+<link rel="stylesheet" href="css/theme-bright_.css?v=SAFARI-BRIGHT-RECENT-GRID-REV02-20261015">
+<link rel="stylesheet" href="css/theme-toggle_.css?v=DARK-BRIGHT-THEME-REV25">
+<link rel="stylesheet" href="css/whats-new_.css?v=WHATS-NEW-TEST-REV11-FLAGS">
+<link rel="stylesheet" href="css/seasonal-theme_.css?v=SEASONAL-PUBLIC-TEST-REV01">
 </head>
 <body>
-<main id="login">
-<h1>Mark Lynx Admin</h1><p>AUTHORIZED ACCESS ONLY</p>
-<form id="loginForm">
-<input id="email" type="email" autocomplete="username" placeholder="Email" required>
-<input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
-<button type="submit">Sign In</button>
-</form>
-<div id="error" role="alert" aria-live="polite"></div>
-</main>
-<main id="admin">
-<!-- SEASONAL TEST REV02: header layout only -->
-<div id="adminHeader">
-  <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV03</p></div>
-  <section id="seasonalThemePanel" aria-label="Seasonal Theme TEST">
-    <label for="seasonalThemeSelect">Seasonal Theme <span class="seasonalTestLabel">TEST REV05</span></label>
-    <div class="seasonalThemeActions">
-      <select id="seasonalThemeSelect" disabled><option value="none">Normal (OFF)</option><option value="halloween">Halloween</option></select>
-      <button id="seasonalThemeSave" type="button" disabled>Save</button>
-    </div>
-    <p id="seasonalThemeStatus" role="status" aria-live="polite">Waiting for Admin login…</p>
-  </section>
-  <div id="testContentHeaderControls" aria-label="Test content control">
-    <div id="testStatus"></div>
-    <button id="testToggle" type="button"></button>
-    <button id="logout" type="button">Sign Out</button>
-  </div>
-</div>
-<div id="adminWorkspace"><div id="adminControls">
-<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/index_.html" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
-<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/index_.html" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
-<button id="completionTypeManagement" class="admin-link" type="button" data-admin-modal-url="completion-types/index_.html?v=COMPLETION-TYPES-TEST-REV02" data-admin-modal-title="Completion Type Management" style="background:#173a63;color:#fff">Completion Type Management</button>
-<button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/index_.html?v=TEXT-GUIDE-MANAGEMENT-REV02" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
-<button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index_.html?v=PLATFORM-MANAGEMENT-REV01" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
-<button id="whatsNewProbe" class="admin-link" type="button" data-admin-modal-url="whats-new-probe/index_.html?v=ESMX-TEST-REV03" data-admin-modal-title="What's New — Announcement Management (TEST)" style="background:#173a63;color:#fff">What's New (TEST PROBE)</button>
-<button id="languageManagement" class="admin-link" type="button" data-admin-modal-url="languages/index_.html?v=ESMX-TEST-REV02" data-admin-modal-title="Language Management (TEST)" style="background:#173a63;color:#fff">Language Management (TEST)</button>
-<button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index_.html?v=GENRE-MANAGEMENT-REV01" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
-<button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/index_.html?v=QUALITY-BADGE-ADD-FIX-REV02" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
-<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
-<section id="testPanel" aria-label="Site testing tools">
-<div id="siteLinks" aria-label="YouTube site launch and redirect checks">
-<a class="admin-link primary" href="https://marklynx.com/youtube/index_.html" target="_blank" rel="noopener noreferrer">Open TEST Site</a>
-<a class="admin-link" href="http://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Test HTTP Redirect</a>
-<a class="admin-link" href="http://copyright.marklynx.com" target="_blank" rel="noopener noreferrer">Test Copyright Redirect</a>
-</div>
-          <div style="margin-top:12px;">
-            <a href="test/index.html" target="_blank" rel="noopener"
-               style="display:block;text-align:center;text-decoration:none;background:#f2f2f2;color:#111;font-weight:700;border:1px solid #d0d0d0;border-radius:6px;padding:10px 12px;">
-              Open Full QA Checklist
-            </a>
-          </div>
-</section>
-<section id="dataSourceStatusPanel" aria-label="Data Source Status">
-<h2>Data Source Status</h2>
-<p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
-<p id="dataSourceStatusNote">Read-only TEST status from data-source_.json.</p>
-<p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
-<p><strong>Database Identity:</strong> <span id="databaseIdentityStatus">WAITING FOR LIVE CHECK…</span></p>
-<p id="databaseIdentityDetails">The database must identify itself before TEST can be marked verified.</p>
-<div id="dataSourceActions">
-<button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
-<button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
-</div>
-<p id="dataSourceControlMessage" aria-live="polite"></p>
-</section>
-</div>
-<div id="adminGameColumn">
-<section id="gameDevPanel" aria-label="Game Management Firestore test">
-<h2>Game Management — games_TEST</h2>
-<p id="gameDevStatus">Waiting for authentication…</p>
-<p id="gameDevDetails"></p>
-<p id="gameDevError"></p>
-<div id="gameDevTools">
-<input id="gameDevSearch" type="search" placeholder="Search by name, ID, playlist or video…" autocomplete="off" aria-label="Search games">
-<select id="gameDevList" aria-label="Select game"></select>
-<div class="gd-toolbar">
-  <button id="gameDevAddLauncher" type="button">Add New Game</button>
-  <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
-  <button id="gameDevReloadLauncher" type="button">Reload</button>
-  <button id="gameDevExportSupabase" type="button">Generate Recovery Files</button>
-</div>
-<div id="gameDevEditorHome"><form id="gameDevForm">
-<label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
-<label>Provided by Developer<select id="gdProvidedByDeveloper"><option value="">None</option></select><span class="field-help">Optional. Lists Active Relationship and Do Not Contact companies only.</span></label>
-<input id="gdOrder" type="hidden">
-<label class="wide">Game Name<input id="gdName" placeholder="Example: 7 Days Of Rose"><span class="field-help">The title shown throughout the website.</span></label>
-<label>Difficulty<select id="gdDifficulty"><option value="">Select difficulty…</option><option>Quick & Easy</option><option>Easy</option><option>Moderate</option><option>Hard</option></select><span class="field-help">Existing site values: Quick & Easy | Easy | Moderate | Hard.</span></label>
-<div><strong>Genre / Type</strong><details class="multi-select"><summary id="gdTypeSummary">Select genres…</summary><div id="gdTypeChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every genre/type that applies. Admin builds the stored value automatically.</span></div>
-<label>Completion Time<div class="inline-pair"><input id="gdTime" inputmode="text" placeholder="Example: 3 or 6-7"><select id="gdTimeUnit" aria-label="Completion time unit"><option value="Minutes">Minutes</option><option value="Hours">Hours</option></select></div><span class="field-help">Enter one amount or a range (example: 6-7), then choose Minutes or Hours.</span><span id="gdTimeError" class="field-error"></span></label>
-<label>Gamerscore<input id="gdGamerscore" inputmode="numeric" placeholder="Example: 2000 → 2,000G"><span class="field-help">Optional. Enter numbers only; Admin formats the value automatically. Leave blank for games/platforms without Gamerscore.</span><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="gdGamerscoreUpdate" type="checkbox" style="width:auto"> Update video</label><span class="field-help">Checked = stores the Gamerscore as, for example, 2,000G Update.</span><span id="gdGamerscoreError" class="field-error"></span></label>
-<label>Completion Type<select id="gdCompletionType"><option value="">None — optional</option></select><span class="field-help">Independent of Xbox Gamerscore. Manage choices in Completion Type Management.</span></label>
-<div><strong>Platform</strong><details class="multi-select"><summary id="gdPlatformSummary">Select platforms…</summary><div id="gdPlatformChoices" class="choice-box choice-grid"></div></details><span class="field-help">Select every platform that applies. Multiple selections are supported.</span></div>
-<label>Quality<select id="gdQuality"><option value="">Select quality…</option></select><span class="field-help">Quality options are managed in Quality Badge Management.</span></label>
-<label>Text Guide<select id="gdTextGuide"><option value="">Select Text Guide…</option></select><span class="field-help">Text Guide options are managed in Text Guide Management.</span></label>
-<div class="wide"><label>YouTube Link<input id="gdYoutubeLink" placeholder="Paste a YouTube video or playlist link"><span class="field-help">Paste the normal YouTube link. Admin detects Video vs Playlist and extracts the correct ID automatically.</span><span id="gdYoutubeLinkError" class="field-error"></span></label></div>
-<label>18+ / Age Restricted<select id="gdAdult"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = age-restricted YouTube content. The website opens it directly on YouTube instead of using the embedded player.</span></label>
-<label>Kinect Required<select id="gdKinect"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes only when Kinect hardware is required to play/complete the game. Otherwise leave No.</span></label>
-<label>Test Content<select id="gdTest"><option value="false">No — normal record</option><option value="true">Yes — TEST only</option></select><span class="field-help">New games default to No. Choose Yes only for deliberate QA/test records.</span></label>
-<label>Always Show in Recent<select id="gdAlwaysRecent"><option value="false">No</option><option value="true">Yes</option></select><span class="field-help">Yes = this game can be forced into Recent Uploads. TEST CONTENT remains the master visibility gate for TEST-only records.</span></label>
-<div class="wide gd-collapsible-row">
-<details class="gd-collapsible gd-developers">
-<summary>Developers — Expand</summary>
-<div class="gd-collapsible-fields">
-<div class="wide"><span class="field-help">Up to 5 developers. Leave unused fields blank.</span></div>
-<label>Developer 1<input id="gdDeveloper1" placeholder="Developer 1"></label>
-<label>Developer 2<input id="gdDeveloper2" placeholder="Developer 2"></label>
-<label>Developer 3<input id="gdDeveloper3" placeholder="Developer 3"></label>
-<label>Developer 4<input id="gdDeveloper4" placeholder="Developer 4"></label>
-<label>Developer 5<input id="gdDeveloper5" placeholder="Developer 5"></label>
-</div>
-</details>
-<details class="gd-collapsible gd-publishers">
-<summary>Publishers — Expand</summary>
-<div class="gd-collapsible-fields">
-<div class="wide"><span class="field-help">Up to 3 publishers. Leave unused fields blank.</span></div>
-<label>Publisher 1<input id="gdPublisher1" placeholder="Publisher 1"></label>
-<label>Publisher 2<input id="gdPublisher2" placeholder="Publisher 2"></label>
-<label>Publisher 3<input id="gdPublisher3" placeholder="Publisher 3"></label>
-</div>
-</details>
-</div>
-<label class="wide">Raw record preview <span class="gd-readonly-label">READ ONLY</span><input id="gdRaw" disabled aria-readonly="true"></label>
-</form><div id="gameDevActions"><button id="gameDevAdd" type="button">Add New Game</button><button id="gameDevCancel" type="button" style="display:none">Cancel</button><button id="gameDevSave" type="button">Save Selected Record</button><button id="gameDevDelete" type="button">Delete Selected Game</button><button id="gameDevReload" type="button">Reload from Firestore</button></div><p id="gameDevWriteStatus"></p></div>
-</div>
-</section>
-<section id="devPubSearchPanel" aria-label="Developer Publisher Search">
-<div id="devPubSearchHeader">
-<h2>Developer / Publisher Search</h2>
-<div id="devPubSearchActions">
-<button id="devPubPublicProfiles" class="admin-link" type="button" data-admin-modal-url="developer-publishers/public-profiles_.html" data-admin-modal-title="Public Developer Profiles">Public Developer Profiles</button>
-<button id="devPubManageCompanies" class="admin-link" type="button" data-admin-modal-url="developer-publishers/manage_.html?v=DEVELOPER-PROVIDED-ADMIN-REV09" data-admin-modal-title="Manage Developer / Publisher">Manage Developer / Publisher</button>
-<button id="devPubAddCompany" class="admin-link" type="button" data-admin-modal-url="developer-publishers/index_.html" data-admin-modal-title="Add New Developer / Publisher">Add New Developer / Publisher</button>
-</div>
-</div>
-<input id="devPubSearch" type="search" placeholder="Search company or developer…" autocomplete="off" aria-label="Search developer or publisher">
-<p id="devPubSearchSummary">Type a developer or publisher name to find matching games.</p>
-<div id="devPubSearchResults" aria-live="polite"></div>
-</section>
-<div id="manualRefreshControls">
-<div id="recentRefreshControl">
-<button id="recentRefresh" class="admin-link" type="button">Refresh Recent Uploads Now</button>
-<p id="recentRefreshStatus" aria-live="polite"></p>
-</div>
-<div id="videoCountRefreshControl">
-<button id="videoCountRefresh" class="admin-link" type="button">Refresh Video Count Now</button>
-<p id="videoCountRefreshStatus" aria-live="polite"></p>
-</div>
-</div>
-<section id="trafficPanel" aria-label="Traffic Analytics">
-<h2>Traffic Analytics</h2>
-<div id="trafficGrid">
-<div class="traffic-card"><strong>Today</strong><div id="trafficToday" class="traffic-values">Loading…</div></div>
-<div class="traffic-card"><strong>Last 7 Days</strong><div id="traffic7" class="traffic-values">Loading…</div></div>
-<div class="traffic-card"><strong>Last 30 Days</strong><div id="traffic30" class="traffic-values">Loading…</div></div>
-<div class="traffic-card"><strong>All Time</strong><div id="trafficAll" class="traffic-values">Loading…</div></div>
-</div>
-<p id="trafficUpdated"></p>
-<p id="trafficError"></p>
-</section>
-</div></div>
-<div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
-<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
-<div class="gd-modal-head"><h2 id="gameDevEditTitle">Edit Game</h2><button id="gameDevEditClose" type="button" aria-label="Close Edit Game">×</button></div>
-<p class="gd-modal-note" id="gameDevEditNote">Review the selected games_TEST record before saving changes.</p>
-<div id="gameDevEditMount"></div>
-</div></div>
-<div id="gameDevDeleteModal" class="gd-modal" aria-hidden="true">
-<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevDeleteTitle">
-<div class="gd-modal-head"><h2 id="gameDevDeleteTitle">Delete Game?</h2><button id="gameDevDeleteClose" type="button" aria-label="Close Delete confirmation">×</button></div>
-<p class="gd-danger-note">This permanently deletes one record from games_TEST.</p>
-<div id="gameDevDeleteTarget" class="gd-delete-target"></div>
-<div class="gd-modal-actions"><button id="gameDevDeleteConfirm" type="button">Yes — Delete This Game</button><button id="gameDevDeleteCancel" type="button">Cancel</button></div>
-</div></div>
-<div id="gameDevAddModal" class="gd-modal" aria-hidden="true">
-<div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevAddTitle">
-<div class="gd-modal-head"><h2 id="gameDevAddTitle">Add New Game</h2><button id="gameDevAddClose" type="button" aria-label="Close Add New Game">×</button></div>
-<p class="gd-modal-note">Create a new <strong>games_TEST</strong> record. Nothing is written until you click Create New Game.</p>
-<div id="gameDevAddMount"></div>
-</div>
-</div>
-</main>
-<div id="gameDevResultModal" class="gd-modal gd-result-modal" aria-hidden="true">
-  <div id="gameDevResultCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="gameDevResultTitle">
-    <h2 id="gameDevResultTitle"></h2>
-    <p id="gameDevResultMessage"></p>
-    <p id="gameDevResultQuestion"></p>
-    <div id="gameDevResultRecoveryActions" class="gd-result-actions">
-      <button id="gameDevResultYes" type="button">YES</button>
-      <button id="gameDevResultNo" type="button">NO</button>
-    </div>
-    <div id="gameDevResultOkActions" class="gd-result-actions gd-result-actions-single">
-      <button id="gameDevResultOk" type="button">OK</button>
-    </div>
-  </div>
-</div>
 
-<!-- SEASONAL TEST REV05: Admin-styled confirmation/result modal; independent of Game Management modal state. -->
-<div id="seasonalConfirmModal" class="gd-modal gd-result-modal" aria-hidden="true">
-  <div id="seasonalConfirmCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="seasonalConfirmTitle" aria-describedby="seasonalConfirmMessage">
-    <h2 id="seasonalConfirmTitle">Seasonal Theme</h2>
-    <p id="seasonalConfirmMessage"></p>
-    <div class="gd-result-actions" id="seasonalConfirmActions">
-      <button id="seasonalConfirmYes" type="button">Yes</button>
-      <button id="seasonalConfirmNo" type="button">No</button>
-    </div>
-  </div>
-</div>
-<div id="adminPageModal" aria-hidden="true">
-  <div id="adminPageModalShell" role="dialog" aria-modal="true" aria-labelledby="adminPageModalTitle">
-    <div id="adminPageModalHeader">
-      <h2 id="adminPageModalTitle">Admin</h2>
-      <button id="adminPageModalClose" type="button" aria-label="Close">×</button>
-    </div>
-    <iframe id="adminPageModalFrame" title="Admin content"></iframe>
-  </div>
-</div>
-<script type="module" src="js/admin-core_.js?v=SEASONAL-TEST-REV05"></script>
-<div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
-  <div class="gd-dialog" style="max-width:430px">
-    <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button id="gdProvidedRoleDeveloper" type="button">Developer</button>
-      <button id="gdProvidedRolePublisher" type="button">Publisher</button>
-      <button id="gdProvidedRoleBoth" type="button">Both</button>
-    </div>
-  </div>
-</div>
+<div id="mainModuleMount"></div>
+<div id="footerModuleMount"></div>
 
-
-<!-- TEST REV06: read-only diagnostic overlay. No Firebase SDK calls or auth mutations. -->
-<style>
-#wnDiag{position:fixed;bottom:10px;right:10px;z-index:2147483647;width:min(380px,calc(100vw - 20px));max-height:45vh;overflow:auto;background:#111827;color:#e5e7eb;border:2px solid #facc15;border-radius:9px;padding:9px;font:11px/1.45 Consolas,monospace;box-shadow:0 5px 24px #000a}
-#wnDiag button{background:#facc15;color:#111;border:0;border-radius:4px;padding:3px 7px;cursor:pointer;font-weight:bold}
-#wnDiag pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font:inherit}
-#wnDiag .head{position:sticky;top:0;background:#111827;z-index:1;display:flex;justify-content:space-between;gap:8px;align-items:center}
-</style>
-<div id="wnDiag" aria-label="TEST REV03 What's New publication diagnostics"><div class="head"><strong>TEST REV03 — WHAT'S NEW PUBLICATION DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
-<script>
-(function(){
- const panel=document.getElementById('wnDiagText'), logs=[];
- const $=id=>document.getElementById(id);
- const visible=id=>{const el=$(id);return el?getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden':'missing';};
- const state=()=>({loginVisible:visible('login'),adminVisible:visible('admin'),modalOpen:$('adminPageModal')?.classList.contains('open'),iframeSrc:$('adminPageModalFrame')?.getAttribute('src'),viewport:innerWidth+'x'+innerHeight,visualViewport:window.visualViewport?Math.round(visualViewport.width)+'x'+Math.round(visualViewport.height)+' @'+visualViewport.scale:'n/a',devicePixelRatio:devicePixelRatio,visibility:document.visibilityState});
- const log=(event)=>{const line=new Date().toLocaleTimeString('en-US',{hour12:true})+'.'+String(new Date().getMilliseconds()).padStart(3,'0')+' '+event+' '+JSON.stringify(state());logs.push(line);if(logs.length>500)logs.shift();const scroller=panel.parentElement;const atBottom=scroller.scrollHeight-scroller.scrollTop-scroller.clientHeight<25;panel.textContent=logs.join('\n');if(atBottom)scroller.scrollTop=scroller.scrollHeight;};
- $('wnDiagHide').addEventListener('click',()=>{const pre=$('wnDiagText'),hide=pre.style.display!=='none';pre.style.display=hide?'none':'';$('wnDiagHide').textContent=hide?'SHOW':'HIDE';$('wnDiagHide').setAttribute('aria-expanded',String(!hide));$('wnDiag').style.maxHeight=hide?'none':'45vh';});
- $('wnDiagCopy').addEventListener('click',()=>navigator.clipboard?.writeText(logs.join('\n')).catch(()=>{}));
- const observe=()=>{for(const id of ['login','admin','adminPageModal','adminPageModalFrame']){const el=$(id);if(el)new MutationObserver(()=>log('DOM change '+id)).observe(el,{attributes:true,attributeFilter:['style','class','src','aria-hidden']});}}
- observe();log('page initialized');
- $('adminPageModalFrame')?.addEventListener('load',()=>log('iframe loaded'));
- $('adminPageModalClose')?.addEventListener('click',()=>log('modal close clicked'));
- $('whatsNewProbe')?.addEventListener('click',()=>log('probe clicked'));
- window.addEventListener('storage',e=>log('storage event key='+String(e.key).slice(0,45)));
- document.addEventListener('visibilitychange',()=>log('visibility change'));
- window.addEventListener('resize',()=>log('resize'));
-  // TEST REV03: passive publication audit. Never log payload bodies, tokens or personal data.
-  // This listener observes messages; it does not dispatch requests or change announcement state.
-  window.addEventListener('message',e=>{
-    if(e.origin!==location.origin)return;
-    const d=e.data;if(!d||typeof d!=='object')return;
-    if(d.wnProbeEvent)log('probe: '+String(d.wnProbeEvent).slice(0,600));
-    // Observe only messages from the known TEST What's New iframe or parent responses.
-    const frame=$('adminPageModalFrame');
-    if(e.source!==frame?.contentWindow)return;
-    if(d.type==='wn-admin-action-request'){
-      const p=d.payload||{};
-      log('PUBLICATION ACTION REQUEST '+JSON.stringify({action:String(p.action||''),id:p.id??null,language:p.language_code??null,requestId:String(d.requestId||'')}));
-    }else if(d.type==='wn-probe-readonly-request')log('PUBLICATION LIST REQUEST');
-  });
-  // Existing iframe REV16 diagnostics report action responses and list counts.
-
- window.addEventListener('pagehide',()=>log('pagehide'));
-})();
-</script>
+<script src="js/theme-toggle_.js?v=THEME-ISOLATION-REV02"></script>
+<script src="js/seasonal-theme_.js?v=SEASONAL-PUBLIC-TEST-REV01"></script>
+<script src="js/test_media_inject_.js?v=DEVELOPER-HARDCODE-REMOVAL-REV11"></script>
+<script src="js/loader_.js?v=RECOMPLETION-TEST-REV04-20261014"></script>
+<script src="js/language_.js?v=ESMX-TEST-REV09"></script>
+<script src="js/recent-landscape-diagnostics_.js?v=SEASONAL-PUBLIC-TEST-REV01"></script>
+<script src="js/whats-new_.js?v=WHATS-NEW-TEST-REV11-FLAGS"></script>
 </body>
 </html>
