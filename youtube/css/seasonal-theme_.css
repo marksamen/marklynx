@@ -1,4 +1,4 @@
-/* SEASONAL PUBLIC TEST REV01: paint only. No geometry, layout or playback changes. */
+/* SEASONAL PUBLIC TEST REV02: paint only. No geometry, layout or playback changes. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] {
   --bg:#130c1b; --bg-raised:#201327; --bg-card:#24152b;
   --line:#53335b; --text:#f6edf8; --text-dim:#d2b9d8;
@@ -27,3 +27,66 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .card { background:#f
 html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row:hover,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .card:hover { background:#ffe6cd; }
 html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2::after { background:linear-gradient(90deg,#db741f,#a354c6,transparent); }
+
+/* REV02: Halloween atmosphere. Paint only; no sizing, ordering or interactive overlays.
+   All rules require the Admin-selected seasonal flag and the visitor's existing theme. */
+html[data-seasonal-theme="halloween"] {
+  --red:#c76316;
+  --red-bright:#ef8c25;
+}
+/* Make the utility strip, banner surround, action strip and body one continuous canvas. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar {background-color:#130c1b;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar {background-color:#fff0dc;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] body {background:#fff0dc;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--bg:#fff0dc;--bg-raised:#fff8ee;--bg-card:#fff8ee;--line:#d6b18c;}
+/* Subtle candlelight glow in the banner surround, with the original banner untouched. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap {
+  background-image:radial-gradient(ellipse at 3% 50%,rgba(237,106,18,.17),transparent 34%),radial-gradient(ellipse at 97% 50%,rgba(128,56,142,.22),transparent 34%);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap {
+  background-image:radial-gradient(ellipse at 3% 50%,rgba(231,111,24,.14),transparent 36%),radial-gradient(ellipse at 97% 50%,rgba(143,73,130,.11),transparent 36%);
+}
+/* Buttons and filters: pumpkin accents; maintain contrast and original sizing. */
+html[data-seasonal-theme="halloween"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"] .clear-filters-btn {background:#b95a15;border-color:#d57b2b;color:#fff;}
+html[data-seasonal-theme="halloween"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"] .view-toggle button.active:hover {background:#d3731e;border-color:#f3a34e;color:#fff;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn {background:#2c1b31;border-color:#95571e;color:#ffe7cb;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .theme-toggle-btn {background:#f8dfc0;border-color:#b9793b;color:#63320e;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar select,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar input {border-color:#6a3b59;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar input {border-color:#bb956f;}
+/* Light completion-type pills -> pumpkin, scoped across LIST and GRID. */
+html[data-seasonal-theme="halloween"] .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="halloween"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="halloween"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="halloween"] #resultsGrid .card-meta .completion-type-meta {
+  background:#f6b45e!important;border-color:#b86a20!important;color:#482508!important;
+  box-shadow:none!important;text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label,
+html[data-seasonal-theme="halloween"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value,
+html[data-seasonal-theme="halloween"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="halloween"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="halloween"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {color:#482508!important;}
+/* Header accents and list separators; never change badge semantics such as Xbox green or quality gold. */
+html[data-seasonal-theme="halloween"] .banner-wrap::after {border-bottom-color:#e88b29;}
+html[data-seasonal-theme="halloween"] .recent-uploads-head h2::after {background:linear-gradient(90deg,#f09a32,#9c4b9e,transparent);}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .list-row,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card {border-color:#58315d;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card {border-color:#c9a581;}
