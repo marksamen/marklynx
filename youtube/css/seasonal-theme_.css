@@ -401,3 +401,28 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:n
   background:#693284!important;
   color:#ffcf85!important;
 }
+
+/* REV13 — Halloween DARK only: game titles and metadata paint.
+   Keep layout, values, completion-type meanings, quality badges, and Bright untouched. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-name, #resultsGrid .card-title, .recent-uploads-grid .recent-upload-title) {
+  color:#ffac40!important;
+}
+/* Normal video Gamerscore, in both LIST and GRID presentations. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.gs, #resultsGrid .gs-pill) {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+/* Normal video Genre, Time, and Difficulty — retain compact chip geometry. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.type, #resultsList .list-col.time, #resultsList .list-col.diff, #resultsGrid .game-meta-pill, #resultsGrid .diff-tag, #resultsList .mobile-game-meta .game-meta-pill) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .game-meta-label, #resultsGrid .game-meta-label) {
+  color:#d59cbe!important;
+}
+/* Keep secondary platform labels legible, separate from the game title. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-sub, #resultsGrid .card-meta) {
+  color:#d5a9e4;
+}
