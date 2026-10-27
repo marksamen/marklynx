@@ -603,3 +603,28 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
     box-shadow: none;
   }
 }
+
+/* REV25 — Halloween Recent Uploads Gamerscore PAINT ONLY.
+   Recent uses .recent-upload-meta.gs, not Normal .list-col.gs/.gs-pill.
+   Keep all historical desktop/mobile LIST/GRID sizing, positioning, display,
+   and completion-type badge rules intact. Do not modify recent_.js.
+   Christmas/future seasons: remember Recent and Normal have separate badge selectors. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  .recent-uploads-grid .recent-upload-meta.gs {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  .recent-uploads-grid .recent-upload-meta.gs {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+/* Recent badge labels otherwise inherit their historic green/neutral colors. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label {
+  color:inherit!important;
+}
