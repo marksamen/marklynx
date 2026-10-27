@@ -566,3 +566,27 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
   background-color:#704179!important;
   border-color:#704179!important;
 }
+
+/* REV21 — Halloween BRIGHT mobile action buttons only.
+   Reinforce the approved desktop purple/orange paint on touch/mobile viewports.
+   No geometry, layout, Dark-mode or non-seasonal changes. */
+@media (max-width: 700px), (pointer: coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button {
+    background:#502268!important;
+    border-color:#30143f!important;
+    color:#ffbe65!important;
+  }
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button:hover {
+    background:#693284!important;
+    border-color:#30143f!important;
+    color:#ffcf85!important;
+  }
+}
