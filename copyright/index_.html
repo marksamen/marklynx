@@ -40,6 +40,7 @@
 <div id="error" role="alert" aria-live="polite"></div>
 </main>
 <main id="admin">
+<!-- SEASONAL TEST REV01 -->
 <div id="adminHeader">
   <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV03</p></div>
   <div id="testContentHeaderControls" aria-label="Test content control">
@@ -71,6 +72,14 @@
               Open Full QA Checklist
             </a>
           </div>
+</section>
+<section id="seasonalThemePanel" aria-label="Seasonal Theme TEST" style="padding:12px;border:1px solid #c78339;margin:12px 0">
+<h2>Seasonal Theme — TEST REV01</h2>
+<p>Admin forces the seasonal appearance; visitors retain their existing Dark/Bright preference.</p>
+<label for="seasonalThemeSelect">Active theme</label>
+<select id="seasonalThemeSelect" disabled><option value="none">Normal (OFF)</option><option value="halloween">Halloween</option></select>
+<button id="seasonalThemeSave" type="button" disabled>Save TEST Theme</button>
+<p id="seasonalThemeStatus" role="status" aria-live="polite">Waiting for Admin login…</p>
 </section>
 <section id="dataSourceStatusPanel" aria-label="Data Source Status">
 <h2>Data Source Status</h2>
@@ -224,7 +233,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core_.js?v=WN-ADMIN-REV12"></script>
+<script type="module" src="js/admin-core_.js?v=SEASONAL-TEST-REV01"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
