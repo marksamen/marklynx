@@ -213,3 +213,25 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #whatsNewMobileBtn:hove
 html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot {
   background:#6c2d83!important; box-shadow:0 0 0 2px #e88424!important;
 }
+
+/* REV05: verified selectors against deployed baseline. Halloween only. */
+/* Bright rows: near-page pumpkin tint instead of the former yellow/grey. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card {background:#efa54a!important;border-color:#b56a32!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {background:#f6b665!important;}
+/* Language selector is #siteLanguageSelect, whose Bright rule uses !important. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] #siteLanguageSelect {background:#592773!important;color:#fff!important;border-color:#8d49a4!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageSelect {background:#e88424!important;color:#211020!important;border-color:#ffad52!important;}
+/* Inactive Grid/List has a Bright base-theme !important rule. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active) {background:#efa54a!important;color:#4b205c!important;border-color:#8d49a4!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active):hover {background:#f6b665!important;color:#32113f!important;border-color:#592773!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button:not(.active) {background:#30183b!important;color:#ffb65c!important;border-color:#6d3e76!important;}
+/* The banner images themselves contain opaque gray/black side pixels.
+   Seasonal derivatives recolor only edge-connected flat backgrounds; original images untouched. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap img {content:url("../banner-halloween-bright_.png?v=SEASONAL-PUBLIC-TEST-REV05")!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap img {content:url("../banner-halloween-dark_.png?v=SEASONAL-PUBLIC-TEST-REV05")!important;}
