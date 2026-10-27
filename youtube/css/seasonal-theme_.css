@@ -349,8 +349,8 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap + .subsc
 /* Banner's thin bottom rule and top trim use the selected seasonal accent. */
 html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::after {border-bottom-color:#71358a!important;}
 html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after {border-bottom-color:#e88424!important;}
-html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {background-color:#71358a!important;}
-html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {background-color:#e88424!important;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {left:50%;right:auto;width:min(calc(100% - 56px), 1400px);height:1px;transform:translateX(-50%);background-color:#71358a!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {left:50%;right:auto;width:min(calc(100% - 56px), 1400px);height:1px;transform:translateX(-50%);background-color:#e88424!important;}
 /* Shared section boundaries: toolbar, Recent Uploads, guides and footer. */
 html[data-seasonal-theme="halloween"][data-theme="bright"] {--line:#71358a;}
 html[data-seasonal-theme="halloween"][data-theme="dark"] {--line:#e88424;}
