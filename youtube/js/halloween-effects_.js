@@ -18,27 +18,39 @@
       !matchMedia('(prefers-reduced-motion: reduce)').matches&&
       !playerPotentiallyVisible()&&performance.now()-lastSound>10000;
   }
+  // REV33: full-length, controlled bat flutter. Keep audio independent of visuals.
+  // 5.8s matches CSS flyby duration. A single shared sound, not one per bat.
   function flutter(){
     if(!canPlayEffect())return;
-    var Ctx=window.AudioContext||window.webkitAudioContext;
-    if(!Ctx||!audioContext||audioContext.state!=='running')return;
+    if(!audioContext||audioContext.state!=='running')return;
     lastSound=performance.now();
-    // Original, synthesized soft flutter: short filtered noise pulses, no external assets.
-    var sampleRate=audioContext.sampleRate,frames=Math.floor(sampleRate*.58);
-    var buffer=audioContext.createBuffer(1,frames,sampleRate),data=buffer.getChannelData(0);
-    for(var i=0;i<frames;i++)data[i]=(Math.random()*2-1)*.45;
+    var duration=5.8,rate=audioContext.sampleRate;
+    var frames=Math.ceil(rate*duration);
+    var buffer=audioContext.createBuffer(1,frames,rate);
+    var data=buffer.getChannelData(0);
+    // Soft, band-limited air movement; slow noise modulation avoids harsh static.
+    var smooth=0;
+    for(var i=0;i<frames;i++){
+      smooth=smooth*.92+(Math.random()*2-1)*.08;
+      data[i]=smooth;
+    }
     var noise=audioContext.createBufferSource();noise.buffer=buffer;
-    var filter=audioContext.createBiquadFilter();filter.type='lowpass';filter.frequency.value=550;
+    var filter=audioContext.createBiquadFilter();filter.type='lowpass';filter.frequency.value=950;
     var gain=audioContext.createGain();gain.gain.value=0;
     noise.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);
-    var start=audioContext.currentTime+.01;
-    for(var k=0;k<5;k++){
-      var t=start+k*.11;
-      gain.gain.setValueAtTime(0,t);
-      gain.gain.linearRampToValueAtTime(.035,t+.025);
-      gain.gain.exponentialRampToValueAtTime(.001,t+.095);
+    var start=audioContext.currentTime+.015;
+    // Fade in/out, with 0.32-second wingbeats throughout the entire flyby.
+    // Peak gain ~0.13, intentionally bounded to avoid startling visitors.
+    gain.gain.setValueAtTime(0,start);
+    for(var k=0;k<18;k++){
+      var t=start+k*.32;
+      var envelope=Math.min(1,(k+.5)/3,(18-k)/3);
+      var peak=.13*Math.max(.15,envelope);
+      gain.gain.linearRampToValueAtTime(peak,t+.105);
+      gain.gain.linearRampToValueAtTime(peak*.25,t+.285);
     }
-    noise.start(start);noise.stop(start+.57);
+    gain.gain.linearRampToValueAtTime(0,start+duration);
+    noise.start(start);noise.stop(start+duration);
     noise.onended=function(){noise.disconnect();filter.disconnect();gain.disconnect();};
   }
   // First ordinary trusted pointer/keyboard interaction unlocks Web Audio.
