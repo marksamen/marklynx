@@ -817,19 +817,6 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 #ml-halloween-fx .ml-halloween-spider-thread {pointer-events:none}
 #ml-halloween-fx .ml-halloween-spider-body {pointer-events:auto}
 
-/* REV47: Compact visitor-controlled intro, independent of Halloween FX overlay. */
-#ml-halloween-intro-ui {position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:60;
- display:flex;gap:7px;align-items:center;padding:7px;border:1px solid #b77bce;border-radius:12px;
- background:rgba(28,13,40,.92);box-shadow:0 3px 18px rgba(0,0,0,.3);max-width:calc(100vw - 24px)}
-#ml-halloween-intro-ui button {font:600 12px/1.25 system-ui,sans-serif;color:#fff0fc;
- background:#59316e;border:1px solid #c591db;border-radius:8px;padding:7px 9px;cursor:pointer;white-space:nowrap}
-#ml-halloween-intro-ui button:focus-visible {outline:2px solid #fff;outline-offset:2px}
-#ml-halloween-intro-ui button:hover {background:#7b4694}
-#ml-halloween-intro-ui button[hidden] {display:none}
-@media(max-width:700px){#ml-halloween-intro-ui{bottom:8px;padding:5px;gap:4px}
- #ml-halloween-intro-ui button{font-size:11px;padding:6px}}
-
-
 /* REV48 — Halloween mobile What's New unread dot contrast ONLY.
    Keep mobile bell borderless, dot position/size, desktop, and unread logic unchanged. */
 @media (max-width:950px) and (pointer:coarse) {
@@ -841,4 +828,14 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
     background:#ff3658!important;
     box-shadow:0 0 0 2px #30143f!important;
   }
+}
+
+/* REV49: Mobile portrait creatures are visual-only; allow underlying site taps.
+   The existing automatic bat flyby audio is deliberately preserved. */
+@media (max-width:700px) and (orientation:portrait) and (pointer:coarse) {
+  #ml-halloween-fx .ml-halloween-ghost,
+  #ml-halloween-fx .ml-halloween-bat,
+  #ml-halloween-fx .ml-halloween-spider-body,
+  #ml-halloween-fx .ml-halloween-eyes,
+  #ml-halloween-fx .ml-halloween-pumpkin {pointer-events:none}
 }
