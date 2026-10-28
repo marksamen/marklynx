@@ -119,6 +119,8 @@
   var soundBase='audio/halloween/';
   var creatureFiles={ghost:'ghost.mp3',bat:'bat.mp3',spider:'spider.mp3',eyes:'eyes.mp3',pumpkin:'pumpkin.mp3'};
   var playingSounds=[];
+  // REV50: Per-creature click cooldown must be initialized before first click.
+  var lastCreatureClick=0;
   function stopAudio(el){
     if(!el)return;
     try{el.pause();el.currentTime=0;}catch(e){}
@@ -131,8 +133,16 @@
   function mobilePortrait(){
     return matchMedia('(max-width:700px) and (orientation:portrait) and (pointer:coarse)').matches;
   }
+  // REV50: A visible video thumbnail/player is not proof that media is playing.
+  // Keep the existing conservative visibility check for automatic bat flybys;
+  // only creature sounds use this narrower, observable media-state check.
+  function mediaActuallyPlaying(){
+    return Array.prototype.some.call(document.querySelectorAll('video,audio'),function(el){
+      return !el.closest('#ml-halloween-fx')&&!el.paused&&!el.ended&&el.readyState>0;
+    })||!!(document.fullscreenElement&&document.fullscreenElement.querySelector('iframe,video'));
+  }
   function creatureSound(kind){
-    if(!active()||document.hidden||playerPotentiallyVisible()||!creatureFiles[kind])return;
+    if(!active()||document.hidden||mediaActuallyPlaying()||!creatureFiles[kind])return;
     try{
       var el=new Audio(soundBase+creatureFiles[kind]);
       el.volume=.5;el.preload='auto';
