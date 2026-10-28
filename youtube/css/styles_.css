@@ -1325,7 +1325,7 @@ body.suggest-modal-open{overflow:hidden}
 
 /* REV34 TEST: Desktop Suggest close stays attached to the Suggest panel.
    Mobile keeps the existing fixed/visualViewport behavior unchanged. */
-@media (min-width:701px){
+@media (min-width:701px) and (hover:hover) and (pointer:fine){
   .suggest-close{
     position:absolute !important;
     top:16px !important;
