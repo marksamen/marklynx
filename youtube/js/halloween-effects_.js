@@ -69,6 +69,51 @@
   document.addEventListener('pointerdown',unlockSound,{passive:true});
   document.addEventListener('keydown',unlockSound);
   document.addEventListener('touchend',unlockSound,{passive:true});
+  // REV44: Quiet Halloween feedback for intentional site UI clicks/selections.
+  // Delegated listeners cover dynamically loaded toolbar, menus and header controls.
+  // Exclude player/video controls and media links; never change the click behavior.
+  var lastUiChime=0;
+  function isSiteControl(el){
+    if(!el||!el.closest)return false;
+    var control=el.closest('button,select,input[type="checkbox"],input[type="radio"],a,[role="button"],[role="tab"],[role="switch"]');
+    if(!control||control.disabled||control.getAttribute('aria-disabled')==='true')return false;
+    if(control.closest('#ml-halloween-fx,iframe,video,audio,[class*="video-modal"],[id*="video-modal"],[class*="player"],[id*="player"]'))return false;
+    if(control.matches('a')){
+      var href=control.getAttribute('href')||'';
+      if(/^(?:https?:)?\/\//i.test(href)||/youtube\.com|youtu\.be|\.(?:mp4|webm|mp3)(?:[?#]|$)/i.test(href))return false;
+    }
+    return true;
+  }
+  function uiChime(event){
+    if(!event.isTrusted||!active()||document.hidden||!isSiteControl(event.target))return;
+    // No key-repeat/duplicate change+click sounds; keep rapid filter use comfortable.
+    var now=performance.now();if(now-lastUiChime<115)return;
+    if(!audioContext||audioContext.state!=='running')return;
+    lastUiChime=now;
+    try{
+      var t=audioContext.currentTime+.008;
+      var variant=Math.floor(Math.random()*3);
+      var notes=[[523.25,659.25],[392,493.88],[440,587.33]][variant];
+      var volume=audioContext.createGain();volume.gain.setValueAtTime(.0001,t);
+      volume.gain.exponentialRampToValueAtTime(.037,t+.018);
+      volume.gain.exponentialRampToValueAtTime(.0001,t+.27);
+      volume.connect(audioContext.destination);
+      notes.forEach(function(hz,i){
+        var osc=audioContext.createOscillator();osc.type=i?'sine':'triangle';
+        osc.frequency.setValueAtTime(hz,t);
+        osc.frequency.exponentialRampToValueAtTime(hz*(variant===1?.84:1.06),t+.24);
+        var partial=audioContext.createGain();partial.gain.value=i?.32:.68;
+        osc.connect(partial);partial.connect(volume);
+        osc.start(t+i*.025);osc.stop(t+.28);
+        osc.onended=function(){osc.disconnect();partial.disconnect();};
+      });
+      // Clean up envelope after all voices have stopped.
+      setTimeout(function(){volume.disconnect();},450);
+    }catch(e){/* UI interactions always work even when audio is unavailable. */}
+  }
+  // Capture clicks before navigation; changes cover keyboard-driven select controls.
+  document.addEventListener('click',uiChime,true);
+  document.addEventListener('change',uiChime,true);
   var webSvg='<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 0H100 M0 0V100 M0 0Q50 0 100 100 M0 0Q0 50 100 100 M0 0Q65 15 85 85 M0 0Q15 65 85 85"/><path d="M25 0Q25 25 0 25 M50 0Q50 50 0 50 M75 0Q75 75 0 75"/></svg>';
   function active(){return root.getAttribute('data-seasonal-theme')==='halloween';}
   function svgBat(){
