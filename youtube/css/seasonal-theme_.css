@@ -359,9 +359,10 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-fo
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=text],
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=email],
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea {
-  background:#502268!important;
-  border-color:#7a488b!important;
-  color:#ffdfb3!important;
+  background:#fff1d8!important;
+  border-color:#a65a23!important;
+  color:#30143f!important;
+  caret-color:#30143f!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-close,
@@ -838,4 +839,19 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
   #ml-halloween-fx .ml-halloween-spider-body,
   #ml-halloween-fx .ml-halloween-eyes,
   #ml-halloween-fx .ml-halloween-pumpkin {pointer-events:none}
+}
+
+/* REV52: Halloween Bright modal form fields — readable cream, not purple.
+   Scoped to visitor forms only; Dark and non-Halloween themes are unchanged. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea::placeholder {
+  color:#815c62!important; opacity:1;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea:focus {
+  outline:2px solid #763177!important; outline-offset:1px;
 }
