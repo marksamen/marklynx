@@ -828,3 +828,17 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 #ml-halloween-intro-ui button[hidden] {display:none}
 @media(max-width:700px){#ml-halloween-intro-ui{bottom:8px;padding:5px;gap:4px}
  #ml-halloween-intro-ui button{font-size:11px;padding:6px}}
+
+
+/* REV48 — Halloween mobile What's New unread dot contrast ONLY.
+   Keep mobile bell borderless, dot position/size, desktop, and unread logic unchanged. */
+@media (max-width:950px) and (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] #whatsNewMobileBtn .wn-dot {
+    background:#c90028!important;
+    box-shadow:0 0 0 2px #30143f!important;
+  }
+  html[data-seasonal-theme="halloween"][data-theme="dark"] #whatsNewMobileBtn .wn-dot {
+    background:#ff3658!important;
+    box-shadow:0 0 0 2px #30143f!important;
+  }
+}
