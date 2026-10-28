@@ -120,6 +120,10 @@
     if(!layer||!active())return;
     var dt=spiderLastTick?Math.min(0.06,(time-spiderLastTick)/1000):0;
     spiderLastTick=time;
+    // REV37: The toolbar is inserted/reflowed asynchronously after mount.
+    // Recheck its actual divider each animation frame, including before any scroll.
+    // positionSpiders writes only when geometry changes (see below).
+    positionSpiders();
     var range=spiderRange();
     var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
     spiderStates.forEach(function(st){
@@ -164,9 +168,11 @@
     var b=decorationBoundary();
     Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-spider-hang'),function(el){
       var w=el.getBoundingClientRect().width;
-      el.style.top=Math.round(b.bottom+2)+'px';
-      el.style.left=Math.round((el.classList.contains('left')?b.left:b.right)-w/2)+'px';
-      el.style.right='auto';
+      var top=Math.round(b.bottom+2)+'px';
+      var left=Math.round((el.classList.contains('left')?b.left:b.right)-w/2)+'px';
+      if(el.style.top!==top)el.style.top=top;
+      if(el.style.left!==left)el.style.left=left;
+      if(el.style.right!=='auto')el.style.right='auto';
     });
     // When toolbar height changes, keep existing ghosts below its lower edge too.
     Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-ghost'),function(el){
