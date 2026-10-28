@@ -235,15 +235,13 @@
     });
     resumeSpiders();
   }
-  // REV41: Silent, side-margin-only fog. The CSS layers never intercept input.
-  // Mount before pumpkins so the lanterns remain visually in front of the mist.
+  // REV42: Full-width rolling fog, visually behind the pumpkins.
+  // Three staggered layers create distinct wisps, without handling input.
   function addFog(){
-    ['left','right'].forEach(function(side){
-      var fog=document.createElement('div');
-      fog.className='ml-halloween-fog '+side;
-      fog.innerHTML='<span class="ml-fog-wisp a"></span><span class="ml-fog-wisp b"></span><span class="ml-fog-wisp c"></span>';
-      layer.appendChild(fog);
-    });
+    var fog=document.createElement('div');
+    fog.className='ml-halloween-fog';
+    fog.innerHTML='<span class="ml-fog-wisp a"></span><span class="ml-fog-wisp b"></span><span class="ml-fog-wisp c"></span>';
+    layer.appendChild(fog);
   }
   // REV40: Silent decorative jack-o'-lanterns. Isolated from bat audio and
   // spider/ghost timing. Their glow flickers independently, never blocks input.
