@@ -722,3 +722,17 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 @keyframes ml-spider-leg-a {from{transform:rotate(-4deg)}to{transform:rotate(9deg)}}
 @keyframes ml-spider-leg-b {from{transform:rotate(8deg)}to{transform:rotate(-6deg)}}
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-spider-leg{animation:none!important}}
+
+/* REV40: Two silent jack-o'-lanterns, independently flickering at lower edges.
+   Noninteractive; responsive and hidden on very short viewports via JS. */
+#ml-halloween-fx .ml-halloween-pumpkin {position:absolute;bottom:12px;width:clamp(62px,6.6vw,116px);height:auto;aspect-ratio:100/94;opacity:.94;filter:drop-shadow(0 0 12px rgba(255,118,14,.40));animation:ml-pumpkin-glow-left 4.9s ease-in-out infinite;pointer-events:none}
+#ml-halloween-fx .ml-halloween-pumpkin.left {left:clamp(5px,1vw,24px)}
+#ml-halloween-fx .ml-halloween-pumpkin.right {right:clamp(5px,1vw,24px);animation-name:ml-pumpkin-glow-right;animation-duration:6.3s;animation-delay:-2.7s}
+#ml-halloween-fx .ml-halloween-pumpkin svg {display:block;width:100%;height:100%}
+#ml-halloween-fx .ml-pumpkin-light {animation:ml-pumpkin-candle 2.7s ease-in-out infinite alternate;transform-origin:center}
+#ml-halloween-fx .ml-halloween-pumpkin.right .ml-pumpkin-light {animation-delay:-1.3s;animation-duration:3.8s}
+@keyframes ml-pumpkin-candle {0%,100%{opacity:.8}18%{opacity:1}37%{opacity:.7}58%{opacity:1}77%{opacity:.86}}
+@keyframes ml-pumpkin-glow-left {0%,100%{filter:drop-shadow(0 0 8px rgba(255,118,14,.32))}48%{filter:drop-shadow(0 0 19px rgba(255,135,14,.67))}}
+@keyframes ml-pumpkin-glow-right {0%,100%{filter:drop-shadow(0 0 16px rgba(255,118,14,.58))}56%{filter:drop-shadow(0 0 7px rgba(255,135,14,.27))}}
+@media(max-width:700px){#ml-halloween-fx .ml-halloween-pumpkin{width:42px;bottom:8px;opacity:.82}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-pumpkin,#ml-halloween-fx .ml-pumpkin-light{animation:none!important}}
