@@ -95,7 +95,7 @@
       var variant=Math.floor(Math.random()*3);
       var notes=[[523.25,659.25],[392,493.88],[440,587.33]][variant];
       var volume=audioContext.createGain();volume.gain.setValueAtTime(.0001,t);
-      volume.gain.exponentialRampToValueAtTime(.037,t+.018);
+      volume.gain.exponentialRampToValueAtTime(.0185,t+.018);
       volume.gain.exponentialRampToValueAtTime(.0001,t+.27);
       volume.connect(audioContext.destination);
       notes.forEach(function(hz,i){
@@ -145,7 +145,7 @@
     if(!active()||document.hidden||mediaActuallyPlaying()||!creatureFiles[kind])return;
     try{
       var el=new Audio(soundBase+creatureFiles[kind]);
-      el.volume=.5;el.preload='auto';
+      el.volume=.25;el.preload='auto';
       playingSounds.push(el);
       el.addEventListener('ended',function(){playingSounds=playingSounds.filter(function(x){return x!==el;});},{once:true});
       var promise=el.play();
