@@ -105,6 +105,60 @@
     return {bottom:Math.max(0,Math.min(innerHeight,r.bottom)),
       left:r.left+(r.width-width)/2,right:r.left+(r.width+width)/2};
   }
+  // REV36: independent scroll-responsive and idle climbing; the web always joins the body.
+  // Movement is confined to the viewport space below the real toolbar divider.
+  var spiderStates=[],spiderFrame=0,spiderLastTick=0;
+  function spiderRange(){
+    var boundary=decorationBoundary().bottom;
+    var mobile=matchMedia('(max-width: 700px)').matches;
+    var bodySize=mobile?40:64;
+    return {min:mobile?25:38,max:Math.max(mobile?25:38,
+      Math.min(mobile?160:260,innerHeight-boundary-bodySize-22))};
+  }
+  function animateSpiders(time){
+    spiderFrame=0;
+    if(!layer||!active())return;
+    var dt=spiderLastTick?Math.min(0.06,(time-spiderLastTick)/1000):0;
+    spiderLastTick=time;
+    var range=spiderRange();
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    spiderStates.forEach(function(st){
+      if(!st.hang.isConnected)return;
+      st.target=Math.max(range.min,Math.min(range.max,st.target));
+      if(reduce){st.current=range.min;}
+      else{
+        // Scroll steers the spider; when idle, each spider wanders independently.
+        // Pauses at different phases prevent synchronized yo-yo motion.
+        var idle=Math.sin(time*(st.side==='left'?.00038:.00031)+st.phase);
+        var rest=Math.abs(idle)<.20;
+        var idleTarget=st.base+idle*(st.side==='left'?42:55);
+        idleTarget=Math.max(range.min,Math.min(range.max,idleTarget));
+        if(time-st.lastScrollTime>1250&&!rest){
+          st.target+=(idleTarget-st.target)*Math.min(1,dt*.62);
+        }
+        st.current+=(st.target-st.current)*Math.min(1,dt*5.8);
+      }
+      var thread=st.hang.querySelector('.ml-halloween-spider-thread');
+      if(thread)thread.style.height=Math.round(st.current)+'px';
+    });
+    if(!document.hidden)spiderFrame=requestAnimationFrame(animateSpiders);
+  }
+  function resumeSpiders(){
+    if(!layer||spiderFrame||document.hidden)return;
+    spiderLastTick=0;spiderFrame=requestAnimationFrame(animateSpiders);
+  }
+  function steerSpiders(delta){
+    if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var now=performance.now(),range=spiderRange();
+    spiderStates.forEach(function(st){
+      st.lastScrollTime=now;
+      // Down scroll = descend; up scroll = ascend. Slightly different reactions.
+      st.target=Math.max(range.min,Math.min(range.max,
+        st.target+delta*(st.side==='left'?.28:.23)));
+      st.base=st.target;
+    });
+    resumeSpiders();
+  }
   function positionSpiders(){
     if(!layer)return;
     var b=decorationBoundary();
@@ -146,7 +200,12 @@
       var hang=document.createElement('div');hang.className='ml-halloween-spider-hang '+side;
       hang.innerHTML='<div class="ml-halloween-spider-thread"></div><div class="ml-halloween-spider-body">'+spiderSvg()+'</div>';
       layer.appendChild(hang);
+      var min=matchMedia('(max-width: 700px)').matches?25:38;
+      spiderStates.push({hang:hang,side:side,base:min+ (side==='left'?50:85),
+        current:min+ (side==='left'?50:85),target:min+(side==='left'?50:85),
+        phase:side==='left'?.4:2.1,lastScrollTime:0});
     });
+    resumeSpiders();
   }
   function mount(){
     if(layer||!document.body)return;
@@ -157,9 +216,9 @@
     });
     document.body.appendChild(layer);
     addSpiders();positionSpiders();scheduleGhost();
-    lastScroll=window.scrollY||0;accumulated=0;
+    lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
-  function unmount(){if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
+  function unmount(){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -182,6 +241,8 @@
     if(!layer)return;
     positionSpiders();
     if(delta>innerHeight*2)return;
+    steerSpiders(y-previousSpiderScrollY);
+    previousSpiderScrollY=y;
     accumulated+=delta;
     if(y>lastScrollDirectionY&&delta>0)downwardAccumulated+=delta;else if(y<lastScrollDirectionY)downwardAccumulated=0;
     lastScrollDirectionY=y;
@@ -189,13 +250,14 @@
     var now=performance.now();
     if(accumulated>=550&&now-lastFlight>=11000){accumulated=0;lastFlight=now;fly();}
   }
-  var downwardAccumulated=0,lastScrollDirectionY=window.scrollY||0;
+  var downwardAccumulated=0,lastScrollDirectionY=window.scrollY||0,previousSpiderScrollY=window.scrollY||0;
   var observer=new MutationObserver(function(records){
     if(records.some(function(r){return r.attributeName==='data-seasonal-theme';}))sync();
   });
   observer.observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',positionSpiders,{passive:true});
+  document.addEventListener('visibilitychange',function(){if(document.hidden){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;}else resumeSpiders();});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});
   else sync();
 })();
