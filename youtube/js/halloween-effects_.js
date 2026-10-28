@@ -91,8 +91,22 @@
   function ghostSvg(){
     return '<svg viewBox="0 0 100 116" aria-hidden="true"><path d="M12 105 V47 C12 19 30 7 50 7 S88 19 88 47 V105 L74 95 L61 108 L49 96 L36 108 L24 96 Z" fill="currentColor" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><ellipse cx="37" cy="54" rx="6" ry="10" fill="#25102d"/><ellipse cx="63" cy="54" rx="6" ry="10" fill="#25102d"/><ellipse cx="50" cy="79" rx="7" ry="10" fill="#25102d"/></svg>';
   }
+  // REV38: Eight separately articulated legs. Alternating groups step while
+  // the body climbs, and twitch gently when it is stationary.
   function spiderSvg(){
-    return '<svg viewBox="0 0 80 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M30 38 L15 26 L5 29 M28 44 L13 41 L3 48 M30 50 L15 60 L10 71 M50 38 L65 26 L75 29 M52 44 L67 41 L77 48 M50 50 L65 60 L70 71"/></g><ellipse cx="40" cy="44" rx="16" ry="20" fill="currentColor"/><circle cx="35" cy="39" r="2.5" fill="#ffbe65"/><circle cx="45" cy="39" r="2.5" fill="#ffbe65"/></svg>';
+    return '<svg viewBox="0 0 80 80" aria-hidden="true">'+
+      '<g fill="none" stroke="currentColor" stroke-width="3.7" stroke-linecap="round" stroke-linejoin="round">'+
+      '<g class="ml-spider-leg ml-spider-leg-a"><path d="M30 35 L17 17 L5 18"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-b"><path d="M29 40 L12 31 L3 37"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-a"><path d="M29 47 L12 51 L5 61"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-b"><path d="M32 53 L20 65 L18 77"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-b"><path d="M50 35 L63 17 L75 18"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-a"><path d="M51 40 L68 31 L77 37"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-b"><path d="M51 47 L68 51 L75 61"/></g>'+
+      '<g class="ml-spider-leg ml-spider-leg-a"><path d="M48 53 L60 65 L62 77"/></g>'+
+      '</g><ellipse cx="40" cy="44" rx="16" ry="20" fill="currentColor"/>'+
+      '<circle cx="35" cy="39" r="2.5" fill="#ffbe65"/>'+
+      '<circle cx="45" cy="39" r="2.5" fill="#ffbe65"/></svg>';
   }
   // REV35: Use the actual sticky toolbar bottom/divider geometry, not viewport percentages.
   // The toolbar is loaded asynchronously by the existing main module.
@@ -142,6 +156,13 @@
         }
         st.current+=(st.target-st.current)*Math.min(1,dt*5.8);
       }
+      // REV38: Animate legs in proportion to actual vertical travel. Idle
+      // twitching remains gentle, and reduced-motion users get no leg motion.
+      var speed=dt>0?Math.abs(st.current-(st.lastLegPosition===undefined?st.current:st.lastLegPosition))/dt:0;
+      st.lastLegPosition=st.current;
+      var period=Math.max(.22,Math.min(3.6,1.45/(1+speed*.065)));
+      st.hang.style.setProperty('--ml-spider-step-period',period.toFixed(2)+'s');
+      st.hang.classList.toggle('ml-spider-climbing',!reduce&&speed>1.5);
       var thread=st.hang.querySelector('.ml-halloween-spider-thread');
       if(thread)thread.style.height=Math.round(st.current)+'px';
     });
