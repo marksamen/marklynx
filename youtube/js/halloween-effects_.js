@@ -77,7 +77,7 @@
     if(!el||!el.closest)return false;
     var control=el.closest('button,select,input[type="checkbox"],input[type="radio"],a,[role="button"],[role="tab"],[role="switch"]');
     if(!control||control.disabled||control.getAttribute('aria-disabled')==='true')return false;
-    if(control.closest('#ml-halloween-fx,iframe,video,audio,[class*="video-modal"],[id*="video-modal"],[class*="player"],[id*="player"]'))return false;
+    if(control.closest('#ml-halloween-fx,#ml-halloween-intro-ui,iframe,video,audio,[class*="video-modal"],[id*="video-modal"],[class*="player"],[id*="player"]'))return false;
     if(control.matches('a')){
       var href=control.getAttribute('href')||'';
       if(/^(?:https?:)?\/\//i.test(href)||/youtube\.com|youtu\.be|\.(?:mp4|webm|mp3)(?:[?#]|$)/i.test(href))return false;
@@ -114,36 +114,78 @@
   // Capture clicks before navigation; changes cover keyboard-driven select controls.
   document.addEventListener('click',uiChime,true);
   document.addEventListener('change',uiChime,true);
-  // REV46: Creature-specific sounds on trusted click/tap only.
-  // Never change the approved REV44 UI chimes or REV33 flyby audio.
-  var lastCreatureClick=0;
-  function creatureSound(kind){
-    if(!active()||document.hidden||playerPotentiallyVisible())return;
-    if(!audioContext||audioContext.state!=='running')return;
-    try{
-      var t=audioContext.currentTime+.008;
-      var specs={
-        ghost:{start:520,end:165,duration:1.1,volume:.042,wave:'sine'},
-        bat:{start:1100,end:440,duration:.40,volume:.026,wave:'triangle'},
-        spider:{start:240,end:100,duration:.45,volume:.027,wave:'sawtooth'},
-        eyes:{start:115,end:62,duration:.95,volume:.038,wave:'triangle'},
-        pumpkin:{start:480,end:225,duration:.85,volume:.037,wave:'square'}
-      };
-      var p=specs[kind];if(!p)return;
-      var env=audioContext.createGain();
-      env.gain.setValueAtTime(.0001,t);
-      env.gain.exponentialRampToValueAtTime(p.volume,t+.035);
-      env.gain.exponentialRampToValueAtTime(.0001,t+p.duration);
-      var filter=audioContext.createBiquadFilter();filter.type='lowpass';
-      filter.frequency.value=kind==='pumpkin'?1250:kind==='spider'?700:1800;
-      env.connect(filter);filter.connect(audioContext.destination);
-      var osc=audioContext.createOscillator();osc.type=p.wave;
-      osc.frequency.setValueAtTime(p.start,t);
-      osc.frequency.exponentialRampToValueAtTime(p.end,t+p.duration);
-      osc.connect(env);osc.start(t);osc.stop(t+p.duration+.015);
-      osc.onended=function(){osc.disconnect();env.disconnect();filter.disconnect();};
-    }catch(e){/* Never affect interaction if audio is unavailable. */}
+  // REV47: Licensed site-hosted MP3 recordings replace REV46 synthesized creature tones.
+  // Existing REV44 UI chimes and REV33 bat flyby remain untouched.
+  var soundBase='audio/halloween/';
+  var creatureFiles={ghost:'ghost.mp3',bat:'bat.mp3',spider:'spider.mp3',eyes:'eyes.mp3',pumpkin:'pumpkin.mp3'};
+  var playingSounds=[];
+  var introAudio=null,introUi=null,introButton=null,introSkip=null,introStopped=false;
+  function stopAudio(el){
+    if(!el)return;
+    try{el.pause();el.currentTime=0;}catch(e){}
   }
+  function stopAllHalloweenAudio(){
+    stopAudio(introAudio);
+    playingSounds.forEach(stopAudio);playingSounds=[];
+  }
+  function setIntroLabel(){
+    if(!introButton)return;
+    introButton.textContent=introAudio&&!introAudio.paused?'■ Stop Halloween Intro':'▶ Play Halloween Intro';
+    if(introSkip)introSkip.hidden=!!introStopped||!!(introAudio&&!introAudio.paused);
+  }
+  function stopIntro(){stopAudio(introAudio);introStopped=true;setIntroLabel();}
+  function playIntro(){
+    if(!active()||document.hidden||playerPotentiallyVisible()||!introAudio)return;
+    introStopped=false;
+    introAudio.currentTime=0;
+    var promise=introAudio.play();
+    if(promise&&promise.then)promise.then(setIntroLabel).catch(function(){setIntroLabel();});
+    setIntroLabel();
+  }
+  function buildIntroUi(){
+    if(introUi||!active()||!document.body)return;
+    introAudio=new Audio(soundBase+'intro.mp3');introAudio.preload='none';introAudio.volume=.38;
+    introAudio.addEventListener('ended',function(){introStopped=true;setIntroLabel();});
+    introUi=document.createElement('div');introUi.id='ml-halloween-intro-ui';
+    introUi.setAttribute('role','group');introUi.setAttribute('aria-label','Halloween introduction audio');
+    introButton=document.createElement('button');introButton.type='button';introButton.className='ml-intro-toggle';
+    introButton.textContent='▶ Play Halloween Intro';
+    introButton.addEventListener('click',function(event){
+      event.stopPropagation();
+      if(!introAudio.paused)stopIntro();else playIntro();
+    });
+    introSkip=document.createElement('button');introSkip.type='button';introSkip.className='ml-intro-skip';
+    introSkip.textContent='Skip';introSkip.setAttribute('aria-label','Skip Halloween introduction');
+    introSkip.addEventListener('click',function(event){event.stopPropagation();stopIntro();});
+    introUi.appendChild(introButton);introUi.appendChild(introSkip);
+    document.body.appendChild(introUi);
+    setIntroLabel();
+    // Try on each page load. Browser autoplay rules may block it; button remains available.
+    if(!playerPotentiallyVisible()){
+      var p=introAudio.play();
+      if(p&&p.then)p.then(setIntroLabel).catch(function(){setIntroLabel();});
+    }
+  }
+  function removeIntroUi(){
+    stopAllHalloweenAudio();
+    if(introUi)introUi.remove();
+    introUi=null;introButton=null;introSkip=null;introAudio=null;introStopped=false;
+  }
+  function creatureSound(kind){
+    if(!active()||document.hidden||playerPotentiallyVisible()||!creatureFiles[kind])return;
+    try{
+      var el=new Audio(soundBase+creatureFiles[kind]);
+      el.volume=.5;el.preload='auto';
+      playingSounds.push(el);
+      el.addEventListener('ended',function(){playingSounds=playingSounds.filter(function(x){return x!==el;});},{once:true});
+      var promise=el.play();
+      if(promise&&promise.catch)promise.catch(function(){playingSounds=playingSounds.filter(function(x){return x!==el;});});
+    }catch(e){/* Never interfere with site controls. */}
+  }
+  // A visible video/player must take precedence over background Halloween music.
+  var introWatch=setInterval(function(){
+    if(introAudio&&!introAudio.paused&&(document.hidden||!active()||playerPotentiallyVisible()))stopIntro();
+  },700);
   function creatureClick(event){
     if(!event.isTrusted||!active()||!layer||!layer.contains(event.target))return;
     var el=event.target.closest('.ml-halloween-ghost,.ml-halloween-bat,.ml-halloween-spider-body,.ml-halloween-eyes,.ml-halloween-pumpkin');
@@ -407,10 +449,10 @@
     document.body.appendChild(layer);
     layer.addEventListener('click',creatureClick);
     positionCornerWebs();
-    addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();scheduleEyes();
+    addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();scheduleEyes();buildIntroUi();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
-  function unmount(){if(eyesTimer!==null){clearTimeout(eyesTimer);eyesTimer=null;}if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
+  function unmount(){removeIntroUi();if(eyesTimer!==null){clearTimeout(eyesTimer);eyesTimer=null;}if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -451,7 +493,7 @@
   observer.observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',function(){positionSpiders();positionPumpkins();},{passive:true});
-  document.addEventListener('visibilitychange',function(){if(document.hidden){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;}else resumeSpiders();});
+  document.addEventListener('visibilitychange',function(){if(document.hidden){stopAllHalloweenAudio();setIntroLabel();if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;}else resumeSpiders();});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});
   else sync();
 })();
