@@ -681,3 +681,29 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-ha
 }
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none} #ml-halloween-fx .ml-bat-wing-left,#ml-halloween-fx .ml-bat-wing-right {animation:none!important}}
 
+
+/* REV34: Halloween-only hanging spiders and side-peeking ghosts.
+   Noninteractive, contained overlay. No layout or filter changes. */
+#ml-halloween-fx .ml-halloween-spider-hang {position:absolute;top:0;width:74px;height:210px;transform-origin:50% 0;animation:ml-spider-sway 6.4s ease-in-out infinite alternate;color:#291333;opacity:.84}
+#ml-halloween-fx .ml-halloween-spider-hang.left {left:clamp(100px,11vw,310px)}
+#ml-halloween-fx .ml-halloween-spider-hang.right {right:clamp(100px,11vw,310px);animation-delay:-3.2s}
+#ml-halloween-fx .ml-halloween-spider-thread {height:132px;width:1px;margin:auto;background:currentColor;opacity:.7}
+#ml-halloween-fx .ml-halloween-spider-body {width:64px;height:64px;margin:-3px auto 0}
+#ml-halloween-fx .ml-halloween-spider-body svg,#ml-halloween-fx .ml-halloween-ghost svg {width:100%;height:100%;display:block}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-spider-hang {color:#d6a4e7}
+@keyframes ml-spider-sway {from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+#ml-halloween-fx .ml-halloween-ghost {position:absolute;width:clamp(72px,6.5vw,135px);aspect-ratio:100/116;opacity:0;color:#f8e9ff;filter:drop-shadow(0 0 10px rgba(152,75,189,.55));will-change:transform,opacity}
+#ml-halloween-fx .ml-halloween-ghost.left {left:0;animation:ml-ghost-peek-left 6.2s ease-in-out forwards}
+#ml-halloween-fx .ml-halloween-ghost.right {right:0;animation:ml-ghost-peek-right 6.2s ease-in-out forwards}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-ghost {color:#fff0ff;filter:drop-shadow(0 0 7px rgba(55,20,75,.7))}
+@keyframes ml-ghost-peek-left {0%,100%{opacity:0;transform:translateX(-105%) rotate(-8deg)}18%,70%{opacity:.9;transform:translateX(-12%) rotate(6deg)}85%{opacity:.7;transform:translateX(-20%) rotate(1deg)}}
+@keyframes ml-ghost-peek-right {0%,100%{opacity:0;transform:translateX(105%) rotate(8deg)}18%,70%{opacity:.9;transform:translateX(12%) rotate(-6deg)}85%{opacity:.7;transform:translateX(20%) rotate(-1deg)}}
+@media(max-width:700px){
+ #ml-halloween-fx .ml-halloween-spider-hang {width:42px;height:126px;opacity:.65}
+ #ml-halloween-fx .ml-halloween-spider-hang.left {left:20vw}
+ #ml-halloween-fx .ml-halloween-spider-hang.right {right:20vw}
+ #ml-halloween-fx .ml-halloween-spider-thread {height:72px}
+ #ml-halloween-fx .ml-halloween-spider-body {width:40px;height:40px}
+ #ml-halloween-fx .ml-halloween-ghost {width:58px}
+}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-spider-hang{animation:none!important}#ml-halloween-fx .ml-halloween-ghost{display:none!important}}
