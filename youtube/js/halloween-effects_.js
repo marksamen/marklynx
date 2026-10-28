@@ -235,6 +235,16 @@
     });
     resumeSpiders();
   }
+  // REV41: Silent, side-margin-only fog. The CSS layers never intercept input.
+  // Mount before pumpkins so the lanterns remain visually in front of the mist.
+  function addFog(){
+    ['left','right'].forEach(function(side){
+      var fog=document.createElement('div');
+      fog.className='ml-halloween-fog '+side;
+      fog.innerHTML='<span class="ml-fog-wisp a"></span><span class="ml-fog-wisp b"></span><span class="ml-fog-wisp c"></span>';
+      layer.appendChild(fog);
+    });
+  }
   // REV40: Silent decorative jack-o'-lanterns. Isolated from bat audio and
   // spider/ghost timing. Their glow flickers independently, never blocks input.
   function pumpkinSvg(){
@@ -261,6 +271,10 @@
     if(!layer)return;
     var boundary=decorationBoundary().bottom;
     var room=innerHeight-boundary;
+    Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-fog'),function(el){
+      var show=room>=150;
+      if(el.style.display!==(show?'':'none'))el.style.display=show?'':'none';
+    });
     Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-pumpkin'),function(el){
       // On very short screens, do not overlap the sticky toolbar.
       var show=room>=120;
@@ -285,7 +299,7 @@
     });
     document.body.appendChild(layer);
     positionCornerWebs();
-    addSpiders();positionSpiders();addPumpkins();scheduleGhost();
+    addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
   function unmount(){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
