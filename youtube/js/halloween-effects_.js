@@ -94,6 +94,32 @@
   function spiderSvg(){
     return '<svg viewBox="0 0 80 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M30 38 L15 26 L5 29 M28 44 L13 41 L3 48 M30 50 L15 60 L10 71 M50 38 L65 26 L75 29 M52 44 L67 41 L77 48 M50 50 L65 60 L70 71"/></g><ellipse cx="40" cy="44" rx="16" ry="20" fill="currentColor"/><circle cx="35" cy="39" r="2.5" fill="#ffbe65"/><circle cx="45" cy="39" r="2.5" fill="#ffbe65"/></svg>';
   }
+  // REV35: Use the actual sticky toolbar bottom/divider geometry, not viewport percentages.
+  // The toolbar is loaded asynchronously by the existing main module.
+  function decorationBoundary(){
+    var toolbar=document.querySelector('.toolbar');
+    if(!toolbar)return {bottom:0,left:0,right:innerWidth};
+    var r=toolbar.getBoundingClientRect();
+    // styles_.css: toolbar::after is centered, width:min(100%-56px,1400px).
+    var width=Math.min(Math.max(0,r.width-56),1400);
+    return {bottom:Math.max(0,Math.min(innerHeight,r.bottom)),
+      left:r.left+(r.width-width)/2,right:r.left+(r.width+width)/2};
+  }
+  function positionSpiders(){
+    if(!layer)return;
+    var b=decorationBoundary();
+    Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-spider-hang'),function(el){
+      var w=el.getBoundingClientRect().width;
+      el.style.top=Math.round(b.bottom+2)+'px';
+      el.style.left=Math.round((el.classList.contains('left')?b.left:b.right)-w/2)+'px';
+      el.style.right='auto';
+    });
+    // When toolbar height changes, keep existing ghosts below its lower edge too.
+    Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-ghost'),function(el){
+      var minTop=b.bottom+8;
+      if(parseFloat(el.style.top)<minTop)el.style.top=Math.round(minTop)+'px';
+    });
+  }
   var ghostTimer=null,lastGhost=0,ghostCount=0;
   function spawnGhost(force){
     if(!layer||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -103,7 +129,10 @@
     var ghost=document.createElement('div');
     var side=ghostCount%2?'left':'right';
     ghost.className='ml-halloween-ghost '+side;
-    ghost.style.top=(Math.round(innerHeight*(.23+(ghostCount%3)*.17)))+'px';
+    var boundary=decorationBoundary().bottom+8;
+    var ghostHeight=matchMedia('(max-width: 700px)').matches?68:Math.min(135,Math.max(72,innerWidth*.065))*1.16;
+    var available=Math.max(0,innerHeight-boundary-ghostHeight-8);
+    ghost.style.top=Math.round(boundary+available*(.18+(ghostCount%3)*.28))+'px';
     ghost.innerHTML=ghostSvg();layer.appendChild(ghost);
     ghost.addEventListener('animationend',function(){ghost.remove();},{once:true});
     setTimeout(function(){ghost.remove();},7200);
@@ -127,7 +156,7 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
-    addSpiders();scheduleGhost();
+    addSpiders();positionSpiders();scheduleGhost();
     lastScroll=window.scrollY||0;accumulated=0;
   }
   function unmount(){if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
@@ -150,7 +179,9 @@
   }
   function onScroll(){
     var y=window.scrollY||0,delta=Math.abs(y-lastScroll);lastScroll=y;
-    if(!layer||delta>innerHeight*2)return;
+    if(!layer)return;
+    positionSpiders();
+    if(delta>innerHeight*2)return;
     accumulated+=delta;
     if(y>lastScrollDirectionY&&delta>0)downwardAccumulated+=delta;else if(y<lastScrollDirectionY)downwardAccumulated=0;
     lastScrollDirectionY=y;
@@ -164,6 +195,7 @@
   });
   observer.observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
   window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',positionSpiders,{passive:true});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});
   else sync();
 })();
