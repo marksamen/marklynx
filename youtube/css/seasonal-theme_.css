@@ -771,24 +771,32 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fo
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-fog-wisp{animation:none!important}}
 
 
-/* REV43: Occasional silent blinking eyes, only within the Halloween overlay. */
+/* REV45: Double-size, high-contrast glowing green eyes with black slit pupils. */
 #ml-halloween-fx .ml-halloween-eyes {
-  position:absolute;display:flex;gap:13px;align-items:center;
-  width:70px;height:35px;justify-content:center;pointer-events:none;
+  position:absolute;display:flex;gap:20px;align-items:center;
+  width:140px;height:70px;justify-content:center;pointer-events:none;
   opacity:0;z-index:0;animation:ml-eyes-appear 6.6s ease-in-out forwards;
-  filter:drop-shadow(0 0 8px rgba(240,255,90,.85));
+  filter:drop-shadow(0 0 10px rgba(86,255,35,.85));
 }
-#ml-halloween-fx .ml-halloween-eyes.left {left:clamp(8px,3vw,52px)}
-#ml-halloween-fx .ml-halloween-eyes.right {right:clamp(8px,3vw,52px)}
+#ml-halloween-fx .ml-halloween-eyes.left {left:clamp(4px,1vw,18px)}
+#ml-halloween-fx .ml-halloween-eyes.right {right:clamp(4px,1vw,18px)}
 #ml-halloween-fx .ml-eye {
-  display:block;width:17px;height:12px;border-radius:60% 60% 45% 45%;
-  background:#dfff73;box-shadow:0 0 9px 2px rgba(205,255,75,.55);
+  display:block;width:34px;height:24px;border-radius:60% 60% 45% 45%;
+  background:#8aff24;box-shadow:0 0 13px 4px rgba(100,255,35,.85),0 0 25px rgba(95,255,15,.55);
   transform-origin:center;animation:ml-eye-blink 6.6s linear forwards;
 }
-#ml-halloween-fx .ml-eye::after {content:"";display:block;width:3px;height:9px;margin:1px auto;background:#26152e;border-radius:50%}
-@keyframes ml-eyes-appear {0%,8%,94%,100%{opacity:0}18%,83%{opacity:.9}}
+#ml-halloween-fx .ml-eye::after {content:"";display:block;width:6px;height:18px;margin:2px auto;background:#101810;border-radius:50%}
+@keyframes ml-eyes-appear {0%,8%,94%,100%{opacity:0}18%,83%{opacity:1}}
 @keyframes ml-eye-blink {0%,28%,33%,57%,62%,100%{transform:scaleY(1)}30%,59%{transform:scaleY(.08)}}
-html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye {background:#442253;box-shadow:0 0 7px 2px rgba(67,23,90,.45)}
-html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye::after {background:#f4dc7a}
-@media(max-width:700px){#ml-halloween-fx .ml-halloween-eyes{width:40px;gap:6px;height:24px}#ml-halloween-fx .ml-eye{width:10px;height:8px}#ml-halloween-fx .ml-eye::after{width:2px;height:6px}}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye {
+  background:#66f600;box-shadow:0 0 12px 4px rgba(36,125,0,.75),0 0 24px rgba(64,255,0,.65);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye::after {background:#101810}
+@media(max-width:700px){
+  #ml-halloween-fx .ml-halloween-eyes{width:80px;gap:12px;height:48px}
+  #ml-halloween-fx .ml-halloween-eyes.left{left:2px}
+  #ml-halloween-fx .ml-halloween-eyes.right{right:2px}
+  #ml-halloween-fx .ml-eye{width:20px;height:16px}
+  #ml-halloween-fx .ml-eye::after{width:4px;height:12px;margin:1px auto}
+}
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-eyes{display:none!important}}
