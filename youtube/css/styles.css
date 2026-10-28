@@ -1323,16 +1323,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV34 TEST: Desktop Suggest close stays attached to the Suggest panel.
-   Mobile keeps the existing fixed/visualViewport behavior unchanged. */
-@media (min-width:701px){
-  .suggest-close{
-    position:absolute !important;
-    top:16px !important;
-    right:16px !important;
-    left:auto !important;
-  }
-}
+/* B2 PROD REV01: Existing fixed/visualViewport Suggest close positioning applies at all widths. */
 
 
 /* ---------- TEST REV21: Developer Showcase horizontal video rail ---------- */
