@@ -711,3 +711,14 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 /* REV36: thread height is controlled by the independent spider climb animation.
    Existing left/right sway, body SVG and ghost/bat styling remain unchanged. */
 #ml-halloween-fx .ml-halloween-spider-thread {will-change:height}
+
+/* REV38: independent articulated eight-leg gait. No changes to climb geometry,
+   scroll steering, body sway, or other Halloween decorations. */
+#ml-halloween-fx .ml-spider-leg {transform-box:view-box;transform-origin:40px 44px;animation-duration:var(--ml-spider-step-period,1.45s);animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+#ml-halloween-fx .ml-spider-leg-a {animation-name:ml-spider-leg-a}
+#ml-halloween-fx .ml-spider-leg-b {animation-name:ml-spider-leg-b}
+#ml-halloween-fx .ml-halloween-spider-hang:not(.ml-spider-climbing) .ml-spider-leg {animation-duration:3.6s;animation-play-state:running}
+#ml-halloween-fx .ml-halloween-spider-hang.right .ml-spider-leg {animation-delay:-.63s}
+@keyframes ml-spider-leg-a {from{transform:rotate(-4deg)}to{transform:rotate(9deg)}}
+@keyframes ml-spider-leg-b {from{transform:rotate(8deg)}to{transform:rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-spider-leg{animation:none!important}}
