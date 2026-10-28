@@ -27,6 +27,22 @@
 #testContentHeaderControls #testStatus.off{color:#ff6d6d;border-color:rgba(255,109,109,.38)}
 #testContentHeaderControls #testToggle,#testContentHeaderControls #logout{width:auto;margin:0;white-space:nowrap}
 @media(max-width:700px){#adminHeader{flex-wrap:wrap}#testContentHeaderControls{width:100%;justify-content:flex-start}}
+/* SEASONAL PROD REV01: compact header-only layout; no data or theme logic changes. */
+#adminHeader{gap:16px}
+#adminHeader>div:first-child{flex:0 0 auto}
+#seasonalThemePanel{box-sizing:border-box;flex:0 1 300px;min-width:215px;margin:0;padding:9px 12px;border:1px solid #c78339;border-radius:9px;background:#18191c;color:#fff;text-align:left}
+#seasonalThemePanel>label{display:block;margin:0 0 6px;font-size:.85rem;font-weight:800;line-height:1.2;color:#fff}
+#seasonalThemePanel .seasonalThemeActions{display:flex;align-items:center;gap:7px}
+#seasonalThemePanel select{box-sizing:border-box;flex:1 1 auto;min-width:0;width:auto;height:35px;padding:5px 9px;border:1px solid #8b929e;border-radius:6px;background:#f7f7f7;color:#141414;font:700 .85rem Arial,sans-serif;color-scheme:light}
+#seasonalThemePanel select option{background:#fff;color:#111}
+#seasonalThemePanel button{box-sizing:border-box;flex:0 0 auto;width:auto;height:35px;margin:0;padding:5px 12px;border-radius:6px;background:#c78339;color:#111;font-size:.84rem;font-weight:800}
+#seasonalThemePanel button:disabled{opacity:.5;cursor:not-allowed}
+#seasonalThemePanel p#seasonalThemeStatus{margin:5px 0 0;font-size:.7rem;letter-spacing:0;text-transform:none;opacity:1;color:#f2d3a8;line-height:1.25;overflow-wrap:anywhere}
+@media(max-width:1080px){#adminHeader{flex-wrap:wrap}#seasonalThemePanel{flex:1 1 240px}#testContentHeaderControls{flex:1 1 100%;justify-content:flex-end}}
+@media(max-width:700px){#seasonalThemePanel{flex:1 1 100%;max-width:100%}#testContentHeaderControls{justify-content:flex-start}}
+#seasonalConfirmYes{background:#2e7d32;border-color:#43a047;color:#fff}
+#seasonalConfirmNo{background:#303036;color:#fff}
+
 </style>
 </head>
 <body>
@@ -47,6 +63,14 @@
     <button id="testToggle" type="button"></button>
     <button id="logout" type="button">Sign Out</button>
   </div>
+<section id="seasonalThemePanel" aria-label="Seasonal Theme PROD">
+    <label for="seasonalThemeSelect">Seasonal Theme</label>
+    <div class="seasonalThemeActions">
+      <select id="seasonalThemeSelect" disabled><option value="none">Normal (OFF)</option><option value="halloween">Halloween</option></select>
+      <button id="seasonalThemeSave" type="button" disabled>Save</button>
+    </div>
+    <p id="seasonalThemeStatus" role="status" aria-live="polite">Waiting for Admin login…</p>
+  </section>
 </div>
 <div id="adminWorkspace"><div id="adminControls">
 <button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
@@ -225,7 +249,7 @@
     <iframe id="adminPageModalFrame" title="Admin content"></iframe>
   </div>
 </div>
-<script type="module" src="js/admin-core.js?v=WHATS-NEW-PROD-REV01"></script>
+<script type="module" src="js/admin-core.js?v=SEASONAL-PROD-REV01"></script>
 <div id="gdProvidedRoleModal" class="gd-modal" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center">
   <div class="gd-dialog" style="max-width:430px">
     <h3 id="gdProvidedRoleMsg" style="margin-top:0"></h3>
@@ -237,5 +261,16 @@
   </div>
 </div>
 
+<!-- SEASONAL PROD REV01: Admin-styled confirmation/result modal; independent of Game Management modal state. -->
+<div id="seasonalConfirmModal" class="gd-modal gd-result-modal" aria-hidden="true">
+  <div id="seasonalConfirmCard" class="gd-result-card" role="dialog" aria-modal="true" aria-labelledby="seasonalConfirmTitle" aria-describedby="seasonalConfirmMessage">
+    <h2 id="seasonalConfirmTitle">Seasonal Theme</h2>
+    <p id="seasonalConfirmMessage"></p>
+    <div class="gd-result-actions" id="seasonalConfirmActions">
+      <button id="seasonalConfirmYes" type="button">Yes</button>
+      <button id="seasonalConfirmNo" type="button">No</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
