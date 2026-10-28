@@ -234,6 +234,15 @@
     });
     resumeSpiders();
   }
+  // REV39: Header cobwebs scroll away with the banner, while the overlay
+  // (spiders, ghosts and bats) stays viewport-fixed. No layout changes.
+  function positionCornerWebs(){
+    if(!layer)return;
+    var offset=-(window.scrollY||window.pageYOffset||0)+'px';
+    Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-corner'),function(web){
+      if(web.style.top!==offset)web.style.top=offset;
+    });
+  }
   function mount(){
     if(layer||!document.body)return;
     layer=document.createElement('div');layer.id='ml-halloween-fx';layer.setAttribute('aria-hidden','true');
@@ -242,6 +251,7 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
+    positionCornerWebs();
     addSpiders();positionSpiders();scheduleGhost();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
@@ -266,6 +276,7 @@
   function onScroll(){
     var y=window.scrollY||0,delta=Math.abs(y-lastScroll);lastScroll=y;
     if(!layer)return;
+    positionCornerWebs();
     positionSpiders();
     if(delta>innerHeight*2)return;
     steerSpiders(y-previousSpiderScrollY);
