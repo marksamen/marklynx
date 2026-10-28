@@ -243,6 +243,27 @@
     fog.innerHTML='<span class="ml-fog-wisp a"></span><span class="ml-fog-wisp b"></span><span class="ml-fog-wisp c"></span>';
     layer.appendChild(fog);
   }
+  // REV43: Quiet, occasional blinking eyes in the side shadows.
+  // No sound, input, storage, or site-state changes. Timer removed on OFF.
+  var eyesTimer=null,eyesCount=0;
+  function spawnEyes(){
+    if(!layer||!active()||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var boundary=decorationBoundary().bottom;
+    var available=innerHeight-boundary;
+    if(available<165)return;
+    var eyes=document.createElement('div');
+    eyes.className='ml-halloween-eyes '+(eyesCount++%2?'right':'left');
+    var maxTop=Math.max(0,available-100);
+    eyes.style.top=Math.round(boundary+Math.min(maxTop,available*(.24+Math.random()*.46)))+'px';
+    eyes.innerHTML='<span class="ml-eye"></span><span class="ml-eye"></span>';
+    layer.appendChild(eyes);
+    eyes.addEventListener('animationend',function(e){if(e.target===eyes)eyes.remove();});
+    setTimeout(function(){eyes.remove();},7600);
+  }
+  function scheduleEyes(){
+    if(eyesTimer!==null)clearTimeout(eyesTimer);
+    eyesTimer=setTimeout(function(){eyesTimer=null;if(!layer)return;spawnEyes();scheduleEyes();},11000+Math.round(Math.random()*8000));
+  }
   // REV40: Silent decorative jack-o'-lanterns. Isolated from bat audio and
   // spider/ghost timing. Their glow flickers independently, never blocks input.
   function pumpkinSvg(){
@@ -297,10 +318,10 @@
     });
     document.body.appendChild(layer);
     positionCornerWebs();
-    addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();
+    addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();scheduleEyes();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
-  function unmount(){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
+  function unmount(){if(eyesTimer!==null){clearTimeout(eyesTimer);eyesTimer=null;}if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
