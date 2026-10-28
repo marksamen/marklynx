@@ -95,7 +95,7 @@
       var variant=Math.floor(Math.random()*3);
       var notes=[[523.25,659.25],[392,493.88],[440,587.33]][variant];
       var volume=audioContext.createGain();volume.gain.setValueAtTime(.0001,t);
-      volume.gain.exponentialRampToValueAtTime(.037,t+.018);
+      volume.gain.exponentialRampToValueAtTime(matchMedia('(min-width: 1024px) and (pointer: fine)').matches?.074:.037,t+.018);
       volume.gain.exponentialRampToValueAtTime(.0001,t+.27);
       volume.connect(audioContext.destination);
       notes.forEach(function(hz,i){
