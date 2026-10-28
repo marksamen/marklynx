@@ -138,6 +138,7 @@
     // Recheck its actual divider each animation frame, including before any scroll.
     // positionSpiders writes only when geometry changes (see below).
     positionSpiders();
+    positionPumpkins();
     var range=spiderRange();
     var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
     spiderStates.forEach(function(st){
@@ -234,6 +235,38 @@
     });
     resumeSpiders();
   }
+  // REV40: Silent decorative jack-o'-lanterns. Isolated from bat audio and
+  // spider/ghost timing. Their glow flickers independently, never blocks input.
+  function pumpkinSvg(){
+    return '<svg viewBox="0 0 100 94" aria-hidden="true" focusable="false">'+
+      '<path d="M48 15 Q43 6 51 2 L59 4 Q53 11 54 18" fill="#497b35" stroke="#264b23" stroke-width="2"/>'+
+      '<path d="M49 20 C13 2 1 32 9 61 C15 85 32 91 50 90 C69 91 87 84 92 60 C100 31 87 3 51 20Z" fill="#c65c0d" stroke="#74310b" stroke-width="3"/>'+
+      '<path d="M48 20 C30 14 23 33 24 56 C25 77 34 87 49 89 M54 20 C73 14 79 33 77 56 C76 77 67 87 53 89" fill="none" stroke="#ed8b20" stroke-width="4" opacity=".75"/>'+
+      '<g class="ml-pumpkin-light" fill="#ffe17b" stroke="#6c270a" stroke-width="2">'+
+      '<path d="M20 45 L38 36 L35 55 Z"/><path d="M80 45 L62 36 L65 55 Z"/>'+
+      '<path d="M48 49 L43 62 L57 62 Z"/>'+
+      '<path d="M23 66 Q49 85 77 66 L71 76 L61 73 L54 81 L45 74 L35 79 L30 70 Z"/>'+
+      '</g></svg>';
+  }
+  function addPumpkins(){
+    ['left','right'].forEach(function(side){
+      var el=document.createElement('div');
+      el.className='ml-halloween-pumpkin '+side;
+      el.innerHTML=pumpkinSvg();
+      layer.appendChild(el);
+    });
+    positionPumpkins();
+  }
+  function positionPumpkins(){
+    if(!layer)return;
+    var boundary=decorationBoundary().bottom;
+    var room=innerHeight-boundary;
+    Array.prototype.forEach.call(layer.querySelectorAll('.ml-halloween-pumpkin'),function(el){
+      // On very short screens, do not overlap the sticky toolbar.
+      var show=room>=120;
+      if(el.style.display!==(show?'':'none'))el.style.display=show?'':'none';
+    });
+  }
   // REV39: Header cobwebs scroll away with the banner, while the overlay
   // (spiders, ghosts and bats) stays viewport-fixed. No layout changes.
   function positionCornerWebs(){
@@ -252,7 +285,7 @@
     });
     document.body.appendChild(layer);
     positionCornerWebs();
-    addSpiders();positionSpiders();scheduleGhost();
+    addSpiders();positionSpiders();addPumpkins();scheduleGhost();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
   }
   function unmount(){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;spiderLastTick=0;spiderStates=[];if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
@@ -278,6 +311,7 @@
     if(!layer)return;
     positionCornerWebs();
     positionSpiders();
+    positionPumpkins();
     if(delta>innerHeight*2)return;
     steerSpiders(y-previousSpiderScrollY);
     previousSpiderScrollY=y;
@@ -294,7 +328,7 @@
   });
   observer.observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
   window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',positionSpiders,{passive:true});
+  window.addEventListener('resize',function(){positionSpiders();positionPumpkins();},{passive:true});
   document.addEventListener('visibilitychange',function(){if(document.hidden){if(spiderFrame)cancelAnimationFrame(spiderFrame);spiderFrame=0;}else resumeSpiders();});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});
   else sync();
