@@ -737,17 +737,35 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
 @media(max-width:700px){#ml-halloween-fx .ml-halloween-pumpkin{width:42px;bottom:8px;opacity:.82}}
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-pumpkin,#ml-halloween-fx .ml-pumpkin-light{animation:none!important}}
 
-/* REV41: Restrained, silent purple mist strictly in the outer side margins.
-   Decorative overlay only; does not affect layout or pointer input.
-   No center overlay, no obscuring guide cards or toolbar. */
-#ml-halloween-fx .ml-halloween-fog {position:absolute;bottom:0;width:clamp(24px,7.8vw,125px);height:clamp(90px,17vh,200px);overflow:hidden;pointer-events:none;opacity:.60;z-index:0;mask-image:linear-gradient(to top,#000 8%,transparent 100%);-webkit-mask-image:linear-gradient(to top,#000 8%,transparent 100%)}
-#ml-halloween-fx .ml-halloween-fog.left {left:0}
-#ml-halloween-fx .ml-halloween-fog.right {right:0;transform:scaleX(-1)}
-#ml-halloween-fx .ml-fog-wisp {position:absolute;bottom:-18%;left:-30%;width:150%;height:78%;border-radius:50%;background:radial-gradient(ellipse at 50% 65%,rgba(161,89,203,.50) 0%,rgba(119,59,163,.24) 36%,transparent 74%);filter:blur(13px);animation:ml-fog-drift 12s ease-in-out infinite alternate}
-#ml-halloween-fx .ml-fog-wisp.b {bottom:-10%;left:-55%;width:165%;height:60%;opacity:.65;animation-duration:17s;animation-delay:-8s}
-#ml-halloween-fx .ml-fog-wisp.c {bottom:2%;left:-15%;width:110%;height:55%;opacity:.46;animation-duration:14s;animation-delay:-5s}
+/* REV42: Rolling full-width Halloween fog; soft cloud silhouettes and
+   visible purple haze in both Bright and Dark. Entirely decorative.
+   Kept below controls with no pointer or touch interception. */
+#ml-halloween-fx .ml-halloween-fog {
+  position:absolute;left:0;right:0;bottom:0;height:clamp(115px,17vh,190px);
+  pointer-events:none;z-index:0;overflow:hidden;
+  opacity:.88;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,#000 23%,rgba(0,0,0,.78) 49%,transparent 100%);
+  mask-image:linear-gradient(to top,#000 0%,#000 23%,rgba(0,0,0,.78) 49%,transparent 100%);
+}
+#ml-halloween-fx .ml-fog-wisp {
+  position:absolute;inset:0;bottom:-15%;width:125%;height:115%;left:-12%;
+  background:
+    radial-gradient(ellipse 20% 40% at 5% 98%,rgba(103,42,147,.78) 0%,transparent 100%),
+    radial-gradient(ellipse 22% 46% at 23% 89%,rgba(125,59,170,.72) 0%,transparent 100%),
+    radial-gradient(ellipse 26% 44% at 47% 100%,rgba(101,42,150,.82) 0%,transparent 100%),
+    radial-gradient(ellipse 25% 47% at 70% 88%,rgba(123,51,171,.76) 0%,transparent 100%),
+    radial-gradient(ellipse 22% 42% at 93% 99%,rgba(102,44,152,.78) 0%,transparent 100%);
+  filter:blur(13px);animation:ml-fog-roll-a 15s ease-in-out infinite alternate;
+}
+#ml-halloween-fx .ml-fog-wisp.b {opacity:.70;left:-9%;bottom:-30%;transform:scaleX(-1);animation:ml-fog-roll-b 21s ease-in-out infinite alternate;animation-delay:-9s;filter:blur(18px)}
+#ml-halloween-fx .ml-fog-wisp.c {opacity:.48;bottom:-43%;left:-15%;animation:ml-fog-roll-a 27s ease-in-out infinite alternate-reverse;animation-delay:-14s;filter:blur(22px)}
 #ml-halloween-fx .ml-halloween-pumpkin {z-index:1}
-@keyframes ml-fog-drift {from{transform:translate3d(-12%,8%,0) scale(.90);opacity:.45}to{transform:translate3d(20%,-6%,0) scale(1.12);opacity:.95}}
-html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-fog {opacity:.42}
-@media(max-width:700px){#ml-halloween-fx .ml-halloween-fog{width:18px;height:100px;opacity:.28}#ml-halloween-fx .ml-fog-wisp{filter:blur(7px)}}
-@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-fog-wisp{animation:none!important;opacity:.30}}
+@keyframes ml-fog-roll-a {from{transform:translate3d(-5%,4%,0) scale(1)}to{transform:translate3d(5%,-7%,0) scale(1.06)}}
+@keyframes ml-fog-roll-b {from{transform:translate3d(5%,1%,0) scaleX(-1) scale(1.04)}to{transform:translate3d(-5%,-9%,0) scaleX(-1) scale(1)}}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-fog {opacity:.95}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-fog {opacity:.87}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp {filter:blur(13px) brightness(1.55)}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp.b {filter:blur(18px) brightness(1.55)}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp.c {filter:blur(22px) brightness(1.55)}
+@media(max-width:700px){#ml-halloween-fx .ml-halloween-fog{height:85px;opacity:.60!important}#ml-halloween-fx .ml-fog-wisp{filter:blur(10px)}#ml-halloween-fx .ml-fog-wisp.b{filter:blur(14px)}#ml-halloween-fx .ml-fog-wisp.c{filter:blur(17px)}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-fog-wisp{animation:none!important}}
