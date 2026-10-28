@@ -83,7 +83,6 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
-    createSoundButton();
     lastScroll=window.scrollY||0;accumulated=0;
   }
   function unmount(){if(layer){layer.remove();layer=null;}accumulated=0;}
