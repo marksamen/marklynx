@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-27T14:33:49.444984+00:00",
+  "updated": "2026-10-28T11:43:42.970892+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "uIQjhDS_aPQ",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 2 | Run For It | All Star Coins | 3 Methods to beat!",
+      "published": "2026-10-27T23:07:25+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/uIQjhDS_aPQ/hqdefault.jpg"
+    },
     {
       "id": "JxDUwUhHpRA",
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 1 | Spine-Tingling Spine Coaster | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | No Star Coins | Secret exit",
       "published": "2026-10-20T22:45:15+00:00",
       "thumbnail": "https://i.ytimg.com/vi/K5IhnuaNffs/hqdefault.jpg"
-    },
-    {
-      "id": "SrDtro6anRI",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | All Star Coins | Normal exit",
-      "published": "2026-10-19T23:55:30+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/SrDtro6anRI/hqdefault.jpg"
     }
   ]
 }
