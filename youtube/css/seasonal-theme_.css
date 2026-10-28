@@ -800,3 +800,19 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
   #ml-halloween-fx .ml-eye::after{width:4px;height:12px;margin:1px auto}
 }
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-eyes{display:none!important}}
+
+
+/* REV46: Only visible creatures accept pointer clicks/taps. The overlay,
+   fog, cobwebs, spider threads and all empty space remain click-through. */
+#ml-halloween-fx .ml-halloween-ghost,
+#ml-halloween-fx .ml-halloween-bat,
+#ml-halloween-fx .ml-halloween-spider-body,
+#ml-halloween-fx .ml-halloween-eyes,
+#ml-halloween-fx .ml-halloween-pumpkin {
+  pointer-events:auto;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+#ml-halloween-fx .ml-halloween-spider-hang,
+#ml-halloween-fx .ml-halloween-spider-thread {pointer-events:none}
+#ml-halloween-fx .ml-halloween-spider-body {pointer-events:auto}
