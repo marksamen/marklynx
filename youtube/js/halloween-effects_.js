@@ -114,6 +114,49 @@
   // Capture clicks before navigation; changes cover keyboard-driven select controls.
   document.addEventListener('click',uiChime,true);
   document.addEventListener('change',uiChime,true);
+  // REV46: Creature-specific sounds on trusted click/tap only.
+  // Never change the approved REV44 UI chimes or REV33 flyby audio.
+  var lastCreatureClick=0;
+  function creatureSound(kind){
+    if(!active()||document.hidden||playerPotentiallyVisible())return;
+    if(!audioContext||audioContext.state!=='running')return;
+    try{
+      var t=audioContext.currentTime+.008;
+      var specs={
+        ghost:{start:520,end:165,duration:1.1,volume:.042,wave:'sine'},
+        bat:{start:1100,end:440,duration:.40,volume:.026,wave:'triangle'},
+        spider:{start:240,end:100,duration:.45,volume:.027,wave:'sawtooth'},
+        eyes:{start:115,end:62,duration:.95,volume:.038,wave:'triangle'},
+        pumpkin:{start:480,end:225,duration:.85,volume:.037,wave:'square'}
+      };
+      var p=specs[kind];if(!p)return;
+      var env=audioContext.createGain();
+      env.gain.setValueAtTime(.0001,t);
+      env.gain.exponentialRampToValueAtTime(p.volume,t+.035);
+      env.gain.exponentialRampToValueAtTime(.0001,t+p.duration);
+      var filter=audioContext.createBiquadFilter();filter.type='lowpass';
+      filter.frequency.value=kind==='pumpkin'?1250:kind==='spider'?700:1800;
+      env.connect(filter);filter.connect(audioContext.destination);
+      var osc=audioContext.createOscillator();osc.type=p.wave;
+      osc.frequency.setValueAtTime(p.start,t);
+      osc.frequency.exponentialRampToValueAtTime(p.end,t+p.duration);
+      osc.connect(env);osc.start(t);osc.stop(t+p.duration+.015);
+      osc.onended=function(){osc.disconnect();env.disconnect();filter.disconnect();};
+    }catch(e){/* Never affect interaction if audio is unavailable. */}
+  }
+  function creatureClick(event){
+    if(!event.isTrusted||!active()||!layer||!layer.contains(event.target))return;
+    var el=event.target.closest('.ml-halloween-ghost,.ml-halloween-bat,.ml-halloween-spider-body,.ml-halloween-eyes,.ml-halloween-pumpkin');
+    if(!el||!layer.contains(el))return;
+    var kind=el.classList.contains('ml-halloween-ghost')?'ghost':
+      el.classList.contains('ml-halloween-bat')?'bat':
+      el.classList.contains('ml-halloween-spider-body')?'spider':
+      el.classList.contains('ml-halloween-eyes')?'eyes':'pumpkin';
+    var now=performance.now();if(now-lastCreatureClick<180)return;
+    lastCreatureClick=now;
+    event.stopPropagation();
+    creatureSound(kind);
+  }
   var webSvg='<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 0H100 M0 0V100 M0 0Q50 0 100 100 M0 0Q0 50 100 100 M0 0Q65 15 85 85 M0 0Q15 65 85 85"/><path d="M25 0Q25 25 0 25 M50 0Q50 50 0 50 M75 0Q75 75 0 75"/></svg>';
   function active(){return root.getAttribute('data-seasonal-theme')==='halloween';}
   function svgBat(){
@@ -362,6 +405,7 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
+    layer.addEventListener('click',creatureClick);
     positionCornerWebs();
     addSpiders();positionSpiders();addFog();addPumpkins();scheduleGhost();scheduleEyes();
     lastScroll=window.scrollY||0;previousSpiderScrollY=lastScroll;accumulated=0;
