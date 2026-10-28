@@ -707,3 +707,7 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-
  #ml-halloween-fx .ml-halloween-ghost {width:58px}
 }
 @media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-spider-hang{animation:none!important}#ml-halloween-fx .ml-halloween-ghost{display:none!important}}
+
+/* REV36: thread height is controlled by the independent spider climb animation.
+   Existing left/right sway, body SVG and ghost/bat styling remain unchanged. */
+#ml-halloween-fx .ml-halloween-spider-thread {will-change:height}
