@@ -87,6 +87,38 @@
     part('ml-bat-body','M22 8 L21 5 L23 6 L24 8 L25 6 L27 5 L26 8 L28 12 L25 18 L24 16 L23 18 L20 12 Z');
     return svg;
   }
+  // REV34: Silent, decorative ghosts and spiders. Independent of REV33 bat/audio logic.
+  function ghostSvg(){
+    return '<svg viewBox="0 0 100 116" aria-hidden="true"><path d="M12 105 V47 C12 19 30 7 50 7 S88 19 88 47 V105 L74 95 L61 108 L49 96 L36 108 L24 96 Z" fill="currentColor" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><ellipse cx="37" cy="54" rx="6" ry="10" fill="#25102d"/><ellipse cx="63" cy="54" rx="6" ry="10" fill="#25102d"/><ellipse cx="50" cy="79" rx="7" ry="10" fill="#25102d"/></svg>';
+  }
+  function spiderSvg(){
+    return '<svg viewBox="0 0 80 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M30 38 L15 26 L5 29 M28 44 L13 41 L3 48 M30 50 L15 60 L10 71 M50 38 L65 26 L75 29 M52 44 L67 41 L77 48 M50 50 L65 60 L70 71"/></g><ellipse cx="40" cy="44" rx="16" ry="20" fill="currentColor"/><circle cx="35" cy="39" r="2.5" fill="#ffbe65"/><circle cx="45" cy="39" r="2.5" fill="#ffbe65"/></svg>';
+  }
+  var ghostTimer=null,lastGhost=0,ghostCount=0;
+  function spawnGhost(force){
+    if(!layer||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var now=performance.now();
+    if(now-lastGhost<(force?12000:17000))return;
+    lastGhost=now;ghostCount++;
+    var ghost=document.createElement('div');
+    var side=ghostCount%2?'left':'right';
+    ghost.className='ml-halloween-ghost '+side;
+    ghost.style.top=(Math.round(innerHeight*(.23+(ghostCount%3)*.17)))+'px';
+    ghost.innerHTML=ghostSvg();layer.appendChild(ghost);
+    ghost.addEventListener('animationend',function(){ghost.remove();},{once:true});
+    setTimeout(function(){ghost.remove();},7200);
+  }
+  function scheduleGhost(){
+    if(ghostTimer!==null)clearTimeout(ghostTimer);
+    ghostTimer=setTimeout(function(){ghostTimer=null;if(layer)spawnGhost(false);scheduleGhost();},24000);
+  }
+  function addSpiders(){
+    ['left','right'].forEach(function(side){
+      var hang=document.createElement('div');hang.className='ml-halloween-spider-hang '+side;
+      hang.innerHTML='<div class="ml-halloween-spider-thread"></div><div class="ml-halloween-spider-body">'+spiderSvg()+'</div>';
+      layer.appendChild(hang);
+    });
+  }
   function mount(){
     if(layer||!document.body)return;
     layer=document.createElement('div');layer.id='ml-halloween-fx';layer.setAttribute('aria-hidden','true');
@@ -95,9 +127,10 @@
       web.innerHTML=webSvg;layer.appendChild(web);
     });
     document.body.appendChild(layer);
+    addSpiders();scheduleGhost();
     lastScroll=window.scrollY||0;accumulated=0;
   }
-  function unmount(){if(layer){layer.remove();layer=null;}accumulated=0;}
+  function unmount(){if(ghostTimer!==null){clearTimeout(ghostTimer);ghostTimer=null;}if(layer){layer.remove();layer=null;}accumulated=0;lastGhost=0;}
   function sync(){if(active())mount();else unmount();}
   function fly(){
     if(!layer||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -119,9 +152,13 @@
     var y=window.scrollY||0,delta=Math.abs(y-lastScroll);lastScroll=y;
     if(!layer||delta>innerHeight*2)return;
     accumulated+=delta;
+    if(y>lastScrollDirectionY&&delta>0)downwardAccumulated+=delta;else if(y<lastScrollDirectionY)downwardAccumulated=0;
+    lastScrollDirectionY=y;
+    if(downwardAccumulated>=380){downwardAccumulated=0;spawnGhost(true);}
     var now=performance.now();
     if(accumulated>=550&&now-lastFlight>=11000){accumulated=0;lastFlight=now;fly();}
   }
+  var downwardAccumulated=0,lastScrollDirectionY=window.scrollY||0;
   var observer=new MutationObserver(function(records){
     if(records.some(function(r){return r.attributeName==='data-seasonal-theme';}))sync();
   });
