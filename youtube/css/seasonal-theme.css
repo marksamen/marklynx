@@ -1,0 +1,857 @@
+/* SEASONAL PROD REV02 — header and banner surround ONLY.
+   No banner geometry, images, body palette, controls, cards, or layout changes.
+   All paint requires Admin's halloween flag; no effect when OFF. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background-color:#ef9a32;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {
+  background-color:#130c1b;
+}
+/* Repaint the existing top divider, respecting its approved mobile inset. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences-inner { border-bottom-color:#622477; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences-inner { border-bottom-color:#ed912a; }
+@media (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences-inner {
+    background-image:linear-gradient(#622477,#622477);
+  }
+  html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences-inner {
+    background-image:linear-gradient(#ed912a,#ed912a);
+  }
+}
+/* Recolor the existing lower banner divider; never draw a second line. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::after { border-bottom-color:#622477; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::after { border-bottom-color:#ed912a; }
+
+/* REV04: reintroduce the previously approved Halloween DARK palette only.
+   Source: isolated REV08 dark rules. No banner geometry/artwork or extra lines.
+   Bright styling below the header/banner remains unchanged from REV02. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --bg:#180d23;
+  --bg-raised:#271432;
+  --bg-card:#30183b;
+  --line:#6d3e76;
+  --red:#df751c;
+  --red-bright:#ffa63e;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] body,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .toolbar {
+  background-color:#180d23;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card {
+  background-color:#30183b;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card:hover {
+  background-color:#3b2047;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .clear-filters-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn {
+  background:#e88424;
+  border-color:#ffad52;
+  color:#211020;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {
+  background:#ffa63e;
+  border-color:#ffc47a;
+  color:#211020;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta {
+  background:#f6b45e!important;
+  border-color:#b86a20!important;
+  color:#482508!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
+  color:#482508!important;
+}
+
+/* REV05: Dark-only banner surround paint correction.
+   Use the existing banner wrapper and its existing top pseudo-element.
+   No new elements, overlays, separators, dimensions, or image adjustments.
+   A background shorthand resets all layers inherited from earlier themes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .banner-wrap::before {
+  background:#180d23!important;
+}
+
+/* REV06 — Halloween DARK only: existing header, language, What's New,
+   Developer and Suggest surfaces. No banner geometry or generic selectors. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .site-preferences {
+  background:#180d23;
+}
+/* Language select is created with inline styles; override its paint only. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageSelect {
+  background:#30183b!important;
+  color:#fff!important;
+  border-color:#6d3e76!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button {
+  background:#30183b;
+  border-color:#6d3e76;
+  color:#fff;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot { box-shadow:0 0 0 2px #30183b; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dialog,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-panel,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-panel {
+  background:#271432;
+  color:#f5eff8;
+  border-color:#6d3e76;
+  border-top-color:#e88424;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-head,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-body { border-color:#6d3e76; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-cta,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form {
+  background:#30183b;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card-thumb,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-proof span,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card-meta span,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-platform-grid label {
+  background:#271432;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form input,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form textarea,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form input[type=text],
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form input[type=email],
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-game-form textarea {
+  background:#180d23;
+  border-color:#6d3e76;
+  color:#f5eff8;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-close,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-close,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .suggest-close {
+  background:#30183b;
+  border-color:#6d3e76;
+  color:#f5eff8;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-tabs button[aria-selected="true"] {
+  background:#e88424;
+  border-color:#ffad52;
+  color:#211020;
+}
+
+
+/* REV07 — Halloween Dark ONLY. Match the established orange controls,
+   and bring Developer's contact section in line with Suggest's form. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageControl #siteLanguageSelect {
+  background:#e88424!important;
+  border-color:#ffad52!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button {
+  background:#e88424!important;
+  border-color:#ffad52!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button:hover {
+  background:#ffa63e!important;
+  border-color:#ffc47a!important;
+  color:#fff!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot { box-shadow:0 0 0 2px #e88424; }
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn {
+  color:#fff!important;
+}
+/* Existing Developer contact block was omitted in REV06; Suggest's
+   matching .suggest-game-form already has the intended purple surface. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact {
+  background:#30183b;
+  border-color:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-contact-form textarea:focus {
+  background:#180d23;
+  border-color:#e88424;
+  box-shadow:0 0 0 2px rgba(232,132,36,.16);
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .developer-card:hover {
+  background:#3b2047;
+  border-color:#e88424;
+}
+
+/* REV08: Halloween Dark orange controls use near-black text instead of white.
+   Paint only: no backgrounds, dimensions, layout or other theme changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #siteLanguageControl #siteLanguageSelect,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn {
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-button:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .view-toggle button.active:hover {
+  color:#151015!important;
+}
+
+/* REV09: Halloween Dark only — black YouTube action icon and unread dot.
+   Preserve icon geometry and unread visibility logic. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner > .youtube-subscribe-btn svg {
+  fill:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .wn-dot {
+  background:#151015!important;
+}
+
+/* REV10: Halloween Dark ONLY — section heading lettering, not game titles.
+   Preserve existing heading layout, pseudo-element underline, and game data. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-head h2,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .game-guides-section .game-guides-head h2 {
+  color:#f39827;
+  text-shadow:0 1px 0 rgba(0,0,0,.55);
+}
+
+
+/* REV11 — Halloween BRIGHT counterpart to approved Dark REV10.
+   Only applies while Admin's Halloween flag and Bright mode are BOTH active.
+   Paint only. Leave banners, layout, game cards, badges, titles and video UI alone. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --bg:#ef9a32;
+  --bg-raised:#ef9a32;
+  --bg-card:#ef9a32;
+  --line:#622477;
+  --text:#25112d;
+  --text-dim:#572b53;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] body,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .site-preferences,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .banner-wrap::before {
+  background:#ef9a32!important;
+}
+/* All primary action buttons: rich purple with warm orange lettering. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .theme-toggle-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .clear-filters-btn,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #siteLanguageControl #siteLanguageSelect {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active:hover {
+  background:#693284!important;
+  border-color:#30143f!important;
+  color:#ffcf85!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .youtube-subscribe-btn svg {
+  fill:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dot {
+  background:#151015!important;
+  box-shadow:0 0 0 2px #502268!important;
+}
+/* Rich purple search and filter surfaces (no pale peach). */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input::placeholder { color:#e7b9db!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box svg { stroke:#ffbe65!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar .search-box input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .toolbar select:focus {
+  border-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#693284!important;
+  color:#ffcf85!important;
+}
+/* Existing section headings only; not game titles or metadata. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .game-guides-section .game-guides-head h2 {
+  color:#30143f!important;
+  text-shadow:0 1px 0 rgba(255,190,101,.45);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-head h2::after {
+  background:linear-gradient(90deg,#502268 0%,#30143f 72%,rgba(48,20,63,0) 100%);
+}
+/* Popup shells, forms and controls: orange-dominant with purple surfaces. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dialog,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-panel,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-panel {
+  background:#f6ac50!important;
+  color:#30143f!important;
+  border-color:#622477!important;
+  border-top-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-body { border-color:#622477!important; }
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-cta,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form {
+  background:#ffc276!important;
+  border-color:#622477!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-thumb,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-proof span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card-meta span,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-platform-grid label {
+  background:#f6ac50!important;
+  border-color:#622477!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=text],
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input[type=email],
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea {
+  background:#fff1d8!important;
+  border-color:#a65a23!important;
+  color:#30143f!important;
+  caret-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-close {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-tabs button[aria-selected="true"] {
+  background:#30143f!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-card:hover {
+  background:#ffd08d!important;
+  border-color:#30143f!important;
+}
+
+/* REV12 — Halloween Bright only: unread dot and Grid/List visibility.
+   Preserve existing active-state behavior, sizing and layout. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-dot {
+  background:#f39827!important;
+  box-shadow:0 0 0 2px #502268!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button.active:hover {
+  background:#f39827!important;
+  color:#151015!important;
+  border-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active) {
+  background:#502268!important;
+  color:#ffbe65!important;
+  border-color:#7a488b!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .view-toggle button:not(.active):hover {
+  background:#693284!important;
+  color:#ffcf85!important;
+}
+
+/* REV13 — Halloween DARK only: game titles and metadata paint.
+   Keep layout, values, completion-type meanings, quality badges, and Bright untouched. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-name, #resultsGrid .card-title, .recent-uploads-grid .recent-upload-title) {
+  color:#ffac40!important;
+}
+/* Normal video Gamerscore, in both LIST and GRID presentations. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.gs, #resultsGrid .gs-pill) {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+/* Normal video Genre, Time, and Difficulty — retain compact chip geometry. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.type, #resultsList .list-col.time, #resultsList .list-col.diff, #resultsGrid .game-meta-pill, #resultsGrid .diff-tag, #resultsList .mobile-game-meta .game-meta-pill) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .game-meta-label, #resultsGrid .game-meta-label) {
+  color:#d59cbe!important;
+}
+/* Keep secondary platform labels legible, separate from the game title. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-sub, #resultsGrid .card-meta) {
+  color:#d5a9e4;
+}
+
+/* REV14 — Halloween DARK LIST ONLY. Recent metadata and Recent/Normal platform
+   paint. No JS changes, no GRID changes, no Text Guide/Developer badges. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) .recent-meta-label {
+  color:#d59cbe!important;
+}
+/* Console/platform only: do not target other under-title badges. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.list-mode .recent-upload-platform,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .list-sub {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+}
+
+/* REV15 — Halloween DARK GRID ONLY. Match approved REV14 LIST colors.
+   Metadata, Recent platform, Normal platform; preserve geometry and all special badges.
+   No Recent JS modifications. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) .recent-meta-label {
+  color:#d59cbe!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-platform,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card .grid-list-sub {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+}
+/* Preserve the same platform palette if responsive rendering wraps platform units. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card .grid-list-sub .landscape-platform-unit {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+}
+
+/* REV16 — Halloween DARK Recent GRID card background only.
+   Blend with the existing page background; no layout, spacing, or JS changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {
+  background-color:#180d23!important;
+}
+
+/* REV17 — Halloween BRIGHT game-area counterpart to approved Dark REV16.
+   Visual paint only. Scope: Recent + Normal, LIST + GRID.
+   Preserve layouts, JS, special Text Guide/Developer Provided badges and Dark. */
+/* Game titles: deep purple against orange page and neutral card surfaces. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#resultsList .list-name, #resultsGrid .card-title, .recent-uploads-grid .recent-upload-title) {
+  color:#30143f!important;
+}
+/* Normal Gamerscore: reverse Dark orange-on-purple. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#resultsList .list-col.gs, #resultsGrid .gs-pill) {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+/* Normal Genre, Time and Difficulty chips, including mobile LIST metadata. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#resultsList .list-col.type, #resultsList .list-col.time, #resultsList .list-col.diff, #resultsGrid .game-meta-pill, #resultsGrid .diff-tag, #resultsList .mobile-game-meta .game-meta-pill) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#resultsList .game-meta-label, #resultsGrid .game-meta-label) {
+  color:#e7b9db!important;
+}
+/* Recent metadata: same approved fields, both rendering modes. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid :is(.recent-upload-meta.type, .recent-upload-meta.time, .recent-upload-meta.diff) .recent-meta-label {
+  color:#e7b9db!important;
+}
+/* Console/platform labels in Recent and Normal, LIST and GRID. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card .grid-list-sub,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card .grid-list-sub .landscape-platform-unit {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+}
+/* Completion Type remains a distinct badge; change only its palette.
+   Do not affect Text Guide or Developer Provided. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card-meta .completion-type-meta {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid .recent-upload-meta.completion-type .recent-completion-value,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
+  color:#ffbe65!important;
+}
+/* Recent GRID: visually blend with Bright's page; leave Normal GRID cards alone. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {
+  background-color:#ef9a32!important;
+}
+
+/* REV18/REV19 — Halloween BRIGHT background paint only.
+   Recent LIST and Normal LIST rows, Normal GRID cards.
+   Preserve Recent GRID, layout, metadata, badges, titles and special flags. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card {
+  background:#f6aa49!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row:hover,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .card:hover {
+  background:#f8b65f!important;
+}
+
+/* REV20 — Halloween BRIGHT LIST separators only.
+   Existing 1px flex gap is colored by the list container background.
+   Change the container background and its existing outer border, without
+   altering geometry, row backgrounds, or GRID. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .recent-uploads-grid.list-mode,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
+  background-color:#704179!important;
+  border-color:#704179!important;
+}
+
+/* REV21 — Halloween BRIGHT mobile action buttons only.
+   Reinforce the approved desktop purple/orange paint on touch/mobile viewports.
+   No geometry, layout, Dark-mode or non-seasonal changes. */
+@media (max-width: 700px), (pointer: coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button {
+    background:#502268!important;
+    border-color:#30143f!important;
+    color:#ffbe65!important;
+  }
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .youtube-subscribe-btn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #suggestGameBtn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+  html[data-seasonal-theme="halloween"][data-theme="bright"] .wn-button:hover {
+    background:#693284!important;
+    border-color:#30143f!important;
+    color:#ffcf85!important;
+  }
+}
+
+/* REV24: Halloween Bright mobile popup trigger PAINT ONLY.
+   These are visible replacement buttons for the six native select controls.
+   Keep native selects, popup sizing, click/keyboard behavior and existing mobile fixes unchanged. */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 500px) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"]
+    .toolbar .ml-filter-popup-anchor > .ml-filter-popup-trigger {
+    background: #502268;
+    border-color: #7a488b;
+    color: #ffbe65;
+    box-shadow: none;
+  }
+}
+
+/* REV25 — Halloween Recent Uploads Gamerscore PAINT ONLY.
+   Recent uses .recent-upload-meta.gs, not Normal .list-col.gs/.gs-pill.
+   Keep all historical desktop/mobile LIST/GRID sizing, positioning, display,
+   and completion-type badge rules intact. Do not modify recent_.js.
+   Christmas/future seasons: remember Recent and Normal have separate badge selectors. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  .recent-uploads-grid .recent-upload-meta.gs {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  .recent-uploads-grid .recent-upload-meta.gs {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+/* Recent badge labels otherwise inherit their historic green/neutral colors. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label,
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  .recent-uploads-grid .recent-upload-meta.gs .recent-meta-label {
+  color:inherit!important;
+}
+
+/* REV26 — Halloween-only scrollbars and noninteractive decorations.
+   DO NOT edit historical mobile filter, LIST/GRID or Recent fixes.
+   Firefox uses scrollbar-color; Chromium/WebKit use ::-webkit-scrollbar.
+   iOS Safari may retain OS-controlled overlay scroll indicators. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  scrollbar-color:#f39827 #180d23;
+  scrollbar-width:auto;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  scrollbar-color:#502268 #f39827;
+  scrollbar-width:auto;
+}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar {width:12px;height:12px}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar {width:12px;height:12px}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-track {background:#180d23}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-track {background:#f39827}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-thumb {background:#f39827;border:2px solid #180d23;border-radius:9px}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-thumb {background:#502268;border:2px solid #f39827;border-radius:9px}
+html[data-seasonal-theme="halloween"][data-theme="dark"]::-webkit-scrollbar-thumb:hover {background:#ffb45d}
+html[data-seasonal-theme="halloween"][data-theme="bright"]::-webkit-scrollbar-thumb:hover {background:#704179}
+
+/* Isolated decorative overlay; no interaction or document geometry changes. */
+#ml-halloween-fx {position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8;contain:layout style paint}
+#ml-halloween-fx .ml-halloween-corner {position:absolute;width:clamp(145px, 10vw, 340px);height:clamp(145px, 10vw, 340px);opacity:.32}
+#ml-halloween-fx .ml-halloween-corner.left {left:0;top:0}
+#ml-halloween-fx .ml-halloween-corner.right {right:0;top:0;transform:scaleX(-1)}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-corner {color:#30143f;opacity:.38}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-corner {color:#e4b7ef;opacity:.28}
+#ml-halloween-fx .ml-halloween-bat {position:absolute;left:calc(-1 * clamp(76px, 4.4vw, 190px));top:0;width:clamp(76px, 4.4vw, 190px);height:auto;aspect-ratio:48 / 28;will-change:transform,opacity;opacity:0}
+#ml-halloween-fx .ml-halloween-bat.fly {animation:ml-halloween-bat-fly 5.8s linear forwards}
+
+/* REV28: independent SVG wing flap. Container flight remains unchanged.
+   Scoped to the Halloween overlay; never affects game cards or mobile controls. */
+#ml-halloween-fx .ml-bat-wing-left,
+#ml-halloween-fx .ml-bat-wing-right {transform-box:view-box;will-change:transform}
+#ml-halloween-fx .ml-bat-wing-left {transform-origin:23px 9px;animation:ml-bat-flap-left .32s ease-in-out infinite alternate}
+#ml-halloween-fx .ml-bat-wing-right {transform-origin:25px 9px;animation:ml-bat-flap-right .32s ease-in-out infinite alternate}
+@keyframes ml-bat-flap-left {from{transform:rotate(-17deg) scaleY(.67)}to{transform:rotate(13deg) scaleY(1.12)}}
+@keyframes ml-bat-flap-right {from{transform:rotate(17deg) scaleY(.67)}to{transform:rotate(-13deg) scaleY(1.12)}}
+
+@keyframes ml-halloween-bat-fly {
+  0% {opacity:0;transform:translate3d(0,18px,0) rotate(-10deg)}
+  12% {opacity:.85}
+  80% {opacity:.8}
+  100% {opacity:0;transform:translate3d(calc(100vw + 220px),-35px,0) rotate(8deg)}
+}
+@media(max-width:700px){
+  #ml-halloween-fx .ml-halloween-corner {width:clamp(105px, 27vw, 160px);height:clamp(105px, 27vw, 160px);opacity:.36}
+  #ml-halloween-fx .ml-halloween-bat {width:clamp(65px, 17vw, 95px);height:auto}
+}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-bat {animation:none!important;display:none} #ml-halloween-fx .ml-bat-wing-left,#ml-halloween-fx .ml-bat-wing-right {animation:none!important}}
+
+
+/* REV34: Halloween-only hanging spiders and side-peeking ghosts.
+   Noninteractive, contained overlay. No layout or filter changes. */
+#ml-halloween-fx .ml-halloween-spider-hang {position:absolute;top:0;width:74px;height:210px;transform-origin:50% 0;animation:ml-spider-sway 6.4s ease-in-out infinite alternate;color:#291333;opacity:.84}
+#ml-halloween-fx .ml-halloween-spider-hang.left {left:clamp(100px,11vw,310px)}
+#ml-halloween-fx .ml-halloween-spider-hang.right {right:clamp(100px,11vw,310px);animation-delay:-3.2s}
+#ml-halloween-fx .ml-halloween-spider-thread {height:132px;width:1px;margin:auto;background:currentColor;opacity:.7}
+#ml-halloween-fx .ml-halloween-spider-body {width:64px;height:64px;margin:-3px auto 0}
+#ml-halloween-fx .ml-halloween-spider-body svg,#ml-halloween-fx .ml-halloween-ghost svg {width:100%;height:100%;display:block}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-spider-hang {color:#d6a4e7}
+@keyframes ml-spider-sway {from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+#ml-halloween-fx .ml-halloween-ghost {position:absolute;width:clamp(72px,6.5vw,135px);aspect-ratio:100/116;opacity:0;color:#f8e9ff;filter:drop-shadow(0 0 10px rgba(152,75,189,.55));will-change:transform,opacity}
+#ml-halloween-fx .ml-halloween-ghost.left {left:0;animation:ml-ghost-peek-left 6.2s ease-in-out forwards}
+#ml-halloween-fx .ml-halloween-ghost.right {right:0;animation:ml-ghost-peek-right 6.2s ease-in-out forwards}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-ghost {color:#fff0ff;filter:drop-shadow(0 0 7px rgba(55,20,75,.7))}
+@keyframes ml-ghost-peek-left {0%,100%{opacity:0;transform:translateX(-105%) rotate(-8deg)}18%,70%{opacity:.9;transform:translateX(-12%) rotate(6deg)}85%{opacity:.7;transform:translateX(-20%) rotate(1deg)}}
+@keyframes ml-ghost-peek-right {0%,100%{opacity:0;transform:translateX(105%) rotate(8deg)}18%,70%{opacity:.9;transform:translateX(12%) rotate(-6deg)}85%{opacity:.7;transform:translateX(20%) rotate(-1deg)}}
+@media(max-width:700px){
+ #ml-halloween-fx .ml-halloween-spider-hang {width:42px;height:126px;opacity:.65}
+ #ml-halloween-fx .ml-halloween-spider-hang.left {left:20vw}
+ #ml-halloween-fx .ml-halloween-spider-hang.right {right:20vw}
+ #ml-halloween-fx .ml-halloween-spider-thread {height:72px}
+ #ml-halloween-fx .ml-halloween-spider-body {width:40px;height:40px}
+ #ml-halloween-fx .ml-halloween-ghost {width:58px}
+}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-spider-hang{animation:none!important}#ml-halloween-fx .ml-halloween-ghost{display:none!important}}
+
+/* REV36: thread height is controlled by the independent spider climb animation.
+   Existing left/right sway, body SVG and ghost/bat styling remain unchanged. */
+#ml-halloween-fx .ml-halloween-spider-thread {will-change:height}
+
+/* REV38: independent articulated eight-leg gait. No changes to climb geometry,
+   scroll steering, body sway, or other Halloween decorations. */
+#ml-halloween-fx .ml-spider-leg {transform-box:view-box;transform-origin:40px 44px;animation-duration:var(--ml-spider-step-period,1.45s);animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+#ml-halloween-fx .ml-spider-leg-a {animation-name:ml-spider-leg-a}
+#ml-halloween-fx .ml-spider-leg-b {animation-name:ml-spider-leg-b}
+#ml-halloween-fx .ml-halloween-spider-hang:not(.ml-spider-climbing) .ml-spider-leg {animation-duration:3.6s;animation-play-state:running}
+#ml-halloween-fx .ml-halloween-spider-hang.right .ml-spider-leg {animation-delay:-.63s}
+@keyframes ml-spider-leg-a {from{transform:rotate(-4deg)}to{transform:rotate(9deg)}}
+@keyframes ml-spider-leg-b {from{transform:rotate(8deg)}to{transform:rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-spider-leg{animation:none!important}}
+
+/* REV40: Two silent jack-o'-lanterns, independently flickering at lower edges.
+   Noninteractive; responsive and hidden on very short viewports via JS. */
+#ml-halloween-fx .ml-halloween-pumpkin {position:absolute;bottom:12px;width:clamp(62px,6.6vw,116px);height:auto;aspect-ratio:100/94;opacity:.94;filter:drop-shadow(0 0 12px rgba(255,118,14,.40));animation:ml-pumpkin-glow-left 4.9s ease-in-out infinite;pointer-events:none}
+#ml-halloween-fx .ml-halloween-pumpkin.left {left:clamp(5px,1vw,24px)}
+#ml-halloween-fx .ml-halloween-pumpkin.right {right:clamp(5px,1vw,24px);animation-name:ml-pumpkin-glow-right;animation-duration:6.3s;animation-delay:-2.7s}
+#ml-halloween-fx .ml-halloween-pumpkin svg {display:block;width:100%;height:100%}
+#ml-halloween-fx .ml-pumpkin-light {animation:ml-pumpkin-candle 2.7s ease-in-out infinite alternate;transform-origin:center}
+#ml-halloween-fx .ml-halloween-pumpkin.right .ml-pumpkin-light {animation-delay:-1.3s;animation-duration:3.8s}
+@keyframes ml-pumpkin-candle {0%,100%{opacity:.8}18%{opacity:1}37%{opacity:.7}58%{opacity:1}77%{opacity:.86}}
+@keyframes ml-pumpkin-glow-left {0%,100%{filter:drop-shadow(0 0 8px rgba(255,118,14,.32))}48%{filter:drop-shadow(0 0 19px rgba(255,135,14,.67))}}
+@keyframes ml-pumpkin-glow-right {0%,100%{filter:drop-shadow(0 0 16px rgba(255,118,14,.58))}56%{filter:drop-shadow(0 0 7px rgba(255,135,14,.27))}}
+@media(max-width:700px){#ml-halloween-fx .ml-halloween-pumpkin{width:42px;bottom:8px;opacity:.82}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-pumpkin,#ml-halloween-fx .ml-pumpkin-light{animation:none!important}}
+
+/* REV42: Rolling full-width Halloween fog; soft cloud silhouettes and
+   visible purple haze in both Bright and Dark. Entirely decorative.
+   Kept below controls with no pointer or touch interception. */
+#ml-halloween-fx .ml-halloween-fog {
+  position:absolute;left:0;right:0;bottom:0;height:clamp(115px,17vh,190px);
+  pointer-events:none;z-index:0;overflow:hidden;
+  opacity:.88;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,#000 23%,rgba(0,0,0,.78) 49%,transparent 100%);
+  mask-image:linear-gradient(to top,#000 0%,#000 23%,rgba(0,0,0,.78) 49%,transparent 100%);
+}
+#ml-halloween-fx .ml-fog-wisp {
+  position:absolute;inset:0;bottom:-15%;width:125%;height:115%;left:-12%;
+  background:
+    radial-gradient(ellipse 20% 40% at 5% 98%,rgba(103,42,147,.78) 0%,transparent 100%),
+    radial-gradient(ellipse 22% 46% at 23% 89%,rgba(125,59,170,.72) 0%,transparent 100%),
+    radial-gradient(ellipse 26% 44% at 47% 100%,rgba(101,42,150,.82) 0%,transparent 100%),
+    radial-gradient(ellipse 25% 47% at 70% 88%,rgba(123,51,171,.76) 0%,transparent 100%),
+    radial-gradient(ellipse 22% 42% at 93% 99%,rgba(102,44,152,.78) 0%,transparent 100%);
+  filter:blur(13px);animation:ml-fog-roll-a 15s ease-in-out infinite alternate;
+}
+#ml-halloween-fx .ml-fog-wisp.b {opacity:.70;left:-9%;bottom:-30%;transform:scaleX(-1);animation:ml-fog-roll-b 21s ease-in-out infinite alternate;animation-delay:-9s;filter:blur(18px)}
+#ml-halloween-fx .ml-fog-wisp.c {opacity:.48;bottom:-43%;left:-15%;animation:ml-fog-roll-a 27s ease-in-out infinite alternate-reverse;animation-delay:-14s;filter:blur(22px)}
+#ml-halloween-fx .ml-halloween-pumpkin {z-index:1}
+@keyframes ml-fog-roll-a {from{transform:translate3d(-5%,4%,0) scale(1)}to{transform:translate3d(5%,-7%,0) scale(1.06)}}
+@keyframes ml-fog-roll-b {from{transform:translate3d(5%,1%,0) scaleX(-1) scale(1.04)}to{transform:translate3d(-5%,-9%,0) scaleX(-1) scale(1)}}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-halloween-fog {opacity:.95}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-halloween-fog {opacity:.87}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp {filter:blur(13px) brightness(1.55)}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp.b {filter:blur(18px) brightness(1.55)}
+html[data-seasonal-theme="halloween"][data-theme="dark"] #ml-halloween-fx .ml-fog-wisp.c {filter:blur(22px) brightness(1.55)}
+@media(max-width:700px){#ml-halloween-fx .ml-halloween-fog{height:85px;opacity:.60!important}#ml-halloween-fx .ml-fog-wisp{filter:blur(10px)}#ml-halloween-fx .ml-fog-wisp.b{filter:blur(14px)}#ml-halloween-fx .ml-fog-wisp.c{filter:blur(17px)}}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-fog-wisp{animation:none!important}}
+
+
+/* REV45: Double-size, high-contrast glowing green eyes with black slit pupils. */
+#ml-halloween-fx .ml-halloween-eyes {
+  position:absolute;display:flex;gap:20px;align-items:center;
+  width:140px;height:70px;justify-content:center;pointer-events:none;
+  opacity:0;z-index:0;animation:ml-eyes-appear 6.6s ease-in-out forwards;
+  filter:drop-shadow(0 0 10px rgba(86,255,35,.85));
+}
+#ml-halloween-fx .ml-halloween-eyes.left {left:clamp(4px,1vw,18px)}
+#ml-halloween-fx .ml-halloween-eyes.right {right:clamp(4px,1vw,18px)}
+#ml-halloween-fx .ml-eye {
+  display:block;width:34px;height:24px;border-radius:60% 60% 45% 45%;
+  background:#8aff24;box-shadow:0 0 13px 4px rgba(100,255,35,.85),0 0 25px rgba(95,255,15,.55);
+  transform-origin:center;animation:ml-eye-blink 6.6s linear forwards;
+}
+#ml-halloween-fx .ml-eye::after {content:"";display:block;width:6px;height:18px;margin:2px auto;background:#101810;border-radius:50%}
+@keyframes ml-eyes-appear {0%,8%,94%,100%{opacity:0}18%,83%{opacity:1}}
+@keyframes ml-eye-blink {0%,28%,33%,57%,62%,100%{transform:scaleY(1)}30%,59%{transform:scaleY(.08)}}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye {
+  background:#66f600;box-shadow:0 0 12px 4px rgba(36,125,0,.75),0 0 24px rgba(64,255,0,.65);
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #ml-halloween-fx .ml-eye::after {background:#101810}
+@media(max-width:700px){
+  #ml-halloween-fx .ml-halloween-eyes{width:80px;gap:12px;height:48px}
+  #ml-halloween-fx .ml-halloween-eyes.left{left:2px}
+  #ml-halloween-fx .ml-halloween-eyes.right{right:2px}
+  #ml-halloween-fx .ml-eye{width:20px;height:16px}
+  #ml-halloween-fx .ml-eye::after{width:4px;height:12px;margin:1px auto}
+}
+@media(prefers-reduced-motion:reduce){#ml-halloween-fx .ml-halloween-eyes{display:none!important}}
+
+
+/* REV46: Only visible creatures accept pointer clicks/taps. The overlay,
+   fog, cobwebs, spider threads and all empty space remain click-through. */
+#ml-halloween-fx .ml-halloween-ghost,
+#ml-halloween-fx .ml-halloween-bat,
+#ml-halloween-fx .ml-halloween-spider-body,
+#ml-halloween-fx .ml-halloween-eyes,
+#ml-halloween-fx .ml-halloween-pumpkin {
+  pointer-events:auto;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+#ml-halloween-fx .ml-halloween-spider-hang,
+#ml-halloween-fx .ml-halloween-spider-thread {pointer-events:none}
+#ml-halloween-fx .ml-halloween-spider-body {pointer-events:auto}
+
+/* REV48 — Halloween mobile What's New unread dot contrast ONLY.
+   Keep mobile bell borderless, dot position/size, desktop, and unread logic unchanged. */
+@media (max-width:950px) and (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] #whatsNewMobileBtn .wn-dot {
+    background:#c90028!important;
+    box-shadow:0 0 0 2px #30143f!important;
+  }
+  html[data-seasonal-theme="halloween"][data-theme="dark"] #whatsNewMobileBtn .wn-dot {
+    background:#ff3658!important;
+    box-shadow:0 0 0 2px #30143f!important;
+  }
+}
+
+/* REV49: Mobile portrait creatures are visual-only; allow underlying site taps.
+   The existing automatic bat flyby audio is deliberately preserved. */
+@media (max-width:700px) and (orientation:portrait) and (pointer:coarse) {
+  #ml-halloween-fx .ml-halloween-ghost,
+  #ml-halloween-fx .ml-halloween-bat,
+  #ml-halloween-fx .ml-halloween-spider-body,
+  #ml-halloween-fx .ml-halloween-eyes,
+  #ml-halloween-fx .ml-halloween-pumpkin {pointer-events:none}
+}
+
+/* REV52: Halloween Bright modal form fields — readable cream, not purple.
+   Scoped to visitor forms only; Dark and non-Halloween themes are unchanged. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input::placeholder,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea::placeholder {
+  color:#815c62!important; opacity:1;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-form textarea:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input:focus,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea:focus {
+  outline:2px solid #763177!important; outline-offset:1px;
+}
