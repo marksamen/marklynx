@@ -41,7 +41,8 @@
   const refreshFlag = () => {
     const code = language === 'en' ? 'gb' : language.toLowerCase();
     flag.onerror = () => { flag.onerror = null; flag.src = 'images/flag-gb_.svg'; };
-    flag.src = 'images/flag-' + encodeURIComponent(code) + '_.svg';
+    const nextSrc = 'images/flag-' + encodeURIComponent(code) + '_.svg';
+    if (flag.getAttribute('src') !== nextSrc) flag.src = nextSrc;
   };
   const insertSelector = () => {
     const prefs = document.querySelector('.site-preferences-inner');
