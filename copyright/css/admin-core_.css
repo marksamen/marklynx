@@ -180,3 +180,14 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
  #manualRefreshControls #recentRefresh,
  #manualRefreshControls #videoCountRefresh{font-size:14px;font-weight:600}
 }
+
+/* ADMIN LAYOUT TEST REV09 — uniform 14px button typography; geometry unchanged. */
+#adminControls > .admin-link,
+#adminRightButtons > .admin-link,
+#adminControls #testPanel .admin-link,
+#adminRightButtons #gameDevExportSupabase,
+#adminControls #seasonalThemePanel button,
+#devPubSearchPanel #devPubSearchActions .admin-link,
+#manualRefreshControls #recentRefresh,
+#manualRefreshControls #videoCountRefresh,
+#gameDevPanel .gd-toolbar > button{font-size:14px;font-weight:600}
