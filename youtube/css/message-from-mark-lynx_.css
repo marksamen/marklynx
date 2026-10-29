@@ -43,3 +43,23 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inne
 html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#693284!important;border-color:#30143f!important;color:#ffcf85!important}
 html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){background:#e88424!important;border-color:#ffad52!important;color:#151015!important}
 html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#ffa63e!important;border-color:#ffc47a!important;color:#151015!important}
+
+/* REV13: Halloween Bright popup ONLY. Values copied from the established
+   What's New rules in youtube/css/seasonal-theme_.css. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-dialog,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-dialog {
+  background:#f6ac50!important; color:#30143f!important;
+  border-color:#622477!important; border-top-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-body {border-color:#622477!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-card {background:#ffc276!important;border-color:#622477!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-options button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-close {
+  background:#502268!important;border-color:#30143f!important;color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button[aria-selected="true"] {
+  background:#30143f!important;color:#ffbe65!important;
+}
