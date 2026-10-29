@@ -95,7 +95,7 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 @media(max-width:620px){#manualRefreshControls{grid-template-columns:1fr}}
 
 
-/* ADMIN LAYOUT TEST REV02 — geometry only; original controls and IDs preserved. */
+/* ADMIN LAYOUT TEST REV03 — geometry only; original controls and IDs preserved. */
 #adminWorkspace{grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,1fr);gap:14px;width:min(1510px,calc(100vw - 48px));padding:14px}
 #adminHeader{width:min(1510px,calc(100vw - 48px))}
 #adminRightControls{min-width:0}
@@ -111,4 +111,13 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
  #adminWorkspace{grid-template-columns:1fr;width:min(700px,94vw)}
  #adminHeader{width:min(700px,94vw)}
  #adminRightControls{grid-row:auto}
+}
+
+/* ADMIN LAYOUT TEST REV03 — presentation only. */
+#adminControls #whatsNewProbe{background:#0F766E!important;color:#fff!important}
+#adminControls #languageManagement{background:#A85C0A!important;color:#fff!important}
+@media(min-width:851px){
+ #gameDevPanel .gd-toolbar button{min-height:34px;padding:7px 10px;font-size:.82rem;line-height:1.2;border-radius:6px}
+ #gameDevPanel .gd-toolbar{gap:8px;margin-top:8px}
+ #gameDevPanel #gameDevSearch,#gameDevPanel #gameDevList{min-height:36px}
 }
