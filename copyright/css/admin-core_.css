@@ -168,3 +168,15 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 #adminControls #seasonalThemePanel select{min-width:0;flex:1 1 0;font-size:.75rem;padding:4px 5px}
 #adminControls #seasonalThemePanel button{flex:0 0 auto;font-size:.73rem;padding:4px 7px}
 #adminControls #seasonalThemePanel p#seasonalThemeStatus{font-size:.68rem;overflow-wrap:anywhere}
+
+/* ADMIN LAYOUT TEST REV08 — typography only; button geometry unchanged. */
+#adminControls > .admin-link,
+#adminRightButtons > .admin-link,
+#adminControls #testPanel .admin-link{font-size:13px;font-weight:600}
+#adminRightButtons #gameDevExportSupabase{font-size:13px;font-weight:600}
+@media (min-width:851px){
+ #gameDevPanel .gd-toolbar > button{font-size:14px;font-weight:600}
+ #devPubSearchPanel #devPubSearchActions .admin-link{font-size:13px;font-weight:600}
+ #manualRefreshControls #recentRefresh,
+ #manualRefreshControls #videoCountRefresh{font-size:14px;font-weight:600}
+}
