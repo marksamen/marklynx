@@ -1,4 +1,4 @@
-/* Message from Mark Lynx — isolated TEST REV10. What's New files unchanged. */
+/* Message from Mark Lynx — isolated TEST REV11. What's New files unchanged. */
 .mlm-button{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:#251313;border:1px solid #8f2924;border-radius:3px;color:#fff;font:600 13px var(--sans,Arial,sans-serif);cursor:pointer;line-height:1.2;text-align:left;flex:none}
 .mlm-button:hover{background:#3a1715;border-color:var(--red-bright,#e0392f)}
 .mlm-button svg{width:20px;height:20px;flex:none}.mlm-label{white-space:normal}
@@ -29,3 +29,18 @@ html[data-theme="bright"] .mlm-close,html[data-theme="bright"] .mlm-hub-close,ht
   #markLynxMobileHubBtn svg{width:20px;height:20px;flex:none}#markLynxMobileHubBtn .mlm-dot{top:2px;right:1px;box-shadow:0 0 0 2px var(--bg,#141414)}
   html[data-theme="bright"] #markLynxMobileHubBtn,html[data-theme="light"] #markLynxMobileHubBtn{color:#222}
 }
+
+/* REV11: Match desktop box heights without touching What's New handlers or base CSS. */
+@media(min-width:761px){
+ .subscribe-strip-inner:has(>#markLynxMessagePublicBtn:not([hidden]))>#whatsNewPublicBtn,
+ .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){box-sizing:border-box;min-height:36px}
+}
+/* REV11: Halloween paint copied from the existing TEST seasonal-theme_.css What's New rules. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){background:#502268!important;border-color:#30143f!important;color:#ffbe65!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#693284!important;border-color:#30143f!important;color:#ffcf85!important}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){background:#e88424!important;border-color:#ffad52!important;color:#151015!important}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#ffa63e!important;border-color:#ffc47a!important;color:#151015!important}
+/* REV11 visible diagnostics: isolated to TEST frontend, does not change existing diagnostic panel. */
+#mlm-test-rev11-diagnostics{position:fixed;left:10px;bottom:76px;z-index:999998;box-sizing:border-box;width:230px;max-width:calc(100vw - 20px);padding:8px 10px;background:#101014!important;color:#fff!important;border:2px solid #f4ce2e!important;border-radius:4px;font:11px/1.35 Consolas,monospace;box-shadow:0 3px 12px #0008;pointer-events:none;overflow-wrap:anywhere}
+#mlm-test-rev11-diagnostics strong{display:block;color:#f4ce2e;margin-bottom:3px;font-size:11px}
+@media(max-width:950px) and (pointer:coarse){#mlm-test-rev11-diagnostics{bottom:8px;left:8px;width:185px;font-size:9px;padding:5px 7px}#mlm-test-rev11-diagnostics strong{font-size:9px}}
