@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-28T15:08:48.911668+00:00",
+  "updated": "2026-10-29T15:15:10.440417+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "Iomwmqwsdas",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 3 | Swim for your life! | All Star Coins",
+      "published": "2026-10-28T22:04:19+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/Iomwmqwsdas/hqdefault.jpg"
+    },
     {
       "id": "uIQjhDS_aPQ",
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 2 | Run For It | All Star Coins | 3 Methods to beat!",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle 2 | Magma-River Cruise | All Star Coins | Normal exi",
       "published": "2026-10-21T22:52:00+00:00",
       "thumbnail": "https://i.ytimg.com/vi/Fw3d504tzjI/hqdefault.jpg"
-    },
-    {
-      "id": "K5IhnuaNffs",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 1 | Meteor Moat | No Star Coins | Secret exit",
-      "published": "2026-10-20T22:45:15+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/K5IhnuaNffs/hqdefault.jpg"
     }
   ]
 }
