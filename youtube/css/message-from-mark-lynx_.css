@@ -62,3 +62,8 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-close {
 html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button[aria-selected="true"] {
   background:#30143f!important;color:#ffbe65!important;
 }
+
+/* REV15: portrait-only spacing correction. Landscape retains REV14 spacing. */
+@media (max-width:950px) and (pointer:coarse) and (orientation:portrait) {
+  #markLynxMobileHubBtn:not([hidden]) { margin-left:4px; }
+}
