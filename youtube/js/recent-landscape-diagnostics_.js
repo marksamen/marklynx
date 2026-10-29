@@ -8,7 +8,7 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='TEST B2 SUGGEST REV02 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+  var label=document.createElement('span'); label.textContent='TEST B1 FIREFOX FLAG REV01 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
   head.appendChild(label);
@@ -72,4 +72,83 @@
   else mount();
   window.addEventListener('resize',function(){render('resize');});
   window.addEventListener('orientationchange',function(){render('orientation');});
+})();
+
+
+/* B1 TEST REV01 — passive language/flag diagnostic; no production behavior changes. */
+(function () {
+  'use strict';
+  var records = [];
+  var previous = '';
+  var flag = null;
+  var select = null;
+  var logPanel = null;
+  var imageObserver = null;
+  function snapshot(reason) {
+    var control = document.getElementById('siteLanguageControl');
+    if (!control) return;
+    var nextFlag = control.querySelector('img');
+    var nextSelect = document.getElementById('siteLanguageSelect');
+    if (!nextFlag || !nextSelect) return;
+    if (flag !== nextFlag) {
+      if (imageObserver) imageObserver.disconnect();
+      flag = nextFlag;
+      flag.addEventListener('load', function () { snapshot('image-load'); });
+      flag.addEventListener('error', function () { snapshot('image-error'); });
+      imageObserver = new MutationObserver(function () { snapshot('src-attribute-change'); });
+      imageObserver.observe(flag, {attributes:true,attributeFilter:['src']});
+    }
+    if (select !== nextSelect) {
+      select = nextSelect;
+      select.addEventListener('change', function () {
+        snapshot('selection-change');
+        queueMicrotask(function () { snapshot('after-change-microtask'); });
+        setTimeout(function () { snapshot('after-change-250ms'); }, 250);
+        setTimeout(function () { snapshot('after-change-1000ms'); }, 1000);
+      });
+    }
+    var code = select.value || '';
+    var expected = 'images/flag-' + encodeURIComponent(code === 'en' ? 'gb' : code.toLowerCase()) + '_.svg';
+    var actual = flag.getAttribute('src') || '';
+    var data = 'selected='+code+' expected='+expected+' src='+actual+
+      ' currentSrc='+flag.currentSrc+' complete='+flag.complete+
+      ' natural='+flag.naturalWidth+'x'+flag.naturalHeight;
+    if (reason !== 'manual' && data === previous && reason === 'poll') return;
+    previous = data;
+    records.push('['+Math.round(performance.now())+'ms] '+reason+' '+data);
+    if (records.length > 60) records.shift();
+    if (logPanel) logPanel.textContent = records.join('\n');
+  }
+  function mount() {
+    if (!document.body) return;
+    var box = document.createElement('div');
+    box.id = 'ml-b1-flag-diagnostic';
+    box.style.cssText = 'position:fixed!important;bottom:8px!important;left:8px!important;z-index:2147483646!important;max-width:min(580px,calc(100vw - 16px))!important;max-height:45vh!important;overflow:auto!important;background:#101015!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;padding:8px!important;font:11px/1.4 monospace!important;white-space:pre-wrap!important';
+    var header = document.createElement('div');
+    header.textContent = 'TEST B1 FLAG TRACE REV01 ';
+    var copy = document.createElement('button');
+    copy.type='button'; copy.textContent='Copy';
+    var hide = document.createElement('button');
+    hide.type='button'; hide.textContent='Hide';
+    header.append(copy,hide);
+    logPanel = document.createElement('div');
+    box.append(header,logPanel);
+    document.body.appendChild(box);
+    copy.addEventListener('click',function () {
+      var value=records.join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(function(){copy.textContent='Copied';},function(){copy.textContent='Copy failed';});
+      } else {
+        var ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);
+        ta.select();var ok=document.execCommand('copy');ta.remove();copy.textContent=ok?'Copied':'Copy failed';
+      }
+    });
+    hide.addEventListener('click',function(){
+      var hidden=!logPanel.hidden;logPanel.hidden=hidden;hide.textContent=hidden?'Show':'Hide';
+    });
+    snapshot('initial');
+    setInterval(function(){snapshot('poll');},500);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
+  else mount();
 })();
