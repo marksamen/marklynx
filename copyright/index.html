@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="/copyright/favicon.ico" type="image/x-icon">
 <title>Mark Lynx Admin</title>
-<link rel="stylesheet" href="css/admin-core.css?v=REV30-video-count-refresh">
+<link rel="stylesheet" href="css/admin-core.css?v=ADMIN-LAYOUT-PROD-REV01">
 <link rel="stylesheet" href="css/auth.css">
 <link rel="stylesheet" href="css/games.css?v=REV65-provided-relationship-dialog">
 <link rel="stylesheet" href="css/traffic-analytics.css">
@@ -44,6 +44,14 @@
 #seasonalConfirmNo{background:#303036;color:#fff}
 
 </style>
+<style>
+@media (min-width:851px){
+#devPubSearchPanel #devPubSearchHeader{flex-direction:column;align-items:stretch;gap:12px;margin-bottom:12px}
+#devPubSearchPanel #devPubSearchActions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:100%}
+#devPubSearchPanel #devPubSearchActions .admin-link{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:36px;box-sizing:border-box;padding:7px 5px;margin:0;font-size:14px;line-height:1.2;text-align:center;white-space:normal}
+#devPubSearchPanel #devPubSearchHeader h2{align-self:stretch;transform:none;margin:0;font-size:.94rem;white-space:normal}
+}
+</style>
 </head>
 <body>
 <main id="login">
@@ -57,12 +65,20 @@
 </main>
 <main id="admin">
 <div id="adminHeader">
-  <div><h1>Mark Lynx Admin</h1><p>PRODUCTION</p></div>
+  <div><h1>Mark Lynx Admin</h1><p>PRODUCTION · ADMIN LAYOUT PROD REV01</p></div>
   <div id="testContentHeaderControls" aria-label="Test content control">
     <div id="testStatus"></div>
     <button id="testToggle" type="button"></button>
     <button id="logout" type="button">Sign Out</button>
   </div>
+
+</div>
+<div id="adminWorkspace"><div id="adminControls">
+<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
+<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
+<button id="whatsNewProbe" class="admin-link" type="button" data-admin-modal-url="whats-new-probe/index.html?v=ESMX-PROD-REV01" data-admin-modal-title="What's New — Announcement Management" style="background:#0F766E;color:#fff">What's New</button>
+<button id="languageManagement" class="admin-link" type="button" data-admin-modal-url="languages/index.html?v=ESMX-PROD-REV01" data-admin-modal-title="Language Management" style="background:#A85C0A;color:#fff">Language Management</button>
+<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
 <section id="seasonalThemePanel" aria-label="Seasonal Theme PROD">
     <label for="seasonalThemeSelect">Seasonal Theme</label>
     <div class="seasonalThemeActions">
@@ -71,19 +87,6 @@
     </div>
     <p id="seasonalThemeStatus" role="status" aria-live="polite">Waiting for Admin login…</p>
   </section>
-</div>
-<div id="adminWorkspace"><div id="adminControls">
-<button id="developerSubmissions" class="admin-link" type="button" data-admin-modal-url="developers/" data-admin-modal-title="Developer Submissions">Developer Submissions</button>
-<button id="gameSuggestions" class="admin-link" type="button" data-admin-modal-url="suggestions/" data-admin-modal-title="Game Suggestions">Game Suggestions</button>
-<button id="completionTypeManagement" class="admin-link" type="button" data-admin-modal-url="completion-types/index.html?v=COMPLETION-TYPES-PROD-REV02" data-admin-modal-title="Completion Type Management" style="background:#173a63;color:#fff">Completion Type Management</button>
-<button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/?v=TEXT-GUIDE-MANAGEMENT-PROD-REV04" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
-<button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index.html?v=PLATFORM-MANAGEMENT-REV04" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
-<button id="whatsNewProbe" class="admin-link" type="button" data-admin-modal-url="whats-new-probe/index.html?v=ESMX-PROD-REV01" data-admin-modal-title="What's New — Announcement Management" style="background:#173a63;color:#fff">What's New</button>
-<button id="languageManagement" class="admin-link" type="button" data-admin-modal-url="languages/index.html?v=ESMX-PROD-REV01" data-admin-modal-title="Language Management" style="background:#173a63;color:#fff">Language Management</button>
-<button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index.html?v=GENRE-MANAGEMENT-PROD-REV08" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
-<button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/?v=QUALITY-BADGE-ADD-FIX-PROD01" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
-
-<a id="youtubeClaims" class="admin-link" href="https://studio.youtube.com/channel/UCGY3Rz3lQ_r9gnWvP-NIDHQ/videos/upload?filter=%5B%7B%22name%22%3A%22HAS_COPYRIGHT_CLAIM%22%2C%22value%22%3A%22VIDEO_HAS_COPYRIGHT_CLAIM%22%7D%5D&amp;sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer">Check YouTube Copyright Claims</a>
 <section id="testPanel" aria-label="Site testing tools">
 <div id="siteLinks" aria-label="YouTube site launch and redirect checks">
 <a class="admin-link primary" href="https://youtube.marklynx.com" target="_blank" rel="noopener noreferrer">Open HTTPS Site</a>
@@ -97,19 +100,7 @@
             </a>
           </div>
 </section>
-<section id="dataSourceStatusPanel" aria-label="Data Source Status">
-<h2>Data Source Status</h2>
-<p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
-<p id="dataSourceStatusNote">Read-only PROD status from data-source.json.</p>
-<p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
-<p><strong>Database Identity:</strong> <span id="databaseIdentityStatus">WAITING FOR LIVE CHECK…</span></p>
-<p id="databaseIdentityDetails">The database must identify itself before PROD can be marked verified.</p>
-<div id="dataSourceActions">
-<button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
-<button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
-</div>
-<p id="dataSourceControlMessage" aria-live="polite"></p>
-</section>
+
 </div>
 <div id="adminGameColumn">
 <section id="gameDevPanel" aria-label="Game Management Firestore test">
@@ -124,7 +115,7 @@
   <button id="gameDevAddLauncher" type="button">Add New Game</button>
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
-  <button id="gameDevExportSupabase" type="button">Generate Recovery Files</button>
+  
 </div>
 <div id="gameDevEditorHome"><form id="gameDevForm">
 <label>ID<input id="gdId" disabled><span class="field-help">Assigned automatically. You do not need to change this.</span></label>
@@ -204,7 +195,31 @@
 <p id="trafficUpdated"></p>
 <p id="trafficError"></p>
 </section>
-</div></div>
+</div>
+<aside id="adminRightControls" aria-label="Game configuration and system status">
+<div id="adminRightButtons">
+<button id="completionTypeManagement" class="admin-link" type="button" data-admin-modal-url="completion-types/index.html?v=COMPLETION-TYPES-PROD-REV02" data-admin-modal-title="Completion Type Management" style="background:#173a63;color:#fff">Completion Type Management</button>
+<button id="textGuideManagement" class="admin-link" type="button" data-admin-modal-url="text-guides/?v=TEXT-GUIDE-MANAGEMENT-PROD-REV04" data-admin-modal-title="Text Guide Management" style="background:#173a63;color:#fff">Text Guide Management</button>
+<button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index.html?v=PLATFORM-MANAGEMENT-REV04" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
+<button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index.html?v=GENRE-MANAGEMENT-PROD-REV08" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
+<button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/?v=QUALITY-BADGE-ADD-FIX-PROD01" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
+<button id="gameDevExportSupabase" class="admin-link" style="background:#6B3F85;color:#fff" type="button">Generate Recovery Files</button>
+</div>
+<section id="dataSourceStatusPanel" aria-label="Data Source Status">
+<h2>Data Source Status</h2>
+<p>Configured Source: <span id="dataSourceConfigured">Loading…</span></p>
+<p id="dataSourceStatusNote">Read-only PROD status from data-source.json.</p>
+<p>Manual Override: <span id="dataSourceOverride">Loading…</span></p>
+<p><strong>Database Identity:</strong> <span id="databaseIdentityStatus">WAITING FOR LIVE CHECK…</span></p>
+<p id="databaseIdentityDetails">The database must identify itself before PROD can be marked verified.</p>
+<div id="dataSourceActions">
+<button id="dataSourceUseSupabase" type="button">USE SUPABASE</button>
+<button id="dataSourceUseJson" type="button">USE RECOVERY JSON</button>
+</div>
+<p id="dataSourceControlMessage" aria-live="polite"></p>
+</section>
+</aside>
+</div>
 <div id="gameDevEditModal" class="gd-modal" aria-hidden="true">
 <div class="gd-modal-card" role="dialog" aria-modal="true" aria-labelledby="gameDevEditTitle">
 <div class="gd-modal-head"><h2 id="gameDevEditTitle">Edit Game</h2><button id="gameDevEditClose" type="button" aria-label="Close Edit Game">×</button></div>
