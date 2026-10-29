@@ -3,7 +3,7 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
-import { initAdminPageModal } from "./admin-page-modal_.js?v=MLM-TEST-REV05";
+import { initAdminPageModal } from "./admin-page-modal_.js?v=MLM-TEST-REV06";
 import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=SEASONAL-RESTART-TEST-REV01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=RECOMPLETION-TEST-REV01-20261014";
@@ -233,7 +233,16 @@ window.addEventListener("message", async event => {
 initAdminPageModal();
 
 
-// MESSAGE FROM MARK LYNX TEST REV05 — parent-only auth status handshake.
+// REV06: on iframe load, proactively deliver auth state to the correct same-origin frame.
+const mlmFrame = document.getElementById('adminPageModalFrame');
+mlmFrame?.addEventListener('load', () => {
+  const src = mlmFrame.getAttribute('src') || '';
+  if (!src.startsWith('message-from-mark-lynx/')) return;
+  const target = mlmFrame.contentWindow;
+  if (target) target.postMessage({type:'mlm-auth-status-response',authenticated:Boolean(auth.currentUser)},window.location.origin);
+});
+
+// MESSAGE FROM MARK LYNX TEST REV06 — parent-only auth status handshake.
 // Never send Firebase credentials or ID tokens to the iframe.
 window.addEventListener("message", event => {
   if (event.origin !== window.location.origin || event.data?.type !== "mlm-auth-status-request") return;
@@ -246,7 +255,7 @@ window.addEventListener("message", event => {
   }, event.origin);
 });
 
-// MESSAGE FROM MARK LYNX TEST REV05 — separate Firebase-authenticated iframe bridge.
+// MESSAGE FROM MARK LYNX TEST REV06 — separate Firebase-authenticated iframe bridge.
 let mlmReadOnlyBusy = false;
 window.addEventListener("message", async event => {
   if (event.origin !== window.location.origin || event.data?.type !== "mlm-probe-readonly-request") return;
