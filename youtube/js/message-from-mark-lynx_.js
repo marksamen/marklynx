@@ -1,4 +1,4 @@
-/* Message from Mark Lynx — public TEST REV11. Independent read-only frontend. */
+/* Message from Mark Lynx — public TEST REV12. Independent read-only frontend. */
 (() => {
   'use strict';
   const ROOT='https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -12,16 +12,6 @@
   let desktop,hub,overlay,hubOverlay,hubWhats,hubMark,hubCount,closeButton,heading,tabs,list;
   let langRequest=0,read=new Set();
   let lastFetch='PENDING',lastError='';
-  function diagnostics(){
-    let panel=document.getElementById('mlm-test-rev11-diagnostics');
-    if(!panel){panel=document.createElement('aside');panel.id='mlm-test-rev11-diagnostics';panel.setAttribute('aria-label','Message from Mark Lynx TEST diagnostics');document.body.append(panel);}
-    panel.replaceChildren();
-    const header=document.createElement('strong');header.textContent='MESSAGE FROM MARK LYNX — TEST REV11';
-    const state=document.createElement('div');state.textContent='Master: '+(enabled?'ON':'OFF')+' | Published: '+messages.length;
-    const status=document.createElement('div');status.textContent='Public read: '+lastFetch;
-    const error=document.createElement('div');error.textContent=lastError?'Error: '+lastError:'';
-    panel.append(header,state,status);if(lastError)panel.append(error);
-  }
 
   try {const saved=JSON.parse(localStorage.getItem(READ_KEY)||'[]');if(Array.isArray(saved))read=new Set(saved.map(String));}catch(e){console.warn('[MARK MESSAGE TEST] Invalid read state',e);}
   const lang=()=>{let v=document.getElementById('siteLanguageSelect')?.value||document.documentElement.lang;if(!v){try{v=localStorage.getItem(LANGUAGE_KEY);}catch{}}return v||'en';};
@@ -33,8 +23,8 @@
   const whatsUnread=()=>{const b=document.getElementById(WN_ID);return !!(visibleWhats()&&b.querySelector('.wn-dot')&&!b.querySelector('.wn-dot').hidden);};
   const date=v=>{try{return new Intl.DateTimeFormat(undefined,{year:'numeric',month:'short',day:'numeric'}).format(new Date(v));}catch{return '';}};
   function draw(){
-    diagnostics();
     if(!desktop||!overlay)return;
+    desktop.dataset.messageDiagnostic='Master '+(enabled?'ON':'OFF')+' | Published '+messages.length+' | Public read '+lastFetch+(lastError?' | '+lastError:'');
     desktop.hidden=!enabled;
     if(!enabled&&opened)toggle(false);
     if(hub){const active=enabled||visibleWhats();hub.hidden=!active;hub.setAttribute('aria-label','Notifications');hub.title='Notifications';hub.querySelector('.mlm-dot').hidden=!(enabled&&messages.some(unread))&&!whatsUnread();}
@@ -62,7 +52,7 @@
   function toggle(open){if(open&&!enabled)return;opened=open;overlay.hidden=!open;document.body.classList.toggle('mlm-open',open);if(open){view='new';draw();closeButton.focus();}else{(window.matchMedia('(max-width:950px) and (pointer:coarse)').matches?hub:desktop)?.focus();}}
   function toggleHub(open){if(!hubOverlay)return;hubOverlay.hidden=!open;if(open)hubOverlay.querySelector('.mlm-hub-close').focus();else hub?.focus();}
   async function loadUi(){const requestId=++langRequest;let next={...LABELS};if(lang()!=='en'){
-    try{const r=await fetch('data/translations_.json?v=MESSAGE-FROM-MARK-LYNX-TEST-REV11',{cache:'no-store'});if(r.ok){const row=(await r.json())[lang()]||{};for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);const value=row[key];if(typeof value==='string'&&value.trim())next[k]=value;}}}catch(e){console.warn('[MARK MESSAGE TEST] UI recovery unavailable',e);}
+    try{const r=await fetch('data/translations_.json?v=MESSAGE-FROM-MARK-LYNX-TEST-REV12',{cache:'no-store'});if(r.ok){const row=(await r.json())[lang()]||{};for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);const value=row[key];if(typeof value==='string'&&value.trim())next[k]=value;}}}catch(e){console.warn('[MARK MESSAGE TEST] UI recovery unavailable',e);}
     try{const rows=await request('site_translations','select=translation_key,translated_text&language_code=eq.'+encodeURIComponent(lang())+'&translation_key=like.whats_new.*');for(const r of rows){for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);if(r.translation_key===key&&typeof r.translated_text==='string'&&r.translated_text.trim())next[k]=r.translated_text;}}}catch(e){console.warn('[MARK MESSAGE TEST] Managed UI labels unavailable; using recovery',e);}
   }if(requestId===langRequest){ui=next;draw();}}
   function init(){if(desktop)return;
