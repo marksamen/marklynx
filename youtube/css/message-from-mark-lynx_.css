@@ -1,4 +1,4 @@
-/* Message from Mark Lynx — isolated TEST REV12. What's New files unchanged. */
+/* Message from Mark Lynx — isolated TEST REV14. What's New files unchanged. */
 .mlm-button{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:#251313;border:1px solid #8f2924;border-radius:3px;color:#fff;font:600 13px var(--sans,Arial,sans-serif);cursor:pointer;line-height:1.2;text-align:left;flex:none}
 .mlm-button:hover{background:#3a1715;border-color:var(--red-bright,#e0392f)}
 .mlm-button svg{width:20px;height:20px;flex:none}.mlm-label{white-space:normal}
@@ -21,16 +21,15 @@ html[data-theme="bright"] .mlm-close,html[data-theme="bright"] .mlm-hub-close,ht
 .mlm-button:focus-visible,.mlm-mobile-hub:focus-visible,.mlm-close:focus-visible,.mlm-hub-close:focus-visible,.mlm-tabs button:focus-visible,.mlm-hub-options button:focus-visible{outline:3px solid #e6ad2e;outline-offset:2px}
 .mlm-mobile-hub{display:none}
 @media(max-width:650px){.mlm-dialog{max-height:90dvh}.mlm-head h2{font-size:18px}}
-/* Keep existing What's New button and handlers intact; only swap its mobile visual entry point. */
+/* REV14: retain the original mobile What's New bell and add a separate chat icon. */
 @media(max-width:950px) and (pointer:coarse){
   .subscribe-strip-inner>#markLynxMessagePublicBtn{display:none!important}
-  .site-preferences-inner:has(>#markLynxMobileHubBtn:not([hidden]))>#whatsNewMobileBtn{display:none!important}
-  #markLynxMobileHubBtn:not([hidden]){display:inline-flex!important;position:relative;width:34px;height:34px;min-width:34px;min-height:34px;margin-left:4px;padding:5px;box-sizing:border-box;align-items:center;justify-content:center;flex:none;background:transparent;border:0;border-radius:3px;color:var(--text,#eee);cursor:pointer}
+  #markLynxMobileHubBtn:not([hidden]){display:inline-flex!important;position:relative;width:34px;height:34px;min-width:34px;min-height:34px;margin-left:20px;padding:5px;box-sizing:border-box;align-items:center;justify-content:center;flex:none;background:transparent;border:0;border-radius:3px;color:var(--text,#eee);cursor:pointer}
   #markLynxMobileHubBtn svg{width:20px;height:20px;flex:none}#markLynxMobileHubBtn .mlm-dot{top:2px;right:1px;box-shadow:0 0 0 2px var(--bg,#141414)}
   html[data-theme="bright"] #markLynxMobileHubBtn,html[data-theme="light"] #markLynxMobileHubBtn{color:#222}
 }
 
-/* REV12: identical desktop box heights; no change to What's New handlers. */
+/* REV14: preserve identical desktop box heights; no change to What's New handlers. */
 @media (min-width:951px), (min-width:761px) and (pointer:fine){
  .subscribe-strip-inner>#whatsNewPublicBtn:not([hidden]),
  .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){
