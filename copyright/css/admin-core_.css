@@ -93,3 +93,22 @@ linear-gradient(180deg,#0b0b0c 0%,#111 55%,#0b0b0c 100%);min-height:100vh}
 #manualRefreshControls #recentRefresh:hover,#videoCountRefresh:hover{background:#157347}
 #videoCountRefreshStatus{margin-top:7px;text-align:center}
 @media(max-width:620px){#manualRefreshControls{grid-template-columns:1fr}}
+
+
+/* ADMIN LAYOUT TEST REV01 — geometry only; original controls and IDs preserved. */
+#adminWorkspace{grid-template-columns:minmax(170px,215px) minmax(520px,1fr) minmax(170px,215px);gap:14px;width:min(1510px,calc(100vw - 48px));padding:14px}
+#adminHeader{width:min(1510px,calc(100vw - 48px))}
+#adminRightControls{min-width:0}
+#adminControls .admin-link,#adminRightButtons .admin-link,#testPanel .admin-link{font-size:.78rem;line-height:1.2;padding:.58rem .65rem;margin-top:.42rem;border-radius:6px}
+#adminRightButtons .admin-link{margin-top:0;margin-bottom:7px}
+#adminControls #testPanel{margin-top:14px}
+#adminRightControls #dataSourceStatusPanel{margin-top:20px;overflow-wrap:anywhere}
+@media(max-width:1150px){
+ #adminWorkspace{grid-template-columns:minmax(155px,195px) minmax(420px,1fr) minmax(155px,195px);gap:10px;width:calc(100vw - 30px)}
+ #adminHeader{width:calc(100vw - 30px)}
+}
+@media(max-width:850px){
+ #adminWorkspace{grid-template-columns:1fr;width:min(700px,94vw)}
+ #adminHeader{width:min(700px,94vw)}
+ #adminRightControls{grid-row:auto}
+}
