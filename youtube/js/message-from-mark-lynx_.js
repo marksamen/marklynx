@@ -1,4 +1,4 @@
-/* Message from Mark Lynx — public TEST REV14. Independent read-only frontend. */
+/* Message from Mark Lynx — public TEST REV18. Independent read-only frontend. */
 (() => {
   'use strict';
   const ROOT='https://aikifibkcjibubqegvmb.supabase.co/rest/v1/';
@@ -44,13 +44,13 @@
       const stamp=document.createElement('small');stamp.textContent=ui.published+': '+date(m.published_at);
       entry.append(title,summary,stamp);
       const body=document.createElement('div');body.className='mlm-body';body.hidden=true;body.textContent=tr.body;
-      entry.addEventListener('click',()=>{const expanding=body.hidden;body.hidden=!expanding;entry.setAttribute('aria-expanded',String(expanding));if(expanding&&unread(m)){read.add(String(m.id));store();draw();}});
+      entry.addEventListener('click',()=>{const expanding=body.hidden;body.hidden=!expanding;entry.setAttribute('aria-expanded',String(expanding));if(expanding&&unread(m)){read.add(String(m.id));store();const hasUnread=messages.some(unread);desktop.querySelector('.mlm-dot').hidden=!hasUnread;if(hub)hub.querySelector('.mlm-dot').hidden=!hasUnread;}});
       card.append(entry,body);list.append(card);
     }
   }
   function toggle(open){if(open&&!enabled)return;opened=open;overlay.hidden=!open;document.body.classList.toggle('mlm-open',open);if(open){view='new';draw();closeButton.focus();}else{(window.matchMedia('(max-width:950px) and (pointer:coarse)').matches?hub:desktop)?.focus();}}
   async function loadUi(){const requestId=++langRequest;let next={...LABELS};if(lang()!=='en'){
-    try{const r=await fetch('data/translations_.json?v=MESSAGE-FROM-MARK-LYNX-TEST-REV14',{cache:'no-store'});if(r.ok){const row=(await r.json())[lang()]||{};for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);const value=row[key];if(typeof value==='string'&&value.trim())next[k]=value;}}}catch(e){console.warn('[MARK MESSAGE TEST] UI recovery unavailable',e);}
+    try{const r=await fetch('data/translations_.json?v=MESSAGE-FROM-MARK-LYNX-TEST-REV18',{cache:'no-store'});if(r.ok){const row=(await r.json())[lang()]||{};for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);const value=row[key];if(typeof value==='string'&&value.trim())next[k]=value;}}}catch(e){console.warn('[MARK MESSAGE TEST] UI recovery unavailable',e);}
     try{const rows=await request('site_translations','select=translation_key,translated_text&language_code=eq.'+encodeURIComponent(lang())+'&translation_key=like.whats_new.*');for(const r of rows){for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);if(r.translation_key===key&&typeof r.translated_text==='string'&&r.translated_text.trim())next[k]=r.translated_text;}}}catch(e){console.warn('[MARK MESSAGE TEST] Managed UI labels unavailable; using recovery',e);}
   }if(requestId===langRequest){ui=next;draw();}}
   function init(){if(desktop)return;
