@@ -67,3 +67,21 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button[aria
 @media (max-width:950px) and (pointer:coarse) and (orientation:portrait) {
   #markLynxMobileHubBtn:not([hidden]) { margin-left:4px; }
 }
+
+/* REV16: Match the existing What's New unread dot. Preserve button/icon geometry,
+   portrait/landscape margins, independent unread state and all popup styling.
+   Reference: youtube/css/whats-new_.css and seasonal-theme_.css. */
+.mlm-button .mlm-dot {right:5px;top:3px;width:9px;height:9px;background:#e93445;box-shadow:0 0 0 2px #251313;}
+html[data-theme="bright"] .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot,
+html[data-theme="light"] .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot {box-shadow:0 0 0 2px #f2dcd8;}
+@media (max-width:950px) and (pointer:coarse) {
+  #markLynxMobileHubBtn .mlm-dot {top:2px;right:1px;width:9px;height:9px;background:#e93445;box-shadow:0 0 0 2px var(--bg,#141414);}
+}
+/* Halloween desktop dot palette copied from established What's New rules. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-dot {background:#f39827!important;box-shadow:0 0 0 2px #502268!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .mlm-dot {background:#151015!important;box-shadow:0 0 0 2px #e88424;}
+/* Halloween mobile contrast: established What's New REV48 palette. */
+@media (max-width:950px) and (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] #markLynxMobileHubBtn .mlm-dot {background:#c90028!important;box-shadow:0 0 0 2px #30143f!important;}
+  html[data-seasonal-theme="halloween"][data-theme="dark"] #markLynxMobileHubBtn .mlm-dot {background:#ff3658!important;box-shadow:0 0 0 2px #30143f!important;}
+}
