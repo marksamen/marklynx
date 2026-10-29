@@ -85,3 +85,12 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .mlm-dot {background:#1
   html[data-seasonal-theme="halloween"][data-theme="bright"] #markLynxMobileHubBtn .mlm-dot {background:#c90028!important;box-shadow:0 0 0 2px #30143f!important;}
   html[data-seasonal-theme="halloween"][data-theme="dark"] #markLynxMobileHubBtn .mlm-dot {background:#ff3658!important;box-shadow:0 0 0 2px #30143f!important;}
 }
+
+/* REV17: desktop ONLY — top-left unread dots on both notification buttons.
+   Preserve established dot palette, size, shadow, and mobile placement. */
+@media (min-width:951px), (min-width:761px) and (pointer:fine) {
+  .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot,
+  .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot {
+    left:5px!important;right:auto!important;
+  }
+}
