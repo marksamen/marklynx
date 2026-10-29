@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="/copyright/favicon_.ico" type="image/x-icon">
 <title>(TEST) Mark Lynx Admin</title>
-<link rel="stylesheet" href="css/admin-core_.css?v=ADMIN-LAYOUT-TEST-REV04">
+<link rel="stylesheet" href="css/admin-core_.css?v=ADMIN-LAYOUT-TEST-REV06">
 <link rel="stylesheet" href="css/auth_.css">
 <link rel="stylesheet" href="css/games_.css?v=REV65-provided-relationship-dialog">
 <link rel="stylesheet" href="css/traffic-analytics_.css">
@@ -67,7 +67,7 @@
 <main id="admin">
 <!-- SEASONAL TEST REV01: header layout only -->
 <div id="adminHeader">
-  <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV03 · ADMIN LAYOUT TEST REV04</p></div>
+  <div><h1>Mark Lynx Admin</h1><p>GAMEDEV TEST — WRITE TEST REV03 · ADMIN LAYOUT TEST REV06</p></div>
   <section id="seasonalThemePanel" aria-label="Seasonal Theme TEST">
     <label for="seasonalThemeSelect">Seasonal Theme <span class="seasonalTestLabel">TEST REV01</span></label>
     <div class="seasonalThemeActions">
@@ -113,7 +113,6 @@
 <input id="gameDevSearch" type="search" placeholder="Search by name, ID, playlist or video…" autocomplete="off" aria-label="Search games">
 <select id="gameDevList" aria-label="Select game"></select>
 <div class="gd-toolbar">
-  <button id="gameDevExportSupabase" type="button">Generate Recovery Files</button>
   <button id="gameDevAddLauncher" type="button">Add New Game</button>
   <button id="gameDevEditLauncher" type="button">Edit Selected Game</button>
   <button id="gameDevReloadLauncher" type="button">Reload</button>
@@ -204,6 +203,7 @@
 <button id="platformManagement" class="admin-link" type="button" data-admin-modal-url="platforms/index_.html?v=PLATFORM-MANAGEMENT-REV01" data-admin-modal-title="Platform Management" style="background:#173a63;color:#fff">Platform Management</button>
 <button id="genreManagement" class="admin-link" type="button" data-admin-modal-url="genres/index_.html?v=GENRE-MANAGEMENT-REV01" data-admin-modal-title="Genre Management" style="background:#173a63;color:#fff">Genre Management</button>
 <button id="qualityBadgeManagement" class="admin-link" type="button" data-admin-modal-url="quality-badges/index_.html?v=QUALITY-BADGE-ADD-FIX-REV02" data-admin-modal-title="Quality Badge Management" style="background:#173a63;color:#fff">Quality Badge Management</button>
+<button id="gameDevExportSupabase" class="admin-link" type="button" style="background:#6B3F85;color:#fff">Generate Recovery Files</button>
 </div>
 <section id="dataSourceStatusPanel" aria-label="Data Source Status">
 <h2>Data Source Status</h2>
@@ -296,7 +296,7 @@
 #wnDiag pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font:inherit}
 #wnDiag .head{position:sticky;top:0;background:#111827;z-index:1;display:flex;justify-content:space-between;gap:8px;align-items:center}
 </style>
-<div id="wnDiag" aria-label="ADMIN LAYOUT TEST REV04 diagnostics"><div class="head"><strong>ADMIN LAYOUT TEST REV04 — WHAT'S NEW DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
+<div id="wnDiag" aria-label="ADMIN LAYOUT TEST REV06 diagnostics"><div class="head"><strong>ADMIN LAYOUT TEST REV06 — WHAT'S NEW DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>
 <script>
 (function(){
  const panel=document.getElementById('wnDiagText'), logs=[];
@@ -307,7 +307,7 @@
  $('wnDiagHide').addEventListener('click',()=>{const pre=$('wnDiagText'),hide=pre.style.display!=='none';pre.style.display=hide?'none':'';$('wnDiagHide').textContent=hide?'SHOW':'HIDE';$('wnDiagHide').setAttribute('aria-expanded',String(!hide));$('wnDiag').style.maxHeight=hide?'none':'45vh';});
  $('wnDiagCopy').addEventListener('click',()=>navigator.clipboard?.writeText(logs.join('\n')).catch(()=>{}));
  const observe=()=>{for(const id of ['login','admin','adminPageModal','adminPageModalFrame']){const el=$(id);if(el)new MutationObserver(()=>log('DOM change '+id)).observe(el,{attributes:true,attributeFilter:['style','class','src','aria-hidden']});}}
- observe();log('page initialized');
+ observe();log('ADMIN LAYOUT TEST REV06 — diagnostics initialized');
  $('adminPageModalFrame')?.addEventListener('load',()=>log('iframe loaded'));
  $('adminPageModalClose')?.addEventListener('click',()=>log('modal close clicked'));
  $('whatsNewProbe')?.addEventListener('click',()=>log('probe clicked'));
