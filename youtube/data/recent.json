@@ -1,7 +1,19 @@
 {
-  "updated": "2026-10-29T15:15:10.440417+00:00",
+  "updated": "2026-10-30T15:04:22.332127+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "nZ_pSE6oIxU",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 4 | Hammerswing Caverns | All Star Coins",
+      "published": "2026-10-29T18:47:26+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/nZ_pSE6oIxU/hqdefault.jpg"
+    },
+    {
+      "id": "LFkCISPxu7Y",
+      "title": "Mark Lynx Gaming Network | All My Game Guides in One Place",
+      "published": "2026-10-29T15:55:24+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/LFkCISPxu7Y/hqdefault.jpg"
+    },
     {
       "id": "Iomwmqwsdas",
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 3 | Swim for your life! | All Star Coins",
@@ -37,18 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle 4 | Firefall Cliffs | Normal Exit | All Star Coins",
       "published": "2026-10-24T04:35:28+00:00",
       "thumbnail": "https://i.ytimg.com/vi/xFvt7JJ5xbY/hqdefault.jpg"
-    },
-    {
-      "id": "VMhIOCqmN-g",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 3 | Rising Tides of Lava | All Star Coins | Normal",
-      "published": "2026-10-23T00:01:23+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/VMhIOCqmN-g/hqdefault.jpg"
-    },
-    {
-      "id": "Fw3d504tzjI",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 2 | Magma-River Cruise | All Star Coins | Normal exi",
-      "published": "2026-10-21T22:52:00+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Fw3d504tzjI/hqdefault.jpg"
     }
   ]
 }
