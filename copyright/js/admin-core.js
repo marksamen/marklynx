@@ -185,7 +185,6 @@ window.addEventListener("message", async event => {
   // Reject malformed input before calling the PROD Edge Function.
   const clean = {action};
   if (action === "set-enabled") {
-    if (incoming.enabled === true) {send({ok:false,error:"PROD REV01 safety lock: switch must remain OFF"});return;}
     if (typeof incoming.enabled !== "boolean") {send({ok:false,error:"Invalid switch value"});return;}
     clean.enabled = incoming.enabled;
   } else if (action === "save-translation") {
@@ -231,7 +230,7 @@ window.addEventListener("message", async event => {
 
 initAdminPageModal();
 
-// Message from Mark Lynx PROD REV01: deliver auth status to the correct same-origin frame.
+// REV06: on iframe load, proactively deliver auth state to the correct same-origin frame.
 const mlmFrame = document.getElementById('adminPageModalFrame');
 mlmFrame?.addEventListener('load', () => {
   const src = mlmFrame.getAttribute('src') || '';
@@ -282,7 +281,7 @@ window.addEventListener("message", async event => {
     try { result = JSON.parse(raw); }
     catch { throw new Error(`Edge Function HTTP ${response.status}: invalid JSON response (${raw.slice(0,120)})`); }
     if (!response.ok || result?.ok !== true) throw new Error(`Edge Function HTTP ${response.status}: ${String(result?.error || "Unknown response").slice(0,180)}`);
-    // Message Admin response contract: settings, messages and translations; languages are not required by this bridge.
+    // Deployed TEST function returns settings, messages and translations; it does not return languages.
     if (!result.settings || typeof result.settings !== "object" ||
         !Array.isArray(result.messages) || !Array.isArray(result.translations)) {
       throw new Error(`Edge Function HTTP ${response.status}: unexpected list response structure`);
@@ -298,7 +297,7 @@ window.addEventListener("message", async event => {
 });
 
 
-// Message from Mark Lynx PROD REV01: narrowly scoped authenticated management.
+// What's New PROD REV01: narrowly scoped authenticated draft management.
 // Parent owns Firebase and token. Never send credentials or tokens to the iframe.
 let mlmWriteBusy = false;
 window.addEventListener("message", async event => {
@@ -320,7 +319,6 @@ window.addEventListener("message", async event => {
   // Reject malformed input before calling the PROD Edge Function.
   const clean = {action};
   if (action === "set-enabled") {
-    if (incoming.enabled === true) {send({ok:false,error:"PROD REV01 safety lock: switch must remain OFF"});return;}
     if (typeof incoming.enabled !== "boolean") {send({ok:false,error:"Invalid switch value"});return;}
     clean.enabled = incoming.enabled;
   } else if (action === "save-translation") {
