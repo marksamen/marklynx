@@ -118,6 +118,9 @@ export const inventory={
     "suggest.submitting_button": "Submitting…",
     "suggest.submitted_button": "Submitted"
   },
+  "Message from Mark Lynx": {
+    "mark_lynx_message.title": "Message from Mark Lynx"
+  },
   "What’s New": {
     "whats_new.title": "What's New",
     "whats_new.new": "New",
