@@ -5,9 +5,10 @@
   const KEY='sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_';
   const READ_KEY='marklynx.messagefrommarklynx.read.v1';
   const TITLE='Message from Mark Lynx';
+  const TITLE_KEY='mark_lynx_message.title';
   const WN_ID='whatsNewMobileBtn';
   const LANGUAGE_KEY='marklynx.public.language';
-  const LABELS={new:'New',archive:'Archive',close:'Close',published:'Published',emptyNew:'No new messages.',emptyArchive:'No archived messages.'};
+  const LABELS={title:TITLE,new:'New',archive:'Archive',close:'Close',published:'Published',emptyNew:'No new messages.',emptyArchive:'No archived messages.'};
   let enabled=false,messages=[],translations=[],ui={...LABELS},view='new',opened=false;
   let desktop,hub,overlay,closeButton,heading,tabs,list;
   let langRequest=0,read=new Set();
@@ -27,10 +28,10 @@
     desktop.dataset.messageDiagnostic='Master '+(enabled?'ON':'OFF')+' | Published '+messages.length+' | Public read '+lastFetch+(lastError?' | '+lastError:'');
     desktop.hidden=!enabled;
     if(!enabled&&opened)toggle(false);
-    if(hub){hub.hidden=!enabled;hub.setAttribute('aria-label',TITLE);hub.title=TITLE;hub.querySelector('.mlm-dot').hidden=!messages.some(unread);}
+    if(hub){hub.hidden=!enabled;hub.setAttribute('aria-label',ui.title);hub.title=ui.title;hub.querySelector('.mlm-dot').hidden=!messages.some(unread);}
     desktop.querySelector('.mlm-dot').hidden=!messages.some(unread);
     if(!enabled)return;
-    heading.textContent=TITLE;closeButton.setAttribute('aria-label',ui.close);
+    heading.textContent=ui.title;desktop.querySelector('.mlm-label').textContent=ui.title;desktop.setAttribute('aria-label',ui.title);closeButton.setAttribute('aria-label',ui.close);
     tabs[0].textContent=ui.new;tabs[1].textContent=ui.archive;
     tabs.forEach((t,i)=>t.setAttribute('aria-selected',String(view===(i?'archive':'new'))));
     list.replaceChildren();
@@ -52,6 +53,7 @@
   async function loadUi(){const requestId=++langRequest;let next={...LABELS};if(lang()!=='en'){
     try{const r=await fetch('data/translations_.json?v=MESSAGE-FROM-MARK-LYNX-TEST-REV18',{cache:'no-store'});if(r.ok){const row=(await r.json())[lang()]||{};for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);const value=row[key];if(typeof value==='string'&&value.trim())next[k]=value;}}}catch(e){console.warn('[MARK MESSAGE TEST] UI recovery unavailable',e);}
     try{const rows=await request('site_translations','select=translation_key,translated_text&language_code=eq.'+encodeURIComponent(lang())+'&translation_key=like.whats_new.*');for(const r of rows){for(const k of ['new','archive','close','published','emptyNew','emptyArchive']){const key='whats_new.'+({emptyNew:'empty_new',emptyArchive:'empty_archive'}[k]||k);if(r.translation_key===key&&typeof r.translated_text==='string'&&r.translated_text.trim())next[k]=r.translated_text;}}}catch(e){console.warn('[MARK MESSAGE TEST] Managed UI labels unavailable; using recovery',e);}
+    try{const rows=await request('site_translations','select=translation_key,translated_text&language_code=eq.'+encodeURIComponent(lang())+'&translation_key=eq.'+encodeURIComponent(TITLE_KEY));const title=rows.find(r=>r.translation_key===TITLE_KEY)?.translated_text;if(typeof title==='string'&&title.trim())next.title=title;}catch(e){console.warn('[MARK MESSAGE TEST] Managed title unavailable; using English',e);}
   }if(requestId===langRequest){ui=next;draw();}}
   function init(){if(desktop)return;
     const anchor=document.querySelector('.subscribe-strip-inner');const prefs=document.querySelector('.site-preferences-inner');
