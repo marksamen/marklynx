@@ -9016,5 +9016,32 @@
     "publisher_1": "Desert Water Games",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 335,
+    "n": "Curious Copy Cats",
+    "p": "Windows | XBOX ONE | XBOX Series S/X",
+    "g": "3,000G",
+    "t": "3 Minutes",
+    "completion_type": null,
+    "ty": "Puzzle",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=gbk78VzI6j4",
+    "v": "gbk78VzI6j4",
+    "pl": null,
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Jolly Lobster Interactive",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Jolly Lobster Interactive",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]

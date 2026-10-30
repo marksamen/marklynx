@@ -17,7 +17,7 @@
     "code": "es-MX",
     "native_name": "Español (Latinoamérica)",
     "english_name": "Spanish (Latin America)",
-    "enabled": false,
+    "enabled": true,
     "sort_order": 21
   },
   {
