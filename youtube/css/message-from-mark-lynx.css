@@ -1,0 +1,96 @@
+/* Message from Mark Lynx — isolated public feature. What's New files unchanged. */
+.mlm-button{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:#251313;border:1px solid #8f2924;border-radius:3px;color:#fff;font:600 13px var(--sans,Arial,sans-serif);cursor:pointer;line-height:1.2;text-align:left;flex:none}
+.mlm-button:hover{background:#3a1715;border-color:var(--red-bright,#e0392f)}
+.mlm-button svg{width:20px;height:20px;flex:none}.mlm-label{white-space:normal}
+.mlm-dot{position:absolute;right:3px;top:2px;width:9px;height:9px;border-radius:50%;background:#e93445;box-shadow:0 0 0 2px #251313}
+.mlm-button[hidden],.mlm-mobile-hub[hidden],.mlm-overlay[hidden],.mlm-hub-overlay[hidden],.mlm-dot[hidden],.mlm-body[hidden],.mlm-hub-whats[hidden],.mlm-hub-mark[hidden]{display:none!important}
+/* Restore the margin auto to the new right-hand message button, leaving What's New in place. */
+@media(min-width:761px){.subscribe-strip-inner:has(>#markLynxMessagePublicBtn:not([hidden]))>#whatsNewPublicBtn{margin-right:0!important}.subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){margin-right:auto}}
+html[data-theme="bright"] .mlm-button,html[data-theme="light"] .mlm-button{background:#f2dcd8;border-color:#b46a63;color:#68231e}
+html[data-theme="bright"] .mlm-button:hover,html[data-theme="light"] .mlm-button:hover{background:#e9cbc5;border-color:#963e35}
+.mlm-overlay,.mlm-hub-overlay{position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.86);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+.mlm-dialog,.mlm-hub-dialog{width:min(740px,100%);max-height:min(85vh,850px);display:flex;flex-direction:column;background:var(--bg-raised,#141414);color:var(--text,#e8e6e2);border:1px solid #4c2926;border-top:3px solid var(--red,#b3231c);border-radius:5px;box-shadow:0 18px 55px #000b;overflow:hidden}
+.mlm-hub-dialog{width:min(420px,100%)}.mlm-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line,#262626)}.mlm-head h2{font-size:20px;margin:0;color:inherit}.mlm-close,.mlm-hub-close{background:#251313;color:inherit;border:1px solid #6e302b;border-radius:3px;font-size:24px;width:35px;height:35px;cursor:pointer}
+.mlm-tabs{display:flex;gap:8px;padding:13px 18px 0}.mlm-tabs button,.mlm-hub-options button{background:#201717;color:inherit;border:1px solid #55302d;border-radius:3px;padding:9px 18px;cursor:pointer}.mlm-tabs button[aria-selected=true]{background:#67231e;border-color:var(--red-bright,#e0392f);color:#fff}
+.mlm-list{overflow:auto;padding:15px 18px 24px;min-height:100px}.mlm-card{background:var(--bg-card,#161616);border:1px solid #422b29;border-radius:4px;margin-bottom:12px;overflow:hidden}.mlm-entry{width:100%;display:flex;flex-direction:column;gap:7px;text-align:left;background:none;color:inherit;border:0;padding:14px;font:inherit;cursor:pointer}.mlm-entry strong{font-size:16px}.mlm-entry span{font-size:14px}.mlm-entry small{opacity:.7}.mlm-body{padding:14px;border-top:1px solid var(--line,#262626);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}.mlm-empty{opacity:.8;margin:16px 0}.mlm-open{overflow:hidden}.mlm-hub-options{display:flex;flex-direction:column;gap:12px;padding:18px}.mlm-hub-options button{text-align:left;font-size:15px;padding:14px}
+html[data-theme="bright"] .mlm-dialog,html[data-theme="bright"] .mlm-hub-dialog,html[data-theme="light"] .mlm-dialog,html[data-theme="light"] .mlm-hub-dialog{background:#fff;color:#1b1b1b;border-color:#b8a9a7;border-top-color:#b3231c}
+html[data-theme="bright"] .mlm-card,html[data-theme="light"] .mlm-card{background:#f8f6f5;border-color:#d5c7c4}
+html[data-theme="bright"] .mlm-tabs button,html[data-theme="bright"] .mlm-hub-options button,html[data-theme="light"] .mlm-tabs button,html[data-theme="light"] .mlm-hub-options button{background:#f3e9e7;color:#272020;border-color:#bca6a2}
+html[data-theme="bright"] .mlm-tabs button[aria-selected=true],html[data-theme="light"] .mlm-tabs button[aria-selected=true]{background:#b3231c;color:#fff}
+html[data-theme="bright"] .mlm-close,html[data-theme="bright"] .mlm-hub-close,html[data-theme="light"] .mlm-close,html[data-theme="light"] .mlm-hub-close{background:#f3e9e7;color:#272020;border-color:#bca6a2}
+.mlm-button:focus-visible,.mlm-mobile-hub:focus-visible,.mlm-close:focus-visible,.mlm-hub-close:focus-visible,.mlm-tabs button:focus-visible,.mlm-hub-options button:focus-visible{outline:3px solid #e6ad2e;outline-offset:2px}
+.mlm-mobile-hub{display:none}
+@media(max-width:650px){.mlm-dialog{max-height:90dvh}.mlm-head h2{font-size:18px}}
+/* REV14: retain the original mobile What's New bell and add a separate chat icon. */
+@media(max-width:950px) and (pointer:coarse){
+  .subscribe-strip-inner>#markLynxMessagePublicBtn{display:none!important}
+  #markLynxMobileHubBtn:not([hidden]){display:inline-flex!important;position:relative;width:34px;height:34px;min-width:34px;min-height:34px;margin-left:20px;padding:5px;box-sizing:border-box;align-items:center;justify-content:center;flex:none;background:transparent;border:0;border-radius:3px;color:var(--text,#eee);cursor:pointer}
+  #markLynxMobileHubBtn svg{width:20px;height:20px;flex:none}#markLynxMobileHubBtn .mlm-dot{top:2px;right:1px;box-shadow:0 0 0 2px var(--bg,#141414)}
+  html[data-theme="bright"] #markLynxMobileHubBtn,html[data-theme="light"] #markLynxMobileHubBtn{color:#222}
+}
+
+/* REV14: preserve identical desktop box heights; no change to What's New handlers. */
+@media (min-width:951px), (min-width:761px) and (pointer:fine){
+ .subscribe-strip-inner>#whatsNewPublicBtn:not([hidden]),
+ .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){
+  box-sizing:border-box!important;height:40px!important;min-height:40px!important;max-height:40px!important;
+  display:inline-flex;align-items:center;justify-content:center;
+ }
+}
+/* Match established Halloween What's New button palette. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){background:#502268!important;border-color:#30143f!important;color:#ffbe65!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#693284!important;border-color:#30143f!important;color:#ffcf85!important}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]){background:#e88424!important;border-color:#ffad52!important;color:#151015!important}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .subscribe-strip-inner>#markLynxMessagePublicBtn:not([hidden]):hover{background:#ffa63e!important;border-color:#ffc47a!important;color:#151015!important}
+
+/* REV13: Halloween Bright popup ONLY. Values copied from the established
+   What's New rules in youtube/css/seasonal-theme_.css. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-dialog,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-dialog {
+  background:#f6ac50!important; color:#30143f!important;
+  border-color:#622477!important; border-top-color:#30143f!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-head,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-body {border-color:#622477!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-card {background:#ffc276!important;border-color:#622477!important}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-options button,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-close,
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-hub-close {
+  background:#502268!important;border-color:#30143f!important;color:#ffbe65!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-tabs button[aria-selected="true"] {
+  background:#30143f!important;color:#ffbe65!important;
+}
+
+/* REV15: portrait-only spacing correction. Landscape retains REV14 spacing. */
+@media (max-width:950px) and (pointer:coarse) and (orientation:portrait) {
+  #markLynxMobileHubBtn:not([hidden]) { margin-left:4px; }
+}
+
+/* REV16: Match the existing What's New unread dot. Preserve button/icon geometry,
+   portrait/landscape margins, independent unread state and all popup styling.
+   Reference: youtube/css/whats-new_.css and seasonal-theme_.css. */
+.mlm-button .mlm-dot {right:5px;top:3px;width:9px;height:9px;background:#e93445;box-shadow:0 0 0 2px #251313;}
+html[data-theme="bright"] .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot,
+html[data-theme="light"] .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot {box-shadow:0 0 0 2px #f2dcd8;}
+@media (max-width:950px) and (pointer:coarse) {
+  #markLynxMobileHubBtn .mlm-dot {top:2px;right:1px;width:9px;height:9px;background:#e93445;box-shadow:0 0 0 2px var(--bg,#141414);}
+}
+/* Halloween desktop dot palette copied from established What's New rules. */
+html[data-seasonal-theme="halloween"][data-theme="bright"] .mlm-dot {background:#f39827!important;box-shadow:0 0 0 2px #502268!important;}
+html[data-seasonal-theme="halloween"][data-theme="dark"] .mlm-dot {background:#151015!important;box-shadow:0 0 0 2px #e88424;}
+/* Halloween mobile contrast: established What's New REV48 palette. */
+@media (max-width:950px) and (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme="bright"] #markLynxMobileHubBtn .mlm-dot {background:#c90028!important;box-shadow:0 0 0 2px #30143f!important;}
+  html[data-seasonal-theme="halloween"][data-theme="dark"] #markLynxMobileHubBtn .mlm-dot {background:#ff3658!important;box-shadow:0 0 0 2px #30143f!important;}
+}
+
+/* REV17: desktop ONLY — top-left unread dots on both notification buttons.
+   Preserve established dot palette, size, shadow, and mobile placement. */
+@media (min-width:951px), (min-width:761px) and (pointer:fine) {
+  .subscribe-strip-inner > #whatsNewPublicBtn .wn-dot,
+  .subscribe-strip-inner > #markLynxMessagePublicBtn .mlm-dot {
+    left:5px!important;right:auto!important;
+  }
+}
