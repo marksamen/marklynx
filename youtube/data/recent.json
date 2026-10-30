@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-30T15:04:22.332127+00:00",
+  "updated": "2026-10-30T17:34:11.593526+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "gbk78VzI6j4",
+      "title": "Curious Copy Cats | Easy 100% Completion | 3000 Gamerscore | 3 Minute Completion | 4K | 60FPS",
+      "published": "2026-10-30T17:28:47+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/gbk78VzI6j4/hqdefault.jpg"
+    },
     {
       "id": "nZ_pSE6oIxU",
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 4 | Hammerswing Caverns | All Star Coins",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle Entrance | Red-Hot Elevator Ride | All Star Coins",
       "published": "2026-10-24T18:52:51+00:00",
       "thumbnail": "https://i.ytimg.com/vi/3nV9qP0YHR4/hqdefault.jpg"
-    },
-    {
-      "id": "xFvt7JJ5xbY",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle 4 | Firefall Cliffs | Normal Exit | All Star Coins",
-      "published": "2026-10-24T04:35:28+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/xFvt7JJ5xbY/hqdefault.jpg"
     }
   ]
 }
