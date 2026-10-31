@@ -1,7 +1,13 @@
 {
-  "updated": "2026-10-30T17:34:11.593526+00:00",
+  "updated": "2026-10-31T14:33:31.783122+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "MnC3ir46ibM",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 5 | Spinning Platforms of Doom | All Star Coins",
+      "published": "2026-10-30T21:49:08+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/MnC3ir46ibM/hqdefault.jpg"
+    },
     {
       "id": "gbk78VzI6j4",
       "title": "Curious Copy Cats | Easy 100% Completion | 3000 Gamerscore | 3 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Peach's Castle | Final Boss Battle | All Star Coins | Normal Exit",
       "published": "2026-10-26T02:09:13+00:00",
       "thumbnail": "https://i.ytimg.com/vi/jNgY-DKIjvI/hqdefault.jpg"
-    },
-    {
-      "id": "3nV9qP0YHR4",
-      "title": "New Super Mario Bros. U Deluxe | Peach's Castle Entrance | Red-Hot Elevator Ride | All Star Coins",
-      "published": "2026-10-24T18:52:51+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/3nV9qP0YHR4/hqdefault.jpg"
     }
   ]
 }
