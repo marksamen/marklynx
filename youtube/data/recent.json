@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-01T21:16:59.376415+00:00",
+  "updated": "2026-11-01T21:39:21.669121+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "6lBEh2MqTVc",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 7 | Lakitu! Lakitu! Lakitu! | All Star Coins",
+      "published": "2026-11-01T21:38:56+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/6lBEh2MqTVc/hqdefault.jpg"
+    },
     {
       "id": "R7kddGGEmQg",
       "title": "Word Quest Cyberpunk | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "Mark Lynx Gaming Network | All My Game Guides in One Place",
       "published": "2026-10-29T15:55:24+00:00",
       "thumbnail": "https://i.ytimg.com/vi/LFkCISPxu7Y/hqdefault.jpg"
-    },
-    {
-      "id": "Iomwmqwsdas",
-      "title": "New Super Mario Bros. U Deluxe | Superstar Road 3 | Swim for your life! | All Star Coins",
-      "published": "2026-10-28T22:04:19+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/Iomwmqwsdas/hqdefault.jpg"
     }
   ]
 }
