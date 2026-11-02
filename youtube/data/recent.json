@@ -1,7 +1,19 @@
 {
-  "updated": "2026-11-01T21:39:21.669121+00:00",
+  "updated": "2026-11-02T18:25:32.072980+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "3FMxTyWJ_Dk",
+      "title": "New Super Mario Bros. U Deluxe | Superstar Road 8 | Pendulum Castle | All Star Coins",
+      "published": "2026-11-02T17:44:13+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/3FMxTyWJ_Dk/hqdefault.jpg"
+    },
+    {
+      "id": "MInfasUCp6w",
+      "title": "Word Quest Fantasy | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
+      "published": "2026-11-02T16:46:11+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/MInfasUCp6w/hqdefault.jpg"
+    },
     {
       "id": "6lBEh2MqTVc",
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 7 | Lakitu! Lakitu! Lakitu! | All Star Coins",
@@ -37,18 +49,6 @@
       "title": "Curious Copy Cats | Easy 100% Completion | 3000 Gamerscore | 3 Minute Completion | 4K | 60FPS",
       "published": "2026-10-30T17:28:47+00:00",
       "thumbnail": "https://i.ytimg.com/vi/gbk78VzI6j4/hqdefault.jpg"
-    },
-    {
-      "id": "nZ_pSE6oIxU",
-      "title": "New Super Mario Bros. U Deluxe | Superstar Road 4 | Hammerswing Caverns | All Star Coins",
-      "published": "2026-10-29T18:47:26+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/nZ_pSE6oIxU/hqdefault.jpg"
-    },
-    {
-      "id": "LFkCISPxu7Y",
-      "title": "Mark Lynx Gaming Network | All My Game Guides in One Place",
-      "published": "2026-10-29T15:55:24+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/LFkCISPxu7Y/hqdefault.jpg"
     }
   ]
 }
