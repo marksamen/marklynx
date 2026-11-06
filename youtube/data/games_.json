@@ -9178,5 +9178,32 @@
     "publisher_1": "Gametry",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 341,
+    "n": "Bus Stop Shuffle (Rush Hour DLC)",
+    "p": "Windows | XBOX ONE | XBOX Series S/X",
+    "g": "2,000G Update",
+    "t": "28 Minutes",
+    "completion_type": null,
+    "ty": "Puzzle",
+    "tx": "No",
+    "q": "4K",
+    "df": "Quick & Easy",
+    "u": "https://www.youtube.com/watch?v=vsANTY0vuOE",
+    "v": "vsANTY0vuOE",
+    "pl": null,
+    "kinect": null,
+    "adult": null,
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Webnetic",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Webnetic",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
