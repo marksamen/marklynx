@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-07T14:55:02.673920+00:00",
+  "updated": "2026-11-07T15:30:12.355300+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "ZWdkHHpFF_0",
+      "title": "Aquarun | Easy 100% Completion | 5000G Update | 1-2 Minute Re-Completion",
+      "published": "2026-11-07T15:25:27+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/ZWdkHHpFF_0/hqdefault.jpg"
+    },
     {
       "id": "vsANTY0vuOE",
       "title": "Bus Stop Shuffle  | Easy 100% Completion | 2000G Update | Rush Hour DLC | 28 Minute Re-Completion",
@@ -43,12 +49,6 @@
       "title": "Word Quest Fantasy | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
       "published": "2026-11-02T16:46:11+00:00",
       "thumbnail": "https://i.ytimg.com/vi/MInfasUCp6w/hqdefault.jpg"
-    },
-    {
-      "id": "6lBEh2MqTVc",
-      "title": "New Super Mario Bros. U Deluxe | Superstar Road 7 | Lakitu! Lakitu! Lakitu! | All Star Coins",
-      "published": "2026-11-01T21:38:56+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/6lBEh2MqTVc/hqdefault.jpg"
     }
   ]
 }
