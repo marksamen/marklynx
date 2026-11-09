@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-09T18:51:02.615592+00:00",
+  "updated": "2026-11-09T19:48:35.485734+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "KrdB3tF7Pq4",
+      "title": "Word Quest Space | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
+      "published": "2026-11-09T19:47:47+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/KrdB3tF7Pq4/hqdefault.jpg"
+    },
     {
       "id": "Hxe_aT3Y1c8",
       "title": "Magical Girls vs Cat Aliens | Easy 100% Completion | 4000G Update | 5 Minute Re-Completion",
@@ -43,12 +49,6 @@
       "title": "New Super Mario Bros. U Deluxe | Superstar Road 9 | Follow That Shell! | All Star Coins",
       "published": "2026-11-03T22:17:42+00:00",
       "thumbnail": "https://i.ytimg.com/vi/VvkwZ8IANRI/hqdefault.jpg"
-    },
-    {
-      "id": "3FMxTyWJ_Dk",
-      "title": "New Super Mario Bros. U Deluxe | Superstar Road 8 | Pendulum Castle | All Star Coins",
-      "published": "2026-11-02T17:44:13+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/3FMxTyWJ_Dk/hqdefault.jpg"
     }
   ]
 }
