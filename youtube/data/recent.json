@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-10T16:26:11.929434+00:00",
+  "updated": "2026-11-11T00:28:26.723380+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "iFVEkKxztrs",
+      "title": "Word Quest Pirates | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
+      "published": "2026-11-10T23:29:37+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/iFVEkKxztrs/hqdefault.jpg"
+    },
     {
       "id": "KrdB3tF7Pq4",
       "title": "Word Quest Space | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "Word Quest Horror | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
       "published": "2026-11-04T14:38:26+00:00",
       "thumbnail": "https://i.ytimg.com/vi/QJd3np5E__w/hqdefault.jpg"
-    },
-    {
-      "id": "VvkwZ8IANRI",
-      "title": "New Super Mario Bros. U Deluxe | Superstar Road 9 | Follow That Shell! | All Star Coins",
-      "published": "2026-11-03T22:17:42+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/VvkwZ8IANRI/hqdefault.jpg"
     }
   ]
 }
