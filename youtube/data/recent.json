@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-12T20:29:51.198269+00:00",
+  "updated": "2026-11-12T20:58:42.792412+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "tR3WmaHYSZ4",
+      "title": "Ocean Oddities | Easy 100% Completion | 3000 Gamerscore | 3-4 Minute Completion | 4K",
+      "published": "2026-11-12T20:28:43+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/tR3WmaHYSZ4/hqdefault.jpg"
+    },
     {
       "id": "yydtypVEQiQ",
       "title": "Liquid Cats | Easy 100% Completion | 2000 Gamerscore | 10 Minute Completion | Text Guide Included",
@@ -43,12 +49,6 @@
       "title": "Word Quest Nature | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
       "published": "2026-11-05T16:20:36+00:00",
       "thumbnail": "https://i.ytimg.com/vi/OYwx3KsYQ_Q/hqdefault.jpg"
-    },
-    {
-      "id": "4syKAWgPX-Y",
-      "title": "New Super Mario Bros. U Deluxe | How to unlock Nabbit Chases? | All Nabbit Chases",
-      "published": "2026-11-05T00:35:00+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/4syKAWgPX-Y/hqdefault.jpg"
     }
   ]
 }
