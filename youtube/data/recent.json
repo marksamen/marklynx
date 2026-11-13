@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-12T20:58:42.792412+00:00",
+  "updated": "2026-11-13T14:11:44.758235+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "XGD9TwhFOLg",
+      "title": "The Wolf Among Us Remastered | Episode 1 | Faith | 100% Achievements | All Book of Fables Entries",
+      "published": "2026-11-13T13:48:20+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/XGD9TwhFOLg/hqdefault.jpg"
+    },
     {
       "id": "tR3WmaHYSZ4",
       "title": "Ocean Oddities | Easy 100% Completion | 3000 Gamerscore | 3-4 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "Bus Stop Shuffle | Easy 100% Completion | 2000G Update | Rush Hour DLC | 28 Minute Re-Completion",
       "published": "2026-11-06T15:48:52+00:00",
       "thumbnail": "https://i.ytimg.com/vi/vsANTY0vuOE/hqdefault.jpg"
-    },
-    {
-      "id": "OYwx3KsYQ_Q",
-      "title": "Word Quest Nature | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
-      "published": "2026-11-05T16:20:36+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/OYwx3KsYQ_Q/hqdefault.jpg"
     }
   ]
 }
