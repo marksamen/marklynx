@@ -9367,5 +9367,32 @@
     "publisher_1": "Jolly Lobster Interactive",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 348,
+    "n": "The Wolf Among Us (Remastered)",
+    "p": "XBOX ONE | XBOX Series S/X",
+    "g": "1,000G",
+    "t": "8-10 Hours",
+    "completion_type": null,
+    "ty": "Adventure | Point & Click",
+    "tx": "No",
+    "q": "4K",
+    "df": "Easy",
+    "u": "https://www.youtube.com/playlist?list=PLIAYW-xf1_BE",
+    "v": null,
+    "pl": "PLIAYW-xf1_BE",
+    "kinect": "false",
+    "adult": "false",
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Telltale Games",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Telltale Games",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
