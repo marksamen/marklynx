@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-14T15:07:24.572352+00:00",
+  "updated": "2026-11-14T23:14:15.255938+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "6wlS0XF890w",
+      "title": "The Wolf Among Us Remastered | Episode 2 | Smoke & Mirrors | 100% Achievements | All Book of Fables",
+      "published": "2026-11-14T15:42:07+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/6wlS0XF890w/hqdefault.jpg"
+    },
     {
       "id": "XGD9TwhFOLg",
       "title": "The Wolf Among Us Remastered | Episode 1 | Faith | 100% Achievements | All Book of Fables Entries",
@@ -43,12 +49,6 @@
       "title": "Aquarun | Easy 100% Completion | 5000G Update | 1-2 Minute Re-Completion",
       "published": "2026-11-07T15:25:27+00:00",
       "thumbnail": "https://i.ytimg.com/vi/ZWdkHHpFF_0/hqdefault.jpg"
-    },
-    {
-      "id": "vsANTY0vuOE",
-      "title": "Bus Stop Shuffle | Easy 100% Completion | 2000G Update | Rush Hour DLC | 28 Minute Re-Completion",
-      "published": "2026-11-06T15:48:52+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/vsANTY0vuOE/hqdefault.jpg"
     }
   ]
 }
