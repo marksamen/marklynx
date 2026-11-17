@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-16T18:36:41.955820+00:00",
+  "updated": "2026-11-17T13:10:49.543907+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "CXpEIKI3Gvg",
+      "title": "The Wolf Among Us Remastered | Episode 5 | Cry Wolf | 100% Achievements | All Book of Fables",
+      "published": "2026-11-17T12:58:24+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/CXpEIKI3Gvg/hqdefault.jpg"
+    },
     {
       "id": "q_V1TmllwB0",
       "title": "The Wolf Among Us Remastered | Episode 4 | In Sheep's Clothing | 100% Achievements | Book of Fables",
@@ -43,12 +49,6 @@
       "title": "Word Quest Pirates | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
       "published": "2026-11-10T23:29:37+00:00",
       "thumbnail": "https://i.ytimg.com/vi/iFVEkKxztrs/hqdefault.jpg"
-    },
-    {
-      "id": "KrdB3tF7Pq4",
-      "title": "Word Quest Space | Easy 100% Completion | 1000 Gamerscore | 2-3 Minute Completion | 4K | 60FPS",
-      "published": "2026-11-09T19:47:47+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/KrdB3tF7Pq4/hqdefault.jpg"
     }
   ]
 }
