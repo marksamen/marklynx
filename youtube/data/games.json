@@ -9394,5 +9394,32 @@
     "publisher_1": "Telltale Games",
     "publisher_2": null,
     "publisher_3": null
+  },
+  {
+    "id": 349,
+    "n": "Super Mario World",
+    "p": "Nintendo Switch | Nintendo Switch 2",
+    "g": null,
+    "t": "10-50 Hours",
+    "completion_type": null,
+    "ty": "Platformer",
+    "tx": "No",
+    "q": "4K",
+    "df": "Hard",
+    "u": "https://www.youtube.com/playlist?list=PLKLYHSF4P-Fw",
+    "v": null,
+    "pl": "PLKLYHSF4P-Fw",
+    "kinect": null,
+    "adult": null,
+    "testContent": "false",
+    "always_show_recent": false,
+    "developer_1": "Nintendo",
+    "developer_2": null,
+    "developer_3": null,
+    "developer_4": null,
+    "developer_5": null,
+    "publisher_1": "Nintendo",
+    "publisher_2": null,
+    "publisher_3": null
   }
 ]
