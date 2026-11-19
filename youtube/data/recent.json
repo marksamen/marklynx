@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-19T17:24:11.009057+00:00",
+  "updated": "2026-11-19T22:30:26.960200+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "QFKnQDk3MUo",
+      "title": "Super Mario World | Yoshi's Island 1 | Normal Exit | Exit 01/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-19T21:25:50+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/QFKnQDk3MUo/hqdefault.jpg"
+    },
     {
       "id": "NOvREr31ZHc",
       "title": "The Wolf Among Us Remastered | All Missable Achievements | All Book of Fables Entries | 4K | 60FPS",
@@ -43,12 +49,6 @@
       "title": "Ocean Oddities | Easy 100% Completion | 3000 Gamerscore | 3-4 Minute Completion | 4K",
       "published": "2026-11-12T20:28:43+00:00",
       "thumbnail": "https://i.ytimg.com/vi/tR3WmaHYSZ4/hqdefault.jpg"
-    },
-    {
-      "id": "yydtypVEQiQ",
-      "title": "Liquid Cats | Easy 100% Completion | 2000 Gamerscore | 10 Minute Completion | Text Guide Included",
-      "published": "2026-11-11T13:29:18+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/yydtypVEQiQ/hqdefault.jpg"
     }
   ]
 }
