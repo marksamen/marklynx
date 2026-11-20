@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-20T16:59:06.922623+00:00",
+  "updated": "2026-11-20T17:40:48.410790+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "klUDtwW0Q-U",
+      "title": "Super Mario World | Yellow Switch Palace | Normal Exit | Exit 02/96 | Nintendo Switch 2 | 4K",
+      "published": "2026-11-20T17:20:18+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/klUDtwW0Q-U/hqdefault.jpg"
+    },
     {
       "id": "DqHDE81kqGU",
       "title": "Frame Cat | Easy 100% Completion | 4000 Gamerscore | 19 Minute Completion | 4K",
@@ -43,12 +49,6 @@
       "title": "The Wolf Among Us Remastered | Episode 2 | Smoke & Mirrors | 100% Achievements | All Book of Fables",
       "published": "2026-11-14T15:42:07+00:00",
       "thumbnail": "https://i.ytimg.com/vi/6wlS0XF890w/hqdefault.jpg"
-    },
-    {
-      "id": "XGD9TwhFOLg",
-      "title": "The Wolf Among Us Remastered | Episode 1 | Faith | 100% Achievements | All Book of Fables Entries",
-      "published": "2026-11-13T13:48:20+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/XGD9TwhFOLg/hqdefault.jpg"
     }
   ]
 }
