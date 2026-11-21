@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-21T16:11:11.624053+00:00",
+  "updated": "2026-11-21T16:52:23.403303+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "2df723QA4J8",
+      "title": "Super Mario World | Yoshi's Island 3 | Normal Exit | Exit 04/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-21T16:52:05+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/2df723QA4J8/hqdefault.jpg"
+    },
     {
       "id": "HO8M4BspOng",
       "title": "Super Mario World | Yoshi's Island 2 | Normal Exit | Exit 03/96 | Nintendo Switch 2 | 4K | 60 FPS",
@@ -43,12 +49,6 @@
       "title": "The Wolf Among Us Remastered | Episode 4 | In Sheep's Clothing | 100% Achievements | Book of Fables",
       "published": "2026-11-16T16:03:17+00:00",
       "thumbnail": "https://i.ytimg.com/vi/q_V1TmllwB0/hqdefault.jpg"
-    },
-    {
-      "id": "ZhOWuxYpx7Q",
-      "title": "The Wolf Among Us Remastered | Episode 3 | A Crooked Mile | 100% Achievements | All Book of Fables",
-      "published": "2026-11-15T16:37:16+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/ZhOWuxYpx7Q/hqdefault.jpg"
     }
   ]
 }
