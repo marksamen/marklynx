@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-23T01:37:26.543838+00:00",
+  "updated": "2026-11-23T17:09:36.708127+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "3RUaoZL9TFY",
+      "title": "Super Mario World | Iggy's Castle | Normal Exit | Exit 06/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-23T16:08:10+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/3RUaoZL9TFY/hqdefault.jpg"
+    },
     {
       "id": "4NTPhTloopo",
       "title": "Super Mario World | Yoshi's Island 4 | Normal Exit | Exit 05/96 | Nintendo Switch 2 | 4K | 60 FPS",
@@ -43,12 +49,6 @@
       "title": "The Wolf Among Us Remastered | All Missable Achievements | All Book of Fables Entries | 4K | 60FPS",
       "published": "2026-11-18T14:25:11+00:00",
       "thumbnail": "https://i.ytimg.com/vi/NOvREr31ZHc/hqdefault.jpg"
-    },
-    {
-      "id": "CXpEIKI3Gvg",
-      "title": "The Wolf Among Us Remastered | Episode 5 | Cry Wolf | 100% Achievements | All Book of Fables",
-      "published": "2026-11-17T12:58:24+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/CXpEIKI3Gvg/hqdefault.jpg"
     }
   ]
 }
