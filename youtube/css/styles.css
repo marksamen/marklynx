@@ -4518,7 +4518,8 @@ body.suggest-modal-open{overflow:hidden}
 /* COMPLETION TYPES TEST REV27 - Desktop Normal LIST Xbox Gamerscore badge only.
    Match the approved green Xbox badge in Recent Uploads. */
 @media (min-width:901px) and (hover:hover) and (pointer:fine){
-  #resultsList .list-row > .list-col.gs{
+  #resultsList .list-row > .list-col.gs,
+  #resultsList .guide-list-points > .list-col.gs{
     border:1px solid #107C10;
     background:#e4f3e4;
     color:#194f19;
@@ -4857,5 +4858,110 @@ body.suggest-modal-open{overflow:hidden}
     min-width:0;
     white-space:normal;
     overflow-wrap:anywhere;
+  }
+}
+
+/* TROPHY POINTS TEST REV06 — reuse GS geometry; TP colour only. */
+#resultsGrid .guide-grid-points {position:absolute;top:8px;right:8px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+#resultsGrid .guide-grid-points .gs-pill {position:static;}
+#resultsGrid .gs-pill.guide-tp-pill, #resultsList .list-col.gs.guide-tp-pill {background:#e0edff!important;color:#123e83!important;border-color:#2563eb!important;}
+#resultsList .list-row > .guide-list-points {display:flex!important;flex-direction:column;align-items:flex-end;gap:3px;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;min-width:0;}
+#resultsList .list-row > .guide-empty-points {visibility:hidden;}
+@media (orientation:portrait) and (max-width:900px) {
+ #resultsList .list-row:has(> .guide-list-points) {grid-template-rows:auto auto;row-gap:4px;}
+ #resultsList .list-row:has(> .guide-list-points) > :is(.list-thumb,span:nth-child(2)) {grid-row:1 / span 2;}
+ #resultsList .list-row > .guide-list-points {grid-row:1;transform:none;align-self:end;}
+ #resultsList .list-row:has(> .guide-list-points) > .list-col.quality {grid-row:2;transform:none;align-self:start;}
+}
+
+/* TP TEST REV07 — stack is layout only, never a painted badge. */
+#resultsList .list-row > .guide-list-points {background:transparent!important;border:0!important;box-shadow:none!important;text-shadow:none!important;border-radius:0!important;}
+@media (orientation:portrait) and (max-width:900px){
+ #resultsGrid .gs-pill.guide-tp-pill {background:rgba(12,43,94,.94)!important;color:#fff!important;border-color:#93c5fd!important;}
+ #resultsList .list-row .list-col.gs.guide-tp-pill {text-shadow:none!important;}
+}
+
+/* TROPHY POINTS TEST REV08 — portrait Game Guides LIST dual metrics only. */
+@media (orientation:portrait) and (max-width:900px){
+  #resultsList .list-row:has(> .guide-list-points){grid-template-rows:minmax(max-content,1fr) minmax(max-content,1fr);row-gap:4px;}
+  #resultsList .list-row > .list-col.gs.guide-list-points{grid-row:1;align-self:end;transform:none;position:static;margin:0;}
+  #resultsList .list-row:has(> .guide-list-points) > .list-col.quality{grid-row:2;align-self:start;transform:none;position:static;margin:0;}
+}
+
+/* TROPHY POINTS TEST REV11 — Recent only; inherit existing GS geometry. */
+#recentUploadsSection .recent-upload-meta.gs.recent-tp-badge {
+  background:#e3efff !important; border-color:#2563eb !important; color:#17458e !important;
+}
+#recentUploadsSection .recent-tp-badge .recent-meta-label {color:inherit !important;}
+#recentUploadsSection .recent-upload-meta.gs.recent-points-stack {
+  background:transparent !important; border:0 !important; padding:0 !important;
+  box-shadow:none !important; gap:3px; flex-wrap:wrap; height:auto;
+  max-width:100%; min-width:0; white-space:normal;
+}
+#recentUploadsSection .recent-points-stack > .recent-upload-meta.gs {
+  margin:0; position:static; transform:none; max-width:100%; min-width:0;
+  white-space:normal; overflow-wrap:anywhere;
+}
+
+/* TROPHY POINTS TEST REV12 — Developer Showcase only. */
+#developerShowcaseOverlay .developer-card-meta .developer-points-stack {
+  display:flex; flex-direction:column; align-items:flex-start; gap:3px; min-width:0;
+}
+#developerShowcaseOverlay .developer-card-meta .developer-tp-badge {
+  background:#e3efff; border-color:#2563eb; color:#17458e;
+}
+#developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  background:#fce7f3; border-color:#be185d; color:#831843;
+  max-width:100%; overflow-wrap:anywhere;
+}
+
+/* TROPHY POINTS TEST REV13 — prevent Showcase metadata badge stretching. */
+#developerShowcaseOverlay .developer-card-meta {
+  align-items:center;
+}
+
+/* TROPHY POINTS TEST REV14 - desktop Recent LIST metric spacing. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #recentUploadsSection .recent-uploads-grid.list-mode .recent-points-stack {
+    column-gap:12px;
+  }
+}
+
+/* TROPHY POINTS TEST REV15 — desktop Recent GRID metric spacing. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-points-stack {
+    column-gap:10px;
+  }
+}
+
+/* TROPHY POINTS TEST REV16 — Recent touch landscape GRID dual badge alignment only. */
+@media (orientation:landscape) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    justify-content:flex-start;
+    align-items:flex-start;
+    align-content:flex-start;
+  }
+}
+
+/* TROPHY POINTS TEST REV17 — Recent touch landscape spacing only.
+   GRID matches the existing under-title badge gap; LIST matches card columns. */
+@media (orientation:landscape) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    row-gap:6px;
+  }
+  #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-meta.gs.recent-points-stack {
+    column-gap:12px;
+  }
+}
+
+/* TROPHY POINTS TEST REV21 — narrow touch landscape Recent GRID only.
+   Match the existing 6px under-title badge rhythm. The narrow card is not
+   the desktop flex card, so the stack needs explicit external spacing. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    margin-top:6px;
+  }
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card:has(> .recent-points-stack) > .recent-upload-title-block {
+    display:flex; flex-direction:column; align-items:flex-start; width:100%; min-width:0;
   }
 }

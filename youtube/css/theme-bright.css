@@ -687,3 +687,10 @@ html[data-theme="bright"] #siteLanguageSelect {
     color:inherit !important;
   }
 }
+
+/* TP TEST REV07 — Bright LIST: preserve original GS palette; exclude stack shell. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+ html[data-theme="bright"] #resultsList .guide-list-points > .list-col.gs:not(.guide-tp-pill){background:#d7e9d6!important;border-color:#107C10!important;color:#174c17!important;box-shadow:none!important;text-shadow:none!important;}
+}
+html[data-theme="bright"] #resultsList .list-row .list-col.gs.guide-tp-pill {background:#e0edff!important;color:#123e83!important;border-color:#2563eb!important;}
+html[data-theme="bright"] #resultsList .list-row > .list-col.gs.guide-list-points {background:transparent!important;border:0!important;box-shadow:none!important;text-shadow:none!important;}
