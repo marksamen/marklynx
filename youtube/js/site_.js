@@ -166,11 +166,22 @@ function getFiltered(){
     return true;
   });
   const sort = sortSelect.value;
+  if (['gs-high','gs-low','tp-high','tp-low'].includes(sort)) {
+    const byTP = sort.startsWith('tp-');
+    const descending = sort.endsWith('-high');
+    const hasMetric = byTP ? hasGuideTP : hasGuideGS;
+    const ctOnly = r => !hasGuideGS(r) && !hasGuideTP(r) && String(r.completion_type ?? '').trim() !== '';
+    const metric = r => byTP ? r.tp : gsNumber(r.g);
+    return out.filter(r => hasMetric(r) || ctOnly(r)).sort((a,b) => {
+      const ac = ctOnly(a), bc = ctOnly(b);
+      if (ac !== bc) return (ac ? -1 : 1) * (descending ? -1 : 1);
+      if (ac) return 0;
+      return (metric(a) - metric(b)) * (descending ? -1 : 1);
+    });
+  }
   out.sort((a,b)=>{
     if(sort==='az') return a.n.localeCompare(b.n);
     if(sort==='za') return b.n.localeCompare(a.n);
-    if(sort==='gs-high') return gsNumber(b.g)-gsNumber(a.g);
-    if(sort==='gs-low') return gsNumber(a.g)-gsNumber(b.g);
     return 0;
   });
   return out;
