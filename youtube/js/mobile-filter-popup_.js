@@ -33,6 +33,32 @@
   popup.setAttribute('aria-label', labels[id]);
   popup.hidden = true;
   document.body.appendChild(popup);
+  // Separate fixed overlay: never participates in listbox layout or hit testing.
+  const rail = document.createElement('div');
+  rail.className = 'ml-filter-scroll-rail';
+  rail.setAttribute('aria-hidden', 'true');
+  rail.hidden = true;
+  const thumb = document.createElement('span');
+  rail.appendChild(thumb);
+  document.body.appendChild(rail);
+  function updateScrollbar() {
+    if (!open || popup.hidden) { rail.hidden = true; return; }
+    const overflow = popup.scrollHeight - popup.clientHeight;
+    if (overflow <= 1) { rail.hidden = true; return; }
+    const rect = popup.getBoundingClientRect();
+    const height = Math.max(0, rect.height - 12);
+    if (!height) { rail.hidden = true; return; }
+    const size = Math.min(height, Math.max(18, height * popup.clientHeight / popup.scrollHeight));
+    const fraction = Math.max(0, Math.min(1, popup.scrollTop / overflow));
+    rail.style.top = `${rect.top + 6}px`;
+    rail.style.left = `${rect.right - 7}px`;
+    rail.style.height = `${height}px`;
+    thumb.style.height = `${size}px`;
+    thumb.style.transform = `translateY(${fraction * (height - size)}px)`;
+    rail.hidden = false;
+  }
+  popup.addEventListener('scroll', updateScrollbar, { passive: true });
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(updateScrollbar).observe(popup);
   trigger.setAttribute('aria-controls', popup.id);
   select.dataset.mlPopupEnhanced = '1';
   let open = false;
@@ -86,6 +112,7 @@
       popup.appendChild(row);
     }
     activeIndex = Math.max(0, options().findIndex(o => o.selected));
+    updateScrollbar();
   }
   function position() {
     if (!open) return;
@@ -100,10 +127,12 @@
     popup.style.maxWidth = `${innerWidth - 16}px`;
     popup.style.top = above ? 'auto' : `${rect.bottom + 4}px`;
     popup.style.bottom = above ? `${innerHeight - rect.top + 4}px` : 'auto';
+    updateScrollbar();
   }
   function close() {
     open = false;
     popup.hidden = true;
+    rail.hidden = true;
     trigger.setAttribute('aria-expanded', 'false');
     if (closePrevious === close) closePrevious = null;
   }
@@ -118,6 +147,7 @@
     position();
     const selected = popup.querySelector('.is-selected');
     if (selected) selected.scrollIntoView({ block: 'nearest' });
+    updateScrollbar();
   }
   trigger.addEventListener('click', () => open ? close() : show());
   trigger.addEventListener('keydown', e => {
