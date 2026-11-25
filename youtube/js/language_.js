@@ -83,6 +83,18 @@
       return String(source).replace(norm(source), translations[completionKey]);
     // English is immutable. All other languages use the same Supabase/JSON keys.
     const normalized = norm(source);
+    // TP sorting reuses the existing localized Gamerscore phrases.
+    const tpSort = {
+      'By Trophy Points': ['sort.by_gamerscore', 'By Gamerscore'],
+      'Trophy Points: High–Low': ['sort.gamerscore_desc', 'Gamerscore: High–Low'],
+      'Trophy Points: Low–High': ['sort.gamerscore_asc', 'Gamerscore: Low–High']
+    };
+    if (Object.prototype.hasOwnProperty.call(tpSort, normalized)) {
+      const [key, fallback] = tpSort[normalized];
+      const phrase = getTranslation(key, fallback);
+      return /Gamerscore/i.test(phrase) ? phrase.replace(/Gamerscore/gi, 'Trophy Points') : normalized;
+    }
+
     if (/^(?:Text Guides Only|Text Guide Included)$/i.test(normalized)) {
       return getTranslation('filter.text_guide_included', 'Text Guide Included');
     }
