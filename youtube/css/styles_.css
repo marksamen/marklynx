@@ -4915,3 +4915,8 @@ body.suggest-modal-open{overflow:hidden}
   background:#fce7f3; border-color:#be185d; color:#831843;
   max-width:100%; overflow-wrap:anywhere;
 }
+
+/* TROPHY POINTS TEST REV13 — prevent Showcase metadata badge stretching. */
+#developerShowcaseOverlay .developer-card-meta {
+  align-items:center;
+}
