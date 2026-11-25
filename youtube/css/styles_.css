@@ -4943,3 +4943,14 @@ body.suggest-modal-open{overflow:hidden}
     align-content:flex-start;
   }
 }
+
+/* TROPHY POINTS TEST REV17 — Recent touch landscape spacing only.
+   GRID matches the existing under-title badge gap; LIST matches card columns. */
+@media (orientation:landscape) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    row-gap:6px;
+  }
+  #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-meta.gs.recent-points-stack {
+    column-gap:12px;
+  }
+}
