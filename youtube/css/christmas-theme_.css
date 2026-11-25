@@ -1,0 +1,137 @@
+/* CHRISTMAS TEST REV04 — paint only, independent of Halloween.
+   No geometry, renderer, banner artwork, animation, or audio changes. */
+:root { --ml-christmas-test-revision: REV04; } /* TEST diagnostic fingerprint only */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {
+  --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
+  --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
+  --text:#f5f3e9; --text-dim:#bdcbbc; --silver:#e9d6a5;
+  --xmas-header:#801b25; --xmas-edge:#c5a35b; --xmas-title:#f1d696;
+  --xmas-hover:#294936; --xmas-control:#203c2c; --xmas-accent:#a52635;
+  --xmas-accent-hover:#b93443; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
+  --xmas-tp:#142f57; --xmas-tp-text:#e0edff; --xmas-tp-border:#93c5fd;
+  --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {
+  --bg:#fff7e8; --bg-raised:#fffdf7; --bg-card:#ffffff;
+  --line:#a9b9a4; --red:#a52635; --red-bright:#b92332;
+  --text:#203027; --text-dim:#506255; --silver:#3e6045;
+  --xmas-header:#b92332; --xmas-edge:#287346; --xmas-title:#215b39;
+  --xmas-hover:#edf4e9; --xmas-control:#e2ebdf; --xmas-accent:#a52635;
+  --xmas-accent-hover:#8a1b29; --xmas-chip:#e2ebdf; --xmas-chip-text:#234c30;
+  --xmas-tp:#e0edff; --xmas-tp-text:#123e83; --xmas-tp-border:#2563eb;
+  --xmas-gs:#d7e9d6; --xmas-gs-text:#174c17; --xmas-gs-border:#107c10;
+}
+html[data-seasonal-theme="christmas"] body,
+html[data-seasonal-theme="christmas"] .subscribe-strip,
+html[data-seasonal-theme="christmas"] .toolbar,
+html[data-seasonal-theme="christmas"] .banner-wrap,
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  background:var(--bg)!important; color:var(--text);
+}
+html[data-seasonal-theme="christmas"] .site-preferences {
+  background:var(--xmas-header); border-bottom-color:var(--xmas-edge);
+}
+html[data-seasonal-theme="christmas"] .site-preferences-inner,
+html[data-seasonal-theme="christmas"] .banner-wrap::after {border-bottom-color:var(--xmas-edge);}
+@media(pointer:coarse){
+  html[data-seasonal-theme="christmas"] .site-preferences-inner {background-image:linear-gradient(var(--xmas-edge),var(--xmas-edge));}
+}
+html[data-seasonal-theme="christmas"] .site-preferences #siteLanguageSelect,
+html[data-seasonal-theme="christmas"] #siteLanguageControl #siteLanguageSelect,
+html[data-seasonal-theme="christmas"] .theme-toggle-btn,
+html[data-seasonal-theme="christmas"] .toolbar .search-box input,
+html[data-seasonal-theme="christmas"] .toolbar select,
+html[data-seasonal-theme="christmas"] .toolbar .ml-filter-popup-anchor > .ml-filter-popup-trigger,
+html[data-seasonal-theme="christmas"] .view-toggle button:not(.active) {
+  background:var(--xmas-control)!important; color:var(--text)!important;
+  border-color:var(--xmas-edge)!important; box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] .toolbar .search-box input::placeholder {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] .toolbar .search-box svg {stroke:var(--xmas-title);}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu {background:var(--bg-raised);color:var(--text);border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option.is-selected {background:var(--xmas-chip);color:var(--xmas-chip-text);}
+html[data-seasonal-theme="christmas"] .ml-filter-scroll-rail {background:var(--line);}
+html[data-seasonal-theme="christmas"] .ml-filter-scroll-rail > span {background:var(--xmas-title);}
+html[data-seasonal-theme="christmas"] .youtube-subscribe-btn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #markLynxMessagePublicBtn,
+html[data-seasonal-theme="christmas"] .view-toggle button.active,
+html[data-seasonal-theme="christmas"] .clear-filters-btn {
+  background:var(--xmas-accent)!important;border-color:var(--xmas-edge)!important;color:#fff!important;
+}
+html[data-seasonal-theme="christmas"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #markLynxMessagePublicBtn:hover,
+html[data-seasonal-theme="christmas"] .view-toggle button.active:hover,
+html[data-seasonal-theme="christmas"] .clear-filters-btn:hover {background:var(--xmas-accent-hover)!important;}
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="christmas"] #resultsList .list-row,
+html[data-seasonal-theme="christmas"] #resultsGrid .card {background:var(--bg-card)!important;color:var(--text)!important;border-color:var(--line)!important;}
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card:hover,
+html[data-seasonal-theme="christmas"] #resultsList .list-row:hover,
+html[data-seasonal-theme="christmas"] #resultsGrid .card:hover {background:var(--xmas-hover)!important;}
+html[data-seasonal-theme="christmas"] #resultsList {background-color:var(--line);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] .recent-uploads-head h2,
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head h2,
+html[data-seasonal-theme="christmas"] #resultsList .list-name,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-title,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid .recent-upload-title {color:var(--xmas-title)!important;text-shadow:none!important;}
+html[data-seasonal-theme="christmas"] .recent-uploads-head h2::after,
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head h2::after {background:linear-gradient(90deg,var(--xmas-accent),var(--xmas-edge),transparent);}
+/* General metadata: no generic .gs selector, no special image/quality badges. */
+html[data-seasonal-theme="christmas"] #resultsList .list-col.type,
+html[data-seasonal-theme="christmas"] #resultsList .list-col.time,
+html[data-seasonal-theme="christmas"] #resultsList .list-col.diff,
+html[data-seasonal-theme="christmas"] #resultsList .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"] #resultsGrid .diff-tag,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff),
+html[data-seasonal-theme="christmas"] .recent-uploads-grid .recent-upload-platform,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-sub,
+html[data-seasonal-theme="christmas"] #resultsGrid .card .grid-list-sub,
+html[data-seasonal-theme="christmas"] .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="christmas"] #resultsGrid .grid-list-sub .landscape-platform-unit {
+  background:var(--xmas-chip)!important;color:var(--xmas-chip-text)!important;border-color:var(--line)!important;text-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #resultsList :is(.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill:not(.completion-type-meta)) .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsGrid .game-meta-pill:not(.completion-type-meta) .game-meta-label,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff) .recent-meta-label {color:inherit!important;}
+/* PlayStation blue and Xbox green are independent of festive metadata paint.
+   Explicitly exclude the dual-metric layout wrappers. */
+html[data-seasonal-theme="christmas"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-col.gs.guide-tp-pill,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge,
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-tp-badge {
+  background:var(--xmas-tp)!important;color:var(--xmas-tp-text)!important;border-color:var(--xmas-tp-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-tp-badge .recent-meta-label {color:inherit!important;}
+html[data-seasonal-theme="christmas"] #resultsGrid .gs-pill:not(.guide-tp-pill),
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-col.gs:not(.guide-tp-pill):not(.guide-list-points),
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs:not(.recent-tp-badge):not(.recent-points-stack) {
+  background:var(--xmas-gs)!important;color:var(--xmas-gs-text)!important;border-color:var(--xmas-gs-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs:not(.recent-points-stack) .recent-meta-label {color:inherit!important;}
+/* Existing dialogs: paint only, preserve scrolling, actions and geometry. */
+html[data-seasonal-theme="christmas"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.developer-panel,.suggest-panel) {background:var(--bg-raised);color:var(--text);border-color:var(--line);border-top-color:var(--xmas-accent);}
+html[data-seasonal-theme="christmas"] :is(.wn-card,.mlm-card,.developer-card,.developer-cta,.developer-contact,.suggest-game-form) {background:var(--bg-card);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.wn-head,.wn-body,.mlm-head,.mlm-body) {border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.wn-tabs button,.mlm-tabs button,.mlm-hub-options button,.wn-close,.mlm-close,.mlm-hub-close,.developer-close,.suggest-close) {background:var(--xmas-control);border-color:var(--line);color:var(--text);}
+html[data-seasonal-theme="christmas"] :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:var(--xmas-accent);color:#fff;border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea) {background:var(--bg-raised);color:var(--text);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input,.suggest-game-form textarea)::placeholder {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] .developer-card:hover {background:var(--xmas-hover);border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] .developer-card-meta span:not(.developer-tp-badge):not(.developer-ct-badge):not(.developer-card-quality) {background:var(--xmas-chip);border-color:var(--line);color:var(--xmas-chip-text);}
+html[data-seasonal-theme="christmas"] footer {background:var(--bg);border-top-color:var(--xmas-edge);color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] footer .footer-stats strong {color:var(--xmas-title);}
+@media(max-width:950px) and (pointer:coarse){
+  html[data-seasonal-theme="christmas"] #whatsNewMobileBtn,
+  html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn {color:var(--xmas-title)!important;}
+  html[data-seasonal-theme="christmas"] #whatsNewMobileBtn .wn-dot,
+  html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn .mlm-dot {background:#e93445!important;box-shadow:0 0 0 2px var(--bg)!important;}
+}
