@@ -1,7 +1,19 @@
 {
-  "updated": "2026-11-24T19:31:17.058408+00:00",
+  "updated": "2026-11-25T18:39:37.064379+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "u7tnhAp_V8g",
+      "title": "Super Mario World | Donut Plains 1 | Secret Exit | Exit 08/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-25T15:05:20+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/u7tnhAp_V8g/hqdefault.jpg"
+    },
+    {
+      "id": "Pkc68pBPkUc",
+      "title": "Super Mario World | Donut Plains 1 | Normal Exit | Exit 07/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-24T21:49:06+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/Pkc68pBPkUc/hqdefault.jpg"
+    },
     {
       "id": "3RUaoZL9TFY",
       "title": "Super Mario World | Iggy's Castle | Normal Exit | Exit 06/96 | Nintendo Switch 2 | 4K | 60 FPS",
@@ -37,18 +49,6 @@
       "title": "Frame Cat | Easy 100% Completion | 4000 Gamerscore | 19 Minute Completion | 4K",
       "published": "2026-11-20T13:36:18+00:00",
       "thumbnail": "https://i.ytimg.com/vi/DqHDE81kqGU/hqdefault.jpg"
-    },
-    {
-      "id": "QFKnQDk3MUo",
-      "title": "Super Mario World | Yoshi's Island 1 | Normal Exit | Exit 01/96 | Nintendo Switch 2 | 4K | 60 FPS",
-      "published": "2026-11-19T21:25:50+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/QFKnQDk3MUo/hqdefault.jpg"
-    },
-    {
-      "id": "NOvREr31ZHc",
-      "title": "The Wolf Among Us Remastered | All Missable Achievements | All Book of Fables Entries | 4K | 60FPS",
-      "published": "2026-11-18T14:25:11+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/NOvREr31ZHc/hqdefault.jpg"
     }
   ]
 }
