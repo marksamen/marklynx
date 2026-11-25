@@ -1,4 +1,4 @@
-import {generateAllRecoveryFiles} from "./recovery-generator.js?v=TEST-PARITY-PROD-REV10-20261014";
+import {generateAllRecoveryFiles} from "./recovery-generator.js?v=TROPHY-POINTS-PROD-REV02";
 import {languages as registry} from './language-registry.js?v=ESMX-PROD-REV01';
 import {inventory} from './translation-inventory.js?v=MLM-TITLE-PROD-REV01';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
