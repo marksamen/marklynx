@@ -4968,4 +4968,4 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 /* TEST diagnostic fingerprint only */
-:root { --ml-tp-test-revision: REV21; }
+:root { --ml-tp-test-revision: REV22; }
