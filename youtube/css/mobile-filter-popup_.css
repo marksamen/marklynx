@@ -96,3 +96,15 @@
 .ml-filter-popup-option.is-selected { background: var(--line); font-weight: 700; }
 .ml-filter-popup-option:focus-visible { outline: 2px solid var(--red); }
 .ml-filter-popup-group { padding: 8px 10px 3px; font-size: 11px; color: var(--text-dim); }
+
+/* TROPHY POINTS TEST REV10: persistent, non-interactive overflow indicator. */
+.ml-filter-scroll-rail[hidden] { display: none !important; }
+.ml-filter-scroll-rail {
+  position: fixed; z-index: 10001; width: 4px; border-radius: 4px;
+  background: #454545; pointer-events: none;
+}
+.ml-filter-scroll-rail > span {
+  display: block; width: 100%; border-radius: inherit; background: #bcbcbc;
+}
+html[data-theme="bright"] .ml-filter-scroll-rail { background: #c4bfbc; }
+html[data-theme="bright"] .ml-filter-scroll-rail > span { background: #555; }
