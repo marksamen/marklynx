@@ -73,7 +73,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['id','n','p','g','t','completion_type','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
+      const gameFields = ['id','n','p','g','tp','t','completion_type','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;

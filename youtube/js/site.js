@@ -166,11 +166,22 @@ function getFiltered(){
     return true;
   });
   const sort = sortSelect.value;
+  if (['gs-high','gs-low','tp-high','tp-low'].includes(sort)) {
+    const byTP = sort.startsWith('tp-');
+    const descending = sort.endsWith('-high');
+    const hasMetric = byTP ? hasGuideTP : hasGuideGS;
+    const ctOnly = r => !hasGuideGS(r) && !hasGuideTP(r) && String(r.completion_type ?? '').trim() !== '';
+    const metric = r => byTP ? r.tp : gsNumber(r.g);
+    return out.filter(r => hasMetric(r) || ctOnly(r)).sort((a,b) => {
+      const ac = ctOnly(a), bc = ctOnly(b);
+      if (ac !== bc) return (ac ? -1 : 1) * (descending ? -1 : 1);
+      if (ac) return 0;
+      return (metric(a) - metric(b)) * (descending ? -1 : 1);
+    });
+  }
   out.sort((a,b)=>{
     if(sort==='az') return a.n.localeCompare(b.n);
     if(sort==='za') return b.n.localeCompare(a.n);
-    if(sort==='gs-high') return gsNumber(b.g)-gsNumber(a.g);
-    if(sort==='gs-low') return gsNumber(a.g)-gsNumber(b.g);
     return 0;
   });
   return out;
@@ -252,8 +263,26 @@ function qualityBadge(q){
   return escapeHtml(rawQuality);
 }
 
+function hasGuideGS(r){ return String(r.g ?? '').trim() !== ''; }
+function hasGuideTP(r){ return Number.isInteger(r.tp) && r.tp >= 0; }
+function guideTPLabel(r){ return `${r.tp.toLocaleString('en-US')} TP`; }
+function guideCT(r){ return !hasGuideGS(r) && !hasGuideTP(r) && r.completion_type; }
+function guideGridPoints(r){
+  if (!hasGuideTP(r)) return hasGuideGS(r) ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : '';
+  const tp = `<span class="gs-pill guide-tp-pill">${guideTPLabel(r)}</span>`;
+  return hasGuideGS(r) ? `<span class="guide-grid-points"><span class="gs-pill">${escapeHtml(r.g)}</span>${tp}</span>` : tp;
+}
+function guideListPoints(r){
+  if (hasGuideTP(r)) {
+    const tp = `<span class="list-col gs guide-tp-pill">${guideTPLabel(r)}</span>`;
+    return hasGuideGS(r) ? `<span class="list-col gs guide-list-points"><span class="list-col gs guide-gs-value">${escapeHtml(r.g)}</span>${tp}</span>` : tp;
+  }
+  if (hasGuideGS(r)) return `<span class="list-col gs">${escapeHtml(r.g)}</span>`;
+  if (guideCT(r)) return `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>`;
+  return '<span class="list-col gs guide-empty-points" aria-hidden="true"></span>';
+}
 function completionTypeBadge(r){
-  return r.completion_type ? `<span class="game-meta-pill completion-type-meta" title="Completion Type"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '';
+  return guideCT(r) ? `<span class="game-meta-pill completion-type-meta" title="Completion Type"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '';
 }
 
 function cardHtml(r){
@@ -274,7 +303,7 @@ function cardHtml(r){
   <${tag} class="card${isPlaylist?' playlist-card':''}" ${hrefAttrs} ${openAttr} style="${useModal?'cursor:pointer;':''}">
     <span class="thumb-wrap">
       ${thumb}
-      ${r.g ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : ''}
+      ${guideGridPoints(r)}
       ${playlistPill(r)}
       ${adultPill(r)}
       <span class="desktop-grid-quality">${qualityBadge(r.q)}</span>
@@ -340,7 +369,7 @@ function listRowHtml(r){
     <span class="list-col time game-meta-pill list-meta-pill"><span class="game-meta-label">Time</span>${escapeHtml(displayedCompletionTime(r))}</span>
     <span class="list-col quality">${qualityBadge(r.q)}</span>
     <span class="list-col diff">${escapeHtml(r.df||'')}</span>
-    ${String(r.g||'').trim() ? `<span class="list-col gs">${escapeHtml(r.g)}</span>` : (r.completion_type ? `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>` : '')}
+    ${guideListPoints(r)}
   </${tag}>`;
 }
 
@@ -657,7 +686,7 @@ function upgradeRecentCompletionLabels(){
   const normalize=v=>String(v||'').trim().toLowerCase().replace(/\s+/g,' ');
   window.RAW.forEach(game=>{
     if(!game) return;
-    if(game.v && !byVideo.has(String(game.v))) byVideo.set(String(game.v),game);
+    if(game.v && (!byVideo.has(String(game.v)) || (game.testContent === true && byVideo.get(String(game.v)).testContent !== true))) byVideo.set(String(game.v),game);
     if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
   });
   root.querySelectorAll('.recent-upload-card').forEach(card=>{
@@ -687,7 +716,7 @@ function upgradeRecentCompletionLabels(){
       }
     }
     // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
-    const existing=card.querySelector('.recent-upload-meta.gs');
+    const existing=card.querySelector('.recent-upload-meta.gs:not(.recent-tp-badge):not(.recent-points-stack)');
     if(existing && gamerscore){
       if(!existing.querySelector('.recent-meta-label')){
         const label=document.createElement('span');
@@ -696,7 +725,25 @@ function upgradeRecentCompletionLabels(){
         existing.prepend(label);
       }
     }
-    if(completion && !card.querySelector('.recent-upload-meta.completion-type')){
+    const tpPresent=hasGuideTP(game);
+    const gsPresent=hasGuideGS(game);
+    const oldCT=card.querySelector('.recent-upload-meta.completion-type');
+    if((gsPresent || tpPresent) && oldCT) oldCT.remove();
+    if(tpPresent && !card.querySelector('.recent-tp-badge')){
+      const tp=document.createElement('span');
+      tp.className='recent-upload-meta gs recent-tp-badge';
+      const label=document.createElement('span');
+      label.className='recent-meta-label';
+      label.textContent='Trophy Points';
+      tp.append(label,document.createTextNode(guideTPLabel(game)));
+      if(existing && gsPresent){
+        const stack=document.createElement('span');
+        stack.className='recent-upload-meta gs recent-points-stack';
+        existing.before(stack);
+        stack.append(existing,tp);
+      }else card.appendChild(tp);
+    }
+    if(completion && !gsPresent && !tpPresent && !oldCT){
       const badge=document.createElement('span');
       badge.className='recent-upload-meta completion-type';
       const label=document.createElement('span');
