@@ -1,4 +1,4 @@
-import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=COMPLETION-TRANSLATIONS-TEST-REV03";
+import {generateAllRecoveryFiles} from "./recovery-generator_.js?v=TROPHY-POINTS-TEST-REV03";
 let auth = null;
 let verifyTestDatabaseIdentity = null;
 
@@ -390,6 +390,32 @@ function getChoices(id){return [...document.querySelectorAll(`#${id} input[type=
 function normalizeGamerscore(raw){const v=String(raw||"").trim();if(!v)return "";const digits=v.replace(/\s+Update$/i,"").replace(/,/g,"").replace(/G$/i,"").trim();if(!/^\d+$/.test(digits))return null;return Number(digits).toLocaleString("en-US")+"G";}
 function gamerscoreValue(){const base=normalizeGamerscore(document.getElementById("gdGamerscore").value);if(!base)return base;return base+(document.getElementById("gdGamerscoreUpdate").checked?" Update":"");}
 function validateGamerscore(format=false){const el=document.getElementById("gdGamerscore"),err=document.getElementById("gdGamerscoreError");const n=normalizeGamerscore(el.value);if(n===null){err.textContent="Enter numbers only, e.g. 2000. Or leave blank.";return false;}err.textContent="";if(format&&n)el.value=n;return true;}
+// TROPHY POINTS TEST REV03 — optional integer, independent of GS and CT.
+function parseTrophyPoints(raw){
+  const value=String(raw??"").trim();
+  if(!value)return null;
+  if(!/^\d+$/.test(value))return undefined;
+  const number=Number(value);
+  return Number.isInteger(number)&&number<=2147483647?number:undefined;
+}
+function trophyPointsValue(){return parseTrophyPoints(document.getElementById("gdTrophyPoints").value);}
+function validateTrophyPoints(){
+  const valid=trophyPointsValue()!==undefined;
+  document.getElementById("gdTrophyPointsError").textContent=valid?"":"Enter a whole number from 0 to 2147483647, or leave blank.";
+  return valid;
+}
+function tpDebug(phase,id,tp,status,persisted){
+  window.dispatchEvent(new CustomEvent("ml-tp-qa",{detail:{phase,id:Number(id),tp,status,persisted}}));
+}
+async function verifyTrophyPointsReadback(id,tp){
+  try{
+    const response=await fetch(`${SUPABASE_TEST_URL}/rest/v1/games?select=id,tp&id=eq.${Number(id)}`,{headers:{apikey:SUPABASE_TEST_PUBLISHABLE_KEY},cache:"no-store"});
+    const rows=await response.json();
+    const row=Array.isArray(rows)&&rows.length===1?rows[0]:null;
+    const match=response.ok&&row&&Number(row.id)===Number(id)&&Object.hasOwn(row,"tp")&&row.tp===tp;
+    tpDebug("readback",id,tp,match?"PASS":"FAIL",row?.tp);
+  }catch{tpDebug("readback",id,tp,"UNAVAILABLE");}
+}
 function setCompletionTime(value){const source=String(value||"").trim();const clean=source.replace(/(?:\s+Recompletion)+\s*$/i,"").trim();const m=clean.match(/^(.+?)\s+(Minutes|Hours)$/i);document.getElementById("gdTime").value=m?m[1]:clean;document.getElementById("gdTimeUnit").value=m&&/^hours$/i.test(m[2])?"Hours":"Minutes";}
 function completionTimeValue(){const amount=document.getElementById("gdTime").value.trim();return amount?`${amount} ${document.getElementById("gdTimeUnit").value}`:"";}
 function validateCompletionTime(addMode=false){const el=document.getElementById("gdTime"),v=el.value.trim(),unit=document.getElementById("gdTimeUnit").value,err=document.getElementById("gdTimeError");if(!v){err.textContent="";return true;}if(addMode){const m=v.match(/^(\d+(?:\.\d+)?)(?:-(\d+(?:\.\d+)?))?$/);if(!m){err.textContent="Enter one number or a range such as 6-7, then choose Minutes or Hours.";return false;}const first=Number(m[1]),second=m[2]===undefined?null:Number(m[2]);if(!Number.isFinite(first)||first<=0||(second!==null&&(!Number.isFinite(second)||second<=0))){err.textContent="Completion time must be greater than 0.";return false;}if(second!==null&&second<=first){err.textContent="The end of the range must be greater than the start.";return false;}if(unit==="Minutes"&&(!Number.isInteger(first)||first<1||first>59||(second!==null&&(!Number.isInteger(second)||second<1||second>59)))){err.textContent="Minutes must be whole numbers from 1 to 59. Use Hours for 60 minutes or more.";return false;}}err.textContent="";return true;}
@@ -428,10 +454,11 @@ function validateYoutubeLink(addMode=false){
   if(!parseYoutubeLink(el.value)){err.textContent="Paste a valid YouTube video or playlist link.";return false;}
   return true;
 }
-function addFormIsValid(){return !!document.getElementById("gdName").value.trim()&&validateGamerscore(false)&&validateCompletionTime(true)&&validateYoutubeLink(true);}
+function addFormIsValid(){return !!document.getElementById("gdName").value.trim()&&validateGamerscore(false)&&validateTrophyPoints()&&validateCompletionTime(true)&&validateYoutubeLink(true);}
 function updateCreateButtonState(){const add=document.getElementById("gameDevAdd");if(!add||add.dataset.mode!=="confirm")return;add.disabled=!addFormIsValid();}
 document.getElementById("gdGamerscore").addEventListener("blur",()=>{validateGamerscore(true);updateCreateButtonState();});
 document.getElementById("gdGamerscore").addEventListener("input",()=>document.getElementById("gdGamerscoreError").textContent="");
+document.getElementById("gdTrophyPoints").addEventListener("input",()=>{validateTrophyPoints();updateCreateButtonState();});
 document.getElementById("gdTime").addEventListener("input",()=>document.getElementById("gdTimeError").textContent="");
 document.getElementById("gdTime").addEventListener("input",()=>validateCompletionTime(true));
 document.getElementById("gdTimeUnit").addEventListener("change",()=>validateCompletionTime(true));
@@ -489,6 +516,8 @@ function drawSelectedGame(){
   setChoices("gdTypeChoices",g.ty??"");
   document.getElementById("gdGamerscoreUpdate").checked=/\s+Update$/i.test(String(g.g||""));
   document.getElementById("gdGamerscore").value=normalizeGamerscore(g.g??"")??"";
+  document.getElementById("gdTrophyPoints").value=g.tp??"";
+  document.getElementById("gdTrophyPointsError").textContent="";
   setCompletionTime(g.t??"");
   document.getElementById("gdCompletionType").value=g.completion_type??"";
   setQualityValue(g.q??"");
@@ -581,6 +610,8 @@ function beginAddGame(){
   document.getElementById("gdDifficulty").value="";
   setChoices("gdTypeChoices","");
   document.getElementById("gdGamerscore").value="";
+  document.getElementById("gdTrophyPoints").value="";
+  document.getElementById("gdTrophyPointsError").textContent="";
   document.getElementById("gdGamerscoreUpdate").checked=false;
   document.getElementById("gdCompletionType").value="";
   document.getElementById("gdGamerscoreError").textContent="";
@@ -629,7 +660,7 @@ async function createGameDev(){
   if(!name){writeStatus.style.color="#ff6d6d";writeStatus.textContent="Name is required.";return;}
   if((window.GAMEDEV_RAW||[]).some(g=>g.id===id)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${id} already exists.`;return;}
   if((window.GAMEDEV_RAW||[]).some(g=>Number(g.order)===order)){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — order ${order} already exists.`;return;}
-  if(!validateGamerscore(true)||!validateCompletionTime(true)||!validateYoutubeLink(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — fix the highlighted field(s).";updateCreateButtonState();return;}
+  if(!validateGamerscore(true)||!validateTrophyPoints()||!validateCompletionTime(true)||!validateYoutubeLink(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="CREATE BLOCKED — fix the highlighted field(s).";updateCreateButtonState();return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
   if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`CREATE BLOCKED — ${providedRelationshipValidation.message}`;showProvidedRelationshipWarning();return;}
   const record={
@@ -668,6 +699,7 @@ async function createGameDev(){
       n:record.n ?? null,
       p:record.p || null,
       g:record.g || null,
+      tp:trophyPointsValue(),
       t:record.t || null,
       ty:record.ty || null,
       tx:record.tx || null,
@@ -683,6 +715,7 @@ async function createGameDev(){
       provided_company_id:providedDeveloperCompanyId(),
       ...getDeveloperPublisherFields()
     };
+    tpDebug("add request",id,supabaseRecord.tp,"sending");
     const response=await fetch("https://aikifibkcjibubqegvmb.supabase.co/functions/v1/games-admin",{
       method:"POST",
       headers:{
@@ -692,7 +725,9 @@ async function createGameDev(){
       body:JSON.stringify({action:"add",game:supabaseRecord})
     });
     const result=await response.json().catch(()=>({}));
+    tpDebug("add response",id,supabaseRecord.tp,response.status);
     if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    await verifyTrophyPointsReadback(id,supabaseRecord.tp);
     cancelAddMode();
     await loadGamesTest();
     const refreshedList=document.getElementById("gameDevList");
@@ -774,14 +809,16 @@ document.getElementById("gameDevDeleteClose").addEventListener("click",closeDele
 document.getElementById("gameDevSave").addEventListener("click",async()=>{
   const g=selectedGame(); if(!g)return;
   const writeStatus=document.getElementById("gameDevWriteStatus");
-  if(!validateGamerscore(true)||!validateCompletionTime(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE BLOCKED — fix the highlighted field(s).";return;}
+  if(!validateGamerscore(true)||!validateTrophyPoints()||!validateCompletionTime(true)){writeStatus.style.color="#ff6d6d";writeStatus.textContent="SAVE BLOCKED — fix the highlighted field(s).";return;}
   const providedRelationshipValidation=validateProvidedDeveloperRelationship();
   if(!providedRelationshipValidation.ok){writeStatus.style.color="#ff6d6d";writeStatus.textContent=`SAVE BLOCKED — ${providedRelationshipValidation.message}`;showProvidedRelationshipWarning();return;}
+  if(!Object.hasOwn(g,"tp")){writeStatus.textContent="SAVE BLOCKED — TP column missing from loaded record. Reload TEST games.";return;}
   const patch={
     id:Number(g.id),
     n:document.getElementById("gdName").value.trim(),
     p:getChoices("gdPlatformChoices") || null,
     g:gamerscoreValue() || null,
+    tp:trophyPointsValue(),
     t:completionTimeValue() || null,
     ty:getChoices("gdTypeChoices") || null,
     tx:document.getElementById("gdTextGuide").value || null,
@@ -817,13 +854,16 @@ document.getElementById("gameDevSave").addEventListener("click",async()=>{
     const user=auth.currentUser;
     if(!user) throw new Error("Admin authentication is required.");
     const firebaseToken=await user.getIdToken();
+    tpDebug("update request",g.id,patch.tp,"sending");
     const response=await fetch(`${SUPABASE_TEST_URL}/functions/v1/games-admin`,{
       method:"POST",
       headers:{"Authorization":`Bearer ${firebaseToken}`,"Content-Type":"application/json"},
       body:JSON.stringify({action:"update",game:patch})
     });
     const result=await response.json().catch(()=>({}));
+    tpDebug("update response",g.id,patch.tp,response.status);
     if(!response.ok) throw new Error(result.error || `Supabase TEST returned HTTP ${response.status}.`);
+    await verifyTrophyPointsReadback(g.id,patch.tp);
     closeEditModal();
     await loadGamesTest();
     document.getElementById("gameDevList").value=g.id;

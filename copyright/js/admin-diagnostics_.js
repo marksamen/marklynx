@@ -20,6 +20,8 @@
  $('wnDiagCopy').addEventListener('click',()=>navigator.clipboard?.writeText(logs.join('\n')).catch(()=>{}));
  const observe=()=>{for(const id of ['login','admin','adminPageModal','adminPageModalFrame']){const el=$(id);if(el)new MutationObserver(()=>log('DOM change '+id)).observe(el,{attributes:true,attributeFilter:['style','class','src','aria-hidden']});}}
  observe();log('MESSAGE FROM MARK LYNX TEST REV06 — diagnostics initialized');
+ log('TROPHY POINTS TEST REV03 — diagnostics initialized');
+ window.addEventListener('ml-tp-qa',e=>{const d=e.detail; if(d)log('TP REV03 '+JSON.stringify({phase:d.phase,id:d.id,tp:d.tp,status:d.status,persisted:d.persisted}));});
  $('adminPageModalFrame')?.addEventListener('load',()=>log('iframe loaded'));
  $('adminPageModalClose')?.addEventListener('click',()=>log('modal close clicked'));
  $('whatsNewProbe')?.addEventListener('click',()=>log('probe clicked'));

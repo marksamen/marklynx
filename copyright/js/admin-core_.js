@@ -6,7 +6,7 @@ import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-co
 import { initAdminPageModal } from "./admin-page-modal_.js?v=MLM-TEST-REV06";
 import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=SEASONAL-RESTART-TEST-REV01";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
-import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=RECOMPLETION-TEST-REV01-20261014";
+import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=TROPHY-POINTS-TEST-REV03";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
 import { initVideoCountRefresh } from "./admin-video-count-refresh_.js?v=REV30-video-count-refresh";
 import { initDeveloperPublisherSearch } from "./admin-devpub-search_.js?v=devpub-search-rev01";
