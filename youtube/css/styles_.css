@@ -4874,3 +4874,10 @@ body.suggest-modal-open{overflow:hidden}
  #resultsList .list-row > .guide-list-points {grid-row:1;transform:none;align-self:end;}
  #resultsList .list-row:has(> .guide-list-points) > .list-col.quality {grid-row:2;transform:none;align-self:start;}
 }
+
+/* TP TEST REV07 — stack is layout only, never a painted badge. */
+#resultsList .list-row > .guide-list-points {background:transparent!important;border:0!important;box-shadow:none!important;text-shadow:none!important;border-radius:0!important;}
+@media (orientation:portrait) and (max-width:900px){
+ #resultsGrid .gs-pill.guide-tp-pill {background:rgba(12,43,94,.94)!important;color:#fff!important;border-color:#93c5fd!important;}
+ #resultsList .list-row .list-col.gs.guide-tp-pill {text-shadow:none!important;}
+}
