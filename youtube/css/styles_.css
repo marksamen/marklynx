@@ -4954,3 +4954,12 @@ body.suggest-modal-open{overflow:hidden}
     column-gap:12px;
   }
 }
+
+/* TROPHY POINTS TEST REV18 — narrow touch landscape Recent GRID only.
+   Match the existing 6px under-title badge rhythm. The narrow card is not
+   the desktop flex card, so the stack needs explicit external spacing. */
+@media (orientation:landscape) and (max-width:900px) and (max-height:500px) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    margin-top:3px;
+  }
+}
