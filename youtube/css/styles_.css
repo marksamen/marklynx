@@ -4927,3 +4927,10 @@ body.suggest-modal-open{overflow:hidden}
     column-gap:12px;
   }
 }
+
+/* TROPHY POINTS TEST REV15 — desktop Recent GRID metric spacing. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-points-stack {
+    column-gap:10px;
+  }
+}
