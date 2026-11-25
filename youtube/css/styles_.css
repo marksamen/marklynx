@@ -4934,3 +4934,12 @@ body.suggest-modal-open{overflow:hidden}
     column-gap:10px;
   }
 }
+
+/* TROPHY POINTS TEST REV16 — Recent touch landscape GRID dual badge alignment only. */
+@media (orientation:landscape) and (hover:none) and (pointer:coarse) {
+  #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-meta.gs.recent-points-stack {
+    justify-content:flex-start;
+    align-items:flex-start;
+    align-content:flex-start;
+  }
+}
