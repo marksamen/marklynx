@@ -107,11 +107,26 @@
 
       const meta = document.createElement('div');
       meta.className = 'developer-card-meta';
-      for (const value of [game.g, game.t]) {
+      // TP REV12: use the same metric precedence as Game Guides.
+      const gs = String(game.g ?? '').trim();
+      const hasTP = Number.isInteger(game.tp) && game.tp >= 0;
+      const ct = String(game.completion_type ?? '').trim();
+      const appendMeta = (parent, value, className = '') => {
         const span = document.createElement('span');
-        span.textContent = String(value || '');
-        meta.appendChild(span);
+        if (className) span.className = className;
+        span.textContent = value;
+        parent.appendChild(span);
+      };
+      const points = gs && hasTP ? document.createElement('div') : meta;
+      if (points !== meta) {
+        points.className = 'developer-points-stack';
+        meta.appendChild(points);
       }
+      if (gs) appendMeta(points, gs);
+      if (hasTP) appendMeta(points, `${game.tp.toLocaleString('en-US')} TP`, 'developer-tp-badge');
+      if (!gs && !hasTP && ct) appendMeta(meta, ct, 'developer-ct-badge');
+      const time = String(game.t ?? '').trim();
+      if (time) appendMeta(meta, time);
 
       const qualityCode = String(game.q || '').trim().toLowerCase();
       const managedQuality = window.QUALITY_BADGES?.[qualityCode];
