@@ -4903,3 +4903,15 @@ body.suggest-modal-open{overflow:hidden}
   margin:0; position:static; transform:none; max-width:100%; min-width:0;
   white-space:normal; overflow-wrap:anywhere;
 }
+
+/* TROPHY POINTS TEST REV12 — Developer Showcase only. */
+#developerShowcaseOverlay .developer-card-meta .developer-points-stack {
+  display:flex; flex-direction:column; align-items:flex-start; gap:3px; min-width:0;
+}
+#developerShowcaseOverlay .developer-card-meta .developer-tp-badge {
+  background:#e3efff; border-color:#2563eb; color:#17458e;
+}
+#developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  background:#fce7f3; border-color:#be185d; color:#831843;
+  max-width:100%; overflow-wrap:anywhere;
+}
