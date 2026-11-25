@@ -4519,7 +4519,8 @@ body.suggest-modal-open{overflow:hidden}
 /* COMPLETION TYPES TEST REV27 - Desktop Normal LIST Xbox Gamerscore badge only.
    Match the approved green Xbox badge in Recent Uploads. */
 @media (min-width:901px) and (hover:hover) and (pointer:fine){
-  #resultsList .list-row > .list-col.gs{
+  #resultsList .list-row > .list-col.gs,
+  #resultsList .guide-list-points > .list-col.gs{
     border:1px solid #107C10;
     background:#e4f3e4;
     color:#194f19;
@@ -4861,12 +4862,11 @@ body.suggest-modal-open{overflow:hidden}
   }
 }
 
-/* TROPHY POINTS TEST REV05 — Game Guides only. */
+/* TROPHY POINTS TEST REV06 — reuse GS geometry; TP colour only. */
 #resultsGrid .guide-grid-points {position:absolute;top:8px;right:8px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
 #resultsGrid .guide-grid-points .gs-pill {position:static;}
-#resultsGrid .guide-tp-pill, #resultsList .guide-tp-pill {display:inline-block;background:#e0edff!important;color:#123e83!important;border:1px solid #2563eb!important;border-radius:5px;padding:3px 7px;font-size:12px;font-weight:900;line-height:1.15;white-space:nowrap;text-shadow:none!important;box-shadow:none!important;}
+#resultsGrid .gs-pill.guide-tp-pill, #resultsList .list-col.gs.guide-tp-pill {background:#e0edff!important;color:#123e83!important;border-color:#2563eb!important;}
 #resultsList .list-row > .guide-list-points {display:flex!important;flex-direction:column;align-items:flex-end;gap:3px;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;min-width:0;}
-#resultsList .guide-gs-value {background:#e4f3e4;color:#194f19;border:1px solid #107c10;border-radius:5px;padding:3px 7px;white-space:nowrap;}
 #resultsList .list-row > .guide-empty-points {visibility:hidden;}
 @media (orientation:portrait) and (max-width:900px) {
  #resultsList .list-row:has(> .guide-list-points) {grid-template-rows:auto auto;row-gap:4px;}
