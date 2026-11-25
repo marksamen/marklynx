@@ -4860,3 +4860,17 @@ body.suggest-modal-open{overflow:hidden}
     overflow-wrap:anywhere;
   }
 }
+
+/* TROPHY POINTS TEST REV05 — Game Guides only. */
+#resultsGrid .guide-grid-points {position:absolute;top:8px;right:8px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+#resultsGrid .guide-grid-points .gs-pill {position:static;}
+#resultsGrid .guide-tp-pill, #resultsList .guide-tp-pill {display:inline-block;background:#e0edff!important;color:#123e83!important;border:1px solid #2563eb!important;border-radius:5px;padding:3px 7px;font-size:12px;font-weight:900;line-height:1.15;white-space:nowrap;text-shadow:none!important;box-shadow:none!important;}
+#resultsList .list-row > .guide-list-points {display:flex!important;flex-direction:column;align-items:flex-end;gap:3px;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;min-width:0;}
+#resultsList .guide-gs-value {background:#e4f3e4;color:#194f19;border:1px solid #107c10;border-radius:5px;padding:3px 7px;white-space:nowrap;}
+#resultsList .list-row > .guide-empty-points {visibility:hidden;}
+@media (orientation:portrait) and (max-width:900px) {
+ #resultsList .list-row:has(> .guide-list-points) {grid-template-rows:auto auto;row-gap:4px;}
+ #resultsList .list-row:has(> .guide-list-points) > :is(.list-thumb,span:nth-child(2)) {grid-row:1 / span 2;}
+ #resultsList .list-row > .guide-list-points {grid-row:1;transform:none;align-self:end;}
+ #resultsList .list-row:has(> .guide-list-points) > .list-col.quality {grid-row:2;transform:none;align-self:start;}
+}
