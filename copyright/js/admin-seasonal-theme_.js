@@ -1,4 +1,4 @@
-/* SEASONAL TEST REV05: Firebase-authenticated TEST-only Admin control. */
+/* CHRISTMAS TEST REV03: Firebase-authenticated TEST-only Admin control. */
 export function initSeasonalThemeControl({auth,url}){
   var status=document.getElementById('seasonalThemeStatus');
   var select=document.getElementById('seasonalThemeSelect');
@@ -23,7 +23,7 @@ export function initSeasonalThemeControl({auth,url}){
       select.value=result.theme;
       status.textContent='TEST setting: '+result.theme.toUpperCase();
       select.disabled=false;save.disabled=false;
-    }catch(error){status.textContent='ERROR: '+error.message;console.error('[SEASONAL TEST REV05]',error);}
+    }catch(error){status.textContent='ERROR: '+error.message;console.error('[CHRISTMAS TEST REV03]',error);}
   }
   function confirmSeasonal(theme){
     return new Promise(function(resolve){
@@ -32,7 +32,7 @@ export function initSeasonalThemeControl({auth,url}){
       var no=document.getElementById('seasonalConfirmNo');
       var message=document.getElementById('seasonalConfirmMessage');
       var previous=document.activeElement;
-      message.textContent='Apply '+(theme==='halloween'?'Halloween':'Normal (OFF)')+' to the TEST seasonal theme setting?';
+      message.textContent='Apply '+(theme==='christmas'?'Christmas':theme==='halloween'?'Halloween':'Normal (OFF)')+' to the TEST seasonal theme setting?';
       modal.classList.add('open');modal.setAttribute('aria-hidden','false');
       function finish(value){
         yes.removeEventListener('click',onYes);no.removeEventListener('click',onNo);
@@ -50,11 +50,11 @@ export function initSeasonalThemeControl({auth,url}){
   }
   save.addEventListener('click',async function(){
     var theme=select.value;
-    if(theme!=='none'&&theme!=='halloween')return;
+    if(theme!=='none'&&theme!=='halloween'&&theme!=='christmas')return;
     if(!(await confirmSeasonal(theme)))return;
     save.disabled=true;select.disabled=true;status.textContent='Saving TEST setting…';
     try{await call('set-seasonal-theme',theme);await refresh();}
-    catch(error){status.textContent='SAVE FAILED: '+error.message;console.error('[SEASONAL TEST REV05]',error);save.disabled=false;select.disabled=false;}
+    catch(error){status.textContent='SAVE FAILED: '+error.message;console.error('[CHRISTMAS TEST REV03]',error);save.disabled=false;select.disabled=false;}
   });
   return refresh;
 }
