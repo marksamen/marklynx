@@ -4963,3 +4963,6 @@ body.suggest-modal-open{overflow:hidden}
     margin-top:3px;
   }
 }
+
+/* TEST diagnostic fingerprint only */
+:root { --ml-tp-test-revision: REV19; }
