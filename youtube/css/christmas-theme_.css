@@ -1,25 +1,27 @@
-/* CHRISTMAS TEST REV04 — paint only, independent of Halloween.
+/* CHRISTMAS TEST REV05 — paint only, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV04; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV05; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
   --text:#f5f3e9; --text-dim:#bdcbbc; --silver:#e9d6a5;
-  --xmas-header:#801b25; --xmas-edge:#c5a35b; --xmas-title:#f1d696;
+  --xmas-header:#10251a; --xmas-edge:#c5a35b; --xmas-title:#f1d696;
   --xmas-hover:#294936; --xmas-control:#203c2c; --xmas-accent:#a52635;
   --xmas-accent-hover:#b93443; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
-  --xmas-tp:#142f57; --xmas-tp-text:#e0edff; --xmas-tp-border:#93c5fd;
+  --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
   --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
+  --xmas-ct:#7a2028; --xmas-ct-text:#fff0ef; --xmas-ct-border:#d67980;
 }
 html[data-seasonal-theme="christmas"][data-theme="bright"] {
-  --bg:#fff7e8; --bg-raised:#fffdf7; --bg-card:#ffffff;
-  --line:#a9b9a4; --red:#a52635; --red-bright:#b92332;
-  --text:#203027; --text-dim:#506255; --silver:#3e6045;
-  --xmas-header:#b92332; --xmas-edge:#287346; --xmas-title:#215b39;
-  --xmas-hover:#edf4e9; --xmas-control:#e2ebdf; --xmas-accent:#a52635;
-  --xmas-accent-hover:#8a1b29; --xmas-chip:#e2ebdf; --xmas-chip-text:#234c30;
-  --xmas-tp:#e0edff; --xmas-tp-text:#123e83; --xmas-tp-border:#2563eb;
-  --xmas-gs:#d7e9d6; --xmas-gs-text:#174c17; --xmas-gs-border:#107c10;
+  --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
+  --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
+  --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
+  --xmas-header:#f1dcda; --xmas-edge:#c89a45; --xmas-title:#8f1825;
+  --xmas-hover:#fff0ed; --xmas-control:#faece7; --xmas-accent:#a52635;
+  --xmas-accent-hover:#8a1b29; --xmas-chip:#f6e6df; --xmas-chip-text:#5d332d;
+  --xmas-tp:#f5e2a6; --xmas-tp-text:#6f5100; --xmas-tp-border:#c69200;
+  --xmas-gs:#ddebd8; --xmas-gs-text:#1d5a1d; --xmas-gs-border:#2f7d32;
+  --xmas-ct:#a52635; --xmas-ct-text:#fff7f7; --xmas-ct-border:#7c1522;
 }
 html[data-seasonal-theme="christmas"] body,
 html[data-seasonal-theme="christmas"] .subscribe-strip,
@@ -117,6 +119,19 @@ html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid
   background:var(--xmas-gs)!important;color:var(--xmas-gs-text)!important;border-color:var(--xmas-gs-border)!important;text-shadow:none!important;box-shadow:none!important;
 }
 html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs:not(.recent-points-stack) .recent-meta-label {color:inherit!important;}
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  background:var(--xmas-ct)!important;color:var(--xmas-ct-text)!important;border-color:var(--xmas-ct-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type :is(.recent-meta-label,.recent-completion-value) {color:inherit!important;}
 /* Existing dialogs: paint only, preserve scrolling, actions and geometry. */
 html[data-seasonal-theme="christmas"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.developer-panel,.suggest-panel) {background:var(--bg-raised);color:var(--text);border-color:var(--line);border-top-color:var(--xmas-accent);}
 html[data-seasonal-theme="christmas"] :is(.wn-card,.mlm-card,.developer-card,.developer-cta,.developer-contact,.suggest-game-form) {background:var(--bg-card);border-color:var(--line);}
