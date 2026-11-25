@@ -332,7 +332,7 @@
       window.SITE_TOTAL_VIDEOS = totalVideos;
 
       await loadScript('js/youtube_.js?v=PLAYBACK-RESUME-REV16-BOUNDARY-FIX-20261007F');
-      await loadScript('js/site_.js?v=TROPHY-POINTS-TEST-REV09-20261125');
+      await loadScript('js/site_.js?v=TROPHY-POINTS-TEST-REV11-20261125');
       await loadScript('js/mobile-filter-popup_.js?v=TROPHY-POINTS-TEST-REV10-20261125');
       await loadScript('js/developer_.js?v=DEVELOPER-RECENT-REV39');
       await loadScript('js/recent_.js?v=20260924-test-content-integrity-REV02');

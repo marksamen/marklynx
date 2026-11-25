@@ -686,7 +686,7 @@ function upgradeRecentCompletionLabels(){
   const normalize=v=>String(v||'').trim().toLowerCase().replace(/\s+/g,' ');
   window.RAW.forEach(game=>{
     if(!game) return;
-    if(game.v && !byVideo.has(String(game.v))) byVideo.set(String(game.v),game);
+    if(game.v && (!byVideo.has(String(game.v)) || (game.testContent === true && byVideo.get(String(game.v)).testContent !== true))) byVideo.set(String(game.v),game);
     if(game.n && !byName.has(normalize(game.n))) byName.set(normalize(game.n),game);
   });
   root.querySelectorAll('.recent-upload-card').forEach(card=>{
@@ -716,7 +716,7 @@ function upgradeRecentCompletionLabels(){
       }
     }
     // Only annotate entries with an existing meaningful value; no 0G or Xbox labels for Nintendo.
-    const existing=card.querySelector('.recent-upload-meta.gs');
+    const existing=card.querySelector('.recent-upload-meta.gs:not(.recent-tp-badge):not(.recent-points-stack)');
     if(existing && gamerscore){
       if(!existing.querySelector('.recent-meta-label')){
         const label=document.createElement('span');
@@ -725,7 +725,25 @@ function upgradeRecentCompletionLabels(){
         existing.prepend(label);
       }
     }
-    if(completion && !card.querySelector('.recent-upload-meta.completion-type')){
+    const tpPresent=hasGuideTP(game);
+    const gsPresent=hasGuideGS(game);
+    const oldCT=card.querySelector('.recent-upload-meta.completion-type');
+    if((gsPresent || tpPresent) && oldCT) oldCT.remove();
+    if(tpPresent && !card.querySelector('.recent-tp-badge')){
+      const tp=document.createElement('span');
+      tp.className='recent-upload-meta gs recent-tp-badge';
+      const label=document.createElement('span');
+      label.className='recent-meta-label';
+      label.textContent='Trophy Points';
+      tp.append(label,document.createTextNode(guideTPLabel(game)));
+      if(existing && gsPresent){
+        const stack=document.createElement('span');
+        stack.className='recent-upload-meta gs recent-points-stack';
+        existing.before(stack);
+        stack.append(existing,tp);
+      }else card.appendChild(tp);
+    }
+    if(completion && !gsPresent && !tpPresent && !oldCT){
       const badge=document.createElement('span');
       badge.className='recent-upload-meta completion-type';
       const label=document.createElement('span');
