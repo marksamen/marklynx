@@ -7,7 +7,7 @@
   css.textContent = '\n#wnDiag{position:fixed;bottom:10px;right:10px;z-index:2147483647;width:min(380px,calc(100vw - 20px));max-height:45vh;overflow:auto;background:#111827;color:#e5e7eb;border:2px solid #facc15;border-radius:9px;padding:9px;font:11px/1.45 Consolas,monospace;box-shadow:0 5px 24px #000a}\n#wnDiag button{background:#facc15;color:#111;border:0;border-radius:4px;padding:3px 7px;cursor:pointer;font-weight:bold}\n#wnDiag pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font:inherit}\n#wnDiag .head{position:sticky;top:0;background:#111827;z-index:1;display:flex;justify-content:space-between;gap:8px;align-items:center}\n';
   document.head.appendChild(css);
   const host = document.createElement('div');
-  host.innerHTML = '<div id="wnDiag" aria-label="MESSAGE FROM MARK LYNX TEST REV06 diagnostics"><div class="head"><strong>MESSAGE FROM MARK LYNX TEST REV06 — WHAT\'S NEW DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>';
+  host.innerHTML = '<div id="wnDiag" aria-label="TROPHY POINTS TEST REV19 diagnostics"><div class="head"><strong>TROPHY POINTS TEST REV19 — ADMIN DIAGNOSTICS</strong><span><button id="wnDiagHide" type="button" aria-expanded="true">HIDE</button> <button id="wnDiagCopy" type="button">Copy log</button></span></div><pre id="wnDiagText">Starting…</pre></div>';
   document.body.appendChild(host.firstElementChild);
 })();
 (function(){
@@ -20,7 +20,7 @@
  $('wnDiagCopy').addEventListener('click',()=>navigator.clipboard?.writeText(logs.join('\n')).catch(()=>{}));
  const observe=()=>{for(const id of ['login','admin','adminPageModal','adminPageModalFrame']){const el=$(id);if(el)new MutationObserver(()=>log('DOM change '+id)).observe(el,{attributes:true,attributeFilter:['style','class','src','aria-hidden']});}}
  observe();log('MESSAGE FROM MARK LYNX TEST REV06 — diagnostics initialized');
- log('TROPHY POINTS TEST REV03 — diagnostics initialized');
+ log('TROPHY POINTS TEST REV19 — diagnostics initialized');
  window.addEventListener('ml-tp-qa',e=>{const d=e.detail; if(d)log('TP REV03 '+JSON.stringify({phase:d.phase,id:d.id,tp:d.tp,status:d.status,persisted:d.persisted}));});
  $('adminPageModalFrame')?.addEventListener('load',()=>log('iframe loaded'));
  $('adminPageModalClose')?.addEventListener('click',()=>log('modal close clicked'));
