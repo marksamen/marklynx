@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV05 — paint only, independent of Halloween.
+/* CHRISTMAS TEST REV06 — paint only, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV05; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV06; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -13,15 +13,15 @@ html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --xmas-ct:#7a2028; --xmas-ct-text:#fff0ef; --xmas-ct-border:#d67980;
 }
 html[data-seasonal-theme="christmas"][data-theme="bright"] {
-  --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
-  --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
-  --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
-  --xmas-header:#f1dcda; --xmas-edge:#c89a45; --xmas-title:#8f1825;
-  --xmas-hover:#fff0ed; --xmas-control:#faece7; --xmas-accent:#a52635;
-  --xmas-accent-hover:#8a1b29; --xmas-chip:#f6e6df; --xmas-chip-text:#5d332d;
+  --bg:#a52230; --bg-raised:#85202a; --bg-card:#87212c;
+  --line:#d19479; --red:#edbc68; --red-bright:#ffdc93;
+  --text:#fff8ed; --text-dim:#ffe5d6; --silver:#ffe7b0;
+  --xmas-header:var(--bg); --xmas-edge:#e1b967; --xmas-title:#fff0c2;
+  --xmas-hover:#922330; --xmas-control:#24563b; --xmas-accent:#235e3d;
+  --xmas-accent-hover:#194b30; --xmas-chip:#f3e1bd; --xmas-chip-text:#57251e;
   --xmas-tp:#f5e2a6; --xmas-tp-text:#6f5100; --xmas-tp-border:#c69200;
   --xmas-gs:#ddebd8; --xmas-gs-text:#1d5a1d; --xmas-gs-border:#2f7d32;
-  --xmas-ct:#a52635; --xmas-ct-text:#fff7f7; --xmas-ct-border:#7c1522;
+  --xmas-ct:#a52635; --xmas-ct-text:#fff7f7; --xmas-ct-border:#e6a098;
 }
 html[data-seasonal-theme="christmas"] body,
 html[data-seasonal-theme="christmas"] .subscribe-strip,
@@ -70,12 +70,16 @@ html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #whatsNewPublicBt
 html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #markLynxMessagePublicBtn:hover,
 html[data-seasonal-theme="christmas"] .view-toggle button.active:hover,
 html[data-seasonal-theme="christmas"] .clear-filters-btn:hover {background:var(--xmas-accent-hover)!important;}
+/* REV06 — match Recent card surfaces to the page, even on hover (Halloween GRID pattern).
+   Extend to LIST at owner's request; retain its existing separator geometry. */
 html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card,
 html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {
+  background:var(--bg)!important;color:var(--text)!important;border-color:var(--line)!important;
+}
 html[data-seasonal-theme="christmas"] #resultsList .list-row,
 html[data-seasonal-theme="christmas"] #resultsGrid .card {background:var(--bg-card)!important;color:var(--text)!important;border-color:var(--line)!important;}
-html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
-html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card:hover,
 html[data-seasonal-theme="christmas"] #resultsList .list-row:hover,
 html[data-seasonal-theme="christmas"] #resultsGrid .card:hover {background:var(--xmas-hover)!important;}
 html[data-seasonal-theme="christmas"] #resultsList {background-color:var(--line);border-color:var(--line);}
@@ -149,4 +153,28 @@ html[data-seasonal-theme="christmas"] footer .footer-stats strong {color:var(--x
   html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn {color:var(--xmas-title)!important;}
   html[data-seasonal-theme="christmas"] #whatsNewMobileBtn .wn-dot,
   html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn .mlm-dot {background:#e93445!important;box-shadow:0 0 0 2px var(--bg)!important;}
+}
+
+/* REV06 — BRIGHT contrast on the red page. Keep unrelated light dialogs at REV05 paint. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] .site-preferences {color:var(--text);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid.list-mode {background-color:var(--line);border-color:var(--line);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.game-guides-count,.count-line),
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer .footer-stats span {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.game-guides-count,.count-line) strong,
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer span,
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer .footer-stats strong {color:var(--xmas-title);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more {background:var(--xmas-accent);color:#fff;border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more:hover {background:var(--xmas-accent-hover);color:#fff;border-color:var(--xmas-edge);}
+/* Existing special gold developer badge used translucent paint on the old light page. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#resultsGrid,#resultsList,#recentUploadsSection) .developer-provided-badge {background:#f3e1bd;color:#5b4518;border-color:#a77b18;}
+/* Dialogs keep the REV05 light palette so existing hard-coded dark text stays readable.
+   No dialog behavior, geometry or playback changes. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.developer-panel,.suggest-panel,.video-modal) {
+  --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
+  --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
+  --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
+  --xmas-header:#f1dcda; --xmas-edge:#c89a45; --xmas-title:#8f1825;
+  --xmas-hover:#fff0ed; --xmas-control:#faece7; --xmas-accent:#a52635;
+  --xmas-accent-hover:#8a1b29; --xmas-chip:#f6e6df; --xmas-chip-text:#5d332d;
+  --xmas-ct-border:#7c1522;
 }
