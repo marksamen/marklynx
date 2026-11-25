@@ -2107,7 +2107,7 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 
-/* REV19: MOBILE Normal Videos GRID only.
+/* REV20: MOBILE Normal Videos GRID only.
    Reuse the existing desktop-grid-quality overlay mechanism:
    show its dedicated quality badge bottom-right and hide the ordinary
    metadata quality instance. Built from REV13; REV18 discarded. */
@@ -4965,4 +4965,4 @@ body.suggest-modal-open{overflow:hidden}
 }
 
 /* TEST diagnostic fingerprint only */
-:root { --ml-tp-test-revision: REV19; }
+:root { --ml-tp-test-revision: REV20; }
