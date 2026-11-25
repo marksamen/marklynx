@@ -73,7 +73,7 @@
       }
       const dataSourceConfig = await dataSourceResponse.json();
       const dataSource = String(dataSourceConfig.source || '').toLowerCase();
-      const gameFields = ['id','n','p','g','t','completion_type','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
+      const gameFields = ['id','n','p','g','tp','t','completion_type','ty','tx','q','df','u','v','pl','kinect','adult','testContent','always_show_recent'];
 
       const normalizeBooleanField = value => {
         if (value === true || value === 'true') return true;
@@ -171,6 +171,17 @@
       } else {
         throw new Error(`Unknown website data source: ${selectedDataSource || '(blank)'}`);
       }
+
+      // TP REV04: read-only diagnostic before existing TEST visibility filtering.
+      console.info('[TP TEST REV04] ' + JSON.stringify({
+        source: activeDataSource,
+        total: window.RAW.length,
+        nullTP: window.RAW.filter(game => game.tp === null).length,
+        zeroTP: window.RAW.filter(game => game.tp === 0).length,
+        positiveTP: window.RAW.filter(game => Number.isInteger(game.tp) && game.tp > 0).length,
+        invalidTP: window.RAW.filter(game => game.tp !== null && (!Number.isInteger(game.tp) || game.tp < 0 || game.tp > 2147483647)).length,
+        samples: window.RAW.filter(game => [329,330,351].includes(Number(game.id))).map(({id,g,tp,completion_type}) => ({id,g,tp,completion_type}))
+      }));
 
       // TEST CONTENT OFF must hide the underlying TEST media, not only the row
       // carrying testContent=true. This prevents a non-TEST duplicate record from
