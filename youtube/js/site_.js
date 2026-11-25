@@ -258,10 +258,14 @@ function guideTPLabel(r){ return `${r.tp.toLocaleString('en-US')} TP`; }
 function guideCT(r){ return !hasGuideGS(r) && !hasGuideTP(r) && r.completion_type; }
 function guideGridPoints(r){
   if (!hasGuideTP(r)) return hasGuideGS(r) ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : '';
-  return `<span class="guide-grid-points">${hasGuideGS(r) ? `<span class="gs-pill">${escapeHtml(r.g)}</span>` : ''}<span class="guide-tp-pill">${guideTPLabel(r)}</span></span>`;
+  const tp = `<span class="gs-pill guide-tp-pill">${guideTPLabel(r)}</span>`;
+  return hasGuideGS(r) ? `<span class="guide-grid-points"><span class="gs-pill">${escapeHtml(r.g)}</span>${tp}</span>` : tp;
 }
 function guideListPoints(r){
-  if (hasGuideTP(r)) return `<span class="list-col gs guide-list-points">${hasGuideGS(r) ? `<span class="guide-gs-value">${escapeHtml(r.g)}</span>` : ''}<span class="guide-tp-pill">${guideTPLabel(r)}</span></span>`;
+  if (hasGuideTP(r)) {
+    const tp = `<span class="list-col gs guide-tp-pill">${guideTPLabel(r)}</span>`;
+    return hasGuideGS(r) ? `<span class="list-col gs guide-list-points"><span class="list-col gs guide-gs-value">${escapeHtml(r.g)}</span>${tp}</span>` : tp;
+  }
   if (hasGuideGS(r)) return `<span class="list-col gs">${escapeHtml(r.g)}</span>`;
   if (guideCT(r)) return `<span class="list-col completion-type-list-desktop game-meta-pill completion-type-meta"><span class="game-meta-label">Completion Type</span>${escapeHtml(r.completion_type)}</span>`;
   return '<span class="list-col gs guide-empty-points" aria-hidden="true"></span>';
