@@ -1,4 +1,4 @@
-/* SEASONAL YOUTUBE TEST REV02. Public read-only; never modifies visitor theme preference. */
+/* CHRISTMAS YOUTUBE TEST REV04. Public read-only; never modifies visitor theme preference. */
 (function(){
   'use strict';
   var root=document.documentElement;
@@ -8,9 +8,9 @@
     .then(function(response){if(!response.ok)throw new Error('Seasonal theme HTTP '+response.status);return response.json();})
     .then(function(rows){
       var value=rows.length ? rows[0].value : 'none';
-      if(value!=='none' && value!=='halloween')throw new Error('Unsupported seasonal theme');
+      if(value!=='none' && value!=='halloween' && value!=='christmas')throw new Error('Unsupported seasonal theme');
       root.setAttribute('data-seasonal-theme',value);
-      console.info('[SEASONAL YOUTUBE TEST REV02] '+value);
+      console.info('[CHRISTMAS YOUTUBE TEST REV04] '+value);
     })
-    .catch(function(error){console.error('[SEASONAL YOUTUBE TEST REV02] Seasonal setting unavailable; original theme retained',error);});
+    .catch(function(error){console.error('[CHRISTMAS YOUTUBE TEST REV04] Seasonal setting unavailable; original theme retained',error);});
 })();
