@@ -4881,3 +4881,10 @@ body.suggest-modal-open{overflow:hidden}
  #resultsGrid .gs-pill.guide-tp-pill {background:rgba(12,43,94,.94)!important;color:#fff!important;border-color:#93c5fd!important;}
  #resultsList .list-row .list-col.gs.guide-tp-pill {text-shadow:none!important;}
 }
+
+/* TROPHY POINTS TEST REV08 — portrait Game Guides LIST dual metrics only. */
+@media (orientation:portrait) and (max-width:900px){
+  #resultsList .list-row:has(> .guide-list-points){grid-template-rows:minmax(max-content,1fr) minmax(max-content,1fr);row-gap:4px;}
+  #resultsList .list-row > .list-col.gs.guide-list-points{grid-row:1;align-self:end;transform:none;position:static;margin:0;}
+  #resultsList .list-row:has(> .guide-list-points) > .list-col.quality{grid-row:2;align-self:start;transform:none;position:static;margin:0;}
+}
