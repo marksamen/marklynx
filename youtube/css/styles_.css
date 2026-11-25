@@ -4888,3 +4888,18 @@ body.suggest-modal-open{overflow:hidden}
   #resultsList .list-row > .list-col.gs.guide-list-points{grid-row:1;align-self:end;transform:none;position:static;margin:0;}
   #resultsList .list-row:has(> .guide-list-points) > .list-col.quality{grid-row:2;align-self:start;transform:none;position:static;margin:0;}
 }
+
+/* TROPHY POINTS TEST REV11 — Recent only; inherit existing GS geometry. */
+#recentUploadsSection .recent-upload-meta.gs.recent-tp-badge {
+  background:#e3efff !important; border-color:#2563eb !important; color:#17458e !important;
+}
+#recentUploadsSection .recent-tp-badge .recent-meta-label {color:inherit !important;}
+#recentUploadsSection .recent-upload-meta.gs.recent-points-stack {
+  background:transparent !important; border:0 !important; padding:0 !important;
+  box-shadow:none !important; gap:3px; flex-wrap:wrap; height:auto;
+  max-width:100%; min-width:0; white-space:normal;
+}
+#recentUploadsSection .recent-points-stack > .recent-upload-meta.gs {
+  margin:0; position:static; transform:none; max-width:100%; min-width:0;
+  white-space:normal; overflow-wrap:anywhere;
+}
