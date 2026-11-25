@@ -4920,3 +4920,10 @@ body.suggest-modal-open{overflow:hidden}
 #developerShowcaseOverlay .developer-card-meta {
   align-items:center;
 }
+
+/* TROPHY POINTS TEST REV14 - desktop Recent LIST metric spacing. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  #recentUploadsSection .recent-uploads-grid.list-mode .recent-points-stack {
+    column-gap:12px;
+  }
+}
