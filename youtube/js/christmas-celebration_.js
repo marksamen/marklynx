@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV56 — read-only presentation; REV55 settings are sole celebration authority. */
+/* CHRISTMAS TEST REV57 — read-only presentation; REV55 settings are sole celebration authority. */
 (function(){
   'use strict';
   const root=document.documentElement, mount=document.getElementById('mainModuleMount');
@@ -20,20 +20,16 @@
     :host{display:block;box-sizing:border-box;width:100%;padding:6px 12px 5px;color:#ffe6a8;font-family:var(--sans,system-ui,sans-serif);}
     :host([hidden]){display:none!important}
     *,*::before,*::after{box-sizing:border-box}
-    .panel{max-width:950px;margin:auto;border:1px solid #c5a457;border-radius:10px;background:linear-gradient(110deg,#142f21,#17452d 52%,#142f21);padding:9px 12px;text-align:center;box-shadow:inset 0 0 0 2px #ffffff09}
-    :host([data-mode="new_year"]) .panel{background:linear-gradient(110deg,#161b31,#29324b 52%,#161b31);border-color:#d8bc75}
-    :host([data-color="bright"]) .panel{background:linear-gradient(110deg,#fff6de,#fffdf6 52%,#fff6de);color:#7c2025;border-color:#b88b3c}
-    :host([data-color="bright"][data-mode="new_year"]) .panel{background:linear-gradient(110deg,#f7edcf,#fffdf6 52%,#f7edcf);color:#343049}
+    .panel{max-width:950px;margin:auto;border:1px solid #c5a457;border-radius:10px;background:var(--xmas-ribbon,linear-gradient(112deg,#50030a 0%,#a20e1a 33%,#7c0710 68%,#410209 100%));padding:9px 12px;text-align:center;box-shadow:inset 0 0 0 2px #ffffff09}
+    :host([data-color="bright"]) .panel{background:var(--xmas-ribbon,linear-gradient(112deg,#032707 0%,#17601d 33%,#0b4010 68%,#021e05 100%))}
     .heading{display:flex;align-items:center;justify-content:center;gap:10px;margin:0;font-size:clamp(20px,3vw,34px);font-weight:800;line-height:1.16;overflow-wrap:anywhere}
     .ornament{font-size:.78em;flex:none}
     .count{margin-top:6px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
     .count[hidden]{display:none!important}
     .label{font-size:12px;font-weight:650;line-height:1.25}
     .units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:min(100%,340px)}
-    .unit{min-width:0;border-radius:5px;padding:4px 2px;background:#70252d;color:#fff1c9;border:1px solid #d9b56666}
-    :host([data-mode="new_year"]) .unit{background:#343f60}
-    :host([data-color="bright"]) .unit{background:#892c33;color:#fff7df}
-    :host([data-color="bright"][data-mode="new_year"]) .unit{background:#414b70}
+    .unit{min-width:0;border-radius:5px;padding:4px 2px;background:var(--bg-card,#082713);color:#ffe6a8;border:1px solid #d9b56666}
+    :host([data-color="bright"]) .unit{background:var(--bg-card,#78040c)}
     .number{display:block;font-size:clamp(16px,2.5vw,22px);font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1;overflow-wrap:anywhere}
     .unit-label{display:block;font-size:10px;line-height:1.15;overflow-wrap:anywhere;margin-top:2px}
     @media(max-width:600px){:host{padding:4px 8px}.panel{padding:7px 6px}.heading{gap:6px}.count{margin-top:5px;gap:4px}.units{width:min(100%,310px)}}
@@ -102,6 +98,6 @@
   new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme','data-theme','lang']});
   if(mount)new MutationObserver(()=>{if(state&&state.mode!=='none')render();}).observe(mount,{childList:true,subtree:true});
   document.addEventListener('visibilitychange',resume);window.addEventListener('focus',resume);window.addEventListener('pagehide',stop);window.addEventListener('pageshow',()=>{start();resume();});
-  window.mlChristmasCelebrationDiagnostics=()=>({revision:'REV56',status,mode:state?state.mode:null,year:state?state.year:null,visible:!!(host&&host.isConnected&&!host.hidden),lastRead,lastError,pollMs:POLL_MS,season:root.getAttribute('data-seasonal-theme')});
+  window.mlChristmasCelebrationDiagnostics=()=>({revision:'REV57',status,mode:state?state.mode:null,year:state?state.year:null,visible:!!(host&&host.isConnected&&!host.hidden),lastRead,lastError,pollMs:POLL_MS,season:root.getAttribute('data-seasonal-theme')});
   start();
 })();
