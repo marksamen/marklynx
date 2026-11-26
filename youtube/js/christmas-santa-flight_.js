@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV46 — illustrated flight and occasional rooftop delivery, preserving REV43 scheduler safeguards. */
+/* CHRISTMAS TEST REV48 — illustrated flight and occasional rooftop delivery, preserving REV43 scheduler safeguards. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -8,7 +8,7 @@
   var releaseBoundary=null;
   var artwork = null, loadTimer = null, loadAttempt = 0;
   var printing = false, suspended = false, started = false;
-  var assetURL = 'images/christmas-santa-flight_.svg?v=CHRISTMAS-TEST-REV44';
+  var assetURL = 'images/christmas-santa-flight_.svg?v=CHRISTMAS-TEST-REV48';
   var deliveryURL='images/christmas-santa-delivery_.svg?v=CHRISTMAS-TEST-REV44';
   var deliveryState='not requested', deliveryDoc=null, deliveryError='', deliveryNextAttempt=0, ordinarySinceDelivery=0;
   var assetState = 'not requested', status = 'initializing', lastError = '', nextAt = null;
@@ -30,7 +30,7 @@
   // TEST-only, read-only snapshot. No global controls and no polling timers.
   window.mlChristmasSantaDiagnostics = function () {
     var actor=santa&&santa.firstElementChild, r=actor&&actor.getBoundingClientRect();
-    return {revision:'REV46',state:status,blocked:blocked()||null,asset:assetState,
+    return {revision:'REV48',state:status,blocked:blocked()||null,asset:assetState,
       deliveryAsset:deliveryState,deliveryError:deliveryError||null,assetURL:assetURL,assetWidth:artwork?artwork.naturalWidth:0,lastError:lastError||null,
       nextInMs:nextAt===null?null:Math.max(0,nextAt-Date.now()),counts:Object.assign({},counts),
       safeArea:window.mlChristmasSafeArea?window.mlChristmasSafeArea.measure():null,
