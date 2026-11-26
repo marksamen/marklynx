@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV10 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV11 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV10; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV11; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -279,4 +279,24 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSec
 }
 html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .developer-provided-badge svg {
   stroke:#d8ad55!important;
+}
+
+/* REV11 — Game Guides GRID only. Match the page, not the card surface.
+   Do not paint metric wrappers, thumbnail images, quality logos or status indicators.
+   Repeated grid ID deliberately wins over accumulated legacy important selectors. */
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.grid-list-sub .landscape-platform-unit,.diff-tag,.game-meta-pill,.gs-pill,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--bg)!important;
+  color:var(--xmas-title)!important;
+  border-color:var(--line)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.game-meta-pill,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.game-meta-label,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card .diff-tag .diff-dot {
+  background:var(--xmas-title)!important;
 }
