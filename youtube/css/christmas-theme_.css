@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV36 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV36; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV37 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV37; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -824,4 +824,46 @@ html[data-seasonal-theme="christmas"] .banner-wrap {
     --xmas-tree-art: url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29");
     --xmas-garland-lights: url("../images/christmas-banner-lights_.svg?v=CHRISTMAS-TEST-REV32");
   }
+}
+
+
+/* REV37: occasional shooting stars. No layout participation or input capture.
+   The scheduler creates a single decorative node only while a star is active. */
+#ml-christmas-shooting-star {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star {
+    display:block;position:fixed;inset:0;z-index:9;pointer-events:none;
+    overflow:hidden;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-flight {
+    position:absolute;left:var(--star-x);top:var(--star-y);width:0;height:0;
+    pointer-events:none;opacity:0;
+    animation:ml-xmas-star-flight var(--star-duration) linear both;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art {
+    position:absolute;width:0;height:0;transform:rotate(var(--star-angle));
+    pointer-events:none;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art::before {
+    content:"";position:absolute;right:0;top:0;transform:translateY(-50%);
+    width:clamp(44px,10vw,140px);height:5px;
+    background:linear-gradient(90deg,transparent 0%,rgba(255,195,94,.22) 38%,#ffdd8b 82%,#fff7d2 100%);
+    clip-path:polygon(0 50%,100% 0,100% 100%);
+    filter:drop-shadow(0 0 2px #ffcb65);
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art::after {
+    content:"";position:absolute;left:0;top:0;width:clamp(12px,1.25vw,20px);height:clamp(12px,1.25vw,20px);
+    transform:translate(-50%,-50%);background:#fff3bb;
+    clip-path:polygon(50% 0,60% 39%,100% 50%,60% 61%,50% 100%,40% 61%,0 50%,40% 39%);
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art {
+    filter:drop-shadow(0 0 4px #ffc456);
+  }
+  @keyframes ml-xmas-star-flight {
+    0% {transform:translate3d(0,0,0);opacity:0;}
+    15% {opacity:.9;}
+    72% {opacity:.9;}
+    100% {transform:translate3d(var(--star-dx),var(--star-dy),0);opacity:0;}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-shooting-star {display:none!important;}
 }
