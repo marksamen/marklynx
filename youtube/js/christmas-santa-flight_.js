@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV51 — coordinated Santa flight and rooftop delivery. */
+/* CHRISTMAS TEST REV58 — coordinated Santa flight and rooftop delivery. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -18,6 +18,7 @@
   function blocked() {
     var video = document.getElementById('videoModalOverlay');
     if (root.getAttribute('data-seasonal-theme') !== 'christmas') return 'not Christmas';
+    if (['new_year','pending'].includes(root.getAttribute('data-ml-celebration-mode'))) return 'celebration lineup';
     if (motion.matches) return 'reduced motion';
     if (document.hidden) return 'hidden tab';
     if (printing) return 'printing';
@@ -30,7 +31,7 @@
   // TEST-only, read-only snapshot. No global controls and no polling timers.
   window.mlChristmasSantaDiagnostics = function () {
     var actor=santa&&santa.firstElementChild, r=actor&&actor.getBoundingClientRect();
-    return {revision:'REV51',state:status,blocked:blocked()||null,asset:assetState,
+    return {revision:'REV58',state:status,blocked:blocked()||null,asset:assetState,
       deliveryAsset:deliveryState,deliveryError:deliveryError||null,assetURL:assetURL,assetWidth:artwork?artwork.naturalWidth:0,lastError:lastError||null,
       nextInMs:nextAt===null?null:Math.max(0,nextAt-Date.now()),counts:Object.assign({},counts),
       safeArea:window.mlChristmasSafeArea?window.mlChristmasSafeArea.measure():null,
@@ -168,7 +169,7 @@
     reconcile();
   }
   if(mount)new MutationObserver(bindModal).observe(mount,{childList:true,subtree:true});
-  new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
+  new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme','data-ml-celebration-mode']});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);
   else if(motion.addListener)motion.addListener(reconcile);
   document.addEventListener('visibilitychange',reconcile);

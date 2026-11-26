@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV57 — read-only presentation; REV55 settings are sole celebration authority. */
+/* CHRISTMAS TEST REV58 — read-only presentation; REV55 settings are sole celebration authority. */
 (function(){
   'use strict';
   const root=document.documentElement, mount=document.getElementById('mainModuleMount');
@@ -36,6 +36,11 @@
     @media(orientation:landscape) and (max-height:500px){:host{padding:3px 8px}.panel{padding:5px 8px}.heading{font-size:20px}.count{margin-top:3px}.number{font-size:16px}.unit{padding:2px}}
   `;
   let state=null,status='idle',host=null,parts=null,inflight=null,token=0,lastRead=null,lastError=null,pollTimer=null,tickTimer=null,lastFetchAt=0;
+  // Shared read-only mode for New Year event eligibility; no second API read.
+  function publishMode(){
+    const mode=activeTheme()?(state?state.mode:(status==='error'?'none':'pending')):'none';
+    if(root.getAttribute('data-ml-celebration-mode')!==mode)root.setAttribute('data-ml-celebration-mode',mode);
+  }
   function activeTheme(){return root.getAttribute('data-seasonal-theme')==='christmas';}
   function makeHost(){
     const el=document.createElement('div');el.id='ml-christmas-celebration';el.hidden=true;
@@ -61,6 +66,7 @@
     return {target,sec,values:[Math.floor(sec/86400),Math.floor(sec%86400/3600),Math.floor(sec%3600/60),sec%60]};
   }
   function render(){
+    publishMode();
     if(!activeTheme()||!state||state.mode==='none'){if(host)host.hidden=true;return;}
     if(!ensureHost())return;
     const mode=state.mode, isChristmas=mode==='christmas',lang=words[root.lang]?root.lang:'en',w=words[lang];
@@ -98,6 +104,6 @@
   new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme','data-theme','lang']});
   if(mount)new MutationObserver(()=>{if(state&&state.mode!=='none')render();}).observe(mount,{childList:true,subtree:true});
   document.addEventListener('visibilitychange',resume);window.addEventListener('focus',resume);window.addEventListener('pagehide',stop);window.addEventListener('pageshow',()=>{start();resume();});
-  window.mlChristmasCelebrationDiagnostics=()=>({revision:'REV57',status,mode:state?state.mode:null,year:state?state.year:null,visible:!!(host&&host.isConnected&&!host.hidden),lastRead,lastError,pollMs:POLL_MS,season:root.getAttribute('data-seasonal-theme')});
+  window.mlChristmasCelebrationDiagnostics=()=>({revision:'REV58',status,mode:state?state.mode:null,year:state?state.year:null,visible:!!(host&&host.isConnected&&!host.hidden),lastRead,lastError,pollMs:POLL_MS,season:root.getAttribute('data-seasonal-theme')});
   start();
 })();

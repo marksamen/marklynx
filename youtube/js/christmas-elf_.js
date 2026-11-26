@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV51 — coordinated elf-peek event. */
+/* CHRISTMAS TEST REV58 — coordinated elf-peek event. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -11,6 +11,7 @@
   function allowed() {
     var video = document.getElementById('videoModalOverlay');
     return root.getAttribute('data-seasonal-theme') === 'christmas' &&
+      !['new_year','pending'].includes(root.getAttribute('data-ml-celebration-mode')) &&
       !motion.matches && !document.hidden && !printing && !suspended &&
       !(video && video.classList.contains('open'));
   }
@@ -75,7 +76,7 @@
     reconcile();
   }
   if(mount)new MutationObserver(bindModal).observe(mount,{childList:true});
-  new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
+  new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme','data-ml-celebration-mode']});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);
   else if(motion.addListener)motion.addListener(reconcile);
   document.addEventListener('visibilitychange',reconcile);
