@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV43; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV45; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -909,7 +909,7 @@ html[data-seasonal-theme="christmas"] {
 }
 
 
-/* REV43: Santa flyby. Fixed, clipped, noninteractive; no layout changes. */
+/* REV45: Santa flyby. Fixed, clipped, noninteractive; no layout changes. */
 #ml-christmas-santa {display:none;}
 @media screen and (prefers-reduced-motion:no-preference) {
   html[data-seasonal-theme="christmas"] body > #ml-christmas-santa {
@@ -933,4 +933,14 @@ html[data-seasonal-theme="christmas"] {
     100% {transform:translate3d(var(--santa-dx),var(--santa-dy),0);}
   }
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-santa {display:none!important;}
+}
+
+/* REV45: rooftop delivery is an inline animated SVG, not a flight span. */
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span.ml-xmas-delivery {
+    animation:none;overflow:hidden;pointer-events:none;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span.ml-xmas-delivery > svg {
+    display:block;width:100%;height:100%;pointer-events:none;overflow:hidden;
+  }
 }
