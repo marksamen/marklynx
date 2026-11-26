@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV60 — local, interaction-unlocked event audio; no player or Halloween changes. */
+/* CHRISTMAS TEST REV60B — local, interaction-unlocked event audio; no player or Halloween changes. */
 (function(){
   'use strict';
   var root=document.documentElement, motion=matchMedia('(prefers-reduced-motion: reduce)');
@@ -22,7 +22,7 @@
   function load(key){
     if(buffers[key]||loading[key]||errors[key]||!ctx)return;
     loading[key]=true;
-    fetch('audio/christmas/'+files[key]+'.mp3?v=CHRISTMAS-TEST-'+(key==='confetti'?'REV60':key==='fireworks'?'REV59':key==='gingerbread'?'REV53':key==='train'?'REV49':'REV47'),{credentials:'same-origin'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.arrayBuffer();}).then(function(bytes){
+    fetch('audio/christmas/'+files[key]+'.mp3?v=CHRISTMAS-TEST-'+(key==='confetti'?'REV60B':key==='fireworks'?'REV59':key==='gingerbread'?'REV53':key==='train'?'REV49':'REV47'),{credentials:'same-origin'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.arrayBuffer();}).then(function(bytes){
       return new Promise(function(resolve,reject){ctx.decodeAudioData(bytes,resolve,reject);});
     }).then(function(buffer){buffers[key]=buffer;}).catch(function(e){errors[key]=String(e.message||e);}).finally(function(){delete loading[key];});
   }
@@ -71,5 +71,5 @@
   window.addEventListener('pagehide',function(){hiddenPage=true;stopAll();});window.addEventListener('pageshow',function(){hiddenPage=false;});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
   window.mlChristmasSounds=Object.freeze({event:start,cancel:cancel});
-  window.mlChristmasSoundDiagnostics=function(){return {revision:'REV60',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
+  window.mlChristmasSoundDiagnostics=function(){return {revision:'REV60B',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
 })();

@@ -1,9 +1,9 @@
-/* CHRISTMAS TEST REV60 — coordinated, original canvas New Year golden confetti. */
+/* CHRISTMAS TEST REV60B — coordinated, original canvas New Year paper confetti. */
 (function(){
  'use strict';
  const root=document.documentElement, motion=matchMedia('(prefers-reduced-motion: reduce)'),mount=document.getElementById('mainModuleMount');
  const id='ml-christmas-confetti',key='confetti',duration=5800;
- const palette=['#ffe8a0','#d69b29','#fff3c7','#b67c18','#f8c54d'];
+ const palette=['#ffd34d','#ff5258','#e8e9ef','#56d477','#ffb93e','#e84952','#f8f4e8','#33b96a'];
  let node=null,release=null,frame=null,finish=null,modal=null,printing=false,hiddenPage=false,launches=0,completed=0,cancelled=0,postponed=0,last=null;
  function blocked(){const v=document.getElementById('videoModalOverlay');return root.getAttribute('data-seasonal-theme')!=='christmas'||root.getAttribute('data-ml-celebration-mode')!=='new_year'||motion.matches||document.hidden||printing||hiddenPage||!!(v&&v.classList.contains('open'));}
  function schedule(){if(!blocked()&&!node&&window.mlChristmasCoordinator)window.mlChristmasCoordinator.request(key,id,launch,reconcile);}
@@ -21,11 +21,11 @@
   // Seed a local generator so each shower has varied pieces even with a fixed scheduler RNG.
   let seed=(Math.floor(Math.random()*4294967295)||1)>>>0;
   function rnd(){seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;return (seed>>>0)/4294967296;}
-  const count=Math.round(Math.min(96,Math.max(38,w/13))),scale=Math.min(1.15,Math.max(.7,w/900));
+  const count=Math.round(Math.min(96,Math.max(38,w/13))),scale=Math.min(1.15,Math.max(.8,w/900));
   const particles=Array.from({length:count},(_,i)=>({
    x:(i+rnd())/count*w,start:rnd()*1.65,fall:2.45+rnd()*1.55,
-   drift:(rnd()-.5)*Math.min(100,w*.17),phase:rnd()*Math.PI*2,spin:(rnd()<.5?-1:1)*(1.6+rnd()*3.2),
-   size:(5+rnd()*5)*scale,color:palette[i%palette.length],ribbon:i%5===0
+   drift:(rnd()-.5)*Math.min(100,w*.17),phase:rnd()*Math.PI*2,spin:(rnd()<.5?-1:1)*(1.1+rnd()*2.1),
+   size:(10+rnd()*8)*scale,color:palette[i%palette.length],ribbon:i%5===0
   }));
   node=el;document.body.appendChild(el);
   const stop=safe.watch(el,a.top,a.bottom,()=>{cancel();schedule();});if(node!==el){stop();return;}release=stop;
@@ -37,12 +37,13 @@
    frame=null;if(node!==el)return;if(blocked()||!el.isConnected){cancel();schedule();return;}
    const t=(now-origin)/1000;ctx.clearRect(0,0,w,h);
    for(const p of particles){const age=t-p.start;if(age<0||age>p.fall)continue;
-    const u=age/p.fall,x=p.x+p.drift*u+Math.sin(age*3+p.phase)*11*scale,y=-18+(h+38)*u;
+    const u=age/p.fall,x=p.x+p.drift*u+Math.sin(age*2.5+p.phase)*18*scale,y=-18+(h+38)*u;
     const flip=Math.cos(age*p.spin+p.phase),alpha=Math.min(1,age*8,Math.max(0,(1-u)*8));
-    ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(age*2.4+p.phase)*.85+age*p.spin*.38);ctx.globalAlpha=alpha*.9;
-    ctx.scale(.22+.78*Math.abs(flip),1);
-    if(p.ribbon){ctx.lineWidth=2.7*scale;ctx.strokeStyle=flip>0?p.color:'#bd8a25';ctx.beginPath();ctx.moveTo(0,-p.size*1.6);ctx.bezierCurveTo(p.size*.8,-p.size*.8,-p.size*.9,p.size*.4,0,p.size*1.6);ctx.stroke();ctx.lineWidth=.8*scale;ctx.strokeStyle='#fff1bd';ctx.stroke();}
-    else{const g=ctx.createLinearGradient(-p.size/2,0,p.size/2,0);g.addColorStop(0,'#a76d17');g.addColorStop(.45,flip>0?p.color:'#e2ac36');g.addColorStop(.72,'#fff0b3');g.addColorStop(1,p.color);ctx.fillStyle=g;ctx.fillRect(-p.size/2,-p.size*.34,p.size,p.size*.68);}
+    ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(age*1.9+p.phase)*.70+age*p.spin*.28);ctx.globalAlpha=alpha*.96;
+    ctx.scale(.38+.62*Math.abs(flip),1);
+    // Matte coloured paper, no metallic gradients, reflective outlines or glints.
+    if(p.ribbon){ctx.lineWidth=3.8*scale;ctx.lineCap='round';ctx.strokeStyle=p.color;ctx.beginPath();ctx.moveTo(0,-p.size*1.55);ctx.bezierCurveTo(p.size*.95,-p.size*1.15,p.size*.95,-p.size*.45,0,0);ctx.bezierCurveTo(-p.size*.95,p.size*.45,-p.size*.95,p.size*1.15,0,p.size*1.55);ctx.stroke();}
+    else{ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size*.36,p.size,p.size*.72);}
     ctx.restore();
    }
    ctx.globalAlpha=1;if(t*1000>=duration){complete();return;}frame=requestAnimationFrame(paint);
@@ -59,6 +60,6 @@
  window.addEventListener('beforeprint',()=>{printing=true;reconcile();});window.addEventListener('afterprint',()=>{printing=false;reconcile();});
  window.addEventListener('pagehide',()=>{hiddenPage=true;reconcile();});window.addEventListener('pageshow',()=>{hiddenPage=false;reconcile();});
  window.addEventListener('resize',()=>{cancel();reconcile();});
- window.mlChristmasConfettiDiagnostics=()=>({revision:'REV60',blocked:blocked(),active:!!node,launches,completed,cancelled,postponed,last});
+ window.mlChristmasConfettiDiagnostics=()=>({revision:'REV60B',blocked:blocked(),active:!!node,launches,completed,cancelled,postponed,last});
  bindModal();
 })();
