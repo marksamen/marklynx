@@ -1,6 +1,5 @@
-/* CHRISTMAS TEST REV22 — paint and Completion Type font weight, independent of Halloween.
-   No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV22; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV23 — approved REV22 palette, section ribbons and mobile popup feedback. */
+:root { --ml-christmas-test-revision: REV23; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -410,17 +409,23 @@ html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .su
 html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-track {background:var(--bg-card)!important;}
 html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-thumb {background:var(--xmas-accent)!important;}
 
-/* REV21 — mobile replacement dropdown: selected remains identifiable by weight;
-   highlight exactly one option, with pointer hover taking precedence over keyboard focus. */
+/* REV23 — replacement popup only. No permanent gold on selected rows: bold
+   and aria-selected still indicate the current value. Avoid emulated/sticky
+   hover on touch devices; gold feedback is transient while pressing a row.
+   Fine pointers get hover; keyboard focus retains an outline. */
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option,
 html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option.is-selected {
   background:transparent!important;color:var(--text)!important;
 }
-html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:hover,
-html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:hover)) .ml-filter-popup-option:focus-visible {
-  background:#f8d77f!important;color:#412b10!important;
+@media (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:hover {
+    background:#f8d77f!important;color:#412b10!important;
+  }
 }
-html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:is(:hover,:focus-visible))) .ml-filter-popup-option.is-selected {
-  background:#f8d77f!important;color:#412b10!important;
+@media (hover:none), (pointer:coarse) {
+  html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:active {
+    background:#f8d77f!important;color:#412b10!important;
+  }
 }
 html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f8d77f!important;}
 /* Native fallback: option colors are subject to browser/OS popup painting. */
@@ -458,3 +463,39 @@ html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :i
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button:not([aria-selected="true"]),.mlm-tabs button:not([aria-selected="true"])):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-entry small,.mlm-entry small,.wn-empty,.mlm-empty) {color:var(--text-dim)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-list,.mlm-list) {scrollbar-color:var(--xmas-toolbar-control,var(--xmas-control)) var(--bg-card);}
+
+/* REV23 — festive section ribbons. Real heading text is retained for i18n and accessibility.
+   Decorations are noninteractive paint, constrained to the two heading rows. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {--xmas-ribbon:linear-gradient(112deg,#50030a 0%,#a20e1a 33%,#7c0710 68%,#410209 100%);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {--xmas-ribbon:linear-gradient(112deg,#032707 0%,#17601d 33%,#0b4010 68%,#021e05 100%);}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  box-sizing:border-box;
+  min-width:0; min-height:38px;
+  padding:5px 43px;
+  border:1px solid #e9c96e;
+  border-radius:7px 7px 3px 3px;
+  background-image:url(../images/christmas-holly_.svg),url(../images/christmas-holly_.svg),var(--xmas-ribbon);
+  background-position:left 5px center,right 5px center,center;
+  background-size:34px auto,34px auto,100% 100%;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 1px 0 #ffe7ad44,inset 0 -1px 0 #0005;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  display:flex; align-items:center; gap:8px; min-width:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(17px,2.2vw,23px); font-weight:700; line-height:1.2;
+  letter-spacing:normal; overflow-wrap:anywhere;
+  color:var(--xmas-title)!important;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+  content:""; display:block; flex:0 0 1em; width:1em; height:1em;
+  background:var(--xmas-section-icon) center/contain no-repeat;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%2214%22%20rx%3D%223%22%20fill%3D%22%23ffe09a%22%2F%3E%3Cpath%20d%3D%22m10%209%206%203-6%203z%22%20fill%3D%22%2365340d%22%2F%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%205h10c3%200%205%205%205%2010%200%204-3%205-5%202l-2-2H9l-2%202c-2%203-5%202-5-2C2%2010%204%205%207%205Z%22%20fill%3D%22%23ffe09a%22%2F%3E%3Cpath%20d%3D%22M7%208v6m-3-3h6%22%20stroke%3D%22%2365340d%22%20stroke-width%3D%221.6%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2210%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2213%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3C%2Fsvg%3E");}
+@media (max-width:640px) {
+  html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:34px; padding:5px 34px; background-position:left 3px center,right 3px center,center; background-size:27px auto,27px auto,100% 100%;
+  }
+}
