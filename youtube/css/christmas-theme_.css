@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV39 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV39; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV40 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV40; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -882,4 +882,29 @@ html[data-seasonal-theme="christmas"] {
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) {
     --xmas-snowman-art:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33");
   }
+}
+
+
+/* REV40: isolated, occasional elf peek. The clipping window is positioned
+   inside the existing banner by the scheduler; never participates in layout. */
+#ml-christmas-elf {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] .banner-wrap > #ml-christmas-elf {
+    display:block!important;position:absolute;left:var(--elf-x);top:var(--elf-y);
+    width:var(--elf-width);height:var(--elf-height);overflow:hidden;
+    z-index:2;pointer-events:none;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-elf > span {
+    position:absolute;inset:0;pointer-events:none;
+    background:url("../images/christmas-elf_.svg?v=CHRISTMAS-TEST-REV40") center bottom / contain no-repeat;
+    transform-origin:center bottom;
+    animation:ml-xmas-elf-peek 4s ease-in-out both;
+  }
+  @keyframes ml-xmas-elf-peek {
+    0%,100% {transform:translate3d(var(--elf-hide-x),var(--elf-hide-y),0) scaleX(var(--elf-mirror));}
+    22%,34% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(-5deg);}
+    44%,56% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(5deg);}
+    68%,76% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(0deg);}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-elf {display:none!important;}
 }
