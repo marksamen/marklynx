@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV08 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV09 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV08; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV09; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -212,4 +212,45 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid 
 html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .grid-list-sub .landscape-platform-unit,
 html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-row .list-sub.landscape-normal-list-platform .landscape-platform-unit {
   background:#87212c!important;color:#fff0c2!important;border-color:#c66b65!important;
+}
+
+
+/* REV09 — BRIGHT standard metadata should follow DARK's harmony: reddish, not creamy.
+   Leave DARK untouched and preserve special-purpose badges plus GS/TP/CT identities. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform .landscape-platform-unit,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.type,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.time,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.diff,
+  #resultsGrid .card .grid-list-sub,
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+  #resultsList .list-row .list-sub,
+  #resultsList .list-row .list-sub.landscape-normal-list-platform .landscape-platform-unit,
+  #resultsList .list-row .list-col.type,
+  #resultsList .list-row .list-col.time,
+  #resultsList .list-row .list-col.diff,
+  #resultsList .list-row .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card .diff-tag
+){
+  background:#8a2631!important;
+  color:#fff0c2!important;
+  border-color:#c66b65!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.type,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.time,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.diff,
+  #resultsList .list-row .list-col.type,
+  #resultsList .list-row .list-col.time,
+  #resultsList .list-row .list-col.diff,
+  #resultsList .list-row .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform,
+  #resultsGrid .card .grid-list-sub,
+  #resultsList .list-row .list-sub
+) :is(.recent-meta-label,.game-meta-label,.landscape-platform-unit,.landscape-platform-separator){
+  color:inherit!important;
 }
