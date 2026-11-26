@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV45 — isolated shooting-star scheduler. */
+/* CHRISTMAS TEST REV46 — isolated shooting-star scheduler. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -20,7 +20,7 @@
   function clearStar() {
     if(releaseBoundary){releaseBoundary();releaseBoundary=null;}
     if (finish !== null) { window.clearTimeout(finish); finish = null; }
-    if (layer) { layer.remove(); layer = null; }
+    if (layer) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(layer); layer.remove(); layer = null; }
   }
   function schedule() {
     if (!allowed() || pending !== null || layer) return;
@@ -70,6 +70,7 @@
     document.body.appendChild(node);
     releaseBoundary=boundary.watch(node,y-upper,y+dy+lower,function(){clearStar();schedule();});
     if(layer!==node)return;
+    if(window.mlChristmasSounds)window.mlChristmasSounds.event('star',node);
     finish = window.setTimeout(complete,duration+150);
   }
   function reconcile() {

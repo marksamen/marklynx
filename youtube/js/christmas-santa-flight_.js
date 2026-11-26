@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV45 — illustrated flight and occasional rooftop delivery, preserving REV43 scheduler safeguards. */
+/* CHRISTMAS TEST REV46 — illustrated flight and occasional rooftop delivery, preserving REV43 scheduler safeguards. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -30,7 +30,7 @@
   // TEST-only, read-only snapshot. No global controls and no polling timers.
   window.mlChristmasSantaDiagnostics = function () {
     var actor=santa&&santa.firstElementChild, r=actor&&actor.getBoundingClientRect();
-    return {revision:'REV45',state:status,blocked:blocked()||null,asset:assetState,
+    return {revision:'REV46',state:status,blocked:blocked()||null,asset:assetState,
       deliveryAsset:deliveryState,deliveryError:deliveryError||null,assetURL:assetURL,assetWidth:artwork?artwork.naturalWidth:0,lastError:lastError||null,
       nextInMs:nextAt===null?null:Math.max(0,nextAt-Date.now()),counts:Object.assign({},counts),
       safeArea:window.mlChristmasSafeArea?window.mlChristmasSafeArea.measure():null,
@@ -47,6 +47,7 @@
     if (finish !== null) { window.clearTimeout(finish); finish = null; }
     if (santa) {
       if(completed){counts.completed++;if(santa.dataset.santaMode==='delivery')counts.deliveriesCompleted++;}else counts.cancelled++;
+      if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(santa);
       santa.remove(); santa = null;
     }
   }
@@ -102,7 +103,7 @@
     function complete(){if(santa!==node)return;clearSanta(true);schedule();}
     document.body.appendChild(node);
     releaseBoundary=window.mlChristmasSafeArea.watch(node,Math.floor(vh-h-pad),Math.floor(vh-h-pad)+h,function(){clearSanta(false);schedule();});
-    if(santa===node)finish=window.setTimeout(complete,24250);return true;
+    if(santa===node){if(window.mlChristmasSounds)window.mlChristmasSounds.event('delivery',node);finish=window.setTimeout(complete,24250);}return true;
   }
   function schedule() {
     if (!allowed() || pending !== null || santa) return;
@@ -154,7 +155,7 @@
     actor.addEventListener('animationend',complete,{once:true});
     document.body.appendChild(node);
     releaseBoundary=boundary.watch(node,y-rise,y+h,function(){clearSanta(false);schedule();});
-    if(santa===node)finish=window.setTimeout(complete,duration+250);
+    if(santa===node){if(window.mlChristmasSounds)window.mlChristmasSounds.event('flyby',node,duration);finish=window.setTimeout(complete,duration+250);}
   }
   function reconcile(){
     if(!allowed()){clearPending();clearSanta(false);status='paused: '+blocked();return;}

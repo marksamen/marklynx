@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV45 — isolated elf-peek scheduler. */
+/* CHRISTMAS TEST REV46 — isolated elf-peek scheduler. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -20,7 +20,7 @@
   function clearElf() {
     if(releaseBoundary){releaseBoundary();releaseBoundary=null;}
     if (finish !== null) { window.clearTimeout(finish); finish = null; }
-    if (elf) { elf.remove(); elf = null; }
+    if (elf) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(elf); elf.remove(); elf = null; }
   }
   function schedule() {
     if (!allowed() || pending !== null || elf || !document.body) return;
@@ -64,6 +64,7 @@
     document.body.appendChild(node);
     releaseBoundary=boundary.watch(node,y-tilt,y+h+tilt,function(){clearElf();schedule();});
     if(elf!==node)return;
+    if(window.mlChristmasSounds)window.mlChristmasSounds.event('elf',node);
     finish=window.setTimeout(complete,4150);
   }
   function reconcile(){
