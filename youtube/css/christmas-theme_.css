@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV27 — Christmas-only color labels and section frames. */
-:root { --ml-christmas-test-revision: REV27; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV28 — Christmas-only color labels and section frames. */
+:root { --ml-christmas-test-revision: REV28; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -534,7 +534,7 @@ html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-gui
 }
 
 
-/* REV26/REV27 — artist-inspired panel refinements. Font requests are lazy: only the
+/* REV26 — artist-inspired panel refinements. Font requests are lazy: only the
    Christmas heading selectors use these faces. External CDN; fallback remains readable. */
 @font-face {
   font-family:"ML Christmas Cinzel"; font-style:normal; font-weight:600; font-display:swap;
@@ -582,27 +582,39 @@ html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-
 }
 
 
-/* REV27 — final header polish. Keep Christmas-only scope.
-   1) Vertically center both section headings consistently.
-   2) Remove the extra divider between the Game Guides count row and the first list row. */
+/* REV28 — replace the unsuccessful REV27 heading/seam rules.
+   Optical alignment: shift the heading content down slightly; keep the ribbon
+   height, font, artwork and horizontal alignment unchanged. */
 html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
   display:flex;
   align-items:center;
 }
 html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
   margin:0;
-  min-height:100%;
   align-self:center;
   line-height:1;
+  transform:translateY(.13em);
 }
 html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
   padding-bottom:8px;
+  position:relative;
 }
-html[data-seasonal-theme="christmas"] #resultsList {
+/* The LIST border rule must match the specificity of REV26's perimeter rule.
+   Paint the top edge the page color, not transparent over the divider-colored gap. */
+html[data-seasonal-theme="christmas"] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--bg)!important;
   padding-top:0!important;
-  border-top-color:transparent!important;
 }
-html[data-seasonal-theme="christmas"] #resultsList .list-row:first-child {
-  border-top:0!important;
-  margin-top:0!important;
+/* GRID outline is outside its box, at the bottom pixel of the count row.
+   Cover only that horizontal seam, retaining the side frame and grid sizing. */
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count::after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:1px;
+  right:1px;
+  height:1px;
+  background:var(--bg);
+  pointer-events:none;
+  z-index:1;
 }
