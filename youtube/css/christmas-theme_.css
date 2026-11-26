@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV23 — approved REV22 palette, section ribbons and mobile popup feedback. */
-:root { --ml-christmas-test-revision: REV23; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV24 — original reference holly artwork in section corners. */
+:root { --ml-christmas-test-revision: REV24; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -474,9 +474,9 @@ html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-
   padding:5px 43px;
   border:1px solid #e9c96e;
   border-radius:7px 7px 3px 3px;
-  background-image:url(../images/christmas-holly_.svg),url(../images/christmas-holly_.svg),var(--xmas-ribbon);
+  background-image:url(../images/christmas-holly-left_.png),url(../images/christmas-holly-right_.png),var(--xmas-ribbon);
   background-position:left 5px center,right 5px center,center;
-  background-size:34px auto,34px auto,100% 100%;
+  background-size:auto 30px,auto 30px,100% 100%;
   background-repeat:no-repeat;
   box-shadow:inset 0 1px 0 #ffe7ad44,inset 0 -1px 0 #0005;
 }
@@ -496,6 +496,6 @@ html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-head
 html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%205h10c3%200%205%205%205%2010%200%204-3%205-5%202l-2-2H9l-2%202c-2%203-5%202-5-2C2%2010%204%205%207%205Z%22%20fill%3D%22%23ffe09a%22%2F%3E%3Cpath%20d%3D%22M7%208v6m-3-3h6%22%20stroke%3D%22%2365340d%22%20stroke-width%3D%221.6%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2210%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2213%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3C%2Fsvg%3E");}
 @media (max-width:640px) {
   html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
-    min-height:34px; padding:5px 34px; background-position:left 3px center,right 3px center,center; background-size:27px auto,27px auto,100% 100%;
+    min-height:34px; padding:5px 34px; background-position:left 3px center,right 3px center,center; background-size:auto 25px,auto 25px,100% 100%;
   }
 }
