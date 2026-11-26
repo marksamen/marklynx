@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV33 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV33; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV34 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV34; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -730,4 +730,77 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
     background-position:left max(7px,calc((100% - 1400px)/4 - 40px)) top 8px!important;
     background-repeat:no-repeat!important;
   }
+}
+
+
+/* REV34: CSS-only falling snow. No app state, timer, network request or input
+   interception. The markup is hidden by default even if CSS fails to load.
+   The layer is below existing dialogs and hidden while the video modal is open.
+   Do not reuse the Halloween animation layer. */
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow {
+    display:block!important;
+    position:fixed;inset:0;overflow:hidden;pointer-events:none;
+    z-index:8;contain:layout style paint;
+    --ml-xmas-snow-travel:calc(100vh + 32px);
+  }
+  @supports (height:100dvh) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow {--ml-xmas-snow-travel:calc(100dvh + 32px);}
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span {
+    display:block;position:absolute;top:-16px;left:var(--snow-x);
+    width:var(--snow-size);height:var(--snow-size);pointer-events:none;
+    border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff 35%,rgba(255,255,255,0) 72%);
+    opacity:var(--snow-opacity);
+    animation:ml-christmas-snow-fall var(--snow-duration) linear var(--snow-delay) infinite;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(3n+1) {
+    border-radius:0;
+    background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath id='a' d='M12 12V2M8.8 5.1L12 8l3.2-2.9'/%3E%3Cuse href='%23a' transform='rotate(60 12 12)'/%3E%3Cuse href='%23a' transform='rotate(120 12 12)'/%3E%3Cuse href='%23a' transform='rotate(180 12 12)'/%3E%3Cuse href='%23a' transform='rotate(240 12 12)'/%3E%3Cuse href='%23a' transform='rotate(300 12 12)'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  @keyframes ml-christmas-snow-fall {
+    0% {transform:translate3d(0,0,0);}
+    50% {transform:translate3d(var(--snow-drift),calc(var(--ml-xmas-snow-travel) / 2),0);}
+    100% {transform:translate3d(var(--snow-end),var(--ml-xmas-snow-travel),0);}
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(1) {--snow-x:7.42%;--snow-size:9px;--snow-opacity:0.62;--snow-duration:16s;--snow-delay:-13.60s;--snow-drift:27px;--snow-end:25px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(2) {--snow-x:65.51%;--snow-size:5px;--snow-opacity:0.45;--snow-duration:17s;--snow-delay:-4.65s;--snow-drift:-20px;--snow-end:-9px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(3) {--snow-x:29.61%;--snow-size:3px;--snow-opacity:0.48;--snow-duration:17s;--snow-delay:-11.85s;--snow-drift:-30px;--snow-end:-14px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(4) {--snow-x:87.7%;--snow-size:11px;--snow-opacity:0.5;--snow-duration:17s;--snow-delay:-11.09s;--snow-drift:-17px;--snow-end:-11px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(5) {--snow-x:51.8%;--snow-size:5px;--snow-opacity:0.77;--snow-duration:15s;--snow-delay:-7.86s;--snow-drift:26px;--snow-end:27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(6) {--snow-x:15.89%;--snow-size:6px;--snow-opacity:0.57;--snow-duration:21s;--snow-delay:-4.72s;--snow-drift:-24px;--snow-end:-27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(7) {--snow-x:73.99%;--snow-size:11px;--snow-opacity:0.58;--snow-duration:21s;--snow-delay:-1.46s;--snow-drift:20px;--snow-end:15px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(8) {--snow-x:38.08%;--snow-size:4px;--snow-opacity:0.52;--snow-duration:20s;--snow-delay:-19.01s;--snow-drift:13px;--snow-end:12px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(9) {--snow-x:96.18%;--snow-size:3px;--snow-opacity:0.46;--snow-duration:21s;--snow-delay:-2.52s;--snow-drift:-23px;--snow-end:-31px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(10) {--snow-x:60.27%;--snow-size:13px;--snow-opacity:0.5;--snow-duration:23s;--snow-delay:-17.77s;--snow-drift:17px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(11) {--snow-x:24.37%;--snow-size:6px;--snow-opacity:0.69;--snow-duration:21s;--snow-delay:-9.31s;--snow-drift:28px;--snow-end:18px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(12) {--snow-x:82.47%;--snow-size:5px;--snow-opacity:0.49;--snow-duration:21s;--snow-delay:-8.27s;--snow-drift:20px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(13) {--snow-x:46.56%;--snow-size:11px;--snow-opacity:0.66;--snow-duration:22s;--snow-delay:-2.87s;--snow-drift:-19px;--snow-end:-8px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(14) {--snow-x:10.66%;--snow-size:6px;--snow-opacity:0.62;--snow-duration:14s;--snow-delay:-4.12s;--snow-drift:-23px;--snow-end:-10px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(15) {--snow-x:68.75%;--snow-size:4px;--snow-opacity:0.47;--snow-duration:16s;--snow-delay:-14.21s;--snow-drift:-16px;--snow-end:-21px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(16) {--snow-x:32.85%;--snow-size:13px;--snow-opacity:0.63;--snow-duration:15s;--snow-delay:-11.13s;--snow-drift:25px;--snow-end:26px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(17) {--snow-x:90.94%;--snow-size:5px;--snow-opacity:0.7;--snow-duration:15s;--snow-delay:-6.95s;--snow-drift:18px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(18) {--snow-x:55.04%;--snow-size:6px;--snow-opacity:0.63;--snow-duration:17s;--snow-delay:-10.54s;--snow-drift:30px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(19) {--snow-x:19.13%;--snow-size:9px;--snow-opacity:0.61;--snow-duration:15s;--snow-delay:-0.89s;--snow-drift:29px;--snow-end:24px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(20) {--snow-x:77.23%;--snow-size:6px;--snow-opacity:0.5;--snow-duration:23s;--snow-delay:-10.97s;--snow-drift:28px;--snow-end:13px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(21) {--snow-x:41.32%;--snow-size:4px;--snow-opacity:0.76;--snow-duration:20s;--snow-delay:-18.82s;--snow-drift:26px;--snow-end:15px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(22) {--snow-x:5.42%;--snow-size:13px;--snow-opacity:0.57;--snow-duration:22s;--snow-delay:-1.92s;--snow-drift:-27px;--snow-end:-22px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(23) {--snow-x:63.51%;--snow-size:5px;--snow-opacity:0.59;--snow-duration:16s;--snow-delay:-13.32s;--snow-drift:-27px;--snow-end:-27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(24) {--snow-x:27.61%;--snow-size:6px;--snow-opacity:0.51;--snow-duration:19s;--snow-delay:-11.74s;--snow-drift:24px;--snow-end:22px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(25) {--snow-x:85.7%;--snow-size:11px;--snow-opacity:0.64;--snow-duration:13s;--snow-delay:-9.63s;--snow-drift:14px;--snow-end:7px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(26) {--snow-x:49.8%;--snow-size:4px;--snow-opacity:0.69;--snow-duration:14s;--snow-delay:-7.60s;--snow-drift:-13px;--snow-end:-6px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(27) {--snow-x:13.89%;--snow-size:3px;--snow-opacity:0.67;--snow-duration:14s;--snow-delay:-5.44s;--snow-drift:20px;--snow-end:23px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(28) {--snow-x:71.99%;--snow-size:11px;--snow-opacity:0.49;--snow-duration:13s;--snow-delay:-2.02s;--snow-drift:-27px;--snow-end:-37px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(29) {--snow-x:36.08%;--snow-size:3px;--snow-opacity:0.44;--snow-duration:23s;--snow-delay:-7.12s;--snow-drift:-20px;--snow-end:-20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(30) {--snow-x:94.18%;--snow-size:5px;--snow-opacity:0.72;--snow-duration:15s;--snow-delay:-13.03s;--snow-drift:-27px;--snow-end:-13px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(31) {--snow-x:58.27%;--snow-size:9px;--snow-opacity:0.51;--snow-duration:20s;--snow-delay:-13.39s;--snow-drift:24px;--snow-end:21px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(32) {--snow-x:22.37%;--snow-size:6px;--snow-opacity:0.76;--snow-duration:14s;--snow-delay:-3.43s;--snow-drift:-31px;--snow-end:-32px;}
+  @media (max-width:900px) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(n+19) {display:none;animation:none;}
+  }
+  @media (max-width:600px) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(n+13) {display:none;animation:none;}
+  }
+  /* Existing modal uses .open. Hide snowfall entirely, not just behind the player. */
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-snow {display:none!important;}
 }
