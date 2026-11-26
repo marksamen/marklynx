@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV58 — coordinated, original canvas New Year fireworks. */
+/* CHRISTMAS TEST REV59 — coordinated, original canvas New Year fireworks. */
 (function(){
  'use strict';
  const root=document.documentElement, motion=matchMedia('(prefers-reduced-motion: reduce)'),mount=document.getElementById('mainModuleMount');
@@ -7,7 +7,7 @@
  let node=null,release=null,frame=null,finish=null,modal=null,printing=false,hiddenPage=false,launches=0,completed=0,cancelled=0,postponed=0,last=null;
  function blocked(){const v=document.getElementById('videoModalOverlay');return root.getAttribute('data-seasonal-theme')!=='christmas'||root.getAttribute('data-ml-celebration-mode')!=='new_year'||motion.matches||document.hidden||printing||hiddenPage||!!(v&&v.classList.contains('open'));}
  function schedule(){if(!blocked()&&!node&&window.mlChristmasCoordinator)window.mlChristmasCoordinator.request(key,id,launch,reconcile);}
- function clear(){if(release){release();release=null;}if(frame!==null){cancelAnimationFrame(frame);frame=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){node.remove();node=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done(key);}}
+ function clear(){if(release){release();release=null;}if(frame!==null){cancelAnimationFrame(frame);frame=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(node);node.remove();node=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done(key);}}
  function cancel(){if(node){cancelled++;clear();}}
  function launch(){
   if(blocked()||node){reconcile();return;}
@@ -28,6 +28,7 @@
   const stop=safe.watch(el,a.top,a.bottom,()=>{cancel();schedule();});if(node!==el){stop();return;}release=stop;
   launches++;last={width:w,height:h,top:a.top,bursts:bursts.length,particles:132,durationMs:duration};
   const origin=performance.now();
+  if(window.mlChristmasSounds)window.mlChristmasSounds.event('fireworks',el,duration);
   function complete(){if(node!==el)return;completed++;clear();schedule();}
   function paint(now){
    frame=null;if(node!==el)return;if(blocked()||!el.isConnected){cancel();schedule();return;}
@@ -51,6 +52,6 @@
  window.addEventListener('beforeprint',()=>{printing=true;reconcile();});window.addEventListener('afterprint',()=>{printing=false;reconcile();});
  window.addEventListener('pagehide',()=>{hiddenPage=true;reconcile();});window.addEventListener('pageshow',()=>{hiddenPage=false;reconcile();});
  window.addEventListener('resize',()=>{cancel();reconcile();});
- window.mlChristmasFireworksDiagnostics=()=>({revision:'REV58',blocked:blocked(),active:!!node,launches,completed,cancelled,postponed,last});
+ window.mlChristmasFireworksDiagnostics=()=>({revision:'REV59',blocked:blocked(),active:!!node,launches,completed,cancelled,postponed,last});
  bindModal();
 })();
