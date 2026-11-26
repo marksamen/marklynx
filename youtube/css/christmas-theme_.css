@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV41; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV43; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -906,4 +906,31 @@ html[data-seasonal-theme="christmas"] {
     68%,76% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(0deg);}
   }
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-elf {display:none!important;}
+}
+
+
+/* REV43: Santa flyby. Fixed, clipped, noninteractive; no layout changes. */
+#ml-christmas-santa {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] body > #ml-christmas-santa {
+    display:block!important;position:fixed;inset:0;overflow:hidden;
+    z-index:9;pointer-events:none;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span {
+    position:absolute;left:var(--santa-x);top:var(--santa-y);
+    width:var(--santa-width);height:var(--santa-height);pointer-events:none;
+    animation:ml-xmas-santa-flight var(--santa-duration) linear both;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa img {
+    display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;
+    transform:scaleX(var(--santa-mirror));
+  }
+  @keyframes ml-xmas-santa-flight {
+    0% {transform:translate3d(0,0,0);}
+    25% {transform:translate3d(var(--santa-dx25),var(--santa-dy25),0);}
+    50% {transform:translate3d(var(--santa-dx50),var(--santa-dy50),0);}
+    75% {transform:translate3d(var(--santa-dx75),var(--santa-dy75),0);}
+    100% {transform:translate3d(var(--santa-dx),var(--santa-dy),0);}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-santa {display:none!important;}
 }
