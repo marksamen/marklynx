@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV18 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV19 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV18; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV19; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -389,3 +389,49 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcas
 /* REV18 — DARK unread dots, desktop and mobile; preserve visibility and geometry. */
 html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#whatsNewPublicBtn,#whatsNewMobileBtn) .wn-dot,
 html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#markLynxMessagePublicBtn,#markLynxMobileHubBtn) .mlm-dot { background:#55c979!important; }
+
+/* REV19 — DARK Suggest a Game: match the already approved DARK form palette.
+   Keep existing panel/form surfaces; replace legacy black platform tiles and unthemed paint. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid label {
+  background:var(--bg-raised)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid label:hover {
+  background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-panel h2,.suggest-kicker,.suggest-game-form label>span,.suggest-platforms legend,.suggest-platform-grid label>span) {color:var(--xmas-title)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-intro {color:var(--text-dim)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea):focus {background:var(--bg-raised)!important;border-color:var(--xmas-edge)!important;box-shadow:0 0 0 2px var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid input[type=checkbox] {accent-color:var(--xmas-accent);}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-close,.suggest-send-btn) {background:var(--xmas-accent)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-close,.suggest-send-btn):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel {scrollbar-color:var(--xmas-accent) var(--bg-card)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-track {background:var(--bg-card)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-thumb {background:var(--xmas-accent)!important;}
+
+/* REV19 — gold selection: same exact palette as active GRID/LIST. Existing mobile replacement menu. */
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option:is(.is-selected,:hover,:focus-visible,:active) {
+  background:#f1d696!important;color:#412b10!important;
+}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f1d696!important;}
+/* Native fallback: option colors are subject to browser/OS popup painting. */
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);}
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:checked,:hover,:focus-visible) {background:#f1d696!important;color:#412b10!important;}
+/* Modern desktop Chromium: opt into the CSS-stylable select picker, retaining native select
+   value/change/keyboard semantics and existing mobile filter replacement. Unsupported browsers
+   retain native menus; do not change the protected mobile popup script. */
+@supports (appearance:base-select) and selector(::picker(select)) {
+  @media (min-width:901px) and (min-height:501px) and (pointer:fine) {
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker],
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker(select) {appearance:base-select;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] {
+      box-sizing:border-box;width:var(--ml-christmas-picker-width);height:var(--ml-christmas-picker-height);
+    }
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker(select) {
+      background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);border:1px solid var(--xmas-edge);border-radius:3px; padding:0;max-height:min(50vh,360px);overflow:auto;
+    }
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] option {padding:4px 10px;min-height:0;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] option::checkmark {display:none;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker-icon {color:var(--text);}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] optgroup {color:var(--text);}
+  }
+}
