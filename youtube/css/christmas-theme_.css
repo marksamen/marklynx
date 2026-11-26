@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV28 — Christmas-only color labels and section frames. */
-:root { --ml-christmas-test-revision: REV28; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV29 — Christmas-only color labels, section frames and trees. */
+:root { --ml-christmas-test-revision: REV29; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -617,4 +617,30 @@ html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count::a
   background:var(--bg);
   pointer-events:none;
   z-index:1;
+}
+
+
+/* REV29: static Christmas trees only. Use two background layers so the existing
+   banner image remains the only image element (including its dark/bright swap).
+   The previous Christmas background shorthand is !important: match priority
+   for the decorative longhands, leaving its approved background color intact. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-tree-slot:clamp(48px,8vw,148px);
+  background-image:url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-size:calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+  background-position:left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
+}
+html[data-seasonal-theme="christmas"] .banner-wrap > img {
+  width:calc(100% - var(--xmas-tree-slot) - var(--xmas-tree-slot));
+}
+/* Narrow portrait: retain the exact baseline banner width. The tree band
+   lives under the artwork, not over the artwork or interactive controls. */
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    padding-bottom:62px;
+    background-size:auto 56px,auto 56px!important;
+    background-position:left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+  html[data-seasonal-theme="christmas"] .banner-wrap > img {width:100%;}
 }
