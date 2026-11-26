@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV35 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV35; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV36 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV36; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -626,7 +626,7 @@ html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count::a
    for the decorative longhands, leaving its approved background color intact. */
 html[data-seasonal-theme="christmas"] .banner-wrap {
   --xmas-tree-slot:clamp(48px,8vw,148px);
-  background-image:url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+  background-image:var(--xmas-tree-art),var(--xmas-tree-art)!important;
   background-repeat:no-repeat,no-repeat!important;
   background-size:calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
   background-position:left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
@@ -649,7 +649,7 @@ html[data-seasonal-theme="christmas"] .banner-wrap > img {
 /* REV30: static gift clusters in front of the existing trees. The approved
    tree layers, banner geometry and portrait strip are unchanged. */
 html[data-seasonal-theme="christmas"] .banner-wrap {
-  background-image:url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+  background-image:url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
   background-repeat:no-repeat,no-repeat,no-repeat,no-repeat!important;
   background-size:calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
   background-position:left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
@@ -697,7 +697,7 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
    Place the repeating light string behind the two bows, above the garland.
    Reuse its existing height, width and pointer-events behavior. */
 html[data-seasonal-theme="christmas"] .banner-wrap::before {
-  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),url("../images/christmas-banner-lights_.svg?v=CHRISTMAS-TEST-REV32"),url("../images/christmas-garland_.png?v=CHRISTMAS-TEST-REV31")!important;
+  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),var(--xmas-garland-lights),url("../images/christmas-garland_.png?v=CHRISTMAS-TEST-REV31")!important;
   background-size:auto 100%,auto 100%,auto 100%,auto 100%!important;
   background-position:left 4px center,right 4px center,center,center!important;
   background-repeat:no-repeat,no-repeat,repeat-x,repeat-x!important;
@@ -711,7 +711,7 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
 @media (max-width:1439px) {
   html[data-seasonal-theme="christmas"] .banner-wrap {
     padding-bottom:62px;
-    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
     background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat!important;
     background-size:auto 56px,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
     background-position:center bottom 3px,left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px)!important;
@@ -805,4 +805,23 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
   }
   /* Existing modal uses .open. Hide snowfall entirely, not just behind the player. */
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-snow {display:none!important;}
+}
+
+
+/* REV36: slow staggered light twinkles only. Original image fallbacks keep
+   reduced-motion, print and video-modal states static. All REV35 layer sizes,
+   positions, ordering and snowfall are preserved. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-tree-art: url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29");
+  --xmas-garland-lights: url("../images/christmas-banner-lights_.svg?v=CHRISTMAS-TEST-REV32");
+}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    --xmas-tree-art:url("../images/christmas-tree-twinkle_.svg?v=CHRISTMAS-TEST-REV36");
+    --xmas-garland-lights:url("../images/christmas-banner-twinkle_.svg?v=CHRISTMAS-TEST-REV36");
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) .banner-wrap {
+    --xmas-tree-art: url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29");
+    --xmas-garland-lights: url("../images/christmas-banner-lights_.svg?v=CHRISTMAS-TEST-REV32");
+  }
 }
