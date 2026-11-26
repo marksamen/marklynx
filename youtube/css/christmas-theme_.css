@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV26 — Christmas-only color labels and section frames. */
-:root { --ml-christmas-test-revision: REV26; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV27 — Christmas-only color labels and section frames. */
+:root { --ml-christmas-test-revision: REV27; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -534,7 +534,7 @@ html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-gui
 }
 
 
-/* REV26 — artist-inspired panel refinements. Font requests are lazy: only the
+/* REV26/REV27 — artist-inspired panel refinements. Font requests are lazy: only the
    Christmas heading selectors use these faces. External CDN; fallback remains readable. */
 @font-face {
   font-family:"ML Christmas Cinzel"; font-style:normal; font-weight:600; font-display:swap;
@@ -579,4 +579,30 @@ html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-
     padding-inline:37px;min-height:38px;
   }
   html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4.3vw,19px);}
+}
+
+
+/* REV27 — final header polish. Keep Christmas-only scope.
+   1) Vertically center both section headings consistently.
+   2) Remove the extra divider between the Game Guides count row and the first list row. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  display:flex;
+  align-items:center;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  margin:0;
+  min-height:100%;
+  align-self:center;
+  line-height:1;
+}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
+  padding-bottom:8px;
+}
+html[data-seasonal-theme="christmas"] #resultsList {
+  padding-top:0!important;
+  border-top-color:transparent!important;
+}
+html[data-seasonal-theme="christmas"] #resultsList .list-row:first-child {
+  border-top:0!important;
+  margin-top:0!important;
 }
