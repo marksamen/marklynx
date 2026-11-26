@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV24 — original reference holly artwork in section corners. */
-:root { --ml-christmas-test-revision: REV24; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV25 — Christmas-only color labels and section frames. */
+:root { --ml-christmas-test-revision: REV25; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -498,4 +498,37 @@ html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head {--
   html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
     min-height:34px; padding:5px 34px; background-position:left 3px center,right 3px center,center; background-size:auto 25px,auto 25px,100% 100%;
   }
+}
+
+
+/* REV25 — frame the two sections with the approved accent. No overflow clipping
+   or renderer changes. Existing LIST borders keep their geometry; GRID uses
+   an inset-free CSS outline, preserving its column sizing. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  margin-bottom:0;
+  border-color:var(--xmas-edge);
+  border-radius:7px 7px 0 0;
+}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
+  margin:0;
+  padding:8px 8px 10px;
+  box-shadow:inset 1px 0 var(--xmas-edge),inset -1px 0 var(--xmas-edge);
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  border-color:var(--xmas-edge)!important;
+  border-radius:0 0 7px 7px;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  border-radius:0 0 7px 7px;
+  outline:1px solid var(--xmas-edge);
+  outline-offset:0;
+}
+/* Breathing room inside GRID frames, without reducing column widths. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {
+  padding-block:6px;
+}
+/* Match the existing content container in the narrow portrait range where
+   the pre-existing heading and content insets differ. */
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="christmas"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
 }
