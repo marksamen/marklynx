@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV38 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV38; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV39 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV39; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -711,7 +711,7 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
 @media (max-width:1439px) {
   html[data-seasonal-theme="christmas"] .banner-wrap {
     padding-bottom:62px;
-    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
+    background-image:var(--xmas-snowman-art),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
     background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat!important;
     background-size:auto 56px,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
     background-position:center bottom 3px,left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px)!important;
@@ -725,7 +725,7 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
 }
 @media (min-width:1440px) {
   html[data-seasonal-theme="christmas"] #recentUploadsSection {
-    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33")!important;
+    background-image:var(--xmas-snowman-art)!important;
     background-size:min(108px,calc((100% - 1400px)/2 + 14px)) auto!important;
     background-position:left max(7px,calc((100% - 1400px)/4 - 40px)) top 8px!important;
     background-repeat:no-repeat!important;
@@ -866,4 +866,20 @@ html[data-seasonal-theme="christmas"] .banner-wrap {
     100% {transform:translate3d(var(--star-dx),var(--star-dy),0);opacity:0;}
   }
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-shooting-star {display:none!important;}
+}
+
+
+/* REV39: occasional snowman wave and hat tip, preserving REV33 geometry.
+   Only the background artwork changes; static original for print, reduced
+   motion and the existing open video modal. No scheduler or input capture. */
+html[data-seasonal-theme="christmas"] {
+  --xmas-snowman-art:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33");
+}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] {
+    --xmas-snowman-art:url("../images/christmas-snowman-wave_.svg?v=CHRISTMAS-TEST-REV39");
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) {
+    --xmas-snowman-art:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33");
+  }
 }
