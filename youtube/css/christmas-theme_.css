@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV20 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV21 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV20; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV21; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -285,9 +285,9 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSec
    Do not paint metric wrappers, thumbnail images, quality logos or status indicators.
    Repeated grid ID deliberately wins over accumulated legacy important selectors. */
 html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.grid-list-sub .landscape-platform-unit,.diff-tag,.game-meta-pill,.gs-pill,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--bg)!important;
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
   color:var(--xmas-title)!important;
-  border-color:var(--line)!important;
+  border-color:var(--xmas-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -304,9 +304,9 @@ html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card
 /* REV13 — Game Guides LIST only: same outside-page paint as approved GRID.
    Exclude empty points placeholders and dual-metric layout wrapper. */
 html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.list-sub .landscape-platform-unit,.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill,.completion-type-meta,.list-col.gs:not(.guide-list-points):not(.guide-empty-points),.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--bg)!important;
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
   color:var(--xmas-title)!important;
-  border-color:var(--line)!important;
+  border-color:var(--xmas-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -325,9 +325,9 @@ html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list
 /* REV15 — Recent Uploads LIST only: plain page-matching metadata paint, same direction as accepted Normal LIST/GRID.
    Match the outside page color, not the inner card tone. Preserve Recent GRID, wrappers, artwork and layout. */
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--bg)!important;
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
   color:var(--xmas-title)!important;
-  border-color:var(--line)!important;
+  border-color:var(--xmas-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -341,9 +341,9 @@ html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-
 /* REV16 — Recent Uploads GRID only. Mirror approved REV15 LIST badge paint.
    Preserve typography, geometry, wrappers, quality artwork and LIST. */
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--bg)!important;
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
   color:var(--xmas-title)!important;
-  border-color:var(--line)!important;
+  border-color:var(--xmas-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -408,8 +408,16 @@ html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .su
 html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-track {background:var(--bg-card)!important;}
 html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-thumb {background:var(--xmas-accent)!important;}
 
-/* REV19 — gold selection: same exact palette as active GRID/LIST. Existing mobile replacement menu. */
-html[data-seasonal-theme="christmas"] .ml-filter-popup-option:is(.is-selected,:hover,:focus-visible,:active) {
+/* REV21 — mobile replacement dropdown: selected remains identifiable by weight;
+   highlight exactly one option, with pointer hover taking precedence over keyboard focus. */
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option.is-selected {
+  background:transparent!important;color:var(--text)!important;
+}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:hover,
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:hover)) .ml-filter-popup-option:focus-visible {
+  background:#f1d696!important;color:#412b10!important;
+}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:is(:hover,:focus-visible))) .ml-filter-popup-option.is-selected {
   background:#f1d696!important;color:#412b10!important;
 }
 html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f1d696!important;}
