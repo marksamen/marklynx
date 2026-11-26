@@ -3,8 +3,8 @@ import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPas
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { loadTrafficAnalytics } from "./admin-traffic_.js";
 import { initTestContentControl } from "./admin-test-content_.js?v=REV58-test-content-isolation";
-import { initAdminPageModal } from "./admin-page-modal_.js?v=MLM-TEST-REV06";
-import { initSeasonalThemeControl } from "./admin-seasonal-theme_.js?v=CHRISTMAS-TEST-REV03";
+import { initAdminPageModal } from "./admin-page-modal_.js?v=CHRISTMAS-TEST-REV55";
+import { initSeasonalConfiguration } from "./admin-seasonal-configuration_.js?v=CHRISTMAS-TEST-REV55";
 import { initDataSourceControl, loadDataSourceStatus, verifyTestDatabaseIdentity } from "./admin-data-source_.js";
 import { initGameManagement, loadGamesTest, loadQualityBadges,loadTextGuideOptions,loadPlatformOptions,loadGenreOptions,loadCompletionTypeOptions } from "./admin-game-management_.js?v=TROPHY-POINTS-TEST-REV03";
 import { initRecentRefresh } from "./admin-recent-refresh_.js?v=recent-refresh-rev01";
@@ -28,8 +28,8 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){refreshSeasonalTheme();login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
+function loggedOut(){if(document.getElementById("adminPageModalFrame")?.getAttribute("src")?.startsWith("seasonal/"))document.getElementById("adminPageModalClose").click();admin.style.display="none";login.style.display="block";}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesTest();loadDataSourceStatus();}
 
 
 // Supabase TEST recovery export — public SELECT only. No database writes.
@@ -37,7 +37,7 @@ const SUPABASE_TEST_URL="https://aikifibkcjibubqegvmb.supabase.co";
 const SUPABASE_TEST_PUBLISHABLE_KEY="sb_publishable_AMeGQySg9vDaKqkZRz_7HQ_yveiHHV_";
 
 initDataSourceControl({auth,SUPABASE_TEST_URL,SUPABASE_TEST_PUBLISHABLE_KEY});
-const refreshSeasonalTheme=initSeasonalThemeControl({auth,url:SUPABASE_TEST_URL});
+initSeasonalConfiguration({auth,url:SUPABASE_TEST_URL});
 initGameManagement({auth,verifyTestDatabaseIdentity});
 initRecentRefresh({auth});
 initVideoCountRefresh({auth});
