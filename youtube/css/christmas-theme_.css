@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV12 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV13 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV12; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV13; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -299,4 +299,20 @@ html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card
 }
 html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card .diff-tag .diff-dot {
   background:var(--xmas-title)!important;
+}
+
+/* REV13 — Game Guides LIST only: same outside-page paint as approved GRID.
+   Exclude empty points placeholders and dual-metric layout wrapper. */
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.list-sub .landscape-platform-unit,.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill,.completion-type-meta,.list-col.gs:not(.guide-list-points):not(.guide-empty-points),.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--bg)!important;
+  color:var(--xmas-title)!important;
+  border-color:var(--line)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.game-meta-pill,.completion-type-meta,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.game-meta-label,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
 }
