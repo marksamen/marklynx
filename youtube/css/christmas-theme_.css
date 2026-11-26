@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV30 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV30; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV31 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV31; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -659,4 +659,35 @@ html[data-seasonal-theme="christmas"] .banner-wrap {
     background-size:44px auto,44px auto,auto 56px,auto 56px!important;
     background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
   }
+}
+
+
+/* REV31: static evergreen garland, satin bows and golden bells above the
+   banner. Reuse the existing noninteractive top pseudo-element. A dedicated
+   strip keeps all decoration off the artwork and preserves its width.
+   The added half-strip offset keeps the REV30 tree/gift layers aligned
+   relative to the banner; narrow-screen bottom anchoring needs no offset. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-banner-garland-height:36px;
+  padding-top:var(--xmas-banner-garland-height);
+  background-position:left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] .banner-wrap {--xmas-banner-bow:url("../images/christmas-banner-bow-red_.png?v=CHRISTMAS-TEST-REV31");}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .banner-wrap {--xmas-banner-bow:url("../images/christmas-banner-bow-green_.png?v=CHRISTMAS-TEST-REV31");}
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  left:50%;right:auto;transform:translateX(-50%);
+  width:min(calc(100% - var(--xmas-tree-slot) - var(--xmas-tree-slot)),1707px);
+  height:var(--xmas-banner-garland-height);
+  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),url("../images/christmas-garland_.png?v=CHRISTMAS-TEST-REV31")!important;
+  background-size:auto 100%,auto 100%,auto 100%!important;
+  background-position:left 4px center,right 4px center,center!important;
+  background-repeat:no-repeat,no-repeat,repeat-x!important;
+  pointer-events:none;
+}
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    --xmas-banner-garland-height:24px;
+    background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+  html[data-seasonal-theme="christmas"] .banner-wrap::before {width:100%;}
 }
