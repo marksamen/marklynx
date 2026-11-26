@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV29 — Christmas-only color labels, section frames and trees. */
-:root { --ml-christmas-test-revision: REV29; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV30 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV30; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -643,4 +643,20 @@ html[data-seasonal-theme="christmas"] .banner-wrap > img {
     background-position:left 12px bottom 3px,right 12px bottom 3px!important;
   }
   html[data-seasonal-theme="christmas"] .banner-wrap > img {width:100%;}
+}
+
+
+/* REV30: static gift clusters in front of the existing trees. The approved
+   tree layers, banner geometry and portrait strip are unchanged. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  background-image:url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat!important;
+  background-size:calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+  background-position:left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
+}
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    background-size:44px auto,44px auto,auto 56px,auto 56px!important;
+    background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
 }
