@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV49; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV50; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -957,4 +957,20 @@ html[data-seasonal-theme="christmas"] {
  html[data-seasonal-theme="christmas"] #ml-christmas-train img {display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;transform:scaleX(var(--train-mirror));}
  @keyframes ml-xmas-train-cross {from {transform:translate3d(0,0,0);}to {transform:translate3d(var(--train-dx),0,0);}}
  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-train {display:none!important;}
+}
+
+/* REV50 — occasional snowy bootprints, no layout or hit-test participation. */
+#ml-christmas-footprints {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+ html[data-seasonal-theme="christmas"] body > #ml-christmas-footprints {
+  display:block!important;position:fixed;inset:0;overflow:hidden;z-index:9;pointer-events:none;contain:layout style paint;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-footprints > svg {
+  position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;pointer-events:none;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-footprints .ml-xmas-bootprint {
+  opacity:0;animation:ml-xmas-bootprint 4.8s var(--foot-delay) both;
+ }
+ @keyframes ml-xmas-bootprint {0%{opacity:0} 5%{opacity:.9} 68%{opacity:.85} 100%{opacity:0}}
+ html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-footprints {display:none!important;}
 }
