@@ -1,11 +1,11 @@
-/* CHRISTMAS TEST REV40 — isolated elf-peek scheduler. */
+/* CHRISTMAS TEST REV41 — isolated elf-peek scheduler. */
 (function () {
   'use strict';
   var root = document.documentElement;
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var mount = document.getElementById('mainModuleMount');
   var pending = null, finish = null, elf = null, modal = null;
-  var printing = false, suspended = false, started = false;
+  var printing = false, suspended = false, started = false, lastSide = null;
   function random(min,max) { return min + Math.random()*(max-min); }
   function allowed() {
     var video = document.getElementById('videoModalOverlay');
@@ -21,47 +21,43 @@
     if (elf) { elf.remove(); elf = null; }
   }
   function schedule() {
-    if (!allowed() || pending !== null || elf || !document.querySelector('.banner-wrap > img')) return;
+    if (!allowed() || pending !== null || elf || !document.body) return;
     pending = window.setTimeout(function () {
       pending = null;
       if (allowed()) peek();
-    }, Math.round(started ? random(15000,35000) : random(8000,15000)));
+      else reconcile();
+    }, Math.round(started ? random(5000,20000) : random(3000,8000)));
   }
   function peek() {
-    var banner = document.querySelector('.banner-wrap');
-    var image = banner && banner.querySelector(':scope > img');
-    if (!allowed() || elf || !image) return;
-    var box = banner.getBoundingClientRect(), art = image.getBoundingClientRect();
-    var right = Math.random() >= .5;
-    var w, h, x, y, dx = 0, dy = 0;
-    // Smaller screens already reserve a 62px strip. Keep clear of the snowman,
-    // trees, gifts and the banner itself. On wide screens peek beside the art.
-    if (window.matchMedia('(max-width:1439px)').matches) {
-      w = Math.min(48, Math.floor(box.width*.14)); h = 54;
-      x = box.width*(right ? .70 : .30)-w/2;
-      y = banner.clientHeight-h-3; dy = h+4;
+    if (!allowed() || elf) return;
+    // CSS fixed viewport coordinates: no dependence on banner or scrollY.
+    var vw = root.clientWidth, vh = Math.min(root.clientHeight, window.innerHeight);
+    if (vw < 80 || vh < 100) { schedule(); return; }
+    var sides = ['left','right','bottom'].filter(function(s){return s !== lastSide;});
+    var side = sides[Math.floor(Math.random()*sides.length)];
+    var h = Math.floor(Math.min(vw <= 600 ? 118 : vw <= 900 ? 130 : 162, vh*.34));
+    var w = Math.round(h*120/206), pad = 10;
+    var x, y, dx = 0, dy = 0;
+    if (side === 'bottom') {
+      x = Math.round(random(pad, Math.max(pad,vw-w-pad)));
+      y = vh-h-pad; dy = h+pad+20;
     } else {
-      var margin = right ? box.right-art.right : art.left-box.left;
-      w = Math.min(78,Math.floor(margin-6)); h = Math.round(w*1.2);
-      x = right ? art.right-box.left : art.left-box.left-w;
-      y = art.top-box.top+Math.max(0,Math.min(art.height-h,art.height*.43));
-      dx = right ? -w-4 : w+4;
+      x = side === 'right' ? vw-w-pad : pad;
+      y = Math.round(random(Math.min(vh*.48,vh-h-pad), vh-h-pad));
+      dx = side === 'right' ? w+pad+20 : -w-pad-20;
     }
-    // Skip rather than place the elf outside the decorative area or off-screen.
-    if (w<26 || h<30 || x<0 || y<0 || x+w>box.width+.5 || y+h>box.height+.5 ||
-        box.top+y<0 || box.top+y+h>root.clientHeight) {schedule();return;}
     var node = document.createElement('div');
     node.id='ml-christmas-elf'; node.setAttribute('aria-hidden','true');
     node.style.display='none';
-    node.setAttribute('data-elf-side',right?'right':'left');
+    node.setAttribute('data-elf-side',side);
     var values={'--elf-x':x+'px','--elf-y':y+'px','--elf-width':w+'px','--elf-height':h+'px',
-      '--elf-hide-x':dx+'px','--elf-hide-y':dy+'px','--elf-mirror':right?'-1':'1'};
+      '--elf-hide-x':dx+'px','--elf-hide-y':dy+'px','--elf-mirror':side==='right'?'-1':'1'};
     Object.keys(values).forEach(function(k){node.style.setProperty(k,values[k]);});
     var actor=document.createElement('span');node.appendChild(actor);
-    elf=node; started=true;
+    elf=node; started=true; lastSide=side;
     function complete(){if(elf!==node)return;clearElf();schedule();}
     actor.addEventListener('animationend',complete,{once:true});
-    banner.appendChild(node);finish=window.setTimeout(complete,4150);
+    document.body.appendChild(node);finish=window.setTimeout(complete,4150);
   }
   function reconcile(){
     if(!allowed()){clearPending();clearElf();return;}
