@@ -1,7 +1,13 @@
 {
-  "updated": "2026-11-25T18:39:37.064379+00:00",
+  "updated": "2026-11-26T18:27:09.822458+00:00",
   "channelId": "UCGY3Rz3lQ_r9gnWvP-NIDHQ",
   "videos": [
+    {
+      "id": "60rBMg3B3RM",
+      "title": "Super Mario World | Donut Plains 2 | Normal Exit | Exit 09/96 | Nintendo Switch 2 | 4K | 60 FPS",
+      "published": "2026-11-26T17:13:59+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/60rBMg3B3RM/hqdefault.jpg"
+    },
     {
       "id": "u7tnhAp_V8g",
       "title": "Super Mario World | Donut Plains 1 | Secret Exit | Exit 08/96 | Nintendo Switch 2 | 4K | 60 FPS",
@@ -43,12 +49,6 @@
       "title": "Super Mario World | Yellow Switch Palace | Normal Exit | Exit 02/96 | Nintendo Switch 2 | 4K",
       "published": "2026-11-20T17:20:18+00:00",
       "thumbnail": "https://i.ytimg.com/vi/klUDtwW0Q-U/hqdefault.jpg"
-    },
-    {
-      "id": "DqHDE81kqGU",
-      "title": "Frame Cat | Easy 100% Completion | 4000 Gamerscore | 19 Minute Completion | 4K",
-      "published": "2026-11-20T13:36:18+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/DqHDE81kqGU/hqdefault.jpg"
     }
   ]
 }
