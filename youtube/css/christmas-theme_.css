@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV19 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV20 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV19; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV20; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -169,7 +169,7 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more:hover {bac
 html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#resultsGrid,#resultsList,#recentUploadsSection) .developer-provided-badge {background:#f3e1bd;color:#5b4518;border-color:#a77b18;}
 /* Dialogs keep the REV05 light palette so existing hard-coded dark text stays readable.
    No dialog behavior, geometry or playback changes. */
-html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.video-modal) {
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.mlm-hub-dialog,.video-modal) {
   --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
   --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
   --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
@@ -415,7 +415,7 @@ html[data-seasonal-theme="christmas"] .ml-filter-popup-option:is(.is-selected,:h
 html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f1d696!important;}
 /* Native fallback: option colors are subject to browser/OS popup painting. */
 html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);}
-html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:checked,:hover,:focus-visible) {background:#f1d696!important;color:#412b10!important;}
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f1d696!important;color:#412b10!important;}
 /* Modern desktop Chromium: opt into the CSS-stylable select picker, retaining native select
    value/change/keyboard semantics and existing mobile filter replacement. Unsupported browsers
    retain native menus; do not change the protected mobile popup script. */
@@ -435,3 +435,16 @@ html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) o
     html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] optgroup {color:var(--text);}
   }
 }
+
+/* REV20 — notification dialogs only. Actual green DARK and red BRIGHT palettes.
+   The owner screenshots show BRIGHT despite the DARK wording; correct both dialog palettes.
+   Keep the mobile hub, video modal, notification dots, and all behavior untouched. */
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) {background:var(--bg-raised)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;border-top-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog) {background:var(--bg)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-card,.mlm-card) {background:var(--bg-card)!important;border-color:var(--line)!important;color:var(--xmas-title)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-head,.mlm-head,.wn-body,.mlm-body) {border-color:var(--line)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button,.mlm-tabs button) {background:var(--xmas-toolbar-control,var(--xmas-control))!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:#f1d696!important;color:#412b10!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button:not([aria-selected="true"]),.mlm-tabs button:not([aria-selected="true"])):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-entry small,.mlm-entry small,.wn-empty,.mlm-empty) {color:var(--text-dim)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-list,.mlm-list) {scrollbar-color:var(--xmas-toolbar-control,var(--xmas-control)) var(--bg-card);}
