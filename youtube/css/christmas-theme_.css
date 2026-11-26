@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV09 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV10 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV09; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV10; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -253,4 +253,30 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(
   #resultsList .list-row .list-sub
 ) :is(.recent-meta-label,.game-meta-label,.landscape-platform-unit,.landscape-platform-separator){
   color:inherit!important;
+}
+
+/* REV10 — BRIGHT feature and metric paint only. Reuse DARK feature colors;
+   opaque equivalents of DARK's translucent paint avoid red bleed-through.
+   TEST label is text-guide content, not a distinct badge class.
+   Main guides and Recent share the same badge identities. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) {
+  --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
+  --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge {
+  background:linear-gradient(180deg,#15312d,#122920)!important;
+  color:#b9dce9!important;border-color:#31586b!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge svg {
+  color:#65b7d6!important;stroke:#65b7d6!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .kinect-badge {
+  background:#16302c!important;color:#d9ecff!important;border-color:#456b8a!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .developer-provided-badge {
+  background:linear-gradient(180deg,#2a351e,#192b1c)!important;
+  color:#e7d39f!important;border-color:#6b5730!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .developer-provided-badge svg {
+  stroke:#d8ad55!important;
 }
