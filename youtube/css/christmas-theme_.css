@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV48; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV49; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -943,4 +943,18 @@ html[data-seasonal-theme="christmas"] {
   html[data-seasonal-theme="christmas"] #ml-christmas-santa > span.ml-xmas-delivery > svg {
     display:block;width:100%;height:100%;pointer-events:none;overflow:hidden;
   }
+}
+
+/* REV49: gift train, isolated from document geometry and controls. */
+#ml-christmas-train {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+ html[data-seasonal-theme="christmas"] body > #ml-christmas-train {
+  display:block!important;position:fixed;inset:0;overflow:hidden;z-index:9;pointer-events:none;contain:layout style paint;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-train > span {
+  position:absolute;left:var(--train-x);top:var(--train-y);width:var(--train-width);height:var(--train-height);pointer-events:none;animation:ml-xmas-train-cross var(--train-duration) linear both;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-train img {display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;transform:scaleX(var(--train-mirror));}
+ @keyframes ml-xmas-train-cross {from {transform:translate3d(0,0,0);}to {transform:translate3d(var(--train-dx),0,0);}}
+ html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-train {display:none!important;}
 }
