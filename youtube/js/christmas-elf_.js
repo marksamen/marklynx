@@ -1,12 +1,12 @@
-/* CHRISTMAS TEST REV46 — isolated elf-peek scheduler. */
+/* CHRISTMAS TEST REV51 — coordinated elf-peek event. */
 (function () {
   'use strict';
   var root = document.documentElement;
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var mount = document.getElementById('mainModuleMount');
-  var pending = null, finish = null, elf = null, modal = null;
+  var finish = null, elf = null, modal = null;
   var releaseBoundary=null;
-  var printing = false, suspended = false, started = false, lastSide = null;
+  var printing = false, suspended = false, lastSide = null;
   function random(min,max) { return min + Math.random()*(max-min); }
   function allowed() {
     var video = document.getElementById('videoModalOverlay');
@@ -15,20 +15,16 @@
       !(video && video.classList.contains('open'));
   }
   function clearPending() {
-    if (pending !== null) { window.clearTimeout(pending); pending = null; }
+    if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.cancel('elf');
   }
   function clearElf() {
     if(releaseBoundary){releaseBoundary();releaseBoundary=null;}
     if (finish !== null) { window.clearTimeout(finish); finish = null; }
-    if (elf) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(elf); elf.remove(); elf = null; }
+    if (elf) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(elf); elf.remove(); elf = null; if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done('elf'); }
   }
   function schedule() {
-    if (!allowed() || pending !== null || elf || !document.body) return;
-    pending = window.setTimeout(function () {
-      pending = null;
-      if (allowed()) peek();
-      else reconcile();
-    }, Math.round(started ? random(5000,20000) : random(3000,8000)));
+    if (!allowed() || elf || !document.body) return;
+    if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.request('elf','ml-christmas-elf',peek,reconcile);
   }
   function peek() {
     if (!allowed() || elf) return;
@@ -58,7 +54,7 @@
       '--elf-hide-x':dx+'px','--elf-hide-y':dy+'px','--elf-mirror':side==='right'?'-1':'1'};
     Object.keys(values).forEach(function(k){node.style.setProperty(k,values[k]);});
     var actor=document.createElement('span');node.appendChild(actor);
-    elf=node; started=true; lastSide=side;
+    elf=node; lastSide=side;
     function complete(){if(elf!==node)return;clearElf();schedule();}
     actor.addEventListener('animationend',complete,{once:true});
     document.body.appendChild(node);

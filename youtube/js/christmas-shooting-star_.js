@@ -1,12 +1,12 @@
-/* CHRISTMAS TEST REV46 — isolated shooting-star scheduler. */
+/* CHRISTMAS TEST REV51 — coordinated shooting-star event. */
 (function () {
   'use strict';
   var root = document.documentElement;
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var mount = document.getElementById('mainModuleMount');
-  var pending = null, finish = null, layer = null, modal = null;
+  var finish = null, layer = null, modal = null;
   var releaseBoundary = null;
-  var printing = false, suspended = false, started = false;
+  var printing = false, suspended = false;
   function random(min, max) { return min + Math.random() * (max - min); }
   function allowed() {
     var video = document.getElementById('videoModalOverlay');
@@ -15,19 +15,16 @@
       !(video && video.classList.contains('open'));
   }
   function clearPending() {
-    if (pending !== null) { window.clearTimeout(pending); pending = null; }
+    if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.cancel('star');
   }
   function clearStar() {
     if(releaseBoundary){releaseBoundary();releaseBoundary=null;}
     if (finish !== null) { window.clearTimeout(finish); finish = null; }
-    if (layer) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(layer); layer.remove(); layer = null; }
+    if (layer) { if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(layer); layer.remove(); layer = null; if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done('star'); }
   }
   function schedule() {
-    if (!allowed() || pending !== null || layer) return;
-    pending = window.setTimeout(function () {
-      pending = null;
-      if (allowed()) fly();
-    }, Math.round(started ? random(5000,20000) : random(3000,8000)));
+    if (!allowed() || layer) return;
+    if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.request('star','ml-christmas-shooting-star',fly,reconcile);
   }
   function fly() {
     if (!allowed() || layer) return;
@@ -61,7 +58,7 @@
     flight.style.setProperty('--star-dy',dy+'px');
     flight.style.setProperty('--star-angle',(Math.atan2(dy,dx)*180/Math.PI)+'deg');
     flight.style.setProperty('--star-duration',duration+'ms');
-    layer = node; started = true;
+    layer = node;
     function complete() {
       if (layer !== node) return;
       clearStar(); schedule();
@@ -75,6 +72,7 @@
   }
   function reconcile() {
     if (!allowed()) { clearPending(); clearStar(); return; }
+    if(layer&&!layer.isConnected)clearStar();
     schedule();
   }
   var modalObserver = new MutationObserver(reconcile);

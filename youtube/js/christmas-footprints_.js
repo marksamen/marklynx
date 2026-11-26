@@ -1,14 +1,14 @@
-/* CHRISTMAS TEST REV50 — snowy bootprints, shared viewport safe area. */
+/* CHRISTMAS TEST REV51 — coordinated snowy bootprints. */
 (function(){
  'use strict';
  var root=document.documentElement,motion=matchMedia('(prefers-reduced-motion: reduce)'),mount=document.getElementById('mainModuleMount');
- var timer=null,finish=null,node=null,release=null,modal=null,printing=false,hiddenPage=false,started=false,lastDirection=null,due=null,completed=0,launches=0,cancelled=0,postponed=0,last=null;
+ var finish=null,node=null,release=null,modal=null,printing=false,hiddenPage=false,lastDirection=null,completed=0,launches=0,cancelled=0,postponed=0,last=null;
  var ns='http://www.w3.org/2000/svg';
  function random(min,max){return min+Math.random()*(max-min);}
  function blocked(){var v=document.getElementById('videoModalOverlay');return root.getAttribute('data-seasonal-theme')!=='christmas'||motion.matches||document.hidden||printing||hiddenPage||!!(v&&v.classList.contains('open'));}
- function clearTimer(){if(timer!==null)clearTimeout(timer);timer=null;due=null;}
- function clearNode(){if(release){release();release=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){node.remove();node=null;}}
- function schedule(){if(blocked()||node||timer!==null)return;var ms=Math.round(started?random(10000,25000):random(3000,8000));due=Date.now()+ms;timer=setTimeout(function(){timer=null;due=null;launch();},ms);}
+ function clearTimer(){if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.cancel('footprints');}
+ function clearNode(){if(release){release();release=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){node.remove();node=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done('footprints');}}
+ function schedule(){if(blocked()||node)return;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.request('footprints','ml-christmas-footprints',launch,reconcile);}
  function svg(tag,attrs,parent){var e=document.createElementNS(ns,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});if(parent)parent.appendChild(e);return e;}
  function boot(parent,i,x,y,size,angle){
   var g=svg('g',{'transform':'translate('+x+' '+y+') rotate('+angle+') scale('+size/48+')'},parent);
@@ -34,7 +34,7 @@
   var drawing=svg('svg',{viewBox:'0 0 '+a.width+' '+a.height,preserveAspectRatio:'none',focusable:'false','aria-hidden':'true'},el);
   for(var i=0;i<count;i++){var x=left+distance*(direction==='right'?i:count-1-i)/(count-1);boot(drawing,i,x,y+(i%2===0?-1:1)*size*.40,size,(direction==='right'?90:-90)+(i%2===0?-10:10));}
   node=el;document.body.appendChild(el);release=safe.watch(el,y-extent,y+extent,function(){cancelled++;clearNode();schedule();});if(node!==el)return;
-  started=true;lastDirection=direction;launches++;var duration=4800+(count-1)*350;last={direction:direction,count:count,size:size,y:y,minY:y-extent,maxY:y+extent,durationMs:duration};
+  lastDirection=direction;launches++;var duration=4800+(count-1)*350;last={direction:direction,count:count,size:size,y:y,minY:y-extent,maxY:y+extent,durationMs:duration};
   finish=setTimeout(function(){if(node!==el)return;completed++;clearNode();schedule();},duration+100);
  }
  function reconcile(){if(blocked()){clearTimer();if(node)cancelled++;clearNode();return;}if(node&&!node.isConnected)clearNode();schedule();}
@@ -45,6 +45,6 @@
  if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
  document.addEventListener('visibilitychange',reconcile);window.addEventListener('beforeprint',function(){printing=true;reconcile();});window.addEventListener('afterprint',function(){printing=false;reconcile();});window.addEventListener('pagehide',function(){hiddenPage=true;reconcile();});window.addEventListener('pageshow',function(){hiddenPage=false;reconcile();});
  window.addEventListener('resize',function(){if(node){cancelled++;clearNode();}reconcile();});
- window.mlChristmasFootprintsDiagnostics=function(){return {revision:'REV50',blocked:blocked(),active:!!node,nextInMs:due===null?null:Math.max(0,due-Date.now()),launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastTrail:last};};
+ window.mlChristmasFootprintsDiagnostics=function(){return {revision:'REV51',blocked:blocked(),active:!!node,launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastTrail:last};};
  bindModal();
 })();

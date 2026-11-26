@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV48 — illustrated flight and occasional rooftop delivery, preserving REV43 scheduler safeguards. */
+/* CHRISTMAS TEST REV51 — coordinated Santa flight and rooftop delivery. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -30,7 +30,7 @@
   // TEST-only, read-only snapshot. No global controls and no polling timers.
   window.mlChristmasSantaDiagnostics = function () {
     var actor=santa&&santa.firstElementChild, r=actor&&actor.getBoundingClientRect();
-    return {revision:'REV48',state:status,blocked:blocked()||null,asset:assetState,
+    return {revision:'REV51',state:status,blocked:blocked()||null,asset:assetState,
       deliveryAsset:deliveryState,deliveryError:deliveryError||null,assetURL:assetURL,assetWidth:artwork?artwork.naturalWidth:0,lastError:lastError||null,
       nextInMs:nextAt===null?null:Math.max(0,nextAt-Date.now()),counts:Object.assign({},counts),
       safeArea:window.mlChristmasSafeArea?window.mlChristmasSafeArea.measure():null,
@@ -40,7 +40,7 @@
   };
   function clearPending() {
     if (pending !== null) { window.clearTimeout(pending); pending = null; }
-    nextAt=null;
+    nextAt=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.cancel('santa');
   }
   function clearSanta(completed) {
     if(releaseBoundary){releaseBoundary();releaseBoundary=null;}
@@ -48,7 +48,7 @@
     if (santa) {
       if(completed){counts.completed++;if(santa.dataset.santaMode==='delivery')counts.deliveriesCompleted++;}else counts.cancelled++;
       if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(santa);
-      santa.remove(); santa = null;
+      santa.remove(); santa = null; if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done('santa');
     }
   }
   function later(delay,fn,state) {
@@ -111,9 +111,8 @@
     if(assetState==='error'){later(5000,loadArtwork,'artwork retry scheduled');return;}
     if(assetState!=='ready'){loadArtwork();return;}
     loadDelivery();
-    later(Math.round(started ? random(10000,25000) : random(3000,8000)),function(){
-      if (allowed()) fly(); else reconcile();
-    },'flight scheduled');
+    status='waiting for coordinator';
+    if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.request('santa','ml-christmas-santa',fly,reconcile);
   }
   function fly() {
     if (!allowed() || santa) {reconcile();return;}
