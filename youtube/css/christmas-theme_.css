@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV07 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV08 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV07; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV08; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -195,4 +195,21 @@ html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid
 html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type :is(.recent-meta-label,.recent-completion-value),
 html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
   font-weight:600!important;
+}
+
+/* REV08 — BRIGHT ordinary metadata only; preserve special completion and feature badges. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.type,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.time,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.diff,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff),
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .grid-list-sub,
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-row .list-sub.landscape-normal-list-platform .landscape-platform-unit {
+  background:#87212c!important;color:#fff0c2!important;border-color:#c66b65!important;
 }
