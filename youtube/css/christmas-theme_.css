@@ -1,12 +1,12 @@
-/* CHRISTMAS TEST REV06 — paint only, independent of Halloween.
+/* CHRISTMAS TEST REV07 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV06; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV07; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
   --text:#f5f3e9; --text-dim:#bdcbbc; --silver:#e9d6a5;
   --xmas-header:#10251a; --xmas-edge:#c5a35b; --xmas-title:#f1d696;
-  --xmas-hover:#294936; --xmas-control:#203c2c; --xmas-accent:#a52635;
+  --xmas-hover:#294936; --xmas-control:#203c2c; --xmas-toolbar-control:#801b25; --xmas-accent:#a52635;
   --xmas-accent-hover:#b93443; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
   --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
   --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
@@ -21,7 +21,7 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] {
   --xmas-accent-hover:#194b30; --xmas-chip:#f3e1bd; --xmas-chip-text:#57251e;
   --xmas-tp:#f5e2a6; --xmas-tp-text:#6f5100; --xmas-tp-border:#c69200;
   --xmas-gs:#ddebd8; --xmas-gs-text:#1d5a1d; --xmas-gs-border:#2f7d32;
-  --xmas-ct:#a52635; --xmas-ct-text:#fff7f7; --xmas-ct-border:#e6a098;
+  --xmas-ct:#fff8e7; --xmas-ct-text:#801b25; --xmas-ct-border:#d4b59e;
 }
 html[data-seasonal-theme="christmas"] body,
 html[data-seasonal-theme="christmas"] .subscribe-strip,
@@ -45,7 +45,7 @@ html[data-seasonal-theme="christmas"] .toolbar .search-box input,
 html[data-seasonal-theme="christmas"] .toolbar select,
 html[data-seasonal-theme="christmas"] .toolbar .ml-filter-popup-anchor > .ml-filter-popup-trigger,
 html[data-seasonal-theme="christmas"] .view-toggle button:not(.active) {
-  background:var(--xmas-control)!important; color:var(--text)!important;
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; color:var(--text)!important;
   border-color:var(--xmas-edge)!important; box-shadow:none!important;
 }
 html[data-seasonal-theme="christmas"] .toolbar .search-box input::placeholder {color:var(--text-dim);}
@@ -176,5 +176,23 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-d
   --xmas-header:#f1dcda; --xmas-edge:#c89a45; --xmas-title:#8f1825;
   --xmas-hover:#fff0ed; --xmas-control:#faece7; --xmas-accent:#a52635;
   --xmas-accent-hover:#8a1b29; --xmas-chip:#f6e6df; --xmas-chip-text:#5d332d;
-  --xmas-ct-border:#7c1522;
+  --xmas-ct-border:#d4b59e;
+}
+
+/* REV07 — gold selected view; inactive follows its toolbar palette. */
+html[data-seasonal-theme="christmas"] .view-toggle button.active,
+html[data-seasonal-theme="christmas"] .view-toggle button.active:hover {
+  background:#f1d696!important;color:#412b10!important;border-color:var(--xmas-edge)!important;
+}
+/* REV07 — reduce only Completion Type weight, including separately weighted labels/values. */
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type :is(.recent-meta-label,.recent-completion-value),
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  font-weight:600!important;
 }
