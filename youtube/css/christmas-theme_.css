@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV32 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV32; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV33 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV33; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -701,4 +701,33 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
   background-size:auto 100%,auto 100%,auto 100%,auto 100%!important;
   background-position:left 4px center,right 4px center,center,center!important;
   background-repeat:no-repeat,no-repeat,repeat-x,repeat-x!important;
+}
+
+
+/* REV33: one static snowman. Narrow phones reuse the existing tree strip;
+   intermediate widths reserve 62px and preserve all four REV32 layer origins.
+   At >=1440px the snowman fits in the left outer margin of Recent Uploads.
+   Decorative backgrounds only: no pointer interception or new runtime code. */
+@media (max-width:1439px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    padding-bottom:62px;
+    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-presents_.png?v=CHRISTMAS-TEST-REV30"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29"),url("../images/christmas-tree_.png?v=CHRISTMAS-TEST-REV29")!important;
+    background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat!important;
+    background-size:auto 56px,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+    background-position:center bottom 3px,left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px)!important;
+  }
+}
+@media (max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    background-size:auto 56px,44px auto,44px auto,auto 56px,auto 56px!important;
+    background-position:center bottom 3px,left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+}
+@media (min-width:1440px) {
+  html[data-seasonal-theme="christmas"] #recentUploadsSection {
+    background-image:url("../images/christmas-snowman_.svg?v=CHRISTMAS-TEST-REV33")!important;
+    background-size:min(108px,calc((100% - 1400px)/2 + 14px)) auto!important;
+    background-position:left max(7px,calc((100% - 1400px)/4 - 40px)) top 8px!important;
+    background-repeat:no-repeat!important;
+  }
 }
