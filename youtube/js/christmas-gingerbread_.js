@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV53 — profile-running gingerbread man, coordinated foreground event. */
+/* CHRISTMAS TEST REV54 — profile-running gingerbread man, coordinated foreground event. */
 (function(){
  'use strict';
  var root=document.documentElement,motion=matchMedia('(prefers-reduced-motion: reduce)'),mount=document.getElementById('mainModuleMount');
@@ -35,11 +35,11 @@
    <g class="ml-ginger-profile-limb ml-ginger-profile-leg-near" fill="url(#ml-ginger-cookie)" stroke="#753b20" stroke-width="3"><path d="M70 129 Q82 124 89 135 L87 154 L101 175 Q105 181 116 181 Q126 181 126 189 Q125 195 115 195 L98 194 Q91 194 87 187 L70 163 Q66 157 67 149Z"/><path d="M87 178 Q94 172 100 180" stroke="#fff5db" fill="none" stroke-width="3.8"/></g>
    <path d="M71 72 Q89 68 102 82 Q107 94 100 117 L94 135 Q83 145 60 136 Q53 133 56 120 L62 87 Q65 77 71 72Z" fill="url(#ml-ginger-cookie)" stroke="#753b20" stroke-width="3"/>
    <path d="M62 129 Q67 125 73 132 T85 132 T94 129" fill="none" stroke="#fff5db" stroke-width="3"/>
-   <path d="M82 12 C103 9 122 20 124 39 Q124 45 132 48 Q138 51 133 57 L125 61 Q121 78 101 83 C81 88 58 78 53 58 C45 34 60 15 82 12Z" fill="url(#ml-ginger-cookie)" stroke="#753b20" stroke-width="3"/>
+   <path d="M82 12 C103 9 125 23 127 43 C130 62 119 78 101 83 C81 88 58 78 53 58 C45 34 60 15 82 12Z" fill="url(#ml-ginger-cookie)" stroke="#753b20" stroke-width="3"/>
    <path d="M62 35 Q67 21 82 20 Q100 15 114 30" stroke="#f5c993" stroke-width="3" opacity=".8" fill="none"/>
    <path d="M67 31 Q72 25 78 30 T91 28 T104 30" stroke="#fff5db" stroke-width="3.4" fill="none"/>
    <ellipse cx="111" cy="43" rx="4.4" ry="6.2" fill="#3f2118"/><circle cx="112" cy="41" r="1.3" fill="#fff"/>
-   <ellipse cx="108" cy="56" rx="5.5" ry="3.1" fill="#eb7770"/><path d="M110 65 Q116 70 122 64" stroke="#fff5db" stroke-width="3.5" fill="none"/>
+   <ellipse cx="108" cy="56" rx="5.5" ry="3.1" fill="#eb7770"/><path d="M107 65 Q113 70 119 64" stroke="#fff5db" stroke-width="3.5" fill="none"/>
    <path d="M99 85 L112 81 L110 96 L100 92Z" fill="#d82e36" stroke="#831d24" stroke-width="1.5"/><circle cx="98" cy="89" r="4" fill="#ee454a" stroke="#831d24"/>
    <circle cx="99" cy="106" r="4.5" fill="#229b56" stroke="#fff5db" stroke-width="1.5"/><circle cx="96" cy="120" r="4.5" fill="#e74946" stroke="#fff5db" stroke-width="1.5"/>
    <g class="ml-ginger-profile-limb ml-ginger-profile-arm-near" fill="url(#ml-ginger-cookie)" stroke="#753b20" stroke-width="3"><path d="M77 82 Q86 79 91 87 Q94 93 86 101 L69 117 L91 125 Q101 129 97 137 Q94 144 84 141 L59 131 Q48 126 54 115 L68 91 Q71 84 77 82Z"/><path d="M83 126 Q88 131 86 139" stroke="#fff5db" stroke-width="3.5" fill="none"/></g>
@@ -80,6 +80,6 @@
  window.addEventListener('beforeprint',function(){printing=true;reconcile();});window.addEventListener('afterprint',function(){printing=false;reconcile();});
  window.addEventListener('pagehide',function(){hiddenPage=true;reconcile();});window.addEventListener('pageshow',function(){hiddenPage=false;reconcile();});
  window.addEventListener('resize',function(){cancelActive();reconcile();});
- window.mlChristmasGingerbreadDiagnostics=function(){return {revision:'REV53',blocked:blocked(),active:!!node,launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastFlight:last};};
+ window.mlChristmasGingerbreadDiagnostics=function(){return {revision:'REV54',blocked:blocked(),active:!!node,launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastFlight:last};};
  bindModal();
 })();
