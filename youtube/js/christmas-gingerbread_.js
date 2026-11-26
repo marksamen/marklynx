@@ -1,9 +1,9 @@
-/* CHRISTMAS TEST REV52B — silent profile-running gingerbread man, coordinated foreground event. */
+/* CHRISTMAS TEST REV53 — profile-running gingerbread man, coordinated foreground event. */
 (function(){
  'use strict';
  var root=document.documentElement,motion=matchMedia('(prefers-reduced-motion: reduce)'),mount=document.getElementById('mainModuleMount');
  var id='ml-christmas-gingerbread',key='gingerbread',finish=null,node=null,release=null,modal=null,printing=false,hiddenPage=false,lastDirection=null,launches=0,completed=0,cancelled=0,postponed=0,last=null;
- // Local original vector artwork; no external artwork fetch or sound. Separate limb groups
+ // Local original vector artwork; no external artwork fetch. Separate limb groups
  // pivot around the shoulders and hips. The full pose stays inside the SVG viewport.
  var artwork=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 200" focusable="false" aria-hidden="true">
  <defs>
@@ -47,7 +47,7 @@
  </g></svg>`;
  function blocked(){var v=document.getElementById('videoModalOverlay');return root.getAttribute('data-seasonal-theme')!=='christmas'||motion.matches||document.hidden||printing||hiddenPage||!!(v&&v.classList.contains('open'));}
  function cancelRequest(){if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.cancel(key);}
- function clearNode(){if(release){release();release=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){node.remove();node=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done(key);}}
+ function clearNode(){if(release){release();release=null;}if(finish!==null){clearTimeout(finish);finish=null;}if(node){if(window.mlChristmasSounds)window.mlChristmasSounds.cancel(node);node.remove();node=null;if(window.mlChristmasCoordinator)window.mlChristmasCoordinator.done(key);}}
  function cancelActive(){if(node){cancelled++;clearNode();}}
  function schedule(){if(blocked()||node||!window.mlChristmasCoordinator)return;window.mlChristmasCoordinator.request(key,id,launch,reconcile);}
  function launch(){
@@ -63,6 +63,7 @@
   Object.keys(vals).forEach(function(k){el.style.setProperty(k,vals[k]);});
   node=el;document.body.appendChild(el);
   var stop=safe.watch(el,y,y+h,function(){cancelActive();schedule();});if(node!==el){stop();return;}release=stop;
+  if(window.mlChristmasSounds)window.mlChristmasSounds.event('gingerbread',el,6000);
   lastDirection=direction;launches++;last={direction:direction,width:w,height:h,y:y,durationMs:6000,waveStartMs:2280,waveEndMs:3720};
   function complete(){if(node!==el)return;completed++;clearNode();schedule();}
   // Child limb animationend events bubble; only the travel animation ends the event.
@@ -79,6 +80,6 @@
  window.addEventListener('beforeprint',function(){printing=true;reconcile();});window.addEventListener('afterprint',function(){printing=false;reconcile();});
  window.addEventListener('pagehide',function(){hiddenPage=true;reconcile();});window.addEventListener('pageshow',function(){hiddenPage=false;reconcile();});
  window.addEventListener('resize',function(){cancelActive();reconcile();});
- window.mlChristmasGingerbreadDiagnostics=function(){return {revision:'REV52B',blocked:blocked(),active:!!node,launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastFlight:last};};
+ window.mlChristmasGingerbreadDiagnostics=function(){return {revision:'REV53',blocked:blocked(),active:!!node,launches:launches,completed:completed,cancelled:cancelled,postponed:postponed,lastFlight:last};};
  bindModal();
 })();
