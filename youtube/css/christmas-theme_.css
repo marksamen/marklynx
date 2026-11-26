@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV31 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV31; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV32 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV32; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -690,4 +690,15 @@ html[data-seasonal-theme="christmas"] .banner-wrap::before {
     background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
   }
   html[data-seasonal-theme="christmas"] .banner-wrap::before {width:100%;}
+}
+
+
+/* REV32: static multicolored Christmas lights along the existing garland.
+   Place the repeating light string behind the two bows, above the garland.
+   Reuse its existing height, width and pointer-events behavior. */
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),url("../images/christmas-banner-lights_.svg?v=CHRISTMAS-TEST-REV32"),url("../images/christmas-garland_.png?v=CHRISTMAS-TEST-REV31")!important;
+  background-size:auto 100%,auto 100%,auto 100%,auto 100%!important;
+  background-position:left 4px center,right 4px center,center,center!important;
+  background-repeat:no-repeat,no-repeat,repeat-x,repeat-x!important;
 }
