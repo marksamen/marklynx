@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV17 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV18 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV17; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV18; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -169,7 +169,7 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more:hover {bac
 html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#resultsGrid,#resultsList,#recentUploadsSection) .developer-provided-badge {background:#f3e1bd;color:#5b4518;border-color:#a77b18;}
 /* Dialogs keep the REV05 light palette so existing hard-coded dark text stays readable.
    No dialog behavior, geometry or playback changes. */
-html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.developer-panel,.suggest-panel,.video-modal) {
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.video-modal) {
   --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
   --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
   --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
@@ -358,3 +358,34 @@ html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-
 html[data-seasonal-theme="christmas"] #recentUploadsGrid .ml-recent-episode-details {
   color:var(--xmas-title)!important;
 }
+
+/* REV18 — BRIGHT Developer and Suggest dialogs only; keep DARK and other dialogs. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.suggest-panel) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;border-top-color:var(--xmas-edge)!important;scrollbar-color:var(--xmas-control) var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-card,.developer-contact,.developer-cta,.suggest-game-form) { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-card:hover { background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-card-thumb { background:var(--bg-card)!important;border-bottom-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel h2,.suggest-panel h2,.developer-kicker,.suggest-kicker,.developer-section-head,.developer-card-top strong,.developer-card-link,.developer-contact-head strong,.developer-cta strong,.developer-contact-form label>span,.suggest-game-form label>span,.suggest-platforms legend,.suggest-platform-grid label>span) { color:var(--xmas-title)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-intro,.suggest-intro,.developer-card-top>span,.developer-contact-head span,.developer-cta span,.developer-email-fallback,.developer-form-status.sending,.suggest-form-status,.suggest-form-status.sending) { color:var(--text-dim)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-proof span,.developer-card-meta span:not(.developer-card-quality)) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;box-shadow:none!important;text-shadow:none!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-close,.suggest-close,.developer-youtube-btn,.developer-send-btn,.developer-email-btn,.suggest-send-btn) { background:var(--xmas-control)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-close,.suggest-close,.developer-youtube-btn,.developer-send-btn,.developer-email-btn,.suggest-send-btn):hover { background:var(--xmas-accent-hover)!important;color:var(--xmas-title)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea,.suggest-platform-grid label) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea):focus { background:var(--bg)!important;border-color:var(--xmas-edge)!important;box-shadow:0 0 0 2px var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input,.suggest-game-form textarea)::placeholder { color:var(--text-dim)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .suggest-platform-grid label:hover { background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .suggest-platform-grid input[type=checkbox] { accent-color:var(--xmas-control); }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-email-fallback a,.developer-contact-form label>span b,.suggest-game-form b,.suggest-platforms b) { color:var(--xmas-title)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-form-status.error,.suggest-form-status.error) { color:#ffe0d6!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-form-status.success { color:#e1f9d8!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-success-panel,.suggest-success-panel) { background:var(--xmas-control)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-success-panel strong,.developer-success-panel p,.developer-success-panel b,.suggest-success-panel strong,.suggest-success-panel p,.developer-success-icon,.suggest-success-icon) { color:var(--text)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel) { scrollbar-color:var(--xmas-control) var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-track { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-thumb { background:var(--xmas-control)!important;border-color:var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-thumb:hover { background:var(--xmas-accent-hover)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-scroll-indicator { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-scroll-indicator-thumb { background:var(--xmas-control)!important;border-color:var(--xmas-edge)!important; }
+
+/* REV18 — DARK unread dots, desktop and mobile; preserve visibility and geometry. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#whatsNewPublicBtn,#whatsNewMobileBtn) .wn-dot,
+html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#markLynxMessagePublicBtn,#markLynxMobileHubBtn) .mlm-dot { background:#55c979!important; }
