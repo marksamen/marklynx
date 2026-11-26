@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV37 — isolated shooting-star scheduler. */
+/* CHRISTMAS TEST REV38 — isolated shooting-star scheduler. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -25,7 +25,7 @@
     pending = window.setTimeout(function () {
       pending = null;
       if (allowed()) fly();
-    }, Math.round(started ? random(45000,100000) : random(12000,25000)));
+    }, Math.round(started ? random(5000,20000) : random(3000,8000)));
   }
   function fly() {
     if (!allowed() || layer) return;
@@ -35,8 +35,8 @@
     var x = w * (direction === 1 ? random(.08,.26) : random(.74,.92));
     var y = h * random(.09,.16);
     var dx = direction * w * random(.36,.57);
-    var dy = Math.min(105,h * random(.07,.14));
-    var duration = Math.round(random(1600,2400));
+    var dy = Math.min(150,h * random(.10,.18));
+    var duration = Math.round(random(1400,2100));
     var node = document.createElement('div');
     node.id = 'ml-christmas-shooting-star';
     node.setAttribute('aria-hidden','true');
