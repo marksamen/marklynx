@@ -1,5 +1,5 @@
-/* CHRISTMAS TEST REV40 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: REV40; } /* TEST diagnostic fingerprint only */
+/* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
+:root { --ml-christmas-test-revision: REV41; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -885,26 +885,25 @@ html[data-seasonal-theme="christmas"] {
 }
 
 
-/* REV40: isolated, occasional elf peek. The clipping window is positioned
-   inside the existing banner by the scheduler; never participates in layout. */
+/* REV41: viewport-relative elf. No banner dependency or page layout participation. */
 #ml-christmas-elf {display:none;}
 @media screen and (prefers-reduced-motion:no-preference) {
-  html[data-seasonal-theme="christmas"] .banner-wrap > #ml-christmas-elf {
-    display:block!important;position:absolute;left:var(--elf-x);top:var(--elf-y);
-    width:var(--elf-width);height:var(--elf-height);overflow:hidden;
-    z-index:2;pointer-events:none;contain:layout style paint;
+  html[data-seasonal-theme="christmas"] body > #ml-christmas-elf {
+    display:block!important;position:fixed;inset:0;overflow:hidden;
+    z-index:9;pointer-events:none;contain:layout style paint;
   }
   html[data-seasonal-theme="christmas"] #ml-christmas-elf > span {
-    position:absolute;inset:0;pointer-events:none;
-    background:url("../images/christmas-elf_.svg?v=CHRISTMAS-TEST-REV40") center bottom / contain no-repeat;
-    transform-origin:center bottom;
+    position:absolute;left:var(--elf-x);top:var(--elf-y);
+    width:var(--elf-width);height:var(--elf-height);pointer-events:none;
+    background:url("../images/christmas-elf_.svg?v=CHRISTMAS-TEST-REV41") center bottom / contain no-repeat;
+    transform-origin:center bottom;opacity:0;
     animation:ml-xmas-elf-peek 4s ease-in-out both;
   }
   @keyframes ml-xmas-elf-peek {
-    0%,100% {transform:translate3d(var(--elf-hide-x),var(--elf-hide-y),0) scaleX(var(--elf-mirror));}
-    22%,34% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(-5deg);}
-    44%,56% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(5deg);}
-    68%,76% {transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(0deg);}
+    0%,100% {opacity:0;transform:translate3d(var(--elf-hide-x),var(--elf-hide-y),0) scaleX(var(--elf-mirror));}
+    22%,34% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(-4deg);}
+    44%,56% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(4deg);}
+    68%,76% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(0deg);}
   }
   html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-elf {display:none!important;}
 }
