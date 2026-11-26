@@ -1,6 +1,6 @@
-/* CHRISTMAS TEST REV15 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV16 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV15; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV16; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
   --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
@@ -335,5 +335,21 @@ html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-
   color:inherit!important;
 }
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+
+/* REV16 — Recent Uploads GRID only. Mirror approved REV15 LIST badge paint.
+   Preserve typography, geometry, wrappers, quality artwork and LIST. */
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--bg)!important;
+  color:var(--xmas-title)!important;
+  border-color:var(--line)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.recent-meta-label,.recent-completion-value,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.text-guide-badge,.developer-provided-badge) svg {
   color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
 }
