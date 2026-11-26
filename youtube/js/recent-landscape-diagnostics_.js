@@ -1,4 +1,4 @@
-/* TEST ONLY - diagnostic overlay, no layout changes. COMPLETION TYPES REV48 */
+/* TEST ONLY - diagnostic overlay, no layout changes. COMPLETION TYPES REV49 */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
@@ -8,7 +8,7 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='CHRISTMAS TEST REV48 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+  var label=document.createElement('span'); label.textContent='CHRISTMAS TEST REV49 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
   head.appendChild(label);
@@ -19,20 +19,21 @@
   panel.appendChild(head);panel.appendChild(body);
   var minimized=false;
   btn.addEventListener('click',function(){minimized=!minimized;body.hidden=minimized;btn.textContent=minimized?'Show':'Hide';});
-  // REV48: compact, read-only mobile filter trace. Copy action is user initiated.
+  // REV49: compact, read-only mobile filter trace. Copy action is user initiated.
   var ids=['typeFilter','diffFilter','platformFilter','qualityFilter','featuresFilter','sortSelect'];
   var trace=[];var previous='';
   var copyBtn=document.createElement('button');
   copyBtn.type='button';copyBtn.textContent='Copy';copyBtn.style.cssText=btn.style.cssText;
   head.insertBefore(copyBtn,btn);
   function capture(reason){
-    var root=document.documentElement; label.textContent='CHRISTMAS TEST REV48 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
-    var lines=['REV48 FILTER PAINT ('+reason+') t='+Math.round(performance.now())+'ms',
+    var root=document.documentElement; label.textContent='CHRISTMAS TEST REV49 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+    var lines=['REV49 FILTER PAINT ('+reason+') t='+Math.round(performance.now())+'ms',
       'viewport='+innerWidth+'x'+innerHeight+' '+(matchMedia('(orientation:portrait)').matches?'P':'L')+
       ' seasonal='+root.getAttribute('data-seasonal-theme')+' theme='+root.getAttribute('data-theme')];
 
-    lines.push('CHRISTMAS SCRIPT REV48; CSS fingerprint='+getComputedStyle(root).getPropertyValue('--ml-christmas-test-revision').trim());
+    lines.push('CHRISTMAS SCRIPT REV49; CSS fingerprint='+getComputedStyle(root).getPropertyValue('--ml-christmas-test-revision').trim());
     lines.push('SANTA REV48: '+(typeof window.mlChristmasSantaDiagnostics==='function'?JSON.stringify(window.mlChristmasSantaDiagnostics()):'scheduler not loaded'));
+    lines.push('TRAIN REV49: '+(typeof window.mlChristmasTrainDiagnostics==='function'?JSON.stringify(window.mlChristmasTrainDiagnostics()):'not loaded'));
     lines.push('CHRISTMAS AUDIO: '+(typeof window.mlChristmasSoundDiagnostics==='function'?JSON.stringify(window.mlChristmasSoundDiagnostics()):'not loaded'));
     lines.push('Preserved TP CSS fingerprint='+getComputedStyle(root).getPropertyValue('--ml-tp-test-revision').trim());
     lines.push('stylesheet='+Array.from(document.querySelectorAll('link[rel=stylesheet]')).filter(function(l){return l.href.indexOf('/styles_.css?')!==-1;}).map(function(l){return l.href+' loaded='+!!l.sheet;}).join(' '));
