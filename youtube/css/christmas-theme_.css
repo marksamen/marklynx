@@ -1,27 +1,29 @@
-/* CHRISTMAS TEST REV21 — paint and Completion Type font weight, independent of Halloween.
+/* CHRISTMAS TEST REV22 — paint and Completion Type font weight, independent of Halloween.
    No geometry, renderer, banner artwork, animation, or audio changes. */
-:root { --ml-christmas-test-revision: REV21; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: REV22; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
-  --bg:#10251a; --bg-raised:#172e22; --bg-card:#1e3929;
-  --line:#667f60; --red:#9c2937; --red-bright:#e26c73;
-  --text:#f5f3e9; --text-dim:#bdcbbc; --silver:#e9d6a5;
-  --xmas-header:#10251a; --xmas-edge:#c5a35b; --xmas-title:#f1d696;
-  --xmas-hover:#294936; --xmas-control:#203c2c; --xmas-toolbar-control:#801b25; --xmas-accent:#a52635;
-  --xmas-accent-hover:#b93443; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
+  --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
+  --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
+  --text:#fff4d8; --text-dim:#e0d5ad; --silver:#f0d38e;
+  --xmas-header:#031c0c; --xmas-edge:#e44d42; --xmas-title:#ffe09a;
+  --xmas-hover:#10351c; --xmas-control:#10351c; --xmas-toolbar-control:#650910; --xmas-accent:#800c16;
+  --xmas-accent-hover:#a31824; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
   --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
   --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
   --xmas-ct:#7a2028; --xmas-ct-text:#fff0ef; --xmas-ct-border:#d67980;
+  --xmas-guide-chip:#480409; --xmas-guide-chip-edge:#e44d42;
 }
 html[data-seasonal-theme="christmas"][data-theme="bright"] {
-  --bg:#a52230; --bg-raised:#85202a; --bg-card:#87212c;
-  --line:#d19479; --red:#edbc68; --red-bright:#ffdc93;
-  --text:#fff8ed; --text-dim:#ffe5d6; --silver:#ffe7b0;
-  --xmas-header:var(--bg); --xmas-edge:#e1b967; --xmas-title:#fff0c2;
-  --xmas-hover:#922330; --xmas-control:#24563b; --xmas-accent:#235e3d;
-  --xmas-accent-hover:#194b30; --xmas-chip:#f3e1bd; --xmas-chip-text:#57251e;
+  --bg:#88010d; --bg-raised:#79010b; --bg-card:#78040c;
+  --line:#d4ad68; --red:#f1c768; --red-bright:#ffdf91;
+  --text:#fff5d9; --text-dim:#f5dcb6; --silver:#ffe3a5;
+  --xmas-header:var(--bg); --xmas-edge:#e9c96e; --xmas-title:#ffe7ad;
+  --xmas-hover:#a10b16; --xmas-control:#063f0b; --xmas-accent:#07500f;
+  --xmas-accent-hover:#0d6518; --xmas-chip:#f3e1bd; --xmas-chip-text:#57251e;
   --xmas-tp:#f5e2a6; --xmas-tp-text:#6f5100; --xmas-tp-border:#c69200;
   --xmas-gs:#ddebd8; --xmas-gs-text:#1d5a1d; --xmas-gs-border:#2f7d32;
   --xmas-ct:#fff8e7; --xmas-ct-text:#801b25; --xmas-ct-border:#d4b59e;
+  --xmas-guide-chip:#063407; --xmas-guide-chip-edge:#e9c96e;
 }
 html[data-seasonal-theme="christmas"] body,
 html[data-seasonal-theme="christmas"] .subscribe-strip,
@@ -182,7 +184,7 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.mlm-hub-dialog,.
 /* REV07 — gold selected view; inactive follows its toolbar palette. */
 html[data-seasonal-theme="christmas"] .view-toggle button.active,
 html[data-seasonal-theme="christmas"] .view-toggle button.active:hover {
-  background:#f1d696!important;color:#412b10!important;border-color:var(--xmas-edge)!important;
+  background:#f8d77f!important;color:#412b10!important;border-color:var(--xmas-edge)!important;
 }
 /* REV07 — reduce only Completion Type weight, including separately weighted labels/values. */
 html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta,
@@ -285,9 +287,9 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSec
    Do not paint metric wrappers, thumbnail images, quality logos or status indicators.
    Repeated grid ID deliberately wins over accumulated legacy important selectors. */
 html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.grid-list-sub .landscape-platform-unit,.diff-tag,.game-meta-pill,.gs-pill,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
   color:var(--xmas-title)!important;
-  border-color:var(--xmas-edge)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -304,9 +306,9 @@ html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card
 /* REV13 — Game Guides LIST only: same outside-page paint as approved GRID.
    Exclude empty points placeholders and dual-metric layout wrapper. */
 html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.list-sub .landscape-platform-unit,.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill,.completion-type-meta,.list-col.gs:not(.guide-list-points):not(.guide-empty-points),.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
   color:var(--xmas-title)!important;
-  border-color:var(--xmas-edge)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -325,9 +327,9 @@ html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list
 /* REV15 — Recent Uploads LIST only: plain page-matching metadata paint, same direction as accepted Normal LIST/GRID.
    Match the outside page color, not the inner card tone. Preserve Recent GRID, wrappers, artwork and layout. */
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
   color:var(--xmas-title)!important;
-  border-color:var(--xmas-edge)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -341,9 +343,9 @@ html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-
 /* REV16 — Recent Uploads GRID only. Mirror approved REV15 LIST badge paint.
    Preserve typography, geometry, wrappers, quality artwork and LIST. */
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
-  background:var(--xmas-toolbar-control,var(--xmas-control))!important; /* REV21 experiment */
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
   color:var(--xmas-title)!important;
-  border-color:var(--xmas-edge)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
   text-shadow:none!important;
   box-shadow:none!important;
 }
@@ -415,15 +417,15 @@ html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-opt
 }
 html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:hover,
 html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:hover)) .ml-filter-popup-option:focus-visible {
-  background:#f1d696!important;color:#412b10!important;
+  background:#f8d77f!important;color:#412b10!important;
 }
 html[data-seasonal-theme="christmas"] .ml-filter-popup-menu:not(:has(.ml-filter-popup-option:is(:hover,:focus-visible))) .ml-filter-popup-option.is-selected {
-  background:#f1d696!important;color:#412b10!important;
+  background:#f8d77f!important;color:#412b10!important;
 }
-html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f1d696!important;}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f8d77f!important;}
 /* Native fallback: option colors are subject to browser/OS popup painting. */
 html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);}
-html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f1d696!important;color:#412b10!important;}
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f8d77f!important;color:#412b10!important;}
 /* Modern desktop Chromium: opt into the CSS-stylable select picker, retaining native select
    value/change/keyboard semantics and existing mobile filter replacement. Unsupported browsers
    retain native menus; do not change the protected mobile popup script. */
@@ -452,7 +454,7 @@ html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-d
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-card,.mlm-card) {background:var(--bg-card)!important;border-color:var(--line)!important;color:var(--xmas-title)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-head,.mlm-head,.wn-body,.mlm-body) {border-color:var(--line)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button,.mlm-tabs button) {background:var(--xmas-toolbar-control,var(--xmas-control))!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
-html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:#f1d696!important;color:#412b10!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:#f8d77f!important;color:#412b10!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button:not([aria-selected="true"]),.mlm-tabs button:not([aria-selected="true"])):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-entry small,.mlm-entry small,.wn-empty,.mlm-empty) {color:var(--text-dim)!important;}
 html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-list,.mlm-list) {scrollbar-color:var(--xmas-toolbar-control,var(--xmas-control)) var(--bg-card);}
