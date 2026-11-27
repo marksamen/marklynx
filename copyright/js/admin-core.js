@@ -1,4 +1,4 @@
-import { initSeasonalThemeControl } from "./admin-seasonal-theme.js?v=SEASONAL-PROD-REV01";
+import { initSeasonalConfiguration } from "./admin-seasonal-configuration.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, updateDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
@@ -28,8 +28,8 @@ const admin = document.getElementById("admin");
 const form = document.getElementById("loginForm");
 const error = document.getElementById("error");
 
-function loggedOut(){admin.style.display="none";login.style.display="block";}
-function loggedIn(){refreshSeasonalTheme();login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesProd();loadDataSourceStatus();}
+function loggedOut(){if(document.getElementById("adminPageModalFrame")?.getAttribute("src")?.startsWith("seasonal/"))document.getElementById("adminPageModalClose").click();admin.style.display="none";login.style.display="block";}
+function loggedIn(){login.style.display="none";admin.style.display="block";form.reset();error.textContent="";loadTrafficAnalytics({db,getDoc,doc});loadGamesProd();loadDataSourceStatus();}
 
 
 // Supabase PROD recovery export — public SELECT only. No database writes.
@@ -63,7 +63,7 @@ window.addEventListener("genres-modal-closed",()=>{
 });
 
 initDataSourceControl({auth,SUPABASE_PROD_URL,SUPABASE_PROD_PUBLISHABLE_KEY});
-const refreshSeasonalTheme=initSeasonalThemeControl({auth,url:SUPABASE_PROD_URL});
+initSeasonalConfiguration({auth,url:SUPABASE_PROD_URL});
 initGameManagement({auth,verifyProdDatabaseIdentity});
 initRecentRefresh({auth});
 initVideoCountRefresh({auth});

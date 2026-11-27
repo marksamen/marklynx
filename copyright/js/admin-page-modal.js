@@ -20,6 +20,7 @@ export function initAdminPageModal(){
     document.body.classList.remove("admin-modal-open");
     adminPageModalFrame.src="about:blank";
     const closingAdminModalUrl=activeAdminModalUrl;
+    if(closingAdminModalUrl.startsWith("seasonal/"))document.getElementById("seasonalConfiguration")?.focus();
     if(closingAdminModalUrl.startsWith("text-guides/")){
       window.dispatchEvent(new CustomEvent("text-guides-modal-closed"));
     }
@@ -39,6 +40,6 @@ export function initAdminPageModal(){
   }
   document.querySelectorAll("[data-admin-modal-url]").forEach(button=>button.addEventListener("click",()=>openAdminPageModal(button.dataset.adminModalUrl,button.dataset.adminModalTitle)));
   adminPageModalClose.addEventListener("click",closeAdminPageModal);
-  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("quality-badges/")&&!activeAdminModalUrl.startsWith("text-guides/")&&!activeAdminModalUrl.startsWith("platforms/")&&!activeAdminModalUrl.startsWith("genres/")&&!activeAdminModalUrl.startsWith("languages/")&&!activeAdminModalUrl.startsWith("completion-types/")&&!activeAdminModalUrl.startsWith("whats-new-probe/")&&!activeAdminModalUrl.startsWith("message-from-mark-lynx/"))closeAdminPageModal();});
-  document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("languages/")&&!activeAdminModalUrl.startsWith("completion-types/")&&!activeAdminModalUrl.startsWith("whats-new-probe/")&&!activeAdminModalUrl.startsWith("message-from-mark-lynx/"))closeAdminPageModal();});
+  adminPageModal.addEventListener("click",event=>{if(event.target===adminPageModal&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("quality-badges/")&&!activeAdminModalUrl.startsWith("text-guides/")&&!activeAdminModalUrl.startsWith("platforms/")&&!activeAdminModalUrl.startsWith("genres/")&&!activeAdminModalUrl.startsWith("languages/")&&!activeAdminModalUrl.startsWith("completion-types/")&&!activeAdminModalUrl.startsWith("whats-new-probe/")&&!activeAdminModalUrl.startsWith("message-from-mark-lynx/")&&!activeAdminModalUrl.startsWith("seasonal/"))closeAdminPageModal();});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape"&&adminPageModal.classList.contains("open")&&!activeAdminModalUrl.startsWith("developers/")&&!activeAdminModalUrl.startsWith("suggestions/")&&!activeAdminModalUrl.startsWith("developer-publishers/")&&!activeAdminModalUrl.startsWith("languages/")&&!activeAdminModalUrl.startsWith("completion-types/")&&!activeAdminModalUrl.startsWith("whats-new-probe/")&&!activeAdminModalUrl.startsWith("message-from-mark-lynx/")&&!activeAdminModalUrl.startsWith("seasonal/"))closeAdminPageModal();});
 }
