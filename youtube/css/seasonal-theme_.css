@@ -855,3 +855,19 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form in
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea:focus {
   outline:2px solid #763177!important; outline-offset:1px;
 }
+
+/* PRIORITY-1 TEST REV01 — B3: Halloween Recent Trophy Points paint only.
+   Match the existing Halloween Recent Gamerscore palette; retain TP label,
+   geometry, dual-metric stack and all non-Halloween styles. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
