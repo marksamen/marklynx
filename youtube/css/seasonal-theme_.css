@@ -930,3 +930,16 @@ html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect) o
     html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] optgroup {color:var(--ml-halloween-menu-text);}
   }
 }
+
+/* PRIORITY-1 TEST REV04 - Halloween dual GS/TP LIST badge correction.
+   The stack is layout-only, not a third painted badge. Preserve its geometry.
+   Bright's ordinary GS child override must not leak into Halloween. */
+html[data-seasonal-theme="halloween"][data-theme] #resultsList .list-row > .list-col.gs.guide-list-points {
+  background:transparent!important;
+  border-color:transparent!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .guide-list-points > .list-col.gs.guide-gs-value {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
