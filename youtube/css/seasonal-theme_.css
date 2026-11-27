@@ -1101,3 +1101,16 @@ html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection .recent-
 html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {
   background:var(--bg);
 }
+
+/* PRIORITY-1 TEST REV13 / V1: correct REV12's page-colour count strip.
+   Match the existing non-hover Game Guides LIST/GRID card paint; join both
+   views without a page-coloured one-pixel seam. No layout changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-guide-surface:#30183b;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-guide-surface:#f6aa49;}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count,
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
+  background:var(--ml-hw-guide-surface);
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--ml-hw-guide-surface)!important;
+}
