@@ -871,3 +871,19 @@ html[data-seasonal-theme="halloween"][data-theme="bright"]
   border-color:#30143f!important;
   color:#ffbe65!important;
 }
+
+/* PRIORITY-1 TEST REV02 — B3 owner-approved scope extension: Game Guides TP.
+   Explicit TP selectors override normal and portrait GRID TP paint.
+   Retain GS/TP geometry and all other seasonal styling. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-col.gs.guide-tp-pill {
+  background:#f39827!important;
+  border-color:#ffb45d!important;
+  color:#151015!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-col.gs.guide-tp-pill {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
