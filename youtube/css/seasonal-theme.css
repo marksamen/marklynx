@@ -77,9 +77,9 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .r
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta {
-  background:#f6b45e!important;
-  border-color:#b86a20!important;
-  color:#482508!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
   box-shadow:none!important;
   text-shadow:none!important;
 }
@@ -88,7 +88,7 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .r
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta .game-meta-label,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
-  color:#482508!important;
+  color:#ffb45d!important;
 }
 
 /* REV05: Dark-only banner surround paint correction.
@@ -410,9 +410,9 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-
 }
 /* Normal video Gamerscore, in both LIST and GRID presentations. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.gs, #resultsGrid .gs-pill) {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 /* Normal video Genre, Time, and Difficulty — retain compact chip geometry. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.type, #resultsList .list-col.time, #resultsList .list-col.diff, #resultsGrid .game-meta-pill, #resultsGrid .diff-tag, #resultsList .mobile-game-meta .game-meta-pill) {
@@ -612,9 +612,9 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
    Christmas/future seasons: remember Recent and Normal have separate badge selectors. */
 html[data-seasonal-theme="halloween"][data-theme="dark"]
   .recent-uploads-grid .recent-upload-meta.gs {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"]
   .recent-uploads-grid .recent-upload-meta.gs {
@@ -854,4 +854,239 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .developer-contact-fo
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form input:focus,
 html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form textarea:focus {
   outline:2px solid #763177!important; outline-offset:1px;
+}
+
+/* PRIORITY-1 PROD REV01 — B3: Halloween Recent Trophy Points paint only.
+   Match the existing Halloween Recent Gamerscore palette; retain TP label,
+   geometry, dual-metric stack and all non-Halloween styles. */
+html[data-seasonal-theme="halloween"][data-theme="dark"]
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"]
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+
+/* PRIORITY-1 PROD REV01 — B3 owner-approved scope extension: Game Guides TP.
+   Explicit TP selectors override normal and portrait GRID TP paint.
+   Retain GS/TP geometry and all other seasonal styling. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-col.gs.guide-tp-pill {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-col.gs.guide-tp-pill {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+
+/* PRIORITY-1 PROD REV01 / B4: Halloween dropdown paint and desktop picker.
+   Keep native values, existing mobile filter behavior and other themes intact. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-halloween-menu-bg:#30183b; --ml-halloween-menu-text:#ffbe65; --ml-halloween-menu-edge:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-halloween-menu-bg:#502268; --ml-halloween-menu-text:#ffbe65; --ml-halloween-menu-edge:#7a488b;
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu {
+  background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);border-color:var(--ml-halloween-menu-edge);
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-group {color:var(--ml-halloween-menu-text);}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option,
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option.is-selected {
+  background:transparent!important;color:var(--ml-halloween-menu-text)!important;
+}
+@media (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option:hover {background:#f39827!important;color:#151015!important;}
+}
+@media (hover:none), (pointer:coarse) {
+  html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option:active {background:#f39827!important;color:#151015!important;}
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-option:focus-visible {outline-color:#f39827!important;}
+/* Native fallback: actual OS popup paint is browser-dependent. */
+html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);}
+html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f39827!important;color:#151015!important;}
+@supports (appearance:base-select) and selector(::picker(select)) {
+  @media (min-width:901px) and (min-height:501px) and (pointer:fine) {
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker],
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker(select) {appearance:base-select;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] {
+      box-sizing:border-box;width:var(--ml-halloween-picker-width);height:var(--ml-halloween-picker-height);
+    }
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker(select) {
+      background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);border:1px solid var(--ml-halloween-menu-edge);border-radius:3px;padding:0;max-height:min(50vh,360px);overflow:auto;
+    }
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] option {padding:4px 10px;min-height:0;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] option::checkmark {display:none;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker-icon {color:currentColor;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] optgroup {color:var(--ml-halloween-menu-text);}
+  }
+}
+
+/* PRIORITY-1 PROD REV01 - Halloween dual GS/TP LIST badge correction.
+   The stack is layout-only, not a third painted badge. Preserve its geometry.
+   Bright's ordinary GS child override must not leak into Halloween. */
+html[data-seasonal-theme="halloween"][data-theme] #resultsList .list-row > .list-col.gs.guide-list-points {
+  background:transparent!important;
+  border-color:transparent!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-row > .guide-list-points > .list-col.gs.guide-gs-value {
+  background:#502268!important;
+  border-color:#30143f!important;
+  color:#ffbe65!important;
+}
+
+/* PRIORITY-1 PROD REV01 / B5: Halloween feature badges and Dark seasonal badge
+   consistency. REV06 Dark matched existing Genre/Time/Difficulty palette for
+   feature badges; REV07 extends that same Dark palette to GS, TP and Completion
+   badges across Recent and Game Guides. Approved Bright remains unchanged. Paint only. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.kinect-badge,.text-guide-badge,.developer-provided-badge) {
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.kinect-badge,.text-guide-badge,.developer-provided-badge) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:inherit!important;
+  stroke:currentColor!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge :is(.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+
+
+/* PRIORITY-1 PROD REV01 — Halloween DARK seasonal badge consistency.
+   Owner approved seasonal-only consistency standard: all Halloween Dark badges
+   now use the established purple/orange palette, including GS, TP and
+   Completion Type, while Normal/Christmas remain unchanged. */
+
+/* Halloween heading ribbon structure.
+   Live h2 text, independent side illustrations, no renderer or translation changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-hw-heading-left:url(../images/halloween-ribbon-dark-left.webp);
+  --ml-hw-heading-right:url(../images/halloween-ribbon-dark-right.webp);
+  
+  --ml-hw-heading-ink:#ffb13e; --ml-hw-heading-edge:#a65ad4;
+  --ml-hw-heading-shadow:0 2px 2px #15091e,0 0 8px #190823;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-hw-heading-left:url(../images/halloween-ribbon-bright-left.webp);
+  --ml-hw-heading-right:url(../images/halloween-ribbon-bright-right.webp);
+  
+  --ml-hw-heading-ink:#3d1956; --ml-hw-heading-edge:#71358f;
+  --ml-hw-heading-shadow:0 1px 0 #ffe0a0,0 0 5px #ffdf88;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  box-sizing:border-box; min-width:0;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--ml-hw-heading-edge); border-radius:6px;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  min-width:0; max-width:100%; margin:0; text-align:center;
+  font-family:Georgia,"Times New Roman",serif; font-weight:900; font-style:italic;
+  line-height:1.12;
+  text-transform:uppercase; overflow-wrap:anywhere;
+  color:var(--ml-hw-heading-ink)!important; text-shadow:var(--ml-hw-heading-shadow)!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+/* Approved Halloween atmospheric ribbon artwork and sizing.
+   Native translated headings; independent side art and text-free horizon. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-hw-heading-horizon:url(../images/halloween-ribbon-dark-horizon.webp);
+  --ml-hw-heading-sky:radial-gradient(ellipse at 18% 90%,#aa54d8 0%,transparent 42%),radial-gradient(ellipse at 78% 80%,#803ac0 0%,transparent 45%),radial-gradient(ellipse at 50% 100%,#6933a1 0%,transparent 56%),linear-gradient(#220e39,#401665 65%,#7b3aad);
+  --ml-hw-heading-edge:#c17af5;
+  --ml-hw-heading-shadow:0 2px 0 #7f3104,0 3px 3px #15091e,0 0 12px #f47b2355;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-hw-heading-horizon:url(../images/halloween-ribbon-bright-horizon.webp);
+  --ml-hw-heading-sky:radial-gradient(ellipse at 24% 90%,#ffe18a 0%,transparent 44%),radial-gradient(ellipse at 77% 80%,#ffda63 0%,transparent 44%),radial-gradient(ellipse at 50% 100%,#ffcf54 0%,transparent 55%),linear-gradient(#e75f0a,#ff9b21 65%,#ffc84b);
+  --ml-hw-heading-edge:#71358f;
+  --ml-hw-heading-shadow:0 1px 0 #fff0bc,0 2px 3px #ffd77a,0 0 9px #fff1b0;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  --ml-hw-height:73px; --ml-hw-art-width:min(27%,260px);
+  min-height:var(--ml-hw-height); padding:5px min(24%,240px);
+  background-image:var(--ml-hw-heading-left),var(--ml-hw-heading-right),var(--ml-hw-heading-horizon),var(--ml-hw-heading-sky);
+  background-position:left center,right center,center bottom,center,center,center,center;
+  background-size:var(--ml-hw-art-width) 100%,var(--ml-hw-art-width) 100%,100% 24%,100% 100%,100% 100%,100% 100%,100% 100%;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 0 0 1px #ffffff40,inset 0 0 12px #34114e50,0 0 6px #7833af44;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  font-size:clamp(22px,3.3vw,44px); letter-spacing:.025em;
+}
+@media (max-width:700px), (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    --ml-hw-height:43px; --ml-hw-art-width:min(23%,150px); padding:3px min(21%,135px);
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4.8vw,29px);}
+}
+@media (orientation:landscape) and (max-height:500px) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    --ml-hw-height:37px; --ml-hw-art-width:min(22%,135px); padding:2px min(21%,120px);
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(17px,3vw,28px);}
+}
+
+
+/* PRIORITY-1 PROD REV01 / V1: connect Halloween ribbons to their content.
+   Adapt the approved Christmas frame geometry, not its palette. No art,
+   renderer, card paint, or heading typography changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-panel-edge:#f39827;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-panel-edge:#71358f;}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  margin-bottom:0; border-color:var(--ml-hw-panel-edge); border-radius:8px 8px 0 0;
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {
+  margin:0; padding:8px; position:relative;
+  box-shadow:inset 1px 0 var(--ml-hw-panel-edge),inset -1px 0 var(--ml-hw-panel-edge);
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  border-color:var(--ml-hw-panel-edge)!important; border-radius:0 0 8px 8px;
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--ml-hw-guide-surface)!important; padding-top:0!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  border-radius:0 0 8px 8px; outline:1px solid var(--ml-hw-panel-edge); outline-offset:0;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {padding-block:6px;}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
+  content:""; position:absolute; bottom:0; left:1px; right:1px; height:1px; background:var(--ml-hw-guide-surface); pointer-events:none; z-index:1;
+}
+html[data-seasonal-theme="halloween"][data-theme] .toolbar::after,
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection .recent-uploads-inner {border-bottom-color:transparent!important;}
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="halloween"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
+}
+
+
+
+/* Approved Halloween guide count surface.
+   Match the existing non-hover Game Guides LIST/GRID card paint; join both
+   views without a page-coloured one-pixel seam. No layout changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-guide-surface:#30183b;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-guide-surface:#f6aa49;}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count,
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
+  background:var(--ml-hw-guide-surface);
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--ml-hw-guide-surface)!important;
 }
