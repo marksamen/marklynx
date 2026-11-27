@@ -975,3 +975,89 @@ html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#res
    Owner approved seasonal-only consistency standard: all Halloween Dark badges
    now use the established purple/orange palette, including GS, TP and
    Completion Type, while Normal/Christmas remain unchanged. */
+
+/* PRIORITY-1 TEST REV08 / V1: slim Halloween heading ribbons.
+   Live h2 text, independent side illustrations, no renderer or translation changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-hw-heading-left:url(../images/halloween-ribbon-dark-left_.webp);
+  --ml-hw-heading-right:url(../images/halloween-ribbon-dark-right_.webp);
+  --ml-hw-heading-sky:linear-gradient(105deg,#2d1544,#4b2472 42%,#442164 65%,#29153e);
+  --ml-hw-heading-ink:#ffb13e; --ml-hw-heading-edge:#a65ad4;
+  --ml-hw-heading-shadow:0 2px 2px #15091e,0 0 8px #190823;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-hw-heading-left:url(../images/halloween-ribbon-bright-left_.webp);
+  --ml-hw-heading-right:url(../images/halloween-ribbon-bright-right_.webp);
+  --ml-hw-heading-sky:linear-gradient(105deg,#ed9021,#ffc75b 42%,#ffbb44 65%,#f29a29);
+  --ml-hw-heading-ink:#3d1956; --ml-hw-heading-edge:#71358f;
+  --ml-hw-heading-shadow:0 1px 0 #ffe0a0,0 0 5px #ffdf88;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  box-sizing:border-box; min-width:0; min-height:70px;
+  display:flex; align-items:center; justify-content:center;
+  padding:7px min(18%,110px);
+  border:1px solid var(--ml-hw-heading-edge); border-radius:6px;
+  background-image:var(--ml-hw-heading-left),var(--ml-hw-heading-right),var(--ml-hw-heading-sky);
+  background-position:left center,right center,center;
+  background-size:auto 100%,auto 100%,100% 100%; background-repeat:no-repeat;
+  box-shadow:inset 0 1px 0 #ffffff30,inset 0 -1px 0 #0005;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  min-width:0; max-width:100%; margin:0; text-align:center;
+  font-family:Georgia,"Times New Roman",serif; font-weight:900; font-style:italic;
+  font-size:clamp(19px,2.4vw,30px); line-height:1.12; letter-spacing:.015em;
+  text-transform:uppercase; overflow-wrap:anywhere;
+  color:var(--ml-hw-heading-ink)!important; text-shadow:var(--ml-hw-heading-shadow)!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+@media (max-width:700px), (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:48px; padding:5px min(18%,65px); background-size:auto 48px,auto 48px,100% 100%;
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,3.8vw,22px);}
+}
+@media (orientation:landscape) and (max-height:500px) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:40px; padding:4px min(18%,56px); background-size:auto 40px,auto 40px,100% 100%;
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,2.5vw,21px);}
+}
+
+/* PRIORITY-1 TEST REV09 / V1: taller atmospheric Halloween ribbons.
+   Native translated headings; independent side art and text-free horizon. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-hw-heading-horizon:url(../images/halloween-ribbon-dark-horizon_.webp);
+  --ml-hw-heading-sky:radial-gradient(ellipse at 18% 90%,#aa54d8 0%,transparent 42%),radial-gradient(ellipse at 78% 80%,#803ac0 0%,transparent 45%),radial-gradient(ellipse at 50% 100%,#6933a1 0%,transparent 56%),linear-gradient(#220e39,#401665 65%,#7b3aad);
+  --ml-hw-heading-edge:#c17af5;
+  --ml-hw-heading-shadow:0 2px 0 #7f3104,0 3px 3px #15091e,0 0 12px #f47b2355;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-hw-heading-horizon:url(../images/halloween-ribbon-bright-horizon_.webp);
+  --ml-hw-heading-sky:radial-gradient(ellipse at 24% 90%,#ffe18a 0%,transparent 44%),radial-gradient(ellipse at 77% 80%,#ffda63 0%,transparent 44%),radial-gradient(ellipse at 50% 100%,#ffcf54 0%,transparent 55%),linear-gradient(#e75f0a,#ff9b21 65%,#ffc84b);
+  --ml-hw-heading-edge:#71358f;
+  --ml-hw-heading-shadow:0 1px 0 #fff0bc,0 2px 3px #ffd77a,0 0 9px #fff1b0;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  --ml-hw-height:110px; --ml-hw-art-width:min(27%,260px);
+  min-height:var(--ml-hw-height); padding:8px min(24%,240px);
+  background-image:var(--ml-hw-heading-left),var(--ml-hw-heading-right),var(--ml-hw-heading-horizon),var(--ml-hw-heading-sky);
+  background-position:left center,right center,center bottom,center,center,center,center;
+  background-size:var(--ml-hw-art-width) 100%,var(--ml-hw-art-width) 100%,100% 24%,100% 100%,100% 100%,100% 100%,100% 100%;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 0 0 1px #ffffff40,inset 0 0 12px #34114e50,0 0 6px #7833af44;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  font-size:clamp(22px,3.3vw,44px); letter-spacing:.025em;
+}
+@media (max-width:700px), (pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    --ml-hw-height:65px; --ml-hw-art-width:min(23%,150px); padding:5px min(21%,135px);
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4.8vw,29px);}
+}
+@media (orientation:landscape) and (max-height:500px) {
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    --ml-hw-height:55px; --ml-hw-art-width:min(22%,135px); padding:4px min(21%,120px);
+  }
+  html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(17px,3vw,28px);}
+}
