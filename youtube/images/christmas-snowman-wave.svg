@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168" height="214" viewBox="0 0 168 214">
+  <style>
+    @media screen and (prefers-reduced-motion:no-preference) {
+      #wave-pivot {transform-box:view-box;transform-origin:115px 124px;animation:wave 20s ease-in-out infinite;}
+      #hat-pivot {transform-box:view-box;transform-origin:83px 46px;animation:tip 20s ease-in-out infinite;}
+      @keyframes wave {
+        0%,15%,31%,50%,64%,100% {transform:rotate(0deg);}
+        17%,23%,29% {transform:rotate(-48deg);}
+        20%,26% {transform:rotate(-22deg);}
+        53%,59% {transform:rotate(-55deg);}
+        56% {transform:rotate(-65deg);}
+      }
+      @keyframes tip {
+        0%,51%,63%,100% {transform:rotate(0deg);}
+        55%,59% {transform:rotate(19deg);}
+      }
+    }
+  </style>
+  <defs>
+    <radialGradient id="snow" cx=".32" cy=".25" r=".82"><stop stop-color="#fffdf6"/><stop offset=".56" stop-color="#f4f9fb"/><stop offset=".84" stop-color="#d0e0e9"/><stop offset="1" stop-color="#9bb4c7"/></radialGradient>
+    <linearGradient id="hat" x2="1" y2=".2"><stop stop-color="#111719"/><stop offset=".38" stop-color="#495054"/><stop offset=".7" stop-color="#252b30"/><stop offset="1" stop-color="#101415"/></linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f34c46"/><stop offset=".35" stop-color="#b71b25"/><stop offset=".7" stop-color="#95101b"/><stop offset="1" stop-color="#660d15"/></linearGradient>
+    <linearGradient id="carrot" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffd77a"/><stop offset=".35" stop-color="#f99a34"/><stop offset="1" stop-color="#c34b16"/></linearGradient>
+    <radialGradient id="coal" cx=".3" cy=".22"><stop stop-color="#62625d"/><stop offset=".32" stop-color="#343535"/><stop offset="1" stop-color="#101415"/></radialGradient>
+    <linearGradient id="branch" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b4834c"/><stop offset="1" stop-color="#54341f"/></linearGradient>
+  </defs>
+  <g id="snow-base"><ellipse cx="85" cy="199" rx="67" ry="10" fill="#102f40" opacity=".2"/><path d="M10 201 Q21 191 44 194 Q58 187 80 193 Q99 185 121 193 Q145 191 159 202 Q128 212 83 211 Q39 213 10 201Z" fill="url(#snow)"/></g>
+  <g id="lower-body"><ellipse cx="84" cy="165" rx="48" ry="40" fill="url(#snow)" stroke="#d3e2eb" stroke-width=".7"/><path d="M47 176 Q65 196 103 193" fill="none" stroke="#fff" stroke-width="1.5" opacity=".7"/></g>
+  <g id="left-arm" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M53 127 27 112 13 91 M27 112 12 115 M19 100 5 99" stroke="#553622" stroke-width="6"/><path d="M53 125 27 110 13 90 M27 110 12 114 M19 99 5 98" stroke="url(#branch)" stroke-width="3.1"/></g>
+  <g id="wave-pivot"><g id="right-arm" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M115 126 140 110 155 86 M140 110 161 109 M149 96 164 94" stroke="#553622" stroke-width="6"/><path d="M115 124 140 108 155 85 M140 108 161 108 M149 95 164 93" stroke="url(#branch)" stroke-width="3.1"/></g>
+  </g>
+  <g id="middle-body"><ellipse cx="84" cy="124" rx="37" ry="35" fill="url(#snow)" stroke="#d3e2eb" stroke-width=".6"/><circle cx="85" cy="132" r="5" fill="url(#coal)"/><circle cx="86" cy="150" r="5.4" fill="url(#coal)"/><circle cx="87" cy="171" r="5.8" fill="url(#coal)"/></g>
+  <g id="head"><circle cx="83" cy="74" r="32" fill="url(#snow)" stroke="#d3e2eb" stroke-width=".7"/><ellipse cx="61" cy="82" rx="7" ry="4" fill="#eb9995" opacity=".45"/><ellipse cx="105" cy="82" rx="7" ry="4" fill="#eb9995" opacity=".45"/><ellipse cx="72" cy="68" rx="3.6" ry="4.5" fill="url(#coal)"/><ellipse cx="94" cy="68" rx="3.6" ry="4.5" fill="url(#coal)"/><circle cx="71" cy="66.5" r="1.1" fill="#fff"/><circle cx="93" cy="66.5" r="1.1" fill="#fff"/><path d="M82 76 Q91 73 113 80 Q91 89 82 83 Q78 80 82 76Z" fill="url(#carrot)" stroke="#b66426" stroke-width=".6"/><path d="M91 77 91 82 M98 78 98 82" stroke="#b86426" stroke-width=".8" opacity=".7"/><g fill="url(#coal)"><circle cx="69" cy="87" r="2"/><circle cx="75" cy="91" r="2.2"/><circle cx="82" cy="92.5" r="2.2"/><circle cx="89" cy="91" r="2.2"/><circle cx="96" cy="87" r="2"/></g></g>
+  <g id="scarf"><path d="M101 101 Q111 115 112 148 L99 154 Q99 128 91 113Z" fill="url(#red)" stroke="#75131c"/><path d="M100 149 100 157 M104 149 104 158 M108 147 109 155 M112 146 114 153" stroke="#a71c25" stroke-width="2"/><path d="M53 96 Q83 110 113 96 L116 107 Q86 124 51 107Z" fill="url(#red)" stroke="#7b131b"/><path d="M55 100 Q82 113 110 100 M103 114 108 143" fill="none" stroke="#f5cc79" stroke-width="1.5"/><path d="M55 105 Q83 118 111 105" fill="none" stroke="#79151c" stroke-width="1.2"/></g>
+  <g id="hat-pivot"><g id="top-hat" transform="rotate(-8 83 46)"><path d="M59 9 Q84 3 107 9 L104 44 Q83 51 61 44Z" fill="url(#hat)" stroke="#11191a"/><ellipse cx="83" cy="9" rx="24" ry="5" fill="#414a4c"/><path d="M61 35 Q83 40 105 35 L104 45 Q83 51 62 45Z" fill="url(#red)"/><ellipse cx="83" cy="46" rx="41" ry="8" fill="url(#hat)" stroke="#12181a"/><path d="M46 45 Q83 52 120 45" stroke="#65696b" fill="none" opacity=".6"/><g transform="translate(101 35)"><path d="M0 0 Q-10 -13 -21 -8 Q-18 -2 -13 -3 L-15 1 Q-5 5 0 0Z M0 0 Q7 -14 16 -11 L12 -6 17 -3 Q8 5 0 0Z" fill="#1f6537" stroke="#a3b866" stroke-width=".6"/><circle cx="0" cy="1" r="3.2" fill="#e74338"/><circle cx="-4" cy="4" r="2.8" fill="#9c1820"/><circle cx="4" cy="5" r="2.5" fill="#c51e29"/><circle cx="-1" cy="0" r=".9" fill="#ffd1ae"/></g></g>
+  </g>
+</svg>
