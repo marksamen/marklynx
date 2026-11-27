@@ -943,3 +943,27 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-ro
   border-color:#30143f!important;
   color:#ffbe65!important;
 }
+
+/* PRIORITY-1 TEST REV05 / B5: Halloween feature badges match existing platform
+   chips in both palettes, all Recent and Game Guides layouts. Paint only. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.kinect-badge,.text-guide-badge,.developer-provided-badge) {
+  background:#30183b!important;
+  border-color:#704179!important;
+  color:#d5a9e4!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.kinect-badge,.text-guide-badge,.developer-provided-badge) {
+  background:#502268!important;
+  border-color:#7a488b!important;
+  color:#ffbe65!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:inherit!important;
+  stroke:currentColor!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge :is(.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
