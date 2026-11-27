@@ -1061,3 +1061,35 @@ html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .rec
   }
   html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(17px,3vw,28px);}
 }
+
+
+/* PRIORITY-1 TEST REV11 / V1: connect Halloween ribbons to their content.
+   Adapt the approved Christmas frame geometry, not its palette. No art,
+   renderer, card paint, or heading typography changes. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-panel-edge:#f39827;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-panel-edge:#71358f;}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  margin-bottom:0; border-color:var(--ml-hw-panel-edge); border-radius:8px 8px 0 0;
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {
+  margin:0; padding:8px; position:relative;
+  box-shadow:inset 1px 0 var(--ml-hw-panel-edge),inset -1px 0 var(--ml-hw-panel-edge);
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  border-color:var(--ml-hw-panel-edge)!important; border-radius:0 0 8px 8px;
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--bg)!important; padding-top:0!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  border-radius:0 0 8px 8px; outline:1px solid var(--ml-hw-panel-edge); outline-offset:0;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {padding-block:6px;}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
+  content:""; position:absolute; bottom:0; left:1px; right:1px; height:1px; background:var(--bg); pointer-events:none; z-index:1;
+}
+html[data-seasonal-theme="halloween"][data-theme] .toolbar::after,
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection .recent-uploads-inner {border-bottom-color:transparent!important;}
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="halloween"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
+}
