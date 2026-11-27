@@ -1,4 +1,4 @@
-/* CHRISTMAS TEST REV55 — configuration only; parent Admin owns Firebase authentication. */
+/* CHRISTMAS TEST REV63 — configuration only; parent Admin owns Firebase authentication. */
 const $=id=>document.getElementById(id);
 let theme=null,saved=null,draft="none",busy=false,dialogActive=false,sequence=0;
 const session=crypto.randomUUID(), pending=new Map();
@@ -20,15 +20,16 @@ window.addEventListener("message",e=>{
 });
 function render(){
  const locked=busy||dialogActive;
+ const celebrationLocked=locked||theme!=="christmas"||saved===null;
  $("theme").disabled=locked||theme===null;$("themeSave").disabled=locked||theme===null||$("theme").value===theme;
  for(const [id,mode] of [["christmas","christmas"],["newYear","new_year"]]){
   const on=draft===mode;$(id).textContent=on?"ON":"OFF";$(id).setAttribute("aria-checked",String(on));
   // Both the draft and the stored value must permit enabling the other mode.
-  $(id).disabled=locked||saved===null||(draft!=="none"&&!on)||(saved!==null&&saved.mode!=="none"&&saved.mode!==mode);
+  $(id).disabled=celebrationLocked||(draft!=="none"&&!on)||(saved!==null&&saved.mode!=="none"&&saved.mode!==mode);
  }
  const y=$("year").valueAsNumber;
- $("year").disabled=locked||saved===null;$("reload").disabled=locked;
- $("celebrationSave").disabled=locked||saved===null||!validYear(y)||(saved.mode===draft&&saved.year===y);
+ $("year").disabled=celebrationLocked;$("reload").disabled=locked;
+ $("celebrationSave").disabled=celebrationLocked||!validYear(y)||(saved.mode===draft&&saved.year===y);
 }
 function dialog(title,message,confirm=false,error=false){
  dialogActive=true;const prev=document.activeElement;$("dialogTitle").textContent=title;$("dialogMessage").textContent=message;$("card").classList.toggle("error",error);$("no").hidden=!confirm;$("yes").textContent=confirm?"Yes":"OK";$("dialog").classList.add("open");$("dialog").setAttribute("aria-hidden","false");$("content").inert=true;render();
