@@ -77,9 +77,9 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .r
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta {
-  background:#f6b45e!important;
-  border-color:#b86a20!important;
-  color:#482508!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
   box-shadow:none!important;
   text-shadow:none!important;
 }
@@ -88,7 +88,7 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] .recent-uploads-grid .r
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row .completion-type-meta .game-meta-label,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .card-meta .completion-type-meta .game-meta-label {
-  color:#482508!important;
+  color:#ffb45d!important;
 }
 
 /* REV05: Dark-only banner surround paint correction.
@@ -410,9 +410,9 @@ html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-
 }
 /* Normal video Gamerscore, in both LIST and GRID presentations. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.gs, #resultsGrid .gs-pill) {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 /* Normal video Genre, Time, and Difficulty — retain compact chip geometry. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#resultsList .list-col.type, #resultsList .list-col.time, #resultsList .list-col.diff, #resultsGrid .game-meta-pill, #resultsGrid .diff-tag, #resultsList .mobile-game-meta .game-meta-pill) {
@@ -612,9 +612,9 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList {
    Christmas/future seasons: remember Recent and Normal have separate badge selectors. */
 html[data-seasonal-theme="halloween"][data-theme="dark"]
   .recent-uploads-grid .recent-upload-meta.gs {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"]
   .recent-uploads-grid .recent-upload-meta.gs {
@@ -861,9 +861,9 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] .suggest-game-form te
    geometry, dual-metric stack and all non-Halloween styles. */
 html[data-seasonal-theme="halloween"][data-theme="dark"]
   #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"]
   #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge {
@@ -877,9 +877,9 @@ html[data-seasonal-theme="halloween"][data-theme="bright"]
    Retain GS/TP geometry and all other seasonal styling. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsGrid .gs-pill.guide-tp-pill,
 html[data-seasonal-theme="halloween"][data-theme="dark"] #resultsList .list-col.gs.guide-tp-pill {
-  background:#f39827!important;
-  border-color:#ffb45d!important;
-  color:#151015!important;
+  background:#4c245b!important;
+  border-color:#8b4a91!important;
+  color:#ffb45d!important;
 }
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsGrid .gs-pill.guide-tp-pill,
 html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-col.gs.guide-tp-pill {
@@ -944,9 +944,10 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-ro
   color:#ffbe65!important;
 }
 
-/* PRIORITY-1 TEST REV05-06 / B5: Halloween feature badges, all Recent and
-   Game Guides layouts. REV06 Dark matches existing Genre/Time/Difficulty
-   palette for stronger contrast; approved Bright remains unchanged. Paint only. */
+/* PRIORITY-1 TEST REV05-07 / B5: Halloween feature badges and Dark seasonal badge
+   consistency. REV06 Dark matched existing Genre/Time/Difficulty palette for
+   feature badges; REV07 extends that same Dark palette to GS, TP and Completion
+   badges across Recent and Game Guides. Approved Bright remains unchanged. Paint only. */
 html[data-seasonal-theme="halloween"][data-theme="dark"] :is(#recentUploadsSection,#resultsGrid,#resultsList) :is(.kinect-badge,.text-guide-badge,.developer-provided-badge) {
   background:#4c245b!important;
   border-color:#8b4a91!important;
@@ -968,3 +969,9 @@ html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#res
 html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge :is(.text-guide-label,.text-guide-detail) {
   color:inherit!important;
 }
+
+
+/* PRIORITY-1 TEST REV07 — Halloween DARK seasonal badge consistency.
+   Owner approved seasonal-only consistency standard: all Halloween Dark badges
+   now use the established purple/orange palette, including GS, TP and
+   Completion Type, while Normal/Christmas remain unchanged. */
