@@ -1,9 +1,9 @@
-/* CHRISTMAS TEST REV60B — local, interaction-unlocked event audio; no player or Halloween changes. */
+/* CHRISTMAS TEST REV61 — local, interaction-unlocked event audio; no player or Halloween changes. */
 (function(){
   'use strict';
   var root=document.documentElement, motion=matchMedia('(prefers-reduced-motion: reduce)');
   var Ctx=window.AudioContext||window.webkitAudioContext, ctx=null, master=null;
-  var files={santa:'santa-ho-ho-ho',bells:'sleigh-bells',land:'landing',chimney:'chimney',return:'magic-chime',elf:'elf-giggle',star:'shooting-star',train:'train-whistle',gingerbread:'gingerbread-run-wave',fireworks:'new-year-fireworks',confetti:'new-year-confetti'};
+  var files={santa:'santa-ho-ho-ho',bells:'sleigh-bells',land:'landing',chimney:'chimney',return:'magic-chime',elf:'elf-giggle',star:'shooting-star',train:'train-whistle',gingerbread:'gingerbread-run-wave',fireworks:'new-year-fireworks',confetti:'new-year-confetti',toast:'new-year-toast'};
   var buffers={}, loading={}, errors={}, jobs=new Map(), active=null, printing=false, hiddenPage=false, unlocked=false;
   var counts={played:0,stopped:0,skipped:0}, lastCue=null;
   function blocked(){
@@ -22,7 +22,7 @@
   function load(key){
     if(buffers[key]||loading[key]||errors[key]||!ctx)return;
     loading[key]=true;
-    fetch('audio/christmas/'+files[key]+'.mp3?v=CHRISTMAS-TEST-'+(key==='confetti'?'REV60B':key==='fireworks'?'REV59':key==='gingerbread'?'REV53':key==='train'?'REV49':'REV47'),{credentials:'same-origin'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.arrayBuffer();}).then(function(bytes){
+    fetch('audio/christmas/'+files[key]+'.mp3?v=CHRISTMAS-TEST-'+(key==='toast'?'REV61':key==='confetti'?'REV60B':key==='fireworks'?'REV59':key==='gingerbread'?'REV53':key==='train'?'REV49':'REV47'),{credentials:'same-origin'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.arrayBuffer();}).then(function(bytes){
       return new Promise(function(resolve,reject){ctx.decodeAudioData(bytes,resolve,reject);});
     }).then(function(buffer){buffers[key]=buffer;}).catch(function(e){errors[key]=String(e.message||e);}).finally(function(){delete loading[key];});
   }
@@ -59,6 +59,7 @@
     else if(type==='gingerbread'){later(50,'gingerbread',1,.65);}
     else if(type==='fireworks'){later(0,'fireworks',2,.72);}
     else if(type==='confetti'){later(0,'confetti',2,.48);}
+    else if(type==='toast'){later(1800,'toast',2,.65);}
   }
   function reconcile(){if(blocked())stopAll();else Array.from(jobs.keys()).forEach(function(node){if(!node.isConnected)cancel(node);});}
   // Check visual media continuously only while a cue is active/pending, including dynamically mounted players.
@@ -71,5 +72,5 @@
   window.addEventListener('pagehide',function(){hiddenPage=true;stopAll();});window.addEventListener('pageshow',function(){hiddenPage=false;});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
   window.mlChristmasSounds=Object.freeze({event:start,cancel:cancel});
-  window.mlChristmasSoundDiagnostics=function(){return {revision:'REV60B',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
+  window.mlChristmasSoundDiagnostics=function(){return {revision:'REV61',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
 })();
