@@ -887,3 +887,46 @@ html[data-seasonal-theme="halloween"][data-theme="bright"] #resultsList .list-co
   border-color:#30143f!important;
   color:#ffbe65!important;
 }
+
+/* PRIORITY-1 TEST REV03 / B4: Halloween dropdown paint and desktop picker.
+   Keep native values, existing mobile filter behavior and other themes intact. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {
+  --ml-halloween-menu-bg:#30183b; --ml-halloween-menu-text:#ffbe65; --ml-halloween-menu-edge:#6d3e76;
+}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {
+  --ml-halloween-menu-bg:#502268; --ml-halloween-menu-text:#ffbe65; --ml-halloween-menu-edge:#7a488b;
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu {
+  background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);border-color:var(--ml-halloween-menu-edge);
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-group {color:var(--ml-halloween-menu-text);}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option,
+html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option.is-selected {
+  background:transparent!important;color:var(--ml-halloween-menu-text)!important;
+}
+@media (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option:hover {background:#f39827!important;color:#151015!important;}
+}
+@media (hover:none), (pointer:coarse) {
+  html[data-seasonal-theme="halloween"] .ml-filter-popup-menu .ml-filter-popup-option:active {background:#f39827!important;color:#151015!important;}
+}
+html[data-seasonal-theme="halloween"] .ml-filter-popup-option:focus-visible {outline-color:#f39827!important;}
+/* Native fallback: actual OS popup paint is browser-dependent. */
+html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);}
+html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f39827!important;color:#151015!important;}
+@supports (appearance:base-select) and selector(::picker(select)) {
+  @media (min-width:901px) and (min-height:501px) and (pointer:fine) {
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker],
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker(select) {appearance:base-select;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] {
+      box-sizing:border-box;width:var(--ml-halloween-picker-width);height:var(--ml-halloween-picker-height);
+    }
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker(select) {
+      background:var(--ml-halloween-menu-bg);color:var(--ml-halloween-menu-text);border:1px solid var(--ml-halloween-menu-edge);border-radius:3px;padding:0;max-height:min(50vh,360px);overflow:auto;
+    }
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] option {padding:4px 10px;min-height:0;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] option::checkmark {display:none;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker]::picker-icon {color:currentColor;}
+    html[data-seasonal-theme="halloween"] :is(.toolbar select,#siteLanguageSelect)[data-ml-halloween-picker] optgroup {color:var(--ml-halloween-menu-text);}
+  }
+}
