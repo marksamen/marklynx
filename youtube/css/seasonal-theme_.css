@@ -1093,3 +1093,11 @@ html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection .recent-
 @media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
   html[data-seasonal-theme="halloween"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
 }
+
+
+/* PRIORITY-1 TEST REV12 / V1: keep the Game Guides count strip on the same
+   section surface as the framed content, matching the approved Christmas
+   treatment while preserving REV11 framing geometry. */
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {
+  background:var(--bg);
+}
