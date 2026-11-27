@@ -1114,3 +1114,51 @@ html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-gui
 html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
   border-top-color:var(--ml-hw-guide-surface)!important;
 }
+
+
+/* PRIORITY-1 TEST REV14 / V2 — Normal section banners only.
+   Keep the live translated headings and existing content frames. */
+html[data-seasonal-theme="none"][data-theme="dark"] {
+  --ml-normal-ribbon-fill:linear-gradient(105deg,#8d0b15 0%,#4b080c 26%,#1d070a 64%,#130407 100%);
+  --ml-normal-ribbon-edge:#b66a6e;
+  --ml-normal-ribbon-light:#c8b6b8;
+}
+html[data-seasonal-theme="none"][data-theme="bright"] {
+  --ml-normal-ribbon-fill:linear-gradient(105deg,#bd1722 0%,#920c16 27%,#58070c 65%,#37070b 100%);
+  --ml-normal-ribbon-edge:#a32b34;
+  --ml-normal-ribbon-light:#f0d9db;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  box-sizing:border-box; min-width:0; min-height:46px;
+  display:flex; align-items:center; justify-content:flex-start;
+  padding:7px min(25%,210px) 7px 18px;
+  border:1px solid var(--ml-normal-ribbon-edge); border-radius:6px;
+  background-image:url(../images/normal-ribbon-flourish_.svg),var(--ml-normal-ribbon-fill);
+  background-size:min(26%,280px) 100%,100% 100%; background-position:right center,center; background-repeat:no-repeat;
+  box-shadow:inset 0 1px 0 var(--ml-normal-ribbon-light),inset 0 -1px 0 #210205,0 1px 3px #0003;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  min-width:0; max-width:100%; margin:0;
+  display:flex; align-items:center; gap:12px;
+  font-family:Arial,Helvetica,sans-serif; font-size:clamp(19px,2.1vw,27px); font-weight:800; font-style:italic;
+  line-height:1.15; letter-spacing:.025em; text-transform:uppercase; overflow-wrap:anywhere;
+  color:#f7f5f4; text-shadow:0 2px 2px #160306;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+  content:""; display:block; flex:0 0 26px; width:26px; height:26px;
+  background:var(--ml-normal-section-icon) center/contain no-repeat;
+}
+html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploads-head {
+  --ml-normal-section-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1' y='4' width='22' height='16' rx='4' fill='%23f7eeee'/%3E%3Cpath fill='%239b0b16' d='M9 8l7 4-7 4z'/%3E%3C/svg%3E");
+}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-head {
+  --ml-normal-section-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f7eeee' d='M7 5h10c3 0 5 5 5 10 0 4-3 5-5 2l-2-2H9l-2 2c-2 3-5 2-5-2 0-5 2-10 5-10Z'/%3E%3Cpath stroke='%239b0b16' stroke-width='1.8' d='M7 8v6m-3-3h6'/%3E%3Ccircle cx='16' cy='10' r='1.3' fill='%239b0b16'/%3E%3Ccircle cx='19' cy='13' r='1.3' fill='%239b0b16'/%3E%3C/svg%3E");
+}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:38px; padding:6px min(23%,100px) 6px 10px; background-size:24% 100%,100% 100%;
+  }
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4vw,21px);gap:8px;}
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {flex-basis:20px;width:20px;height:20px;}
+}
