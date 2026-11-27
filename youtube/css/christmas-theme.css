@@ -1,0 +1,1039 @@
+/* Christmas-only color labels, section frames, trees and presents. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {
+  --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
+  --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
+  --text:#fff4d8; --text-dim:#e0d5ad; --silver:#f0d38e;
+  --xmas-header:#031c0c; --xmas-edge:#e44d42; --xmas-title:#ffe09a;
+  --xmas-hover:#10351c; --xmas-control:#10351c; --xmas-toolbar-control:#650910; --xmas-accent:#800c16;
+  --xmas-accent-hover:#a31824; --xmas-chip:#294936; --xmas-chip-text:#f1e7c8;
+  --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
+  --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
+  --xmas-ct:#7a2028; --xmas-ct-text:#fff0ef; --xmas-ct-border:#d67980;
+  --xmas-guide-chip:#480409; --xmas-guide-chip-edge:#e44d42;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {
+  --bg:#88010d; --bg-raised:#79010b; --bg-card:#78040c;
+  --line:#d4ad68; --red:#f1c768; --red-bright:#ffdf91;
+  --text:#fff5d9; --text-dim:#f5dcb6; --silver:#ffe3a5;
+  --xmas-header:var(--bg); --xmas-edge:#e9c96e; --xmas-title:#ffe7ad;
+  --xmas-hover:#a10b16; --xmas-control:#063f0b; --xmas-accent:#07500f;
+  --xmas-accent-hover:#0d6518; --xmas-chip:#f3e1bd; --xmas-chip-text:#57251e;
+  --xmas-tp:#f5e2a6; --xmas-tp-text:#6f5100; --xmas-tp-border:#c69200;
+  --xmas-gs:#ddebd8; --xmas-gs-text:#1d5a1d; --xmas-gs-border:#2f7d32;
+  --xmas-ct:#fff8e7; --xmas-ct-text:#801b25; --xmas-ct-border:#d4b59e;
+  --xmas-guide-chip:#063407; --xmas-guide-chip-edge:#e9c96e;
+}
+html[data-seasonal-theme="christmas"] body,
+html[data-seasonal-theme="christmas"] .subscribe-strip,
+html[data-seasonal-theme="christmas"] .toolbar,
+html[data-seasonal-theme="christmas"] .banner-wrap,
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  background:var(--bg)!important; color:var(--text);
+}
+html[data-seasonal-theme="christmas"] .site-preferences {
+  background:var(--xmas-header); border-bottom-color:var(--xmas-edge);
+}
+html[data-seasonal-theme="christmas"] .site-preferences-inner,
+html[data-seasonal-theme="christmas"] .banner-wrap::after {border-bottom-color:var(--xmas-edge);}
+@media(pointer:coarse){
+  html[data-seasonal-theme="christmas"] .site-preferences-inner {background-image:linear-gradient(var(--xmas-edge),var(--xmas-edge));}
+}
+html[data-seasonal-theme="christmas"] .site-preferences #siteLanguageSelect,
+html[data-seasonal-theme="christmas"] #siteLanguageControl #siteLanguageSelect,
+html[data-seasonal-theme="christmas"] .theme-toggle-btn,
+html[data-seasonal-theme="christmas"] .toolbar .search-box input,
+html[data-seasonal-theme="christmas"] .toolbar select,
+html[data-seasonal-theme="christmas"] .toolbar .ml-filter-popup-anchor > .ml-filter-popup-trigger,
+html[data-seasonal-theme="christmas"] .view-toggle button:not(.active) {
+  background:var(--xmas-toolbar-control,var(--xmas-control))!important; color:var(--text)!important;
+  border-color:var(--xmas-edge)!important; box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] .toolbar .search-box input::placeholder {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] .toolbar .search-box svg {stroke:var(--xmas-title);}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu {background:var(--bg-raised);color:var(--text);border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option.is-selected {background:var(--xmas-chip);color:var(--xmas-chip-text);}
+html[data-seasonal-theme="christmas"] .ml-filter-scroll-rail {background:var(--line);}
+html[data-seasonal-theme="christmas"] .ml-filter-scroll-rail > span {background:var(--xmas-title);}
+html[data-seasonal-theme="christmas"] .youtube-subscribe-btn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #suggestGameBtn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > .developer-showcase-btn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #whatsNewPublicBtn,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #markLynxMessagePublicBtn,
+html[data-seasonal-theme="christmas"] .view-toggle button.active,
+html[data-seasonal-theme="christmas"] .clear-filters-btn {
+  background:var(--xmas-accent)!important;border-color:var(--xmas-edge)!important;color:#fff!important;
+}
+html[data-seasonal-theme="christmas"] .youtube-subscribe-btn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #suggestGameBtn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > .developer-showcase-btn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #whatsNewPublicBtn:hover,
+html[data-seasonal-theme="christmas"] .subscribe-strip-inner > #markLynxMessagePublicBtn:hover,
+html[data-seasonal-theme="christmas"] .view-toggle button.active:hover,
+html[data-seasonal-theme="christmas"] .clear-filters-btn:hover {background:var(--xmas-accent-hover)!important;}
+/* REV06 — match Recent card surfaces to the page, even on hover (Halloween GRID pattern).
+   Extend to LIST at owner's request; retain its existing separator geometry. */
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.list-mode .recent-upload-card:hover,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid.grid-mode .recent-upload-card:hover {
+  background:var(--bg)!important;color:var(--text)!important;border-color:var(--line)!important;
+}
+html[data-seasonal-theme="christmas"] #resultsList .list-row,
+html[data-seasonal-theme="christmas"] #resultsGrid .card {background:var(--bg-card)!important;color:var(--text)!important;border-color:var(--line)!important;}
+html[data-seasonal-theme="christmas"] #resultsList .list-row:hover,
+html[data-seasonal-theme="christmas"] #resultsGrid .card:hover {background:var(--xmas-hover)!important;}
+html[data-seasonal-theme="christmas"] #resultsList {background-color:var(--line);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] .recent-uploads-head h2,
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head h2,
+html[data-seasonal-theme="christmas"] #resultsList .list-name,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-title,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid .recent-upload-title {color:var(--xmas-title)!important;text-shadow:none!important;}
+html[data-seasonal-theme="christmas"] .recent-uploads-head h2::after,
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head h2::after {background:linear-gradient(90deg,var(--xmas-accent),var(--xmas-edge),transparent);}
+/* General metadata: no generic .gs selector, no special image/quality badges. */
+html[data-seasonal-theme="christmas"] #resultsList .list-col.type,
+html[data-seasonal-theme="christmas"] #resultsList .list-col.time,
+html[data-seasonal-theme="christmas"] #resultsList .list-col.diff,
+html[data-seasonal-theme="christmas"] #resultsList .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"] #resultsGrid .diff-tag,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff),
+html[data-seasonal-theme="christmas"] .recent-uploads-grid .recent-upload-platform,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-sub,
+html[data-seasonal-theme="christmas"] #resultsGrid .card .grid-list-sub,
+html[data-seasonal-theme="christmas"] .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="christmas"] #resultsGrid .grid-list-sub .landscape-platform-unit {
+  background:var(--xmas-chip)!important;color:var(--xmas-chip-text)!important;border-color:var(--line)!important;text-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #resultsList :is(.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill:not(.completion-type-meta)) .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsGrid .game-meta-pill:not(.completion-type-meta) .game-meta-label,
+html[data-seasonal-theme="christmas"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff) .recent-meta-label {color:inherit!important;}
+/* PlayStation blue and Xbox green are independent of festive metadata paint.
+   Explicitly exclude the dual-metric layout wrappers. */
+html[data-seasonal-theme="christmas"] #resultsGrid .gs-pill.guide-tp-pill,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-col.gs.guide-tp-pill,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs.recent-tp-badge,
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-tp-badge {
+  background:var(--xmas-tp)!important;color:var(--xmas-tp-text)!important;border-color:var(--xmas-tp-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-tp-badge .recent-meta-label {color:inherit!important;}
+html[data-seasonal-theme="christmas"] #resultsGrid .gs-pill:not(.guide-tp-pill),
+html[data-seasonal-theme="christmas"] #resultsList .list-row .list-col.gs:not(.guide-tp-pill):not(.guide-list-points),
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs:not(.recent-tp-badge):not(.recent-points-stack) {
+  background:var(--xmas-gs)!important;color:var(--xmas-gs-text)!important;border-color:var(--xmas-gs-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.gs:not(.recent-points-stack) .recent-meta-label {color:inherit!important;}
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  background:var(--xmas-ct)!important;color:var(--xmas-ct-text)!important;border-color:var(--xmas-ct-border)!important;text-shadow:none!important;box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type :is(.recent-meta-label,.recent-completion-value) {color:inherit!important;}
+/* Existing dialogs: paint only, preserve scrolling, actions and geometry. */
+html[data-seasonal-theme="christmas"] :is(.wn-dialog,.mlm-dialog,.mlm-hub-dialog,.developer-panel,.suggest-panel) {background:var(--bg-raised);color:var(--text);border-color:var(--line);border-top-color:var(--xmas-accent);}
+html[data-seasonal-theme="christmas"] :is(.wn-card,.mlm-card,.developer-card,.developer-cta,.developer-contact,.suggest-game-form) {background:var(--bg-card);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.wn-head,.wn-body,.mlm-head,.mlm-body) {border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.wn-tabs button,.mlm-tabs button,.mlm-hub-options button,.wn-close,.mlm-close,.mlm-hub-close,.developer-close,.suggest-close) {background:var(--xmas-control);border-color:var(--line);color:var(--text);}
+html[data-seasonal-theme="christmas"] :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:var(--xmas-accent);color:#fff;border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea) {background:var(--bg-raised);color:var(--text);border-color:var(--line);}
+html[data-seasonal-theme="christmas"] :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input,.suggest-game-form textarea)::placeholder {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] .developer-card:hover {background:var(--xmas-hover);border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"] .developer-card-meta span:not(.developer-tp-badge):not(.developer-ct-badge):not(.developer-card-quality) {background:var(--xmas-chip);border-color:var(--line);color:var(--xmas-chip-text);}
+html[data-seasonal-theme="christmas"] footer {background:var(--bg);border-top-color:var(--xmas-edge);color:var(--text-dim);}
+html[data-seasonal-theme="christmas"] footer .footer-stats strong {color:var(--xmas-title);}
+@media(max-width:950px) and (pointer:coarse){
+  html[data-seasonal-theme="christmas"] #whatsNewMobileBtn,
+  html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn {color:var(--xmas-title)!important;}
+  html[data-seasonal-theme="christmas"] #whatsNewMobileBtn .wn-dot,
+  html[data-seasonal-theme="christmas"] #markLynxMobileHubBtn .mlm-dot {background:#e93445!important;box-shadow:0 0 0 2px var(--bg)!important;}
+}
+
+/* REV06 — BRIGHT contrast on the red page. Keep unrelated light dialogs at REV05 paint. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] .site-preferences {color:var(--text);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid.list-mode {background-color:var(--line);border-color:var(--line);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.game-guides-count,.count-line),
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer .footer-stats span {color:var(--text-dim);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.game-guides-count,.count-line) strong,
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer span,
+html[data-seasonal-theme="christmas"][data-theme="bright"] footer .footer-stats strong {color:var(--xmas-title);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more {background:var(--xmas-accent);color:#fff;border-color:var(--xmas-edge);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .load-more:hover {background:var(--xmas-accent-hover);color:#fff;border-color:var(--xmas-edge);}
+/* Existing special gold developer badge used translucent paint on the old light page. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#resultsGrid,#resultsList,#recentUploadsSection) .developer-provided-badge {background:#f3e1bd;color:#5b4518;border-color:#a77b18;}
+/* Dialogs keep the REV05 light palette so existing hard-coded dark text stays readable.
+   No dialog behavior, geometry or playback changes. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.mlm-hub-dialog,.video-modal) {
+  --bg:#f1dcda; --bg-raised:#fff4ef; --bg-card:#fff9f6;
+  --line:#cba59d; --red:#8f1825; --red-bright:#a52635;
+  --text:#351a18; --text-dim:#6d4741; --silver:#7a5a23;
+  --xmas-header:#f1dcda; --xmas-edge:#c89a45; --xmas-title:#8f1825;
+  --xmas-hover:#fff0ed; --xmas-control:#faece7; --xmas-accent:#a52635;
+  --xmas-accent-hover:#8a1b29; --xmas-chip:#f6e6df; --xmas-chip-text:#5d332d;
+  --xmas-ct-border:#d4b59e;
+}
+
+/* REV07 — gold selected view; inactive follows its toolbar palette. */
+html[data-seasonal-theme="christmas"] .view-toggle button.active,
+html[data-seasonal-theme="christmas"] .view-toggle button.active:hover {
+  background:#f8d77f!important;color:#412b10!important;border-color:var(--xmas-edge)!important;
+}
+/* REV07 — reduce only Completion Type weight, including separately weighted labels/values. */
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsGrid .card-meta .game-meta-pill.completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta,
+html[data-seasonal-theme="christmas"] #resultsList .list-row .completion-type-meta .game-meta-label,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop,
+html[data-seasonal-theme="christmas"] #resultsList .list-row > .completion-type-list-desktop .game-meta-label,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-grid .recent-upload-meta.completion-type :is(.recent-meta-label,.recent-completion-value),
+html[data-seasonal-theme="christmas"] #developerShowcaseOverlay .developer-card-meta .developer-ct-badge {
+  font-weight:600!important;
+}
+
+/* REV08 — BRIGHT ordinary metadata only; preserve special completion and feature badges. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.type,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.time,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-col.diff,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .diff-tag,
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid :is(.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff),
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-row .list-sub,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .grid-list-sub,
+html[data-seasonal-theme="christmas"][data-theme="bright"] .recent-uploads-grid .recent-upload-platform .landscape-platform-unit,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+html[data-seasonal-theme="christmas"][data-theme="bright"] #resultsList .list-row .list-sub.landscape-normal-list-platform .landscape-platform-unit {
+  background:#87212c!important;color:#fff0c2!important;border-color:#c66b65!important;
+}
+
+
+/* REV09 — BRIGHT standard metadata should follow DARK's harmony: reddish, not creamy.
+   Leave DARK untouched and preserve special-purpose badges plus GS/TP/CT identities. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform .landscape-platform-unit,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.type,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.time,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.diff,
+  #resultsGrid .card .grid-list-sub,
+  #resultsGrid .card .grid-list-sub .landscape-platform-unit,
+  #resultsList .list-row .list-sub,
+  #resultsList .list-row .list-sub.landscape-normal-list-platform .landscape-platform-unit,
+  #resultsList .list-row .list-col.type,
+  #resultsList .list-row .list-col.time,
+  #resultsList .list-row .list-col.diff,
+  #resultsList .list-row .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card .diff-tag
+){
+  background:#8a2631!important;
+  color:#fff0c2!important;
+  border-color:#c66b65!important;
+  text-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.type,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.time,
+  #recentUploadsSection .recent-uploads-grid .recent-upload-meta.diff,
+  #resultsList .list-row .list-col.type,
+  #resultsList .list-row .list-col.time,
+  #resultsList .list-row .list-col.diff,
+  #resultsList .list-row .mobile-game-meta .game-meta-pill:not(.completion-type-meta),
+  #resultsGrid .card-meta .game-meta-pill:not(.completion-type-meta),
+  #recentUploadsSection .recent-uploads-grid .recent-upload-platform,
+  #resultsGrid .card .grid-list-sub,
+  #resultsList .list-row .list-sub
+) :is(.recent-meta-label,.game-meta-label,.landscape-platform-unit,.landscape-platform-separator){
+  color:inherit!important;
+}
+
+/* REV10 — BRIGHT feature and metric paint only. Reuse DARK feature colors;
+   opaque equivalents of DARK's translucent paint avoid red bleed-through.
+   TEST label is text-guide content, not a distinct badge class.
+   Main guides and Recent share the same badge identities. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) {
+  --xmas-tp:#69511a; --xmas-tp-text:#fff0c2; --xmas-tp-border:#d7b34c;
+  --xmas-gs:#183d24; --xmas-gs-text:#d9f2d7; --xmas-gs-border:#81bd80;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge {
+  background:linear-gradient(180deg,#15312d,#122920)!important;
+  color:#b9dce9!important;border-color:#31586b!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .text-guide-badge svg {
+  color:#65b7d6!important;stroke:#65b7d6!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .kinect-badge {
+  background:#16302c!important;color:#d9ecff!important;border-color:#456b8a!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .developer-provided-badge {
+  background:linear-gradient(180deg,#2a351e,#192b1c)!important;
+  color:#e7d39f!important;border-color:#6b5730!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#recentUploadsSection,#resultsGrid,#resultsList) .developer-provided-badge svg {
+  stroke:#d8ad55!important;
+}
+
+/* REV11 — Game Guides GRID only. Match the page, not the card surface.
+   Do not paint metric wrappers, thumbnail images, quality logos or status indicators.
+   Repeated grid ID deliberately wins over accumulated legacy important selectors. */
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.grid-list-sub .landscape-platform-unit,.diff-tag,.game-meta-pill,.gs-pill,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
+  color:var(--xmas-title)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.grid-list-sub,.game-meta-pill,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.game-meta-label,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsGrid#resultsGrid .card .diff-tag .diff-dot {
+  background:var(--xmas-title)!important;
+}
+
+/* REV13 — Game Guides LIST only: same outside-page paint as approved GRID.
+   Exclude empty points placeholders and dual-metric layout wrapper. */
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.list-sub .landscape-platform-unit,.list-col.type,.list-col.time,.list-col.diff,.game-meta-pill,.completion-type-meta,.list-col.gs:not(.guide-list-points):not(.guide-empty-points),.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
+  color:var(--xmas-title)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.list-sub,.game-meta-pill,.completion-type-meta,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.game-meta-label,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+
+/* REV14 — Game Guides LIST Gamerscore text only; exclude TP, dual wrapper and empty placeholder. */
+html[data-seasonal-theme="christmas"][data-theme] #resultsList#resultsList .list-row .list-col.gs:not(.guide-tp-pill):not(.guide-list-points):not(.guide-empty-points) {
+  font-weight:600!important;
+}
+
+/* REV15 — Recent Uploads LIST only: plain page-matching metadata paint, same direction as accepted Normal LIST/GRID.
+   Match the outside page color, not the inner card tone. Preserve Recent GRID, wrappers, artwork and layout. */
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
+  color:var(--xmas-title)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.recent-meta-label,.recent-completion-value,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.list-mode .recent-upload-card :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+
+/* REV16 — Recent Uploads GRID only. Mirror approved REV15 LIST badge paint.
+   Preserve typography, geometry, wrappers, quality artwork and LIST. */
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-platform .landscape-platform-unit,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.kinect-badge,.developer-provided-badge) {
+  background:var(--xmas-guide-chip)!important; /* REV22 reference palette */
+  color:var(--xmas-title)!important;
+  border-color:var(--xmas-guide-chip-edge)!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.recent-upload-platform,.recent-upload-meta.type,.recent-upload-meta.time,.recent-upload-meta.diff,.recent-upload-meta.gs:not(.recent-points-stack),.recent-upload-meta.completion-type,.text-guide-badge,.developer-provided-badge) :is(.landscape-platform-unit,.landscape-platform-separator,.recent-meta-label,.recent-completion-value,.text-guide-label,.text-guide-detail) {
+  color:inherit!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-grid.grid-mode .recent-upload-card :is(.text-guide-badge,.developer-provided-badge) svg {
+  color:var(--xmas-title)!important;stroke:var(--xmas-title)!important;
+}
+
+/* REV17 - Recent playlist episode details: match existing Christmas title text in GRID and LIST. */
+html[data-seasonal-theme="christmas"] #recentUploadsGrid .ml-recent-episode-details {
+  color:var(--xmas-title)!important;
+}
+
+/* REV18 — BRIGHT Developer and Suggest dialogs only; keep DARK and other dialogs. */
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.suggest-panel) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;border-top-color:var(--xmas-edge)!important;scrollbar-color:var(--xmas-control) var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-card,.developer-contact,.developer-cta,.suggest-game-form) { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-card:hover { background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-card-thumb { background:var(--bg-card)!important;border-bottom-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel h2,.suggest-panel h2,.developer-kicker,.suggest-kicker,.developer-section-head,.developer-card-top strong,.developer-card-link,.developer-contact-head strong,.developer-cta strong,.developer-contact-form label>span,.suggest-game-form label>span,.suggest-platforms legend,.suggest-platform-grid label>span) { color:var(--xmas-title)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-intro,.suggest-intro,.developer-card-top>span,.developer-contact-head span,.developer-cta span,.developer-email-fallback,.developer-form-status.sending,.suggest-form-status,.suggest-form-status.sending) { color:var(--text-dim)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-proof span,.developer-card-meta span:not(.developer-card-quality)) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;box-shadow:none!important;text-shadow:none!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-close,.suggest-close,.developer-youtube-btn,.developer-send-btn,.developer-email-btn,.suggest-send-btn) { background:var(--xmas-control)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-close,.suggest-close,.developer-youtube-btn,.developer-send-btn,.developer-email-btn,.suggest-send-btn):hover { background:var(--xmas-accent-hover)!important;color:var(--xmas-title)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea,.suggest-platform-grid label) { background:var(--bg)!important;color:var(--xmas-title)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea):focus { background:var(--bg)!important;border-color:var(--xmas-edge)!important;box-shadow:0 0 0 2px var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-contact-form input,.developer-contact-form textarea,.suggest-game-form input,.suggest-game-form textarea)::placeholder { color:var(--text-dim)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .suggest-platform-grid label:hover { background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .suggest-platform-grid input[type=checkbox] { accent-color:var(--xmas-control); }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-email-fallback a,.developer-contact-form label>span b,.suggest-game-form b,.suggest-platforms b) { color:var(--xmas-title)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-form-status.error,.suggest-form-status.error) { color:#ffe0d6!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-form-status.success { color:#e1f9d8!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-success-panel,.suggest-success-panel) { background:var(--xmas-control)!important;border-color:var(--xmas-edge)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-success-panel strong,.developer-success-panel p,.developer-success-panel b,.suggest-success-panel strong,.suggest-success-panel p,.developer-success-icon,.suggest-success-icon) { color:var(--text)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel) { scrollbar-color:var(--xmas-control) var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-track { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-thumb { background:var(--xmas-control)!important;border-color:var(--bg-card)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) :is(.developer-panel,.developer-cards,.suggest-panel)::-webkit-scrollbar-thumb:hover { background:var(--xmas-accent-hover)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-scroll-indicator { background:var(--bg-card)!important;border-color:var(--line)!important; }
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(#developerShowcaseOverlay,#suggestGameOverlay) .developer-scroll-indicator-thumb { background:var(--xmas-control)!important;border-color:var(--xmas-edge)!important; }
+
+/* REV18 — DARK unread dots, desktop and mobile; preserve visibility and geometry. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#whatsNewPublicBtn,#whatsNewMobileBtn) .wn-dot,
+html[data-seasonal-theme="christmas"][data-theme="dark"] :is(#markLynxMessagePublicBtn,#markLynxMobileHubBtn) .mlm-dot { background:#55c979!important; }
+
+/* REV19 — DARK Suggest a Game: match the already approved DARK form palette.
+   Keep existing panel/form surfaces; replace legacy black platform tiles and unthemed paint. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid label {
+  background:var(--bg-raised)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid label:hover {
+  background:var(--xmas-hover)!important;border-color:var(--xmas-edge)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-panel h2,.suggest-kicker,.suggest-game-form label>span,.suggest-platforms legend,.suggest-platform-grid label>span) {color:var(--xmas-title)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-intro {color:var(--text-dim)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-game-form input[type=text],.suggest-game-form input[type=email],.suggest-game-form textarea):focus {background:var(--bg-raised)!important;border-color:var(--xmas-edge)!important;box-shadow:0 0 0 2px var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-platform-grid input[type=checkbox] {accent-color:var(--xmas-accent);}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-close,.suggest-send-btn) {background:var(--xmas-accent)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay :is(.suggest-close,.suggest-send-btn):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel {scrollbar-color:var(--xmas-accent) var(--bg-card)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-track {background:var(--bg-card)!important;}
+html[data-seasonal-theme="christmas"][data-theme="dark"] #suggestGameOverlay .suggest-panel::-webkit-scrollbar-thumb {background:var(--xmas-accent)!important;}
+
+/* REV23 — replacement popup only. No permanent gold on selected rows: bold
+   and aria-selected still indicate the current value. Avoid emulated/sticky
+   hover on touch devices; gold feedback is transient while pressing a row.
+   Fine pointers get hover; keyboard focus retains an outline. */
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option,
+html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option.is-selected {
+  background:transparent!important;color:var(--text)!important;
+}
+@media (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:hover {
+    background:#f8d77f!important;color:#412b10!important;
+  }
+}
+@media (hover:none), (pointer:coarse) {
+  html[data-seasonal-theme="christmas"] .ml-filter-popup-menu .ml-filter-popup-option:active {
+    background:#f8d77f!important;color:#412b10!important;
+  }
+}
+html[data-seasonal-theme="christmas"] .ml-filter-popup-option:focus-visible {outline-color:#f8d77f!important;}
+/* Native fallback: option colors are subject to browser/OS popup painting. */
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option {background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);}
+html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect) option:is(:hover,:focus-visible) {background:#f8d77f!important;color:#412b10!important;}
+/* Modern desktop Chromium: opt into the CSS-stylable select picker, retaining native select
+   value/change/keyboard semantics and existing mobile filter replacement. Unsupported browsers
+   retain native menus; do not change the protected mobile popup script. */
+@supports (appearance:base-select) and selector(::picker(select)) {
+  @media (min-width:901px) and (min-height:501px) and (pointer:fine) {
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker],
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker(select) {appearance:base-select;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] {
+      box-sizing:border-box;width:var(--ml-christmas-picker-width);height:var(--ml-christmas-picker-height);
+    }
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker(select) {
+      background:var(--xmas-toolbar-control,var(--xmas-control));color:var(--text);border:1px solid var(--xmas-edge);border-radius:3px; padding:0;max-height:min(50vh,360px);overflow:auto;
+    }
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] option {padding:4px 10px;min-height:0;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] option::checkmark {display:none;}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker]::picker-icon {color:var(--text);}
+    html[data-seasonal-theme="christmas"] :is(.toolbar select,#siteLanguageSelect)[data-ml-christmas-picker] optgroup {color:var(--text);}
+  }
+}
+
+/* REV20 — notification dialogs only. Actual green DARK and red BRIGHT palettes.
+   The owner screenshots show BRIGHT despite the DARK wording; correct both dialog palettes.
+   Keep the mobile hub, video modal, notification dots, and all behavior untouched. */
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) {background:var(--bg-raised)!important;color:var(--xmas-title)!important;border-color:var(--line)!important;border-top-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme="bright"] :is(.wn-dialog,.mlm-dialog) {background:var(--bg)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-card,.mlm-card) {background:var(--bg-card)!important;border-color:var(--line)!important;color:var(--xmas-title)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-head,.mlm-head,.wn-body,.mlm-body) {border-color:var(--line)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button,.mlm-tabs button) {background:var(--xmas-toolbar-control,var(--xmas-control))!important;color:var(--text)!important;border-color:var(--xmas-edge)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-tabs button[aria-selected="true"],.mlm-tabs button[aria-selected="true"]) {background:#f8d77f!important;color:#412b10!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-close,.mlm-close,.wn-tabs button:not([aria-selected="true"]),.mlm-tabs button:not([aria-selected="true"])):hover {background:var(--xmas-accent-hover)!important;color:var(--text)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-entry small,.mlm-entry small,.wn-empty,.mlm-empty) {color:var(--text-dim)!important;}
+html[data-seasonal-theme="christmas"][data-theme] :is(.wn-dialog,.mlm-dialog) :is(.wn-list,.mlm-list) {scrollbar-color:var(--xmas-toolbar-control,var(--xmas-control)) var(--bg-card);}
+
+/* REV23 — festive section ribbons. Real heading text is retained for i18n and accessibility.
+   Decorations are noninteractive paint, constrained to the two heading rows. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {--xmas-ribbon:linear-gradient(112deg,#50030a 0%,#a20e1a 33%,#7c0710 68%,#410209 100%);}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {--xmas-ribbon:linear-gradient(112deg,#032707 0%,#17601d 33%,#0b4010 68%,#021e05 100%);}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  box-sizing:border-box;
+  min-width:0; min-height:38px;
+  padding:5px 43px;
+  border:1px solid #e9c96e;
+  border-radius:7px 7px 3px 3px;
+  background-image:url(../images/christmas-holly-left.png),url(../images/christmas-holly-right.png),var(--xmas-ribbon);
+  background-position:left 5px center,right 5px center,center;
+  background-size:auto 30px,auto 30px,100% 100%;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 1px 0 #ffe7ad44,inset 0 -1px 0 #0005;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  display:flex; align-items:center; gap:8px; min-width:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(17px,2.2vw,23px); font-weight:700; line-height:1.2;
+  letter-spacing:normal; overflow-wrap:anywhere;
+  color:var(--xmas-title)!important;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+  content:""; display:block; flex:0 0 1em; width:1em; height:1em;
+  background:var(--xmas-section-icon) center/contain no-repeat;
+}
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%2214%22%20rx%3D%223%22%20fill%3D%22%23ffe09a%22%2F%3E%3Cpath%20d%3D%22m10%209%206%203-6%203z%22%20fill%3D%22%2365340d%22%2F%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%205h10c3%200%205%205%205%2010%200%204-3%205-5%202l-2-2H9l-2%202c-2%203-5%202-5-2C2%2010%204%205%207%205Z%22%20fill%3D%22%23ffe09a%22%2F%3E%3Cpath%20d%3D%22M7%208v6m-3-3h6%22%20stroke%3D%22%2365340d%22%20stroke-width%3D%221.6%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2210%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2213%22%20r%3D%221.2%22%20fill%3D%22%2365340d%22%2F%3E%3C%2Fsvg%3E");}
+@media (max-width:640px) {
+  html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:34px; padding:5px 34px; background-position:left 3px center,right 3px center,center; background-size:auto 25px,auto 25px,100% 100%;
+  }
+}
+
+
+/* REV25 — frame the two sections with the approved accent. No overflow clipping
+   or renderer changes. Existing LIST borders keep their geometry; GRID uses
+   an inset-free CSS outline, preserving its column sizing. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  margin-bottom:0;
+  border-color:var(--xmas-edge);
+  border-radius:7px 7px 0 0;
+}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
+  margin:0;
+  padding:8px 8px 10px;
+  box-shadow:inset 1px 0 var(--xmas-edge),inset -1px 0 var(--xmas-edge);
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  border-color:var(--xmas-edge)!important;
+  border-radius:0 0 7px 7px;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  border-radius:0 0 7px 7px;
+  outline:1px solid var(--xmas-edge);
+  outline-offset:0;
+}
+/* Breathing room inside GRID frames, without reducing column widths. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {
+  padding-block:6px;
+}
+/* Match the existing content container in the narrow portrait range where
+   the pre-existing heading and content insets differ. */
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="christmas"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
+}
+
+
+/* REV26 — artist-inspired panel refinements. Font requests are lazy: only the
+   Christmas heading selectors use these faces. External CDN; fallback remains readable. */
+@font-face {
+  font-family:"ML Christmas Cinzel"; font-style:normal; font-weight:600; font-display:swap;
+  src:local("Cinzel SemiBold"),url("https://cdn.jsdelivr.net/npm/@fontsource/cinzel@5.3.0/files/cinzel-latin-600-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family:"ML Christmas Cinzel"; font-style:normal; font-weight:600; font-display:swap;
+  src:local("Cinzel SemiBold"),url("https://cdn.jsdelivr.net/npm/@fontsource/cinzel@5.3.0/files/cinzel-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0300-036F,U+1D00-1DBF,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] {--xmas-panel-edge:#ef5145;--xmas-row-divider:#52613a;}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {--xmas-panel-edge:#f3d88e;--xmas-row-divider:#bd884e;}
+/* Remove the redundant rules visually, preserving original box dimensions. */
+html[data-seasonal-theme="christmas"] .toolbar::after,
+html[data-seasonal-theme="christmas"] #recentUploadsSection .recent-uploads-inner {border-bottom-color:transparent!important;}
+/* LIST separators: existing 1px gap paint, no geometry changes. */
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsGrid.list-mode,#resultsList) {background-color:var(--xmas-row-divider)!important;}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsGrid.list-mode .recent-upload-card {border-color:var(--xmas-row-divider)!important;}
+html[data-seasonal-theme="christmas"][data-theme] #resultsList .list-row:not(:hover) {background:var(--bg)!important;border-color:var(--xmas-row-divider)!important;}
+/* Panel edge: warm metallic highlight across the ribbon and unified perimeter. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  border-color:var(--xmas-panel-edge);border-radius:10px 10px 0 0;
+  box-shadow:inset 0 1px 0 #ffe7ad99,inset 0 -1px 0 #0005;
+  background-size:auto 38px,auto 38px,100% 100%;
+  background-position:left 4px center,right 4px center,center;
+  padding-inline:48px;min-height:44px;
+}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
+  box-shadow:inset 1px 0 var(--xmas-panel-edge),inset -1px 0 var(--xmas-panel-edge);
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {border-color:var(--xmas-panel-edge)!important;border-radius:0 0 10px 10px;}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {outline-color:var(--xmas-panel-edge);border-radius:0 0 10px 10px;}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  font-family:"ML Christmas Cinzel","Palatino Linotype",Palatino,Georgia,serif;
+  font-weight:600;text-transform:uppercase;letter-spacing:.025em;
+  text-shadow:0 1px 1px #270906!important;
+}
+@media (max-width:640px) {
+  html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    background-size:auto 30px,auto 30px,100% 100%;background-position:left 3px center,right 3px center,center;
+    padding-inline:37px;min-height:38px;
+  }
+  html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4.3vw,19px);}
+}
+
+
+/* REV28 — replace the unsuccessful REV27 heading/seam rules.
+   Optical alignment: shift the heading content down slightly; keep the ribbon
+   height, font, artwork and horizontal alignment unchanged. */
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  display:flex;
+  align-items:center;
+}
+html[data-seasonal-theme="christmas"] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  margin:0;
+  align-self:center;
+  line-height:1;
+  transform:translateY(.13em);
+}
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count {
+  padding-bottom:8px;
+  position:relative;
+}
+/* The LIST border rule must match the specificity of REV26's perimeter rule.
+   Paint the top edge the page color, not transparent over the divider-colored gap. */
+html[data-seasonal-theme="christmas"] .game-guides-section + .container > #resultsList {
+  border-top-color:var(--bg)!important;
+  padding-top:0!important;
+}
+/* GRID outline is outside its box, at the bottom pixel of the count row.
+   Cover only that horizontal seam, retaining the side frame and grid sizing. */
+html[data-seasonal-theme="christmas"] .game-guides-section .game-guides-count::after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:1px;
+  right:1px;
+  height:1px;
+  background:var(--bg);
+  pointer-events:none;
+  z-index:1;
+}
+
+
+/* REV29: static Christmas trees only. Use two background layers so the existing
+   banner image remains the only image element (including its dark/bright swap).
+   The previous Christmas background shorthand is !important: match priority
+   for the decorative longhands, leaving its approved background color intact. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-tree-slot:clamp(48px,8vw,148px);
+  background-image:var(--xmas-tree-art),var(--xmas-tree-art)!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-size:calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+  background-position:left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
+}
+html[data-seasonal-theme="christmas"] .banner-wrap > img {
+  width:calc(100% - var(--xmas-tree-slot) - var(--xmas-tree-slot));
+}
+/* Narrow portrait: retain the exact baseline banner width. The tree band
+   lives under the artwork, not over the artwork or interactive controls. */
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    padding-bottom:62px;
+    background-size:auto 56px,auto 56px!important;
+    background-position:left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+  html[data-seasonal-theme="christmas"] .banner-wrap > img {width:100%;}
+}
+
+
+/* REV30: static gift clusters in front of the existing trees. The approved
+   tree layers, banner geometry and portrait strip are unchanged. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  background-image:url("../images/christmas-presents.png"),url("../images/christmas-presents.png"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat!important;
+  background-size:calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+  background-position:left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center,right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) center!important;
+}
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    background-size:44px auto,44px auto,auto 56px,auto 56px!important;
+    background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+}
+
+
+/* REV31: static evergreen garland, satin bows and golden bells above the
+   banner. Reuse the existing noninteractive top pseudo-element. A dedicated
+   strip keeps all decoration off the artwork and preserves its width.
+   The added half-strip offset keeps the REV30 tree/gift layers aligned
+   relative to the banner; narrow-screen bottom anchoring needs no offset. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-banner-garland-height:36px;
+  padding-top:var(--xmas-banner-garland-height);
+  background-position:left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme="dark"] .banner-wrap {--xmas-banner-bow:url("../images/christmas-banner-bow-red.png");}
+html[data-seasonal-theme="christmas"][data-theme="bright"] .banner-wrap {--xmas-banner-bow:url("../images/christmas-banner-bow-green.png");}
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  left:50%;right:auto;transform:translateX(-50%);
+  width:min(calc(100% - var(--xmas-tree-slot) - var(--xmas-tree-slot)),1707px);
+  height:var(--xmas-banner-garland-height);
+  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),url("../images/christmas-garland.png")!important;
+  background-size:auto 100%,auto 100%,auto 100%!important;
+  background-position:left 4px center,right 4px center,center!important;
+  background-repeat:no-repeat,no-repeat,repeat-x!important;
+  pointer-events:none;
+}
+@media(max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    --xmas-banner-garland-height:24px;
+    background-position:left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+  html[data-seasonal-theme="christmas"] .banner-wrap::before {width:100%;}
+}
+
+
+/* REV32: static multicolored Christmas lights along the existing garland.
+   Place the repeating light string behind the two bows, above the garland.
+   Reuse its existing height, width and pointer-events behavior. */
+html[data-seasonal-theme="christmas"] .banner-wrap::before {
+  background-image:var(--xmas-banner-bow),var(--xmas-banner-bow),var(--xmas-garland-lights),url("../images/christmas-garland.png")!important;
+  background-size:auto 100%,auto 100%,auto 100%,auto 100%!important;
+  background-position:left 4px center,right 4px center,center,center!important;
+  background-repeat:no-repeat,no-repeat,repeat-x,repeat-x!important;
+}
+
+
+/* REV33: one static snowman. Narrow phones reuse the existing tree strip;
+   intermediate widths reserve 62px and preserve all four REV32 layer origins.
+   At >=1440px the snowman fits in the left outer margin of Recent Uploads.
+   Decorative backgrounds only: no pointer interception or new runtime code. */
+@media (max-width:1439px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    padding-bottom:62px;
+    background-image:var(--xmas-snowman-art),url("../images/christmas-presents.png"),url("../images/christmas-presents.png"),var(--xmas-tree-art),var(--xmas-tree-art)!important;
+    background-repeat:no-repeat,no-repeat,no-repeat,no-repeat,no-repeat!important;
+    background-size:auto 56px,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc((var(--xmas-tree-slot) - 12px)*.82) auto,calc(var(--xmas-tree-slot) - 12px) auto,calc(var(--xmas-tree-slot) - 12px) auto!important;
+    background-position:center bottom 3px,left max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),right max(12px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 12px)) top calc(50% + (var(--xmas-tree-slot) - 12px)*.54 + var(--xmas-banner-garland-height)/2 - 31px),left max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px),right max(6px,calc((100vw - 1707px)/2 - var(--xmas-tree-slot) + 6px)) top calc(50% + var(--xmas-banner-garland-height)/2 - 31px)!important;
+  }
+}
+@media (max-width:600px) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    background-size:auto 56px,44px auto,44px auto,auto 56px,auto 56px!important;
+    background-position:center bottom 3px,left 34px bottom 3px,right 34px bottom 3px,left 12px bottom 3px,right 12px bottom 3px!important;
+  }
+}
+@media (min-width:1440px) {
+  html[data-seasonal-theme="christmas"] #recentUploadsSection {
+    background-image:var(--xmas-snowman-art)!important;
+    background-size:min(108px,calc((100% - 1400px)/2 + 14px)) auto!important;
+    background-position:left max(7px,calc((100% - 1400px)/4 - 40px)) top 8px!important;
+    background-repeat:no-repeat!important;
+  }
+}
+
+
+/* REV35: refined REV34 snowfall sizes, strokes and opacity. CSS-only falling snow. No app state, timer, network request or input
+   interception. The markup is hidden by default even if CSS fails to load.
+   The layer is below existing dialogs and hidden while the video modal is open.
+   Do not reuse the Halloween animation layer. */
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow {
+    display:block!important;
+    position:fixed;inset:0;overflow:hidden;pointer-events:none;
+    z-index:8;contain:layout style paint;
+    --ml-xmas-snow-travel:calc(100vh + 32px);
+  }
+  @supports (height:100dvh) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow {--ml-xmas-snow-travel:calc(100dvh + 32px);}
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span {
+    display:block;position:absolute;top:-24px;left:var(--snow-x);
+    width:var(--snow-size);height:var(--snow-size);pointer-events:none;
+    border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff 35%,rgba(255,255,255,0) 72%);
+    opacity:var(--snow-opacity);
+    animation:ml-christmas-snow-fall var(--snow-duration) linear var(--snow-delay) infinite;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(3n+1) {
+    border-radius:0;
+    background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath id='a' d='M12 12V2M8.8 5.1L12 8l3.2-2.9'/%3E%3Cuse href='%23a' transform='rotate(60 12 12)'/%3E%3Cuse href='%23a' transform='rotate(120 12 12)'/%3E%3Cuse href='%23a' transform='rotate(180 12 12)'/%3E%3Cuse href='%23a' transform='rotate(240 12 12)'/%3E%3Cuse href='%23a' transform='rotate(300 12 12)'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  @keyframes ml-christmas-snow-fall {
+    0% {transform:translate3d(0,0,0);}
+    50% {transform:translate3d(var(--snow-drift),calc(var(--ml-xmas-snow-travel) / 2),0);}
+    100% {transform:translate3d(var(--snow-end),var(--ml-xmas-snow-travel),0);}
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(1) {--snow-x:7.42%;--snow-size:15px;--snow-opacity:0.74;--snow-duration:16s;--snow-delay:-13.60s;--snow-drift:27px;--snow-end:25px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(2) {--snow-x:65.51%;--snow-size:6px;--snow-opacity:0.51;--snow-duration:17s;--snow-delay:-4.65s;--snow-drift:-20px;--snow-end:-9px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(3) {--snow-x:29.61%;--snow-size:3px;--snow-opacity:0.54;--snow-duration:17s;--snow-delay:-11.85s;--snow-drift:-30px;--snow-end:-14px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(4) {--snow-x:87.7%;--snow-size:19px;--snow-opacity:0.62;--snow-duration:17s;--snow-delay:-11.09s;--snow-drift:-17px;--snow-end:-11px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(5) {--snow-x:51.8%;--snow-size:6px;--snow-opacity:0.83;--snow-duration:15s;--snow-delay:-7.86s;--snow-drift:26px;--snow-end:27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(6) {--snow-x:15.89%;--snow-size:8px;--snow-opacity:0.63;--snow-duration:21s;--snow-delay:-4.72s;--snow-drift:-24px;--snow-end:-27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(7) {--snow-x:73.99%;--snow-size:19px;--snow-opacity:0.70;--snow-duration:21s;--snow-delay:-1.46s;--snow-drift:20px;--snow-end:15px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(8) {--snow-x:38.08%;--snow-size:5px;--snow-opacity:0.58;--snow-duration:20s;--snow-delay:-19.01s;--snow-drift:13px;--snow-end:12px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(9) {--snow-x:96.18%;--snow-size:3px;--snow-opacity:0.52;--snow-duration:21s;--snow-delay:-2.52s;--snow-drift:-23px;--snow-end:-31px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(10) {--snow-x:60.27%;--snow-size:22px;--snow-opacity:0.62;--snow-duration:23s;--snow-delay:-17.77s;--snow-drift:17px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(11) {--snow-x:24.37%;--snow-size:8px;--snow-opacity:0.75;--snow-duration:21s;--snow-delay:-9.31s;--snow-drift:28px;--snow-end:18px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(12) {--snow-x:82.47%;--snow-size:6px;--snow-opacity:0.55;--snow-duration:21s;--snow-delay:-8.27s;--snow-drift:20px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(13) {--snow-x:46.56%;--snow-size:19px;--snow-opacity:0.78;--snow-duration:22s;--snow-delay:-2.87s;--snow-drift:-19px;--snow-end:-8px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(14) {--snow-x:10.66%;--snow-size:8px;--snow-opacity:0.68;--snow-duration:14s;--snow-delay:-4.12s;--snow-drift:-23px;--snow-end:-10px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(15) {--snow-x:68.75%;--snow-size:5px;--snow-opacity:0.53;--snow-duration:16s;--snow-delay:-14.21s;--snow-drift:-16px;--snow-end:-21px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(16) {--snow-x:32.85%;--snow-size:22px;--snow-opacity:0.75;--snow-duration:15s;--snow-delay:-11.13s;--snow-drift:25px;--snow-end:26px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(17) {--snow-x:90.94%;--snow-size:6px;--snow-opacity:0.76;--snow-duration:15s;--snow-delay:-6.95s;--snow-drift:18px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(18) {--snow-x:55.04%;--snow-size:8px;--snow-opacity:0.69;--snow-duration:17s;--snow-delay:-10.54s;--snow-drift:30px;--snow-end:20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(19) {--snow-x:19.13%;--snow-size:15px;--snow-opacity:0.73;--snow-duration:15s;--snow-delay:-0.89s;--snow-drift:29px;--snow-end:24px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(20) {--snow-x:77.23%;--snow-size:8px;--snow-opacity:0.56;--snow-duration:23s;--snow-delay:-10.97s;--snow-drift:28px;--snow-end:13px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(21) {--snow-x:41.32%;--snow-size:5px;--snow-opacity:0.82;--snow-duration:20s;--snow-delay:-18.82s;--snow-drift:26px;--snow-end:15px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(22) {--snow-x:5.42%;--snow-size:22px;--snow-opacity:0.69;--snow-duration:22s;--snow-delay:-1.92s;--snow-drift:-27px;--snow-end:-22px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(23) {--snow-x:63.51%;--snow-size:6px;--snow-opacity:0.65;--snow-duration:16s;--snow-delay:-13.32s;--snow-drift:-27px;--snow-end:-27px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(24) {--snow-x:27.61%;--snow-size:8px;--snow-opacity:0.57;--snow-duration:19s;--snow-delay:-11.74s;--snow-drift:24px;--snow-end:22px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(25) {--snow-x:85.7%;--snow-size:19px;--snow-opacity:0.76;--snow-duration:13s;--snow-delay:-9.63s;--snow-drift:14px;--snow-end:7px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(26) {--snow-x:49.8%;--snow-size:5px;--snow-opacity:0.75;--snow-duration:14s;--snow-delay:-7.60s;--snow-drift:-13px;--snow-end:-6px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(27) {--snow-x:13.89%;--snow-size:3px;--snow-opacity:0.73;--snow-duration:14s;--snow-delay:-5.44s;--snow-drift:20px;--snow-end:23px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(28) {--snow-x:71.99%;--snow-size:19px;--snow-opacity:0.61;--snow-duration:13s;--snow-delay:-2.02s;--snow-drift:-27px;--snow-end:-37px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(29) {--snow-x:36.08%;--snow-size:3px;--snow-opacity:0.50;--snow-duration:23s;--snow-delay:-7.12s;--snow-drift:-20px;--snow-end:-20px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(30) {--snow-x:94.18%;--snow-size:6px;--snow-opacity:0.78;--snow-duration:15s;--snow-delay:-13.03s;--snow-drift:-27px;--snow-end:-13px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(31) {--snow-x:58.27%;--snow-size:15px;--snow-opacity:0.63;--snow-duration:20s;--snow-delay:-13.39s;--snow-drift:24px;--snow-end:21px;}
+  html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(32) {--snow-x:22.37%;--snow-size:8px;--snow-opacity:0.82;--snow-duration:14s;--snow-delay:-3.43s;--snow-drift:-31px;--snow-end:-32px;}
+  @media (max-width:900px) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span {width:calc(var(--snow-size) * .9);height:calc(var(--snow-size) * .9);}
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(n+19) {display:none;animation:none;}
+  }
+  @media (max-width:600px) {
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span {width:calc(var(--snow-size) * .85);height:calc(var(--snow-size) * .85);}
+    html[data-seasonal-theme="christmas"] #ml-christmas-snow > span:nth-child(n+13) {display:none;animation:none;}
+  }
+  /* Existing modal uses .open. Hide snowfall entirely, not just behind the player. */
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-snow {display:none!important;}
+}
+
+
+/* REV36: slow staggered light twinkles only. Original image fallbacks keep
+   reduced-motion, print and video-modal states static. All REV35 layer sizes,
+   positions, ordering and snowfall are preserved. */
+html[data-seasonal-theme="christmas"] .banner-wrap {
+  --xmas-tree-art: url("../images/christmas-tree.png");
+  --xmas-garland-lights: url("../images/christmas-banner-lights.svg");
+}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] .banner-wrap {
+    --xmas-tree-art:url("../images/christmas-tree-twinkle.svg");
+    --xmas-garland-lights:url("../images/christmas-banner-twinkle.svg");
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) .banner-wrap {
+    --xmas-tree-art: url("../images/christmas-tree.png");
+    --xmas-garland-lights: url("../images/christmas-banner-lights.svg");
+  }
+}
+
+
+/* REV38: occasional shooting stars. No layout participation or input capture.
+   The scheduler creates a single decorative node only while a star is active. */
+#ml-christmas-shooting-star {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star {
+    display:block;position:fixed;inset:0;z-index:9;pointer-events:none;
+    overflow:hidden;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-flight {
+    position:absolute;left:var(--star-x);top:var(--star-y);width:0;height:0;
+    pointer-events:none;opacity:0;
+    animation:ml-xmas-star-flight var(--star-duration) linear both;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art {
+    position:absolute;width:0;height:0;transform:rotate(var(--star-angle));
+    pointer-events:none;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art::before {
+    content:"";position:absolute;right:0;top:0;transform:translateY(-50%);
+    width:clamp(80px,15vw,240px);height:clamp(8px,1vw,13px);
+    background:linear-gradient(90deg,transparent 0%,rgba(255,195,94,.42) 30%,#ffdd8b 72%,#fffbea 100%);
+    clip-path:polygon(0 50%,100% 0,100% 100%);
+    filter:drop-shadow(0 0 4px #ffcb65);
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art::after {
+    content:"";position:absolute;left:0;top:0;width:clamp(22px,2.6vw,42px);height:clamp(22px,2.6vw,42px);
+    transform:translate(-50%,-50%);background:#fffbe3;
+    clip-path:polygon(50% 0,64% 35%,100% 50%,64% 65%,50% 100%,36% 65%,0 50%,36% 35%);
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-shooting-star .ml-xmas-star-art {
+    filter:drop-shadow(0 0 6px #ffc456);
+  }
+  @keyframes ml-xmas-star-flight {
+    0% {transform:translate3d(0,0,0);opacity:0;}
+    12% {opacity:1;}
+    78% {opacity:1;}
+    100% {transform:translate3d(var(--star-dx),var(--star-dy),0);opacity:0;}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-shooting-star {display:none!important;}
+}
+
+
+/* REV39: occasional snowman wave and hat tip, preserving REV33 geometry.
+   Only the background artwork changes; static original for print, reduced
+   motion and the existing open video modal. No scheduler or input capture. */
+html[data-seasonal-theme="christmas"] {
+  --xmas-snowman-art:url("../images/christmas-snowman.svg");
+}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] {
+    --xmas-snowman-art:url("../images/christmas-snowman-wave.svg");
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) {
+    --xmas-snowman-art:url("../images/christmas-snowman.svg");
+  }
+}
+
+
+/* REV41: viewport-relative elf. No banner dependency or page layout participation. */
+#ml-christmas-elf {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] body > #ml-christmas-elf {
+    display:block!important;position:fixed;inset:0;overflow:hidden;
+    z-index:9;pointer-events:none;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-elf > span {
+    position:absolute;left:var(--elf-x);top:var(--elf-y);
+    width:var(--elf-width);height:var(--elf-height);pointer-events:none;
+    background:url("../images/christmas-elf.svg") center bottom / contain no-repeat;
+    transform-origin:center bottom;opacity:0;
+    animation:ml-xmas-elf-peek 4s ease-in-out both;
+  }
+  @keyframes ml-xmas-elf-peek {
+    0%,100% {opacity:0;transform:translate3d(var(--elf-hide-x),var(--elf-hide-y),0) scaleX(var(--elf-mirror));}
+    22%,34% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(-4deg);}
+    44%,56% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(4deg);}
+    68%,76% {opacity:1;transform:translate3d(0,0,0) scaleX(var(--elf-mirror)) rotate(0deg);}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-elf {display:none!important;}
+}
+
+
+/* REV45: Santa flyby. Fixed, clipped, noninteractive; no layout changes. */
+#ml-christmas-santa {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] body > #ml-christmas-santa {
+    display:block!important;position:fixed;inset:0;overflow:hidden;
+    z-index:9;pointer-events:none;contain:layout style paint;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span {
+    position:absolute;left:var(--santa-x);top:var(--santa-y);
+    width:var(--santa-width);height:var(--santa-height);pointer-events:none;
+    animation:ml-xmas-santa-flight var(--santa-duration) linear both;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa img {
+    display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;
+    transform:scaleX(var(--santa-mirror));
+  }
+  @keyframes ml-xmas-santa-flight {
+    0% {transform:translate3d(0,0,0);}
+    25% {transform:translate3d(var(--santa-dx25),var(--santa-dy25),0);}
+    50% {transform:translate3d(var(--santa-dx50),var(--santa-dy50),0);}
+    75% {transform:translate3d(var(--santa-dx75),var(--santa-dy75),0);}
+    100% {transform:translate3d(var(--santa-dx),var(--santa-dy),0);}
+  }
+  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-santa {display:none!important;}
+}
+
+/* REV45: rooftop delivery is an inline animated SVG, not a flight span. */
+@media screen and (prefers-reduced-motion:no-preference) {
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span.ml-xmas-delivery {
+    animation:none;overflow:hidden;pointer-events:none;
+  }
+  html[data-seasonal-theme="christmas"] #ml-christmas-santa > span.ml-xmas-delivery > svg {
+    display:block;width:100%;height:100%;pointer-events:none;overflow:hidden;
+  }
+}
+
+/* REV49: gift train, isolated from document geometry and controls. */
+#ml-christmas-train {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+ html[data-seasonal-theme="christmas"] body > #ml-christmas-train {
+  display:block!important;position:fixed;inset:0;overflow:hidden;z-index:9;pointer-events:none;contain:layout style paint;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-train > span {
+  position:absolute;left:var(--train-x);top:var(--train-y);width:var(--train-width);height:var(--train-height);pointer-events:none;animation:ml-xmas-train-cross var(--train-duration) linear both;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-train img {display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;transform:scaleX(var(--train-mirror));}
+ @keyframes ml-xmas-train-cross {from {transform:translate3d(0,0,0);}to {transform:translate3d(var(--train-dx),0,0);}}
+ html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-train {display:none!important;}
+}
+
+/* REV50 — occasional snowy bootprints, no layout or hit-test participation. */
+#ml-christmas-footprints {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+ html[data-seasonal-theme="christmas"] body > #ml-christmas-footprints {
+  display:block!important;position:fixed;inset:0;overflow:hidden;z-index:9;pointer-events:none;contain:layout style paint;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-footprints > svg {
+  position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;pointer-events:none;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-footprints .ml-xmas-bootprint {
+  opacity:0;animation:ml-xmas-bootprint 4.8s var(--foot-delay) both;
+ }
+ @keyframes ml-xmas-bootprint {0%{opacity:0} 5%{opacity:.9} 68%{opacity:.85} 100%{opacity:0}}
+ html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-footprints {display:none!important;}
+}
+
+
+/* REV52B — coordinated gingerbread runner. All art and motion are local.
+   The 38–62% travel hold is a 1.44-second midpoint wave. */
+#ml-christmas-gingerbread {display:none;}
+@media screen and (prefers-reduced-motion:no-preference) {
+ html[data-seasonal-theme="christmas"] body > #ml-christmas-gingerbread {
+  display:block!important;position:fixed;inset:0;overflow:hidden;z-index:9;pointer-events:none;contain:layout style paint;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread > span {
+  position:absolute;left:var(--ginger-x);top:var(--ginger-y);width:var(--ginger-w);height:var(--ginger-h);
+  animation:ml-xmas-ginger-cross 6s linear both;pointer-events:none;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread svg {display:block;width:100%;height:100%;overflow:visible;pointer-events:none;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-limb {transform-box:view-box;animation:ml-xmas-ginger-stride 6s linear both;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-arm-left {transform-origin:48px 85px;--swing-a:-32deg;--swing-b:32deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-arm-right {transform-origin:112px 85px;--swing-a:32deg;--swing-b:-32deg;animation-name:ml-xmas-ginger-wave;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-leg-left {transform-origin:66px 132px;--swing-a:30deg;--swing-b:-30deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-leg-right {transform-origin:94px 132px;--swing-a:-30deg;--swing-b:30deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-body {animation:ml-xmas-ginger-bob 6s linear both;}
+ @keyframes ml-xmas-ginger-cross {
+  0% {transform:translate3d(0,0,0);}
+  38%,62% {transform:translate3d(var(--ginger-mid),0,0);}
+  100% {transform:translate3d(var(--ginger-dx),0,0);}
+ }
+ @keyframes ml-xmas-ginger-stride {
+  0%,38%,62%,100% {transform:rotate(0deg);}
+  3.5%,10.5%,17.5%,24.5%,31.5%,65.5%,72.5%,79.5%,86.5%,93.5% {transform:rotate(var(--swing-a));}
+  7%,14%,21%,28%,35%,69%,76%,83%,90%,97% {transform:rotate(var(--swing-b));}
+ }
+ @keyframes ml-xmas-ginger-wave {
+  0%,38%,62%,100% {transform:rotate(0deg);}
+  3.5%,10.5%,17.5%,24.5%,31.5%,65.5%,72.5%,79.5%,86.5%,93.5% {transform:rotate(var(--swing-a));}
+  7%,14%,21%,28%,35%,69%,76%,83%,90%,97% {transform:rotate(var(--swing-b));}
+  42%,50%,58% {transform:rotate(-90deg);}
+  46%,54% {transform:rotate(-115deg);}
+ }
+ @keyframes ml-xmas-ginger-bob {
+  0%,7%,14%,21%,28%,35%,38%,62%,69%,76%,83%,90%,97%,100% {transform:translateY(0);}
+  3.5%,10.5%,17.5%,24.5%,31.5%,65.5%,72.5%,79.5%,86.5%,93.5% {transform:translateY(-4px);}
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile {
+  transform-box:view-box;transform-origin:80px 100px;animation:ml-xmas-ginger-profile-turn 6s linear both;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-front {
+  transform-box:view-box;transform-origin:80px 100px;animation:ml-xmas-ginger-front-turn 6s linear both;
+ }
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-bob {animation:ml-xmas-ginger-bob 6s linear both;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-limb {transform-box:view-box;animation:ml-xmas-ginger-stride 6s linear both;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-arm-far {transform-origin:85px 88px;--swing-a:-38deg;--swing-b:36deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-arm-near {transform-origin:80px 91px;--swing-a:38deg;--swing-b:-36deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-leg-far {transform-origin:81px 134px;--swing-a:32deg;--swing-b:-28deg;}
+ html[data-seasonal-theme="christmas"] #ml-christmas-gingerbread .ml-ginger-profile-leg-near {transform-origin:77px 135px;--swing-a:-32deg;--swing-b:28deg;}
+ @keyframes ml-xmas-ginger-profile-turn {
+  0%,35%,65%,100% {opacity:1;transform:scaleX(var(--ginger-mirror));}
+  38%,62% {opacity:0;transform:scaleX(0);}
+ }
+ @keyframes ml-xmas-ginger-front-turn {
+  0%,38%,62%,100% {opacity:0;transform:scaleX(0);}
+  40.5%,59.5% {opacity:1;transform:scaleX(1);}
+  35%,65% {opacity:0;transform:scaleX(0);}
+ }
+ html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-gingerbread {display:none!important;}
+}
