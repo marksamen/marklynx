@@ -1,4 +1,4 @@
-/* TEST ONLY - diagnostic overlay, no layout changes. SEASONAL-CHRISTMAS-REFINEMENT TEST REV07 (Christmas REV62 diagnostics preserved) */
+/* TEST ONLY - diagnostic overlay, no layout changes. SEASONAL-HALLOWEEN-REFINEMENT TEST REV01 (Christmas REV62 diagnostics preserved) */
 (function () {
   'use strict';
   if (document.getElementById('ml-recent-diag')) return;
@@ -8,7 +8,7 @@
   panel.style.cssText = 'position:fixed!important;bottom:8px!important;right:8px!important;left:auto!important;top:auto!important;z-index:2147483647!important;width:290px!important;max-width:calc(100vw - 16px)!important;max-height:65vh!important;overflow:auto!important;padding:10px!important;background:rgba(0,0,0,.93)!important;color:#fff!important;border:2px solid #ffcc00!important;border-radius:8px!important;font:12px/1.35 monospace!important;white-space:pre-wrap!important;box-sizing:border-box!important;box-shadow:0 2px 14px #0009!important';
   var head = document.createElement('div');
   head.style.cssText='display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-weight:bold';
-  var label=document.createElement('span'); label.textContent='SEASONAL-CHRISTMAS-REFINEMENT TEST REV07 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+  var label=document.createElement('span'); label.textContent='SEASONAL-HALLOWEEN-REFINEMENT TEST REV01 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
   var btn=document.createElement('button'); btn.type='button';btn.textContent='Hide';
   btn.style.cssText='color:#000;background:#ffcc00;border:0;padding:3px 8px;cursor:pointer';
   head.appendChild(label);
@@ -26,8 +26,8 @@
   copyBtn.type='button';copyBtn.textContent='Copy';copyBtn.style.cssText=btn.style.cssText;
   head.insertBefore(copyBtn,btn);
   function capture(reason){
-    var root=document.documentElement; label.textContent='SEASONAL-CHRISTMAS-REFINEMENT TEST REV07 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
-    var lines=['SEASONAL-CHRISTMAS-REFINEMENT REV07 GRID OVERLAYS ('+reason+') t='+Math.round(performance.now())+'ms',
+    var root=document.documentElement; label.textContent='SEASONAL-HALLOWEEN-REFINEMENT TEST REV01 · '+(matchMedia('(orientation: portrait)').matches?'PORTRAIT':'LANDSCAPE');
+    var lines=['SEASONAL-HALLOWEEN-REFINEMENT REV01 GRID OVERLAYS ('+reason+') t='+Math.round(performance.now())+'ms',
       'viewport='+innerWidth+'x'+innerHeight+' '+(matchMedia('(orientation:portrait)').matches?'P':'L')+
       ' seasonal='+root.getAttribute('data-seasonal-theme')+' theme='+root.getAttribute('data-theme')];
 
