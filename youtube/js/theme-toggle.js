@@ -38,6 +38,18 @@
     pt: ['Vermelho', 'Verde', 'Mudar para o tema vermelho', 'Mudar para o tema verde'],
     'pt-br': ['Vermelho', 'Verde', 'Mudar para o tema vermelho', 'Mudar para o tema verde']
   };
+  // Halloween display labels only; bright remains Orange and dark remains Purple.
+  var halloweenLabels = {
+    en: ['Orange', 'Purple', 'Switch to Orange theme', 'Switch to Purple theme'],
+    de: ['Orange', 'Violett', 'Zum orangefarbenen Design wechseln', 'Zum violetten Design wechseln'],
+    es: ['Naranja', 'Morado', 'Cambiar al tema naranja', 'Cambiar al tema morado'],
+    'es-mx': ['Naranja', 'Morado', 'Cambiar al tema naranja', 'Cambiar al tema morado'],
+    fr: ['Orange', 'Violet', 'Passer au thème orange', 'Passer au thème violet'],
+    it: ['Arancione', 'Viola', 'Passa al tema arancione', 'Passa al tema viola'],
+    pt: ['Laranja', 'Roxo', 'Mudar para o tema laranja', 'Mudar para o tema roxo'],
+    'pt-br': ['Laranja', 'Roxo', 'Mudar para o tema laranja', 'Mudar para o tema roxo']
+  };
+  function isHalloween() { return root.getAttribute('data-seasonal-theme') === 'halloween'; }
   function isChristmas() { return root.getAttribute('data-seasonal-theme') === 'christmas'; }
   function syncButton() {
     var button = document.getElementById('themeToggleBtn');
@@ -53,6 +65,12 @@
       if (icon) icon.textContent = bright ? '🎄' : '❄';
       if (label) label.textContent = words[bright ? 1 : 0];
       button.setAttribute('aria-label', words[bright ? 3 : 2]);
+    } else if (isHalloween()) {
+      var halloweenCode = (root.lang || 'en').toLowerCase();
+      var halloweenWords = halloweenLabels[halloweenCode] || halloweenLabels[halloweenCode.split('-')[0]] || halloweenLabels.en;
+      if (icon) icon.textContent = bright ? '🌙' : '☀';
+      if (label) label.textContent = halloweenWords[bright ? 1 : 0];
+      button.setAttribute('aria-label', halloweenWords[bright ? 3 : 2]);
     } else {
       if (icon) icon.textContent = bright ? '🌙' : '☀';
       if (label) label.textContent = bright ? 'Dark' : 'Bright';
@@ -72,13 +90,13 @@
     return true;
   }
 
-  // Refresh only while Christmas is active, or once when leaving it.
+  // Refresh seasonal display labels while either seasonal mode is active or on exit.
   // The existing language observer restores the usual localized labels on exit.
-  var wasChristmas = isChristmas();
+  var wasSeasonal = isChristmas() || isHalloween();
   var seasonalObserver = new MutationObserver(function () {
-    var active = isChristmas();
-    if (active || wasChristmas) syncButton();
-    wasChristmas = active;
+    var active = isChristmas() || isHalloween();
+    if (active || wasSeasonal) syncButton();
+    wasSeasonal = active;
   });
   seasonalObserver.observe(root, {attributes:true, attributeFilter:['data-seasonal-theme','lang']});
 
