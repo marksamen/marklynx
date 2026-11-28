@@ -1322,3 +1322,87 @@ html[data-seasonal-theme="none"][data-theme="dark"] .toolbar {
 html[data-seasonal-theme="none"][data-theme="dark"] .site-preferences {
   background-color:#101010;
 }
+
+
+/* SEASONAL-HALLOWEEN-REFINEMENT PROD REV01 — Halloween panel perimeter only.
+   Normal REV07's nine-slice principle; slimmer rail/corner dimensions,
+   independent inline artwork. Keep existing ribbon art, palette and layout. */
+html[data-seasonal-theme="halloween"][data-theme] {
+  --ml-hw-frame-corner:12px;
+  --ml-hw-frame-rail:5px;
+  --ml-hw-frame-cut:10px;
+}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="halloween"][data-theme] {
+    --ml-hw-frame-corner:9px; --ml-hw-frame-rail:4px; --ml-hw-frame-cut:7.5px;
+  }
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  position:relative; border-color:transparent; border-radius:0;
+  clip-path:polygon(var(--ml-hw-frame-cut) 0,calc(100% - var(--ml-hw-frame-cut)) 0,100% var(--ml-hw-frame-cut),100% 100%,0 100%,0 var(--ml-hw-frame-cut));
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::after {
+  content:""; position:absolute; inset:-1px; pointer-events:none;
+  border:0 solid transparent; border-image-source:var(--ml-hw-frame-art);
+  border-image-slice:30; border-image-width:var(--ml-hw-frame-corner) var(--ml-hw-frame-corner) 0; border-image-repeat:stretch;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection #recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  box-sizing:border-box; border-style:solid; border-color:transparent!important;
+  border-width:0 var(--ml-hw-frame-rail) var(--ml-hw-frame-corner);
+  border-radius:0; outline:none; box-shadow:none;
+  border-image-source:var(--ml-hw-frame-art); border-image-slice:30;
+  border-image-width:0 var(--ml-hw-frame-corner) var(--ml-hw-frame-corner); border-image-repeat:stretch;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--ml-hw-frame-cut)),calc(100% - var(--ml-hw-frame-cut)) 100%,var(--ml-hw-frame-cut) 100%,0 calc(100% - var(--ml-hw-frame-cut)));
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {
+  box-sizing:border-box; box-shadow:none;
+  border:solid transparent; border-width:0 var(--ml-hw-frame-rail);
+  border-image-source:var(--ml-hw-frame-art); border-image-slice:30;
+  border-image-width:0 var(--ml-hw-frame-corner); border-image-repeat:stretch;
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {content:none;}
+/* Remove only the LIST separator paint and the 1px row gap. Preserve hover,
+   card/badge styles and existing page/panel palette for the next revision. */
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  gap:0; background-color:var(--ml-hw-guide-surface)!important;
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card,#resultsList .list-row) {
+  border-top-color:transparent!important; border-bottom-color:transparent!important;
+}
+
+
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-frame-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cg%20fill%3D%22none%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M1.5%2025.75%20L25.75%201.5%20H74.25%20L98.5%2025.75%20V74.25%20L74.25%2098.5%20H25.75%20L1.5%2074.25%20Z%22%20stroke%3D%22%234e2009%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M4.5%2027.25%20L27.25%204.5%20H72.75%20L95.5%2027.25%20V72.75%20L72.75%2095.5%20H27.25%20L4.5%2072.75%20Z%22%20stroke%3D%22%23ffab45%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M7.5%2028.75%20L28.75%207.5%20H71.25%20L92.5%2028.75%20V71.25%20L71.25%2092.5%20H28.75%20L7.5%2071.25%20Z%22%20stroke%3D%22%23b75a19%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M10%2030.0%20L30.0%2010%20H70.0%20L90%2030.0%20V70.0%20L70.0%2090%20H30.0%20L10%2070.0%20Z%22%20stroke%3D%22%23ffd18a%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-frame-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cg%20fill%3D%22none%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M1.5%2025.75%20L25.75%201.5%20H74.25%20L98.5%2025.75%20V74.25%20L74.25%2098.5%20H25.75%20L1.5%2074.25%20Z%22%20stroke%3D%22%2339164d%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M4.5%2027.25%20L27.25%204.5%20H72.75%20L95.5%2027.25%20V72.75%20L72.75%2095.5%20H27.25%20L4.5%2072.75%20Z%22%20stroke%3D%22%23a96bd0%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M7.5%2028.75%20L28.75%207.5%20H71.25%20L92.5%2028.75%20V71.25%20L71.25%2092.5%20H28.75%20L7.5%2071.25%20Z%22%20stroke%3D%22%2371358f%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M10%2030.0%20L30.0%2010%20H70.0%20L90%2030.0%20V70.0%20L70.0%2090%20H30.0%20L10%2070.0%20Z%22%20stroke%3D%22%23e6b8ff%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");}
+
+/* Continuous joins; retain existing palette and card surfaces. */
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  background-origin:padding-box,padding-box,padding-box,border-box,border-box,border-box,border-box;
+  box-shadow:none;
+  clip-path:polygon(var(--ml-hw-frame-cut) 0,calc(100% - var(--ml-hw-frame-cut)) 0,100% var(--ml-hw-frame-cut),100% calc(100% + 1px),0 calc(100% + 1px),0 var(--ml-hw-frame-cut));
+}
+html[data-seasonal-theme="halloween"][data-theme] :is(#recentUploadsSection #recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  background-clip:border-box;
+  clip-path:polygon(0 -1px,100% -1px,100% calc(100% - var(--ml-hw-frame-cut)),calc(100% - var(--ml-hw-frame-cut)) 100%,var(--ml-hw-frame-cut) 100%,0 calc(100% - var(--ml-hw-frame-cut)));
+}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count {background-clip:border-box;}
+html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
+  content:""; position:absolute; bottom:-1px; left:0; right:0; height:2px; background:inherit; pointer-events:none; z-index:1;
+}
+
+
+/* SEASONAL-HALLOWEEN-REFINEMENT PROD REV01: GRID panel paint only.
+   Preserve exterior, LIST, guide cards and original hover behavior. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-grid-surface:#100719;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-grid-surface:#d78022;}
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) :is(#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid.grid),
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) :is(.game-guides-section .game-guides-count,.game-guides-section + .container > #emptyState) {
+  background-color:var(--ml-hw-grid-surface)!important;
+  background-clip:border-box;
+}
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card:hover {
+  background-color:var(--ml-hw-grid-surface)!important;
+}
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-guides-section .game-guides-count::after {
+  background:var(--ml-hw-grid-surface)!important;
+}
