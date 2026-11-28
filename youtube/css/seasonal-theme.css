@@ -1090,3 +1090,132 @@ html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-gui
 html[data-seasonal-theme="halloween"][data-theme] .game-guides-section + .container > #resultsList {
   border-top-color:var(--ml-hw-guide-surface)!important;
 }
+
+
+/* NORMAL-LANGUAGE PROD REV01 — approved Normal section presentation. */
+html[data-seasonal-theme="none"][data-theme] {
+  --ml-normal-frame-side:10px;
+  --ml-normal-frame-corner:24px;
+  --ml-normal-frame-bottom:24px;
+  --ml-normal-bottom-cut:19.2px;
+  --ml-normal-frame-art:url(../images/normal-ribbon-unified-frame.webp);
+  --ml-normal-guide-surface:#0b0b0b;
+}
+html[data-seasonal-theme="none"][data-theme="bright"] {--ml-normal-guide-surface:#dededc;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  --ml-normal-right:190px;
+  box-sizing:border-box; min-width:0; min-height:46px;
+  display:flex; align-items:center; justify-content:flex-start;
+  position:relative; isolation:isolate; border-radius:0; border:0;
+  padding:6px min(30%,220px) 6px 25px;
+  background:none; clip-path:none; box-shadow:none; margin-bottom:0;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  box-shadow:none;
+  background-image:url(../images/normal-ribbon-fill-right.webp),url(../images/normal-ribbon-fill-center.webp);
+  background-size:var(--ml-normal-right) 100%,calc(100% - var(--ml-normal-right)) 100%;
+  background-position:right top,left top; background-repeat:no-repeat;
+  clip-path:polygon(var(--ml-normal-bottom-cut) 0,calc(100% - var(--ml-normal-bottom-cut)) 0,100% var(--ml-normal-bottom-cut),100% 100%,0 100%,0 var(--ml-normal-bottom-cut));
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::after {
+  content:""; position:absolute; inset:0;
+  border:solid transparent; border-width:0;
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:40;
+  border-image-width:var(--ml-normal-frame-corner) var(--ml-normal-frame-corner) 0; border-image-repeat:stretch;
+  pointer-events:none; z-index:0;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  min-width:0; max-width:100%; margin:0;
+  display:flex; align-items:center; gap:12px;
+  font-family:Arial,Helvetica,sans-serif; font-size:clamp(19px,2.1vw,27px); font-weight:800; font-style:italic;
+  line-height:1.15; letter-spacing:.025em; text-transform:uppercase; overflow-wrap:anywhere;
+  color:#f7f5f4; position:relative; top:4px;
+  -webkit-text-stroke:1.5px #080508; paint-order:stroke fill;
+  text-shadow:-1px -1px 0 #080508,1px -1px 0 #080508,-1px 1px 0 #080508,1px 1px 0 #080508,0 2px 2px #000,0 3px 3px #000;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::after {content:none;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+  content:""; display:block; flex:0 0 34px; width:34px; height:34px;
+  background:var(--ml-normal-section-icon) center/contain no-repeat; filter:drop-shadow(0 1px 1px #100306);
+}
+html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploads-head {--ml-normal-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f9eeee%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c9a6a6%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%2230%22%20height%3D%2222%22%20rx%3D%225%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%23270306%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M12%2010l11%206-11%206z%22%20fill%3D%22%23800912%22%20stroke%3D%22%23320307%22%20stroke-width%3D%22.6%22%2F%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-head {--ml-normal-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f9eeee%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c9a6a6%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M10%205h12c5%200%208%207%209%2014%201%206-3%209-7%205l-4-5h-8l-4%205c-4%204-8%201-7-5C2%2012%205%205%2010%205z%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%23270306%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M10%209v10m-5-5h10%22%20stroke%3D%22%23430609%22%20stroke-width%3D%222.3%22%2F%3E%3Cg%20fill%3D%22%23430609%22%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2210%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2218%22%20r%3D%221.8%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  box-sizing:border-box; border-style:solid; border-color:transparent!important;
+  border-width:0 var(--ml-normal-frame-side) var(--ml-normal-frame-bottom);
+  border-radius:0;
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:40;
+  border-image-width:0 var(--ml-normal-frame-corner) var(--ml-normal-frame-bottom);
+  border-image-repeat:stretch; background-clip:padding-box;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--ml-normal-bottom-cut)),calc(100% - var(--ml-normal-bottom-cut)) 100%,var(--ml-normal-bottom-cut) 100%,0 calc(100% - var(--ml-normal-bottom-cut)));
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {padding-block:6px;}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-count {
+  box-sizing:border-box; margin:0; padding:8px;
+  background:var(--ml-normal-guide-surface); background-clip:padding-box;
+  border-style:solid; border-color:transparent; border-width:0 var(--ml-normal-frame-side);
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:40;
+  border-image-width:0 var(--ml-normal-frame-corner); border-image-repeat:stretch;
+}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section + .container > #resultsList {padding-top:0!important;}
+html[data-seasonal-theme="none"][data-theme] .toolbar::after,
+html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploads-inner {border-bottom-color:transparent!important;}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] {--ml-normal-frame-side:7px;--ml-normal-frame-corner:18px;--ml-normal-frame-bottom:18px;--ml-normal-bottom-cut:14.4px;}
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {--ml-normal-right:min(36%,154px);padding:5px min(23%,100px) 5px 18px;min-height:38px;}
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {font-size:clamp(15px,4vw,21px);gap:8px;top:3px;}
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {flex-basis:26px;width:26px;height:26px;}
+}
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="none"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
+}
+/* Normal GRID spacing — approved desktop and touch settings. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode {
+    box-sizing:border-box;
+    padding-inline:2.5%;
+    padding-block:16px 20px;
+    gap:20px 16px;
+  }
+  html[data-seasonal-theme="none"][data-theme] .game-guides-section + .container > #resultsGrid.grid {
+    box-sizing:border-box;
+    padding-inline:16px;
+    padding-block:16px 20px;
+    row-gap:20px;
+  }
+}
+@media (max-width:900px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode,
+  html[data-seasonal-theme="none"][data-theme] .game-guides-section + .container > #resultsGrid.grid {
+    padding-inline:6px;
+    padding-block:10px 14px;
+  }
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode {gap:12px 8px;}
+}
+
+/* Normal desktop GRID overlays — approved sizes. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > :is(.gs-pill,.guide-grid-points) {
+    transform:scale(.8); transform-origin:top right;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .playlist-pill {
+    transform:scale(.8); transform-origin:top left;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .adult-pill {
+    transform:scale(.8); transform-origin:bottom left;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .desktop-grid-quality {
+    transform:scale(.8); transform-origin:bottom right;
+  }
+  /* Recent overlays use 90%; Game Guides use 80%. */
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb > .recent-grid-quality {
+    transform:scale(.9); transform-origin:bottom right;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .play-badge svg {
+    transform:scale(.8); transform-origin:center;
+  }
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb::after {
+    transform:translate(-50%,-50%) scale(.9); transform-origin:center;
+  }
+}
