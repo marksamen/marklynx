@@ -1257,3 +1257,37 @@ html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploa
 @media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
   html[data-seasonal-theme="none"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
 }
+
+
+/* NORMAL-LANGUAGE TEST REV05 / V2: one continuous metallic perimeter.
+   Original 182px art is displayed at 182/147 height, top-aligned, removing
+   the bottom crossbar (including its red glow) without editing the artwork.
+   Side rails share one profile from banner to count/content; the bottom
+   nine-slice chamfers retain their angles regardless of section height. */
+html[data-seasonal-theme="none"][data-theme] {
+  --ml-normal-frame-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cg%20fill%3D%22none%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M1%200V75L25%2099H75L99%2075V0%22%20stroke%3D%22%23141414%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%200V74L26%2097H74L97%2074V0%22%20stroke%3D%22%23dadada%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M5%200V73L27%2095H73L95%2073V0%22%20stroke%3D%22%23525252%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M7%200V72L28%2093H72L93%2072V0%22%20stroke%3D%22%2314090a%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%200V71L29%2091H71L91%2071V0%22%20stroke%3D%22%23dc1720%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M11%200V70L30%2090H70L89%2070V0%22%20stroke%3D%22%234d1014%22%20stroke-width%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  --ml-normal-frame-corner:24px;
+  --ml-normal-frame-bottom:24px;
+  --ml-normal-bottom-cut:20px;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::before {
+  background-size:var(--ml-normal-cap) 123.81%,var(--ml-normal-right) 123.81%,calc(100% - var(--ml-normal-cap) - var(--ml-normal-right)) 123.81%;
+  background-position:left top,right top,left var(--ml-normal-cap) top;
+}
+/* Continue the same lower vertical rails on the ribbon, below its top bevel. */
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::after {
+  content:""; position:absolute; inset:calc(var(--ml-normal-cut) + 4px) 0 0;
+  border:solid transparent; border-width:0 var(--ml-normal-frame-side);
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:30;
+  border-image-width:0 var(--ml-normal-frame-corner); border-image-repeat:stretch;
+  pointer-events:none; z-index:0;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  border-image-slice:30;
+  border-image-width:0 var(--ml-normal-frame-corner) var(--ml-normal-frame-bottom);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--ml-normal-bottom-cut)),calc(100% - var(--ml-normal-bottom-cut)) 100%,var(--ml-normal-bottom-cut) 100%,0 calc(100% - var(--ml-normal-bottom-cut)));
+}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-count {border-image-slice:30; border-image-width:0 var(--ml-normal-frame-corner);}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] {--ml-normal-frame-corner:18px;--ml-normal-frame-bottom:18px;--ml-normal-bottom-cut:15px;}
+}
