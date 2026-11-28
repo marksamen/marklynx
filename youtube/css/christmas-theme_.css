@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: SEASONAL-CHRISTMAS-REFINEMENT-REV04; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: SEASONAL-CHRISTMAS-REFINEMENT-REV05; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -1137,4 +1137,21 @@ html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-gui
    unhovered rows, dividers and other themes unchanged. */
 html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card:hover {
   background-color:var(--xmas-hover)!important;
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT TEST REV05 -- contrasting panel surfaces.
+   Keep exterior and global palette unchanged. Paint through the frame,
+   unify the count strip and rows, preserve existing guide GRID cards
+   and approved LIST hover. No geometry or other theme changes. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {--xmas-panel-surface:#011008;}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {--xmas-panel-surface:#650009;}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode,#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState,.game-guides-section .game-guides-count) {
+  background-color:var(--xmas-panel-surface)!important;
+  background-clip:border-box;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card,
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card:not(:hover),
+html[data-seasonal-theme="christmas"][data-theme] #resultsList .list-row:not(:hover) {
+  background-color:var(--xmas-panel-surface)!important;
 }
