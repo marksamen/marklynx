@@ -1565,3 +1565,21 @@ html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-gui
 html[data-seasonal-theme="halloween"][data-theme] .game-guides-section .game-guides-count::after {
   content:""; position:absolute; bottom:-1px; left:0; right:0; height:2px; background:inherit; pointer-events:none; z-index:1;
 }
+
+
+/* SEASONAL-HALLOWEEN-REFINEMENT TEST REV03: GRID panel paint only.
+   Preserve exterior, LIST, guide cards and original hover behavior. */
+html[data-seasonal-theme="halloween"][data-theme="dark"] {--ml-hw-grid-surface:#100719;}
+html[data-seasonal-theme="halloween"][data-theme="bright"] {--ml-hw-grid-surface:#d78022;}
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) :is(#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid.grid),
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) :is(.game-guides-section .game-guides-count,.game-guides-section + .container > #emptyState) {
+  background-color:var(--ml-hw-grid-surface)!important;
+  background-clip:border-box;
+}
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card,
+html[data-seasonal-theme="halloween"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card:hover {
+  background-color:var(--ml-hw-grid-surface)!important;
+}
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-guides-section .game-guides-count::after {
+  background:var(--ml-hw-grid-surface)!important;
+}
