@@ -17,7 +17,7 @@
   function newStage(){return {floatPeak:null,bytePeak:null,floatSamples:0,byteSamples:0};}
   function finishRecord(a,reason){try{if(a.record){a.record.endReason=reason;a.record.endClock=ctx.currentTime;a.record.endWall=Date.now();}if(a.taps){a.taps.forEach(function(t){if(t)try{t.node.disconnect();}catch(e){}});a.taps=null;}}catch(e){diagnosticError(e);}}
   function attachMeter(){
-    try{meter=ctx.createAnalyser();meter.fftSize=2048;meterData=new Float32Array(meter.fftSize);master.connect(meter);ctx.addEventListener("statechange",function(){trace("statechange");});trace("context created");}
+    try{meter=ctx.createAnalyser();meter.fftSize=2048;meterData=new Float32Array(meter.fftSize);master.connect(meter);var observed=ctx;ctx.addEventListener("statechange",function(){if(ctx===observed)trace("statechange");});trace("context created");}
     catch(e){meterError=String(e.message||e);meter=null;meterData=null;}
   }
   function sampleMeter(){
@@ -59,19 +59,53 @@
       return new Promise(function(resolve,reject){ctx.decodeAudioData(bytes,resolve,reject);});
     }).then(function(buffer){buffers[key]=buffer;inspectBuffer(key,buffer);}).catch(function(e){errors[key]=String(e.message||e);}).finally(function(){delete loading[key];});
   }
+  // Audio readiness is based on clock progress, not the reported state alone.
+  var probe=null, stalled=false, recoveries=0, maxRecoveries=2, generation=0;
+  function clearProbe(){if(probe){clearTimeout(probe.timer);probe=null;}}
+  function createContext(){
+    ctx=new Ctx();generation++;master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);attachMeter();
+  }
+  function prime(context){
+    // Silent finite source, scheduled synchronously during a trusted gesture.
+    var source=context.createBufferSource();source.buffer=context.createBuffer(1,128,context.sampleRate);
+    source.connect(master);source.onended=function(){try{source.disconnect();}catch(e){}};source.start();
+  }
+  function checkClock(context){
+    if(probe||context!==ctx)return;
+    var p={clock:context.currentTime, timer:null};probe=p;
+    p.timer=setTimeout(function(){
+      if(probe!==p||context!==ctx)return;probe=null;
+      if(blocked()){unlocked=false;return;}
+      if(context.state==='running'&&context.currentTime>p.clock){unlocked=true;stalled=false;trace('clock verified');Object.keys(files).forEach(load);}
+      else{unlocked=false;stalled=true;trace('clock stalled');stopAll();}
+    },350);
+  }
   function unlock(e){
     if(!e.isTrusted||blocked()||!Ctx)return;
+    // Touch pointerdown can precede iOS transient activation; use touchend instead.
+    if(e.type==='pointerdown'&&e.pointerType==='touch')return;
+    if(navigator.userActivation&&!navigator.userActivation.isActive)return;
     try{
-      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);attachMeter();}
-      trace("resume requested",e.type);var promise=ctx.resume();
-      Promise.resolve(promise).then(function(){trace('resume resolved');if(ctx.state==='running'){unlocked=true;Object.keys(files).forEach(load);}}).catch(function(e){trace("resume rejected",String(e));});
-    }catch(e){/* No audio support: leave visuals intact. */}
+      if(!ctx)createContext();
+      else if(stalled){
+        if(recoveries>=maxRecoveries){trace('recovery limit');return;}
+        clearProbe();stopAll();var old=ctx;ctx=null;unlocked=false;stalled=false;recoveries++;
+        try{Promise.resolve(old.close()).catch(function(e){trace('close rejected',String(e));});}catch(e){trace('close failed',String(e));}
+        createContext();trace('context recreated');
+      }
+      var current=ctx;
+      if(unlocked&&current.state==='running'&&!stalled){checkClock(current);return;}
+      trace('resume requested',e.type);var promise=current.resume();
+      try{prime(current);}catch(e){trace('silent prime failed',String(e));}
+      checkClock(current);Object.keys(files).forEach(load);
+      Promise.resolve(promise).then(function(){if(current===ctx)trace('resume resolved');}).catch(function(e){if(current===ctx)trace('resume rejected',String(e));});
+    }catch(e){trace('unlock failed',String(e));unlocked=false;stalled=!!ctx;}
   }
   function stop(){if(active){var a=active;active=null;finishRecord(a,"stopped");try{a.source.stop();}catch(e){}try{a.source.disconnect();a.gain.disconnect();}catch(e){}counts.stopped++;}}
   function cancel(owner){var timers=jobs.get(owner);if(timers){timers.forEach(clearTimeout);jobs.delete(owner);}if(active&&active.owner===owner)stop();}
   function stopAll(){Array.from(jobs.keys()).forEach(cancel);stop();}
   function cue(owner,key,priority,volume){
-    if(blocked()||!owner.isConnected||!ctx||ctx.state!=='running'||!buffers[key]){counts.skipped++;return;}
+    if(blocked()||!owner.isConnected||!unlocked||!ctx||ctx.state!=='running'||!buffers[key]){counts.skipped++;return;}
     if(active){if(active.priority>=priority){counts.skipped++;return;}stop();}
     try{
       var source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=buffers[key];gain.gain.value=volume;
@@ -98,7 +132,7 @@
   function reconcile(){if(blocked())stopAll();else Array.from(jobs.keys()).forEach(function(node){if(!node.isConnected)cancel(node);});}
   // Check visual media continuously only while a cue is active/pending, including dynamically mounted players.
   // No perpetual frame loop in Normal/Halloween or when idle: observe DOM and use a bounded monitor only when needed.
-  var frame=0;function tick(){frame=0;sampleMeter();reconcile();if(jobs.size||active)frame=requestAnimationFrame(tick);}
+  var frame=0;function tick(){frame=0;sampleMeter();if(active&&active.record&&active.record.wallElapsedMs>=1000&&active.record.clockAdvance===0){stalled=true;unlocked=false;trace("clock stalled during cue");stopAll();}reconcile();if(jobs.size||active)frame=requestAnimationFrame(tick);}
   function start(type,owner,duration){event(type,owner,duration);if(jobs.size&&!frame)frame=requestAnimationFrame(tick);}
   document.addEventListener('pointerdown',unlock,{passive:true});document.addEventListener('touchend',unlock,{passive:true});document.addEventListener('keydown',unlock);
   new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
@@ -106,5 +140,5 @@
   window.addEventListener('pagehide',function(){hiddenPage=true;stopAll();});window.addEventListener('pageshow',function(){hiddenPage=false;});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
   window.mlChristmasSounds=Object.freeze({event:start,cancel:cancel});
-  window.mlChristmasSoundDiagnostics=function(){return {revision:'SEASONAL-CHRISTMAS-REFINEMENT TEST REV09',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts),masterGain:master?master.gain.value:null,sampleRate:ctx?ctx.sampleRate:null,baseLatency:ctx&&typeof ctx.baseLatency==='number'?ctx.baseLatency:null,outputLatency:ctx&&typeof ctx.outputLatency==='number'?ctx.outputLatency:null,meterAvailable:!!meter,meterError:meterError,lastCueMeasurement:cueRecord,measurements:history.slice(),bufferInfo:bufferInfo,lifecycle:lifecycle.slice(),diagnosticErrors:diagnosticErrors.slice(),destination:ctx?{channelCount:ctx.destination.channelCount,maxChannelCount:ctx.destination.maxChannelCount,channelCountMode:ctx.destination.channelCountMode,channelInterpretation:ctx.destination.channelInterpretation,currentTime:ctx.currentTime}:null};};
+  window.mlChristmasSoundDiagnostics=function(){return {revision:'SEASONAL-CHRISTMAS-REFINEMENT TEST REV10',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts),masterGain:master?master.gain.value:null,sampleRate:ctx?ctx.sampleRate:null,baseLatency:ctx&&typeof ctx.baseLatency==='number'?ctx.baseLatency:null,outputLatency:ctx&&typeof ctx.outputLatency==='number'?ctx.outputLatency:null,recovery:{stalled:stalled,attempts:recoveries,limit:maxRecoveries,generation:generation,probePending:!!probe},meterAvailable:!!meter,meterError:meterError,lastCueMeasurement:cueRecord,measurements:history.slice(),bufferInfo:bufferInfo,lifecycle:lifecycle.slice(),diagnosticErrors:diagnosticErrors.slice(),destination:ctx?{channelCount:ctx.destination.channelCount,maxChannelCount:ctx.destination.maxChannelCount,channelCountMode:ctx.destination.channelCountMode,channelInterpretation:ctx.destination.channelInterpretation,currentTime:ctx.currentTime}:null};};
 })();
