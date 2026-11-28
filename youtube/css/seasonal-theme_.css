@@ -1384,3 +1384,58 @@ html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-c
     transform:translate(-50%,-50%) scale(.9); transform-origin:center;
   }
 }
+
+
+/* SEASONAL-GRID TEST REV01: reuse owner-approved Normal REV12 GRID spacing
+   and overlay scales for Halloween and Christmas only. Preserve LIST,
+   Normal, existing frames, seasonal paints and runtime. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode {
+    box-sizing:border-box;
+    padding-inline:2.5%;
+    padding-block:16px 20px;
+    gap:20px 16px;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] .game-guides-section + .container > #resultsGrid.grid {
+    box-sizing:border-box;
+    padding-inline:16px;
+    padding-block:16px 20px;
+    row-gap:20px;
+  }
+}
+@media (max-width:900px),(pointer:coarse) {
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode,
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] .game-guides-section + .container > #resultsGrid.grid {
+    padding-inline:6px;
+    padding-block:10px 14px;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode {gap:12px 8px;}
+}
+
+/* Seasonal desktop GRID thumbnail overlays only.
+   Scale visual dimensions to 80%; keep corner anchors and click targets.
+   Scale the dual stack once, never its individual children a second time. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #resultsGrid .thumb-wrap > :is(.gs-pill,.guide-grid-points) {
+    transform:scale(.8); transform-origin:top right;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #resultsGrid .thumb-wrap > .playlist-pill {
+    transform:scale(.8); transform-origin:top left;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #resultsGrid .thumb-wrap > .adult-pill {
+    transform:scale(.8); transform-origin:bottom left;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #resultsGrid .thumb-wrap > .desktop-grid-quality {
+    transform:scale(.8); transform-origin:bottom right;
+  }
+  /* Recent retains 90% of original overlay dimensions. */
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb > .recent-grid-quality {
+    transform:scale(.9); transform-origin:bottom right;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #resultsGrid .thumb-wrap > .play-badge svg {
+    transform:scale(.8); transform-origin:center;
+  }
+  html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb::after {
+    transform:translate(-50%,-50%) scale(.9); transform-origin:center;
+  }
+}
