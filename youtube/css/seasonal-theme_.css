@@ -1356,3 +1356,28 @@ html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-c
   }
   html[data-seasonal-theme="none"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode {gap:12px 8px;}
 }
+
+/* NORMAL-LANGUAGE TEST REV11: Normal desktop GRID thumbnail overlays only.
+   Scale visual dimensions to 80%; keep corner anchors and click targets.
+   Scale the dual stack once, never its individual children a second time. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) {
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > :is(.gs-pill,.guide-grid-points) {
+    transform:scale(.8); transform-origin:top right;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .playlist-pill {
+    transform:scale(.8); transform-origin:top left;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .adult-pill {
+    transform:scale(.8); transform-origin:bottom left;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .desktop-grid-quality,
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb > .recent-grid-quality {
+    transform:scale(.8); transform-origin:bottom right;
+  }
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .play-badge svg {
+    transform:scale(.8); transform-origin:center;
+  }
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb::after {
+    transform:translate(-50%,-50%) scale(.8); transform-origin:center;
+  }
+}
