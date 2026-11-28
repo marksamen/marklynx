@@ -1492,3 +1492,9 @@ html[data-seasonal-theme="none"][data-theme="dark"] .banner-wrap::before {
 html[data-seasonal-theme="none"][data-theme="dark"] .toolbar {
   background-color:rgba(16,16,16,.96);
 }
+
+/* SEASONAL-GRID TEST REV07: Normal Dark utility strip follows the
+   approved REV06 exterior. Preserve its divider and control paint. */
+html[data-seasonal-theme="none"][data-theme="dark"] .site-preferences {
+  background-color:#101010;
+}
