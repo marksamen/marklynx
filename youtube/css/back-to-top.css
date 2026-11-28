@@ -1,0 +1,29 @@
+/* SEASONAL-CHRISTMAS-REFINEMENT PROD REV01: isolated global back-to-top control. */
+#mlBackToTop {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 60;
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg-raised);
+  color: var(--text);
+  box-shadow: 0 3px 12px rgba(0,0,0,.35);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#mlBackToTop[hidden] { display: none !important; }
+body:has(.video-modal-overlay.open, .developer-overlay.open, .suggest-overlay.open,
+  .wn-overlay:not([hidden]), .mlm-overlay:not([hidden]), .mlm-hub-overlay:not([hidden]),
+  .ml-filter-popup-menu:not([hidden])) #mlBackToTop { display: none !important; }
+#mlBackToTop:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+@media (hover: hover) {
+  #mlBackToTop:hover { border-color: currentColor; }
+}
+@media print { #mlBackToTop { display: none !important; } }

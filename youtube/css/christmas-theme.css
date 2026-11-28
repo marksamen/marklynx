@@ -1037,3 +1037,138 @@ html[data-seasonal-theme="christmas"] {
  }
  html[data-seasonal-theme="christmas"] body:has(#videoModalOverlay.open) #ml-christmas-gingerbread {display:none!important;}
 }
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT approved TEST REV02 — Christmas panel perimeter only.
+   Normal REV07's nine-slice principle; slimmer rail/corner dimensions,
+   independent inline artwork. Keep existing ribbon art, palette and layout. */
+html[data-seasonal-theme="christmas"][data-theme] {
+  --xmas-frame-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cg%20fill%3D%22none%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M1.5%2025.75%20L25.75%201.5%20H74.25%20L98.5%2025.75%20V74.25%20L74.25%2098.5%20H25.75%20L1.5%2074.25%20Z%22%20stroke%3D%22%23593b19%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M4.5%2027.25%20L27.25%204.5%20H72.75%20L95.5%2027.25%20V72.75%20L72.75%2095.5%20H27.25%20L4.5%2072.75%20Z%22%20stroke%3D%22%23f3d88e%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M7.5%2028.75%20L28.75%207.5%20H71.25%20L92.5%2028.75%20V71.25%20L71.25%2092.5%20H28.75%20L7.5%2071.25%20Z%22%20stroke%3D%22%23a66f35%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M10%2030.0%20L30.0%2010%20H70.0%20L90%2030.0%20V70.0%20L70.0%2090%20H30.0%20L10%2070.0%20Z%22%20stroke%3D%22%23ffe7ad%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  --xmas-frame-corner:12px;
+  --xmas-frame-rail:5px;
+  --xmas-frame-cut:10px;
+}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="christmas"][data-theme] {
+    --xmas-frame-corner:9px; --xmas-frame-rail:4px; --xmas-frame-cut:7.5px;
+  }
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  position:relative; border-color:transparent; border-radius:0;
+  clip-path:polygon(var(--xmas-frame-cut) 0,calc(100% - var(--xmas-frame-cut)) 0,100% var(--xmas-frame-cut),100% 100%,0 100%,0 var(--xmas-frame-cut));
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::after {
+  content:""; position:absolute; inset:-1px; pointer-events:none;
+  border:0 solid transparent; border-image-source:var(--xmas-frame-art);
+  border-image-slice:30; border-image-width:var(--xmas-frame-corner) var(--xmas-frame-corner) 0; border-image-repeat:stretch;
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  box-sizing:border-box; border-style:solid; border-color:transparent!important;
+  border-width:0 var(--xmas-frame-rail) var(--xmas-frame-corner);
+  border-radius:0; outline:none; box-shadow:none;
+  border-image-source:var(--xmas-frame-art); border-image-slice:30;
+  border-image-width:0 var(--xmas-frame-corner) var(--xmas-frame-corner); border-image-repeat:stretch;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--xmas-frame-cut)),calc(100% - var(--xmas-frame-cut)) 100%,var(--xmas-frame-cut) 100%,0 calc(100% - var(--xmas-frame-cut)));
+}
+html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-guides-count {
+  box-sizing:border-box; box-shadow:none;
+  border:solid transparent; border-width:0 var(--xmas-frame-rail);
+  border-image-source:var(--xmas-frame-art); border-image-slice:30;
+  border-image-width:0 var(--xmas-frame-corner); border-image-repeat:stretch;
+}
+html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-guides-count::after {content:none;}
+/* Remove only the LIST separator paint and the 1px row gap. Preserve hover,
+   card/badge styles and existing page/panel palette for the next revision. */
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode,.game-guides-section + .container > #resultsList) {
+  gap:0; background-color:var(--bg)!important;
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card,#resultsList .list-row) {
+  border-top-color:transparent!important; border-bottom-color:transparent!important;
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT approved TEST REV03 — header polish only.
+   Retain REV02 perimeter, section/card surfaces, content and layout rules.
+   Normal's metallic icon geometry, independently recolored for Christmas. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {
+  --xmas-ribbon:linear-gradient(180deg,#ffffff12 0%,#ffffff00 45%,#00000025 100%),linear-gradient(108deg,#54040b 0%,#a20e1a 29%,#780810 66%,#410209 100%);
+}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {
+  --xmas-ribbon:linear-gradient(180deg,#ffffff15 0%,#ffffff00 45%,#00000025 100%),linear-gradient(108deg,#042c08 0%,#17601d 29%,#0b4010 66%,#021e05 100%);
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  min-height:46px; padding:6px 43px;
+  justify-content:flex-start;
+  background-size:auto 30px,auto 30px,100% 100%,100% 100%;
+  background-position:left 10px center,right 10px center,center,center;
+  background-repeat:no-repeat;
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(19px,2.1vw,27px); font-weight:700; font-style:italic;
+  line-height:1.15; letter-spacing:.025em; gap:10px; max-width:100%;
+  color:#ffe7ad!important; text-shadow:0 1px 1px #321306,0 2px 2px #0009!important;
+  transform:none; overflow-wrap:anywhere;
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+  flex:0 0 30px; width:30px; height:30px;
+  filter:drop-shadow(0 1px 1px #0009);
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection .recent-uploads-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%3Cstop%20stop-color%3D%22%23fff4cf%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f4d88c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23b77c32%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%2230%22%20height%3D%2222%22%20rx%3D%225%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%2340240d%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M12%2010l11%206-11%206z%22%20fill%3D%22%236d210d%22%20stroke%3D%22%2340240d%22%20stroke-width%3D%22.6%22%2F%3E%3C%2Fsvg%3E");}
+html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-guides-head {--xmas-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%3Cstop%20stop-color%3D%22%23fff4cf%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f4d88c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23b77c32%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M10%205h12c5%200%208%207%209%2014%201%206-3%209-7%205l-4-5h-8l-4%205c-4%204-8%201-7-5C2%2012%205%205%2010%205z%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%2340240d%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M10%209v10m-5-5h10%22%20stroke%3D%22%235b310f%22%20stroke-width%3D%222.3%22%2F%3E%3Cg%20fill%3D%22%235b310f%22%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2210%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2218%22%20r%3D%221.8%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+    min-height:38px; padding:5px 34px;
+    background-size:auto 24px,auto 24px,100% 100%,100% 100%;
+    background-position:left 7px center,right 7px center,center,center;
+  }
+  html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {
+    font-size:clamp(15px,4vw,21px);gap:7px;
+  }
+  html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
+    flex-basis:23px;width:23px;height:23px;
+  }
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT approved TEST REV04 -- restore Recent LIST hover.
+   Match the existing Christmas Game Guides hover palette; leave GRID,
+   unhovered rows, dividers and other themes unchanged. */
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card:hover {
+  background-color:var(--xmas-hover)!important;
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT approved TEST REV05 -- contrasting panel surfaces.
+   Keep exterior and global palette unchanged. Paint through the frame,
+   unify the count strip and rows, preserve existing guide GRID cards
+   and approved LIST hover. No geometry or other theme changes. */
+html[data-seasonal-theme="christmas"][data-theme="dark"] {--xmas-panel-surface:#011008;}
+html[data-seasonal-theme="christmas"][data-theme="bright"] {--xmas-panel-surface:#650009;}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.list-mode,#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState,.game-guides-section .game-guides-count) {
+  background-color:var(--xmas-panel-surface)!important;
+  background-clip:border-box;
+}
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.grid-mode > .recent-upload-card,
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card:not(:hover),
+html[data-seasonal-theme="christmas"][data-theme] #resultsList .list-row:not(:hover) {
+  background-color:var(--xmas-panel-surface)!important;
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT approved TEST REV06 -- remove internal seams only.
+   Paint ribbon gradients through the transparent perimeter border without
+   repositioning holly. Retain top highlight; remove obsolete bottom shadow.
+   Bridge fractional-pixel count/results join inside the existing side rails. */
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {
+  background-origin:padding-box,padding-box,border-box,border-box;
+  box-shadow:inset 0 1px 0 #ffe7ad99;
+  clip-path:polygon(var(--xmas-frame-cut) 0,calc(100% - var(--xmas-frame-cut)) 0,100% var(--xmas-frame-cut),100% calc(100% + 1px),0 calc(100% + 1px),0 var(--xmas-frame-cut));
+}
+html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection #recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  clip-path:polygon(0 -1px,100% -1px,100% calc(100% - var(--xmas-frame-cut)),calc(100% - var(--xmas-frame-cut)) 100%,var(--xmas-frame-cut) 100%,0 calc(100% - var(--xmas-frame-cut)));
+}
+html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-guides-count::after {
+  content:""; position:absolute; bottom:-1px; left:0; right:0; height:2px;
+  background:var(--xmas-panel-surface); pointer-events:none; z-index:1;
+}
