@@ -1291,3 +1291,17 @@ html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-c
 @media (max-width:700px),(pointer:coarse) {
   html[data-seasonal-theme="none"][data-theme] {--ml-normal-frame-corner:18px;--ml-normal-frame-bottom:18px;--ml-normal-bottom-cut:15px;}
 }
+
+
+/* NORMAL-LANGUAGE TEST REV06 / V2: align the upper red light with chrome,
+   centre live heading and icon in the red field. Derived art uses the same
+   visible source region as REV05, with a compressed upper highlight band.
+   Body, count and lower perimeter rules remain byte-for-byte unchanged. */
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::before {
+  background-image:url(../images/normal-ribbon-aligned-left_.webp),url(../images/normal-ribbon-aligned-right_.webp),url(../images/normal-ribbon-aligned-center_.webp);
+  background-size:var(--ml-normal-cap) 100%,var(--ml-normal-right) 100%,calc(100% - var(--ml-normal-cap) - var(--ml-normal-right)) 100%;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {position:relative; top:4px;}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {top:3px;}
+}
