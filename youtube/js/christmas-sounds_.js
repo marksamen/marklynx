@@ -29,7 +29,7 @@
   function unlock(e){
     if(!e.isTrusted||blocked()||!Ctx)return;
     try{
-      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.35;master.connect(ctx.destination);}
+      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);}
       var promise=ctx.resume();
       Promise.resolve(promise).then(function(){if(ctx.state==='running'){unlocked=true;Object.keys(files).forEach(load);}}).catch(function(){});
     }catch(e){/* No audio support: leave visuals intact. */}
@@ -72,5 +72,5 @@
   window.addEventListener('pagehide',function(){hiddenPage=true;stopAll();});window.addEventListener('pageshow',function(){hiddenPage=false;});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
   window.mlChristmasSounds=Object.freeze({event:start,cancel:cancel});
-  window.mlChristmasSoundDiagnostics=function(){return {revision:'REV61',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
+  window.mlChristmasSoundDiagnostics=function(){return {revision:'SEASONAL-CHRISTMAS-REFINEMENT TEST REV07',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
 })();
