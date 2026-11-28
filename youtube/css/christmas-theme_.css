@@ -1,5 +1,5 @@
 /* CHRISTMAS TEST REV41 — Christmas-only color labels, section frames, trees and presents. */
-:root { --ml-christmas-test-revision: SEASONAL-CHRISTMAS-REFINEMENT-REV03; } /* TEST diagnostic fingerprint only */
+:root { --ml-christmas-test-revision: SEASONAL-CHRISTMAS-REFINEMENT-REV04; } /* TEST diagnostic fingerprint only */
 html[data-seasonal-theme="christmas"][data-theme="dark"] {
   --bg:#031c0c; --bg-raised:#062211; --bg-card:#082713;
   --line:#647d52; --red:#d7493d; --red-bright:#ff7667;
@@ -1129,4 +1129,12 @@ html[data-seasonal-theme="christmas"][data-theme] .game-guides-section .game-gui
   html[data-seasonal-theme="christmas"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2::before {
     flex-basis:23px;width:23px;height:23px;
   }
+}
+
+
+/* SEASONAL-CHRISTMAS-REFINEMENT TEST REV04 -- restore Recent LIST hover.
+   Match the existing Christmas Game Guides hover palette; leave GRID,
+   unhovered rows, dividers and other themes unchanged. */
+html[data-seasonal-theme="christmas"][data-theme] #recentUploadsSection #recentUploadsGrid.list-mode > .recent-upload-card:hover {
+  background-color:var(--xmas-hover)!important;
 }
