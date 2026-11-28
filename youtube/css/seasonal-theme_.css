@@ -1462,10 +1462,18 @@ html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-gui
    surface for Recent, guide gutters, count and empty state, and LIST rows.
    No changes to geometry, banners, overlays or either seasonal theme. */
 html[data-seasonal-theme="none"][data-theme="bright"] {--ml-normal-panel-surface:#c9c9c6;}
-html[data-seasonal-theme="none"][data-theme="dark"] {--ml-normal-panel-surface:#1c1c1c;}
+html[data-seasonal-theme="none"][data-theme="dark"] {--ml-normal-panel-surface:#101010;}
 html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid.grid,.game-guides-section + .container > #emptyState,.game-guides-section .game-guides-count) {
   background-color:var(--ml-normal-panel-surface);
 }
 html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid.list-mode .recent-upload-card,#resultsList .list-row):not(:hover) {
   background-color:var(--ml-normal-panel-surface)!important;
+}
+
+/* SEASONAL-GRID TEST REV05: Normal-only darker panel trial and full
+   chamfer fill. The existing clip-path still clips the outer corners;
+   paint extends beneath the transparent nine-slice frame. */
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState,.game-guides-section .game-guides-count) {
+  background-color:var(--ml-normal-panel-surface);
+  background-clip:border-box;
 }
