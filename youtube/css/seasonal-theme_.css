@@ -1370,14 +1370,17 @@ html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-c
   html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .adult-pill {
     transform:scale(.8); transform-origin:bottom left;
   }
-  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .desktop-grid-quality,
-  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb > .recent-grid-quality {
+  html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .desktop-grid-quality {
     transform:scale(.8); transform-origin:bottom right;
+  }
+  /* REV12: Recent has larger thumbnails; restore overlays to 90%. */
+  html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb > .recent-grid-quality {
+    transform:scale(.9); transform-origin:bottom right;
   }
   html[data-seasonal-theme="none"][data-theme] #resultsGrid .thumb-wrap > .play-badge svg {
     transform:scale(.8); transform-origin:center;
   }
   html[data-seasonal-theme="none"][data-theme] #recentUploadsGrid.grid-mode .recent-upload-thumb::after {
-    transform:translate(-50%,-50%) scale(.8); transform-origin:center;
+    transform:translate(-50%,-50%) scale(.9); transform-origin:center;
   }
 }
