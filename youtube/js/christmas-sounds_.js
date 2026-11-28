@@ -6,6 +6,27 @@
   var files={santa:'santa-ho-ho-ho',bells:'sleigh-bells',land:'landing',chimney:'chimney',return:'magic-chime',elf:'elf-giggle',star:'shooting-star',train:'train-whistle',gingerbread:'gingerbread-run-wave',fireworks:'new-year-fireworks',confetti:'new-year-confetti',toast:'new-year-toast'};
   var buffers={}, loading={}, errors={}, jobs=new Map(), active=null, printing=false, hiddenPage=false, unlocked=false;
   var counts={played:0,stopped:0,skipped:0}, lastCue=null;
+  // TEST-only passive meter. Keep the original master -> destination connection intact.
+  var meter=null, meterData=null, meterError=null, cueRecord=null, history=[];
+  function attachMeter(){
+    try{meter=ctx.createAnalyser();meter.fftSize=2048;meterData=new Float32Array(meter.fftSize);master.connect(meter);}
+    catch(e){meterError=String(e.message||e);meter=null;meterData=null;}
+  }
+  function sampleMeter(){
+    if(!meter||!cueRecord||!active)return;
+    try{
+      var peak=0;
+      if(typeof meter.getFloatTimeDomainData==='function'){
+        meter.getFloatTimeDomainData(meterData);
+        for(var i=0;i<meterData.length;i++)peak=Math.max(peak,Math.abs(meterData[i]));
+      }else{throw Error('Float time-domain analyser unavailable');}
+      cueRecord.samples++;cueRecord.peak=Math.max(cueRecord.peak===null?0:cueRecord.peak,peak);
+    }catch(e){meterError=String(e.message||e);}
+  }
+  function recordCue(key,gain){
+    cueRecord={key:key,master:master.gain.value,cueGain:gain.gain.value,effectiveGain:master.gain.value*gain.gain.value,peak:null,samples:0,startedAt:new Date().toISOString()};
+    history.push(cueRecord);if(history.length>12)history.shift();
+  }
   function blocked(){
     if(root.getAttribute('data-seasonal-theme')!=='christmas')return 'not Christmas';
     if(document.hidden||hiddenPage)return 'hidden page';
@@ -29,7 +50,7 @@
   function unlock(e){
     if(!e.isTrusted||blocked()||!Ctx)return;
     try{
-      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);}
+      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);attachMeter();}
       var promise=ctx.resume();
       Promise.resolve(promise).then(function(){if(ctx.state==='running'){unlocked=true;Object.keys(files).forEach(load);}}).catch(function(){});
     }catch(e){/* No audio support: leave visuals intact. */}
@@ -44,7 +65,7 @@
       var source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=buffers[key];gain.gain.value=volume;
       source.connect(gain);gain.connect(master);var a={source:source,gain:gain,owner:owner,priority:priority,key:key};active=a;
       source.onended=function(){if(active===a)active=null;try{source.disconnect();gain.disconnect();}catch(e){}};
-      source.start();counts.played++;lastCue=key;
+      source.start();counts.played++;lastCue=key;recordCue(key,gain);
     }catch(e){stop();counts.skipped++;}
   }
   function event(type,owner,duration){
@@ -64,7 +85,7 @@
   function reconcile(){if(blocked())stopAll();else Array.from(jobs.keys()).forEach(function(node){if(!node.isConnected)cancel(node);});}
   // Check visual media continuously only while a cue is active/pending, including dynamically mounted players.
   // No perpetual frame loop in Normal/Halloween or when idle: observe DOM and use a bounded monitor only when needed.
-  var frame=0;function tick(){frame=0;reconcile();if(jobs.size||active)frame=requestAnimationFrame(tick);}
+  var frame=0;function tick(){frame=0;sampleMeter();reconcile();if(jobs.size||active)frame=requestAnimationFrame(tick);}
   function start(type,owner,duration){event(type,owner,duration);if(jobs.size&&!frame)frame=requestAnimationFrame(tick);}
   document.addEventListener('pointerdown',unlock,{passive:true});document.addEventListener('touchend',unlock,{passive:true});document.addEventListener('keydown',unlock);
   new MutationObserver(reconcile).observe(root,{attributes:true,attributeFilter:['data-seasonal-theme']});
@@ -72,5 +93,5 @@
   window.addEventListener('pagehide',function(){hiddenPage=true;stopAll();});window.addEventListener('pageshow',function(){hiddenPage=false;});
   if(motion.addEventListener)motion.addEventListener('change',reconcile);else if(motion.addListener)motion.addListener(reconcile);
   window.mlChristmasSounds=Object.freeze({event:start,cancel:cancel});
-  window.mlChristmasSoundDiagnostics=function(){return {revision:'SEASONAL-CHRISTMAS-REFINEMENT TEST REV07',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts)};};
+  window.mlChristmasSoundDiagnostics=function(){return {revision:'SEASONAL-CHRISTMAS-REFINEMENT TEST REV08',blocked:blocked()||null,unlocked:unlocked,context:ctx?ctx.state:'not created',ready:Object.keys(buffers),loading:Object.keys(loading),errors:Object.assign({},errors),active:active?active.key:null,pendingEvents:jobs.size,lastCue:lastCue,counts:Object.assign({},counts),masterGain:master?master.gain.value:null,sampleRate:ctx?ctx.sampleRate:null,baseLatency:ctx&&typeof ctx.baseLatency==='number'?ctx.baseLatency:null,outputLatency:ctx&&typeof ctx.outputLatency==='number'?ctx.outputLatency:null,meterAvailable:!!meter,meterError:meterError,lastCueMeasurement:cueRecord,measurements:history.slice()};};
 })();
