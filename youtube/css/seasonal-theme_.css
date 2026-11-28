@@ -1219,3 +1219,41 @@ html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-u
 }
 html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploads-head {--ml-normal-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f9eeee%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c9a6a6%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%2230%22%20height%3D%2222%22%20rx%3D%225%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%23270306%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M12%2010l11%206-11%206z%22%20fill%3D%22%23800912%22%20stroke%3D%22%23320307%22%20stroke-width%3D%22.6%22%2F%3E%3C%2Fsvg%3E");}
 html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-head {--ml-normal-section-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23f9eeee%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c9a6a6%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M10%205h12c5%200%208%207%209%2014%201%206-3%209-7%205l-4-5h-8l-4%205c-4%204-8%201-7-5C2%2012%205%205%2010%205z%22%20fill%3D%22url%28%23m%29%22%20stroke%3D%22%23270306%22%20stroke-width%3D%221.2%22%2F%3E%3Cpath%20d%3D%22M10%209v10m-5-5h10%22%20stroke%3D%22%23430609%22%20stroke-width%3D%222.3%22%2F%3E%3Cg%20fill%3D%22%23430609%22%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2210%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2214%22%20r%3D%221.8%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2218%22%20r%3D%221.8%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");}
+
+
+/* NORMAL-LANGUAGE TEST REV04 / V2: thin layered metallic frame, following
+   the owner's approved concept. Keep REV03 ribbon artwork and live headings.
+   Nine-slice rails retain the bottom chamfers at any content height. */
+html[data-seasonal-theme="none"][data-theme] {
+  --ml-normal-frame-side:10px;
+  --ml-normal-frame-bottom:13px;
+  --ml-normal-frame-art:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2280%22%20height%3D%2280%22%20viewBox%3D%220%200%2080%2080%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22chrome%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f3f0f0%22%2F%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23a0a0a0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23fafafa%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M1%200V66L14%2079H66L79%2066V0%22%20stroke%3D%22%23161616%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%200V65L15%2077H65L77%2065V0%22%20stroke%3D%22url%28%23chrome%29%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M6%200V64L16%2074H64L74%2064V0%22%20stroke%3D%22%23262222%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M8%200V63L17%2072H63L72%2063V0%22%20stroke%3D%22%23dc111b%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M10%200V62L18%2070H62L70%2062V0%22%20stroke%3D%22%23989898%22%20stroke-width%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  --ml-normal-guide-surface:#0b0b0b;
+}
+html[data-seasonal-theme="none"][data-theme="bright"] {--ml-normal-guide-surface:#dededc;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) {margin-bottom:0;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState) {
+  box-sizing:border-box; border-style:solid; border-color:transparent!important;
+  border-width:0 var(--ml-normal-frame-side) var(--ml-normal-frame-bottom);
+  border-radius:0;
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:20;
+  border-image-width:0 var(--ml-normal-frame-side) var(--ml-normal-frame-bottom);
+  border-image-repeat:stretch; background-clip:padding-box;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid) {padding-block:6px;}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-count {
+  box-sizing:border-box; margin:0; padding:8px;
+  background:var(--ml-normal-guide-surface); background-clip:padding-box;
+  border-style:solid; border-color:transparent; border-width:0 var(--ml-normal-frame-side);
+  border-image-source:var(--ml-normal-frame-art); border-image-slice:20;
+  border-image-width:0 var(--ml-normal-frame-side); border-image-repeat:stretch;
+}
+html[data-seasonal-theme="none"][data-theme] .game-guides-section + .container > #resultsList {padding-top:0!important;}
+html[data-seasonal-theme="none"][data-theme] .toolbar::after,
+html[data-seasonal-theme="none"][data-theme] #recentUploadsSection .recent-uploads-inner {border-bottom-color:transparent!important;}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] {--ml-normal-frame-side:7px;--ml-normal-frame-bottom:10px;}
+}
+@media (orientation:portrait) and (min-width:641px) and (max-width:700px) {
+  html[data-seasonal-theme="none"][data-theme] .game-guides-section {padding-left:28px;padding-right:28px;}
+}
