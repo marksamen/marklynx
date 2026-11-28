@@ -1456,3 +1456,16 @@ html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-gui
 html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-guides-section .game-guides-count::after {
   background-color:var(--bg);
 }
+
+/* SEASONAL-GRID TEST REV04: owner-authorized Normal-only panel colour trial.
+   Keep existing GRID card paint and LIST separators; use a contrasting panel
+   surface for Recent, guide gutters, count and empty state, and LIST rows.
+   No changes to geometry, banners, overlays or either seasonal theme. */
+html[data-seasonal-theme="none"][data-theme="bright"] {--ml-normal-panel-surface:#c9c9c6;}
+html[data-seasonal-theme="none"][data-theme="dark"] {--ml-normal-panel-surface:#1c1c1c;}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection #recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid.grid,.game-guides-section + .container > #emptyState,.game-guides-section .game-guides-count) {
+  background-color:var(--ml-normal-panel-surface);
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid.list-mode .recent-upload-card,#resultsList .list-row):not(:hover) {
+  background-color:var(--ml-normal-panel-surface)!important;
+}
