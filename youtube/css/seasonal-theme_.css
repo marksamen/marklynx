@@ -1449,3 +1449,10 @@ html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[dat
   outline:none;
   box-shadow:inset 1px 0 var(--ml-seasonal-grid-edge),inset -1px 0 var(--ml-seasonal-grid-edge),inset 0 -1px var(--ml-seasonal-grid-edge);
 }
+
+/* SEASONAL-GRID TEST REV03: Halloween GRID count strip follows the
+   surrounding section surface, not individual card paint. Preserve LIST. */
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-guides-section .game-guides-count,
+html[data-seasonal-theme="halloween"][data-theme]:has(#gridBtn.active) .game-guides-section .game-guides-count::after {
+  background-color:var(--bg);
+}
