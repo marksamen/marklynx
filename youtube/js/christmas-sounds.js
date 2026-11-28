@@ -29,7 +29,7 @@
   function unlock(e){
     if(!e.isTrusted||blocked()||!Ctx)return;
     try{
-      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.35;master.connect(ctx.destination);}
+      if(!ctx){ctx=new Ctx();master=ctx.createGain();master.gain.value=.175;master.connect(ctx.destination);}
       var promise=ctx.resume();
       Promise.resolve(promise).then(function(){if(ctx.state==='running'){unlocked=true;Object.keys(files).forEach(load);}}).catch(function(){});
     }catch(e){/* No audio support: leave visuals intact. */}
