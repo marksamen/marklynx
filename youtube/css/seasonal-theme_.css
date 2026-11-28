@@ -1439,3 +1439,13 @@ html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-c
     transform:translate(-50%,-50%) scale(.9); transform-origin:center;
   }
 }
+
+/* SEASONAL-GRID TEST REV02: align seasonal GRID frame paint with the
+   in-box header borders and count rails. No layout or top divider change. */
+html[data-seasonal-theme="halloween"][data-theme] {--ml-seasonal-grid-edge:var(--ml-hw-panel-edge);}
+html[data-seasonal-theme="christmas"][data-theme] {--ml-seasonal-grid-edge:var(--xmas-panel-edge);}
+html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme] :is(#recentUploadsGrid.grid-mode,.game-guides-section + .container > #resultsGrid.grid),
+html:is([data-seasonal-theme="halloween"],[data-seasonal-theme="christmas"])[data-theme]:has(#gridBtn.active) .game-guides-section + .container > #emptyState {
+  outline:none;
+  box-shadow:inset 1px 0 var(--ml-seasonal-grid-edge),inset -1px 0 var(--ml-seasonal-grid-edge),inset 0 -1px var(--ml-seasonal-grid-edge);
+}
