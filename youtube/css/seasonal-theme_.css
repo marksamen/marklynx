@@ -1477,3 +1477,18 @@ html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides
   background-color:var(--ml-normal-panel-surface);
   background-clip:border-box;
 }
+
+
+/* SEASONAL-GRID TEST REV06: Normal Dark only. Swap the REV05 panel and
+   page colours; keep the frame fill, card paint and control palette. */
+html[data-seasonal-theme="none"][data-theme="dark"] {
+  --ml-normal-panel-surface:#080808;
+  background-color:#101010;
+}
+html[data-seasonal-theme="none"][data-theme="dark"] :is(body,.subscribe-strip,.banner-wrap),
+html[data-seasonal-theme="none"][data-theme="dark"] .banner-wrap::before {
+  background-color:#101010;
+}
+html[data-seasonal-theme="none"][data-theme="dark"] .toolbar {
+  background-color:rgba(16,16,16,.96);
+}
