@@ -1305,3 +1305,27 @@ html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-u
 @media (max-width:700px),(pointer:coarse) {
   html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head) h2 {top:3px;}
 }
+
+
+/* NORMAL-LANGUAGE TEST REV07 / V2: one artist-derived rail profile, nine-sliced
+   at identical dimensions across header, count and content. Separate red fill
+   from the metallic perimeter; preserve approved heading metrics and card layout. */
+html[data-seasonal-theme="none"][data-theme] {
+  --ml-normal-frame-art:url(../images/normal-ribbon-unified-frame_.webp);
+  --ml-normal-bottom-cut:19.2px;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::before {
+  background-image:url(../images/normal-ribbon-fill-right_.webp),url(../images/normal-ribbon-fill-center_.webp);
+  background-size:var(--ml-normal-right) 100%,calc(100% - var(--ml-normal-right)) 100%;
+  background-position:right top,left top;
+  clip-path:polygon(var(--ml-normal-bottom-cut) 0,calc(100% - var(--ml-normal-bottom-cut)) 0,100% var(--ml-normal-bottom-cut),100% 100%,0 100%,0 var(--ml-normal-bottom-cut));
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsSection .recent-uploads-head,.game-guides-section .game-guides-head)::after {
+  inset:0; border-width:0; border-image-source:var(--ml-normal-frame-art);
+  border-image-slice:40; border-image-width:var(--ml-normal-frame-corner) var(--ml-normal-frame-corner) 0;
+}
+html[data-seasonal-theme="none"][data-theme] :is(#recentUploadsGrid,.game-guides-section + .container > #resultsList,.game-guides-section + .container > #resultsGrid,.game-guides-section + .container > #emptyState),
+html[data-seasonal-theme="none"][data-theme] .game-guides-section .game-guides-count {border-image-slice:40;}
+@media (max-width:700px),(pointer:coarse) {
+  html[data-seasonal-theme="none"][data-theme] {--ml-normal-bottom-cut:14.4px;}
+}
